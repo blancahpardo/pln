@@ -35,7 +35,7 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .kicker { color:var(--amar); font-size:12px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px; }
 .view > h1 { color:var(--azul); font-size:32px; margin:0 0 34px; }
 .hub-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-bottom:30px; }
-.hub-btn { display:flex; flex-direction:column; align-items:flex-start; gap:6px; background:var(--claro); border:none; border-radius:12px; padding:26px 22px; cursor:pointer; text-align:left; box-shadow:0 2px 10px rgba(159,177,186,.28); font-family:Arial,Helvetica,sans-serif; }
+.hub-btn { display:flex; flex-direction:column; align-items:flex-start; gap:6px; background:var(--claro); border:none; border-radius:12px; padding:26px 22px; cursor:pointer; text-align:left; box-shadow:0 2px 10px rgba(159,177,186,.28); font-family:Arial,Helvetica,sans-serif; position:relative; }
 .hub-btn:hover { background:#E9ECEE; }
 .hub-icon { font-size:30px; margin-bottom:4px; }
 .hub-label { font-size:17px; font-weight:bold; color:var(--azul); }
@@ -65,6 +65,20 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .quiz-feedback { font-size:13px; color:var(--gris); background:#fff; border-radius:8px; padding:12px 16px; margin-top:4px; margin-bottom:16px; border-left:3px solid var(--azul); }
 .quiz-score { font-size:26px; font-weight:bold; color:var(--azul); margin-bottom:8px; }
 .quiz-result { background:var(--claro); border-radius:12px; padding:30px; text-align:center; }
+/* teacher panel */
+.teacher-banner { background:var(--azul-d); color:#fff; border-radius:12px; padding:18px 22px; margin-bottom:24px; }
+.teacher-banner strong { color: var(--amar); }
+.teacher-banner p { font-size:13px; margin:6px 0 0; color:var(--humo); }
+.teacher-token-row { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+.teacher-token-row input { flex:1; min-width:220px; padding:9px 12px; border-radius:8px; border:none; font-size:13px; font-family:Arial,Helvetica,sans-serif; }
+.teacher-token-row button { background:var(--amar); color:var(--azul-d); border:none; border-radius:8px; padding:9px 16px; font-size:13px; font-weight:bold; cursor:pointer; font-family:Arial,Helvetica,sans-serif; }
+.teacher-status { font-size:12px; margin-top:10px; min-height:16px; }
+.teacher-toggle-list { list-style:none; padding:0; margin:16px 0 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; }
+.teacher-toggle-list li { background:rgba(255,255,255,.08); border-radius:8px; padding:10px 14px; display:flex; align-items:center; gap:10px; font-size:13px; }
+.teacher-toggle-list input { width:18px; height:18px; }
+.hub-btn .teacher-hint { position:absolute; top:10px; right:12px; font-size:10px; font-weight:bold; padding:2px 8px; border-radius:10px; }
+.hub-btn .teacher-hint.on { background:#DFF3E0; color:var(--verde); }
+.hub-btn .teacher-hint.off { background:#FBEAEC; color:var(--rojo); }
 footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--humo); font-style:italic; }
 </style>
 </head>
@@ -91,10 +105,16 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
 <script>
 (function() {
   var HASH = "2ae8223ee97e3a581d1a19c6c7b8b050d272d9376086e3c9bcc5ccb7aad3e062";
-  var PAYLOAD = "PGRpdiBpZD0iaHViIiBjbGFzcz0idmlldyI+CiAgPGRpdiBjbGFzcz0ia2lja2VyIj5UZW1hIDI8L2Rpdj4KICA8aDE+wr9RdcOpIHF1aWVyZXMgY29uc3VsdGFyPzwvaDE+CiAgPGRpdiBjbGFzcz0iaHViLWdyaWQiPgogICAgPGJ1dHRvbiBjbGFzcz0iaHViLWJ0biIgZGF0YS12aWV3PSJtYW51YWwiPgogICAgICA8c3BhbiBjbGFzcz0iaHViLWljb24iPvCfk5g8L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItbGFiZWwiPk1hbnVhbCB0ZcOzcmljbzwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1kZXNjIj5MZWN0dXJhIGVuIFBERiwgZGVzY2FyZ2FibGU8L3NwYW4+CiAgICA8L2J1dHRvbj4KICA8L2Rpdj4KICA8YSBjbGFzcz0iYmFjay1ob21lIiBocmVmPSIuLi9pbmRleC5odG1sIj7ihpAgVm9sdmVyIGEgbGEgYXNpZ25hdHVyYTwvYT4KPC9kaXY+CjxkaXYgaWQ9InZpZXctbWFudWFsIiBjbGFzcz0idmlldyBzdWItdmlldyIgaGlkZGVuPgogIDxidXR0b24gY2xhc3M9ImJhY2stYnRuIiBkYXRhLWJhY2s9Imh1YiI+4oaQIFZvbHZlcjwvYnV0dG9uPgogIDxoMj5NYW51YWwgdGXDs3JpY28gwrcgVGVtYSAyPC9oMj4KICA8cCBjbGFzcz0ic2VjdGlvbi1ub3RlIj5QdWVkZXMgbGVlcmxvIGFxdcOtIG8gZGVzY2FyZ2FybG8uPC9wPgogIDxhIGNsYXNzPSJkbC1iaWciIGhyZWY9Im1hbnVhbC5wZGYiIGRvd25sb2FkPuKshyBEZXNjYXJnYXIgUERGPC9hPgogIDxpZnJhbWUgY2xhc3M9InBkZi1mcmFtZSIgc3JjPSJtYW51YWwucGRmIiB0aXRsZT0iTWFudWFsIHRlw7NyaWNvIFRlbWEgMiI+PC9pZnJhbWU+CjwvZGl2Pg==";
-  var QUIZ_MANUAL = [];
-  var QUIZ_CUADERNO = [];
+  var TEACHER_HASH = "a6d2cc52cae095f428b5a970cb4420bb3e023e6dc8a6a4bcee26cab90eaa855a";
+  var PAYLOAD = "PGRpdiBpZD0iaHViIiBjbGFzcz0idmlldyI+CiAgPGRpdiBjbGFzcz0ia2lja2VyIj5UZW1hIDI8L2Rpdj4KICA8ZGl2IGlkPSJ0ZWFjaGVyLXBhbmVsIiBjbGFzcz0idGVhY2hlci1iYW5uZXIiIGhpZGRlbj4KICAgIDxzdHJvbmc+4pqZIE1vZG8gcHJvZmVzb3JhPC9zdHJvbmc+CiAgICA8cD5QZWdhIGFxdcOtIHR1IHRva2VuIGRlIEdpdEh1YiAoc29sbyBwYXJhIGVzdGEgc2VzacOzbiBkZSBuYXZlZ2Fkb3I7IHNlIHBpZXJkZSBhbCBjZXJyYXIgbGEgcGVzdGHDsWEpIHkgbWFyY2EgcXXDqSBtYXRlcmlhbGVzIHZlIGVsIGFsdW1uYWRvLiBMb3MgY2FtYmlvcyBzZSBwdWJsaWNhbiBlbiAxLTIgbWludXRvcy48L3A+CiAgICA8ZGl2IGNsYXNzPSJ0ZWFjaGVyLXRva2VuLXJvdyI+CiAgICAgIDxpbnB1dCB0eXBlPSJwYXNzd29yZCIgaWQ9ImdoLXRva2VuIiBwbGFjZWhvbGRlcj0iVG9rZW4gZGUgR2l0SHViIChnaHBfLi4uIG8gZ2l0aHViX3BhdF8uLi4pIj4KICAgICAgPGJ1dHRvbiBpZD0iZ2gtdG9rZW4tc2F2ZSI+R3VhcmRhciB0b2tlbiBkZSBlc3RhIHNlc2nDs248L2J1dHRvbj4KICAgIDwvZGl2PgogICAgPGRpdiBjbGFzcz0idGVhY2hlci1zdGF0dXMiIGlkPSJ0ZWFjaGVyLXN0YXR1cyI+PC9kaXY+CiAgICA8dWwgY2xhc3M9InRlYWNoZXItdG9nZ2xlLWxpc3QiPgogICAgICA8bGk+PGlucHV0IHR5cGU9ImNoZWNrYm94IiBpZD0iY2hrLW1hbnVhbCIgZGF0YS10eXBlPSJtYW51YWwiPjxsYWJlbCBmb3I9ImNoay1tYW51YWwiPk1hbnVhbCB0ZcOzcmljbzwvbGFiZWw+PC9saT4KICAgICAgPGxpPjxpbnB1dCB0eXBlPSJjaGVja2JveCIgaWQ9ImNoay1wcmluY2lwYWwiIGRhdGEtdHlwZT0icHJpbmNpcGFsIj48bGFiZWwgZm9yPSJjaGstcHJpbmNpcGFsIj5DdWFkZXJubyBwcmluY2lwYWw8L2xhYmVsPjwvbGk+CiAgICAgIDxsaT48aW5wdXQgdHlwZT0iY2hlY2tib3giIGlkPSJjaGstZXZhbHVhYmxlIiBkYXRhLXR5cGU9ImV2YWx1YWJsZSI+PGxhYmVsIGZvcj0iY2hrLWV2YWx1YWJsZSI+Q3VhZGVybm8gZXZhbHVhYmxlPC9sYWJlbD48L2xpPgogICAgICA8bGk+PGlucHV0IHR5cGU9ImNoZWNrYm94IiBpZD0iY2hrLXF1aXoiIGRhdGEtdHlwZT0icXVpeiI+PGxhYmVsIGZvcj0iY2hrLXF1aXoiPkN1ZXN0aW9uYXJpbyBkZSBwcsOhY3RpY2E8L2xhYmVsPjwvbGk+CiAgICA8L3VsPgogIDwvZGl2PgogIDxoMT7Cv1F1w6kgcXVpZXJlcyBjb25zdWx0YXI/PC9oMT4KICA8ZGl2IGNsYXNzPSJodWItZ3JpZCI+CiAgICA8YnV0dG9uIGNsYXNzPSJodWItYnRuIiBkYXRhLXZpZXc9Im1hbnVhbCIgZGF0YS10eXBlPSJtYW51YWwiPgogICAgICA8c3BhbiBjbGFzcz0idGVhY2hlci1oaW50IiBkYXRhLWhpbnQ9Im1hbnVhbCI+PC9zcGFuPgogICAgICA8c3BhbiBjbGFzcz0iaHViLWljb24iPvCfk5g8L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItbGFiZWwiPk1hbnVhbCB0ZcOzcmljbzwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1kZXNjIj5MZWN0dXJhIGVuIFBERiwgZGVzY2FyZ2FibGU8L3NwYW4+CiAgICA8L2J1dHRvbj4KICAgIDxidXR0b24gY2xhc3M9Imh1Yi1idG4iIGRhdGEtdmlldz0icHJpbmNpcGFsIiBkYXRhLXR5cGU9InByaW5jaXBhbCI+CiAgICAgIDxzcGFuIGNsYXNzPSJ0ZWFjaGVyLWhpbnQiIGRhdGEtaGludD0icHJpbmNpcGFsIj48L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItaWNvbiI+8J+Tkzwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1sYWJlbCI+Q3VhZGVybm8gcHJpbmNpcGFsPC9zcGFuPgogICAgICA8c3BhbiBjbGFzcz0iaHViLWRlc2MiPkRlc2NhcmdhIGVsIGN1YWRlcm5vIGRlIHRyYWJham88L3NwYW4+CiAgICA8L2J1dHRvbj4KICAgIDxidXR0b24gY2xhc3M9Imh1Yi1idG4iIGRhdGEtdmlldz0iZXZhbHVhYmxlIiBkYXRhLXR5cGU9ImV2YWx1YWJsZSI+CiAgICAgIDxzcGFuIGNsYXNzPSJ0ZWFjaGVyLWhpbnQiIGRhdGEtaGludD0iZXZhbHVhYmxlIj48L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItaWNvbiI+8J+TnTwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1sYWJlbCI+Q3VhZGVybm8gZXZhbHVhYmxlPC9zcGFuPgogICAgICA8c3BhbiBjbGFzcz0iaHViLWRlc2MiPkRlc2NhcmdhIGxhIHBsYW50aWxsYSBkZWwgZW50cmVnYWJsZTwvc3Bhbj4KICAgIDwvYnV0dG9uPgogICAgPGJ1dHRvbiBjbGFzcz0iaHViLWJ0biIgZGF0YS12aWV3PSJxdWl6IiBkYXRhLXR5cGU9InF1aXoiPgogICAgICA8c3BhbiBjbGFzcz0idGVhY2hlci1oaW50IiBkYXRhLWhpbnQ9InF1aXoiPjwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1pY29uIj7inZM8L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItbGFiZWwiPkN1ZXN0aW9uYXJpbyBkZSBwcsOhY3RpY2E8L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItZGVzYyI+MTAgcHJlZ3VudGFzIGFsIGF6YXIsIHB1bnR1YWNpw7NuIHNvYnJlIDEwPC9zcGFuPgogICAgPC9idXR0b24+CiAgPC9kaXY+CiAgPGEgY2xhc3M9ImJhY2staG9tZSIgaHJlZj0iLi4vaW5kZXguaHRtbCI+4oaQIFZvbHZlciBhIGxhIGFzaWduYXR1cmE8L2E+CjwvZGl2Pgo8ZGl2IGlkPSJ2aWV3LW1hbnVhbCIgY2xhc3M9InZpZXcgc3ViLXZpZXciIGhpZGRlbj4KICA8YnV0dG9uIGNsYXNzPSJiYWNrLWJ0biIgZGF0YS1iYWNrPSJodWIiPuKGkCBWb2x2ZXI8L2J1dHRvbj4KICA8aDI+TWFudWFsIHRlw7NyaWNvIMK3IFRlbWEgMjwvaDI+CiAgPHAgY2xhc3M9InNlY3Rpb24tbm90ZSI+UHVlZGVzIGxlZXJsbyBhcXXDrSBvIGRlc2NhcmdhcmxvLjwvcD4KICA8YSBjbGFzcz0iZGwtYmlnIiBocmVmPSJtYW51YWwucGRmIiBkb3dubG9hZD7irIcgRGVzY2FyZ2FyIFBERjwvYT4KICA8aWZyYW1lIGNsYXNzPSJwZGYtZnJhbWUiIHNyYz0ibWFudWFsLnBkZiIgdGl0bGU9Ik1hbnVhbCB0ZcOzcmljbyBUZW1hIDIiPjwvaWZyYW1lPgo8L2Rpdj4KPGRpdiBpZD0idmlldy1wcmluY2lwYWwiIGNsYXNzPSJ2aWV3IHN1Yi12aWV3IiBoaWRkZW4+CiAgPGJ1dHRvbiBjbGFzcz0iYmFjay1idG4iIGRhdGEtYmFjaz0iaHViIj7ihpAgVm9sdmVyPC9idXR0b24+CiAgPGgyPkN1YWRlcm5vIHByaW5jaXBhbCDCtyBUZW1hIDI8L2gyPgogIDxwIGNsYXNzPSJzZWN0aW9uLW5vdGUiPkRlc2NhcmdhIGVsIGZpY2hlcm8gcGFyYSB0cmFiYWphciBjb24gw6lsIGVuIHR1IG9yZGVuYWRvci48L3A+CiAgPGEgY2xhc3M9ImRsLWJpZyIgaHJlZj0iY3VhZGVybm9fcHJpbmNpcGFsLmlweW5iIiBkb3dubG9hZD7irIcgRGVzY2FyZ2FyPC9hPgo8L2Rpdj4KPGRpdiBpZD0idmlldy1ldmFsdWFibGUiIGNsYXNzPSJ2aWV3IHN1Yi12aWV3IiBoaWRkZW4+CiAgPGJ1dHRvbiBjbGFzcz0iYmFjay1idG4iIGRhdGEtYmFjaz0iaHViIj7ihpAgVm9sdmVyPC9idXR0b24+CiAgPGgyPkN1YWRlcm5vIGV2YWx1YWJsZSDCtyBUZW1hIDI8L2gyPgogIDxwIGNsYXNzPSJzZWN0aW9uLW5vdGUiPkRlc2NhcmdhIGVsIGZpY2hlcm8gcGFyYSB0cmFiYWphciBjb24gw6lsIGVuIHR1IG9yZGVuYWRvci48L3A+CiAgPGEgY2xhc3M9ImRsLWJpZyIgaHJlZj0iZXZhbHVhYmxlLmlweW5iIiBkb3dubG9hZD7irIcgRGVzY2FyZ2FyPC9hPgo8L2Rpdj4KPGRpdiBpZD0idmlldy1xdWl6IiBjbGFzcz0idmlldyBzdWItdmlldyIgaGlkZGVuPgogIDxidXR0b24gY2xhc3M9ImJhY2stYnRuIiBkYXRhLWJhY2s9Imh1YiI+4oaQIFZvbHZlcjwvYnV0dG9uPgogIDxoMj5DdWVzdGlvbmFyaW8gZGUgcHLDoWN0aWNhIMK3IFRlbWEgMjwvaDI+CiAgPGRpdiBpZD0icXVpei1yb290Ij48L2Rpdj4KPC9kaXY+";
+  var QUIZ_MANUAL = [{"question":"En un flujo de traducción automática de textos biomédicos, se puede añadir una capa automática que revise los segmentos ya traducidos en busca de patrones léxicos de riesgo, antes de que un revisor humano los lea. ¿Cuál es la función principal de esa capa de vigilancia lingüística?","answerOptions":[{"text":"Localizar patrones de riesgo para que la revisión humana se concentre en los casos de mayor riesgo.","isCorrect":true,"rationale":"El objetivo es automatizar lo repetitivo para permitir que el lingüista se enfoque en lo que exige criterio experto."},{"text":"Sustituir íntegramente la labor del revisor humano para agilizar el pipeline.","isCorrect":false,"rationale":"La herramienta no sustituye el criterio experto: ayuda a priorizar los segmentos que requieren atención."},{"text":"Detectar errores gramaticales complejos mediante el análisis sintáctico del texto.","isCorrect":false,"rationale":"La herramienta se centra en patrones léxicos y falsos amigos, no en la estructura gramatical o sintáctica de la frase."},{"text":"Garantizar que la traducción automática sea semánticamente perfecta antes de la revisión.","isCorrect":false,"rationale":"Las expresiones regulares tienen límites y no comprenden el significado semántico profundo del texto."}],"hint":"Considera si la herramienta es un reemplazo o un apoyo para el profesional."},{"question":"En el contexto de las expresiones regulares en Python, ¿por qué es una buena práctica usar cadenas 'raw' como `r\"\\bactual\\b\"`?","answerOptions":[{"text":"Para que Python interprete las barras invertidas de forma literal y no como caracteres especiales.","isCorrect":true,"rationale":"La r inicial evita que Python procese secuencias como \\b o \\n antes de que lleguen al motor de expresiones regulares."},{"text":"Para obligar al motor de búsqueda a ignorar la distinción entre mayúsculas y minúsculas.","isCorrect":false,"rationale":"Esa función la cumple el flag re.IGNORECASE, no el prefijo de cadena raw."},{"text":"Para que el patrón solo busque palabras que estén en formato de texto crudo sin formato.","isCorrect":false,"rationale":"'Raw string' se refiere al tratamiento de los caracteres de escape en el código, no al formato del texto de entrada."},{"text":"Para optimizar la velocidad de ejecución del módulo re al procesar corpus de gran tamaño con miles de documentos.","isCorrect":false,"rationale":"Aunque es una buena práctica, su función principal es la claridad sintáctica y evitar errores de escape, no el rendimiento del motor."}],"hint":"Piensa en cómo trata Python el carácter de la barra invertida (backslash)."},{"question":"Si se desea identificar la palabra completa 'actual' y evitar que se capture dentro de 'actually', ¿qué elemento de la expresión regular es imprescindible?","answerOptions":[{"text":"El uso de límites de palabra representados por `\\b`.","isCorrect":true,"rationale":"El símbolo \\b marca la frontera entre caracteres de palabra y espacios o signos, garantizando que se capture la palabra exacta."},{"text":"El uso del cuantificador '+' al final del patrón.","isCorrect":false,"rationale":"El cuantificador '+' busca una o más repeticiones, lo que no ayuda a delimitar fronteras de palabra."},{"text":"La inclusión de un punto al final del patrón léxico.","isCorrect":false,"rationale":"En regex, el punto es un comodín que representa cualquier carácter, lo que aumentaría las capturas no deseadas."},{"text":"El empleo de paréntesis para crear un grupo de captura cerrado.","isCorrect":false,"rationale":"Los grupos de captura organizan subpatrones, pero no impiden que se encuentren coincidencias dentro de palabras más largas."}],"hint":"Busca el símbolo que define las fronteras o límites de una unidad léxica."},{"question":"En un sistema que revisa segmentos bilingües en busca de posibles errores léxicos, se puede usar `re.findall()` para contar cuántas veces aparece un patrón, o `re.search()` para comprobar si aparece al menos una vez en una línea concreta. ¿Cuál es la diferencia fundamental entre ambas funciones en ese tipo de flujo de control de calidad?","answerOptions":[{"text":"`re.findall()` se usa para contar todas las ocurrencias y `re.search()` para decidir si un segmento se incluye en un informe.","isCorrect":true,"rationale":"Findall localiza todas las apariciones para métricas, mientras que search filtra líneas basándose en la primera coincidencia encontrada."},{"text":"`re.findall()` devuelve objetos de coincidencia y `re.search()` devuelve una lista de strings.","isCorrect":false,"rationale":"Es al revés: findall() devuelve una lista de strings y search() devuelve un objeto de coincidencia (Match object)."},{"text":"`re.search()` es obligatorio para usar el flag `re.IGNORECASE`, mientras que `re.findall()` no lo admite.","isCorrect":false,"rationale":"Ambas funciones aceptan el argumento flags para modificar el comportamiento de la búsqueda."},{"text":"`re.findall()` solo funciona con strings simples y `re.search()` únicamente con textos multilínea completos.","isCorrect":false,"rationale":"Ambas funciones pueden operar sobre cualquier objeto de tipo string, independientemente de si tiene saltos de línea."}],"hint":"Considera qué función es mejor para estadísticas y cuál para validación condicional."},{"question":"En un sistema de detección de falsos amigos, un primer tipo de informe puede limitarse a listar los segmentos sospechosos, mientras que un segundo tipo distingue los casos con más evidencia. ¿Cómo se define un 'error probable' en ese segundo tipo de informe?","answerOptions":[{"text":"Cuando coinciden simultáneamente la forma inglesa sospechosa y la traducción literal problemática en el segmento.","isCorrect":true,"rationale":"La doble coincidencia en el par TO-TM aporta evidencia estadística de que la transferencia errónea ha ocurrido."},{"text":"Cuando el sistema detecta un término inglés que no existe en el diccionario médico especializado del glosario.","isCorrect":false,"rationale":"Eso sería un error ortográfico o de vocabulario, no necesariamente relacionado con la lógica de falsos amigos TO-TM."},{"text":"Cuando aparece el falso amigo en el texto origen, independientemente de su traducción.","isCorrect":false,"rationale":"Eso se define como 'riesgo', pero no confirma que el error se haya cometido en la traducción."},{"text":"Cuando el sistema de traducción automática devuelve un segmento vacío o mal segmentado.","isCorrect":false,"rationale":"Este es un error de procesamiento técnico, no una cuestión de transferencia léxica de falsos amigos."}],"hint":"Recuerda la distinción entre riesgo (origen) y evidencia (origen + meta)."},{"question":"En el desarrollo de un pipeline con Python, ¿cuál es la utilidad de aplicar `.strip()` a cada línea después de usar `.split('\\n')`?","answerOptions":[{"text":"Eliminar espacios en blanco y saltos de línea residuales al principio y al final de la cadena.","isCorrect":true,"rationale":"Esto asegura que no se procesen líneas vacías y que el contenido del segmento esté limpio para el análisis."},{"text":"Eliminar caracteres especiales como tildes y eñes para facilitar la búsqueda.","isCorrect":false,"rationale":"Strip no modifica caracteres internos del string; solo elimina espacios y saltos de línea en los extremos."},{"text":"Convertir todo el texto a minúsculas para que coincida con el glosario.","isCorrect":false,"rationale":"Esa tarea se realiza con el método .lower() o mediante flags en el módulo re."},{"text":"Separar el Texto Origen (TO) del Texto Meta (TM) automáticamente.","isCorrect":false,"rationale":"Strip no separa partes de una cadena basándose en su contenido lingüístico, solo limpia los bordes."}],"hint":"Piensa en la limpieza de los extremos de un string."},{"question":"¿Qué limitación técnica presentan las expresiones regulares frente a variantes morfológicas como 'assist', 'assisted' y 'assisting'?","answerOptions":[{"text":"Un patrón exacto como `r\"\\bassist\\b\"` no detectará automáticamente las formas flexionadas o derivadas.","isCorrect":true,"rationale":"Al exigir límites de palabra estrictos, cualquier sufijo como -ed o -ing rompe la coincidencia con la raíz exacta."},{"text":"Las expresiones regulares no pueden procesar verbos en inglés por restricciones del módulo re.","isCorrect":false,"rationale":"El módulo re puede procesar cualquier secuencia de caracteres, incluidos verbos, si el patrón está bien definido."},{"text":"El uso de `re.IGNORECASE` impide que el sistema reconozca terminaciones verbales.","isCorrect":false,"rationale":"IGNORECASE solo afecta a la distinción entre mayúsculas y minúsculas, no a la morfología de la palabra."},{"text":"Las expresiones regulares solo funcionan con sustantivos y no con categorías gramaticales variables.","isCorrect":false,"rationale":"Regex es agnóstico a la categoría gramatical; busca patrones de caracteres sin importar la función lingüística."}],"hint":"Considera qué ocurre cuando buscas una cadena exacta frente a una palabra que cambia sus terminaciones."},{"question":"¿Qué representa un 'falso negativo' en este sistema de detección de calidad léxica?","answerOptions":[{"text":"Un error de traducción real que el sistema no ha sido capaz de detectar.","isCorrect":true,"rationale":"Ocurre cuando el sistema omite un problema, generalmente porque el patrón es muy estricto o el término no está en el glosario."},{"text":"Un segmento que el sistema marca como error, pero cuya traducción es realmente correcta.","isCorrect":false,"rationale":"Esa es la definición de un falso positivo (ruido innecesario)."},{"text":"Un error en el código de Python que impide la ejecución del bucle for.","isCorrect":false,"rationale":"Los falsos negativos son fallos de cobertura lingüística, no necesariamente errores de sintaxis en el código."},{"text":"Un caso donde la palabra inglesa y la española coinciden plenamente en significado.","isCorrect":false,"rationale":"Si el significado coincide, no hay error de traducción y, por tanto, el sistema no debería marcarlo."}],"hint":"Es el caso en el que el sistema 'no ve' un error que sí existe."},{"question":"Al construir dinámicamente un patrón de expresión regular a partir de una lista de términos de un glosario, se puede combinar una f-string con una cadena raw, como en `fr\"\\b{palabra}\\b\"`. ¿Cuál es la ventaja de esta combinación?","answerOptions":[{"text":"Permiten insertar variables del glosario dentro de un patrón que respeta las barras invertidas de regex.","isCorrect":true,"rationale":"Combina la capacidad de interpolación de variables ({palabra}) con el tratamiento literal de los caracteres de escape (\\b)."},{"text":"Hacen que la búsqueda sea automáticamente bilingüe sin necesidad de usar diccionarios.","isCorrect":false,"rationale":"La lógica bilingüe depende de cómo se use la variable, no del formato fr del string por sí mismo."},{"text":"Son la única forma de que Python reconozca el final de un segmento bilingüe.","isCorrect":false,"rationale":"El final de un segmento suele identificarse por saltos de línea (\\n), no por el tipo de string usado en el patrón."},{"text":"Evitan que el programa consuma demasiada memoria RAM al recorrer el bucle sobre el glosario completo.","isCorrect":false,"rationale":"El formato del string no tiene un impacto significativo en la gestión de memoria comparado con otras estructuras."}],"hint":"Piensa en la necesidad de buscar diferentes palabras dinámicamente usando el mismo patrón estructural."},{"question":"¿Por qué el dominio biomédico hace que la detección de falsos amigos sea un problema de 'seguridad comunicativa'?","answerOptions":[{"text":"Porque una mala equivalencia puede alterar la interpretación de síntomas o instrucciones de tratamiento.","isCorrect":true,"rationale":"En medicina, un error léxico (como confundir sensible con sensato) puede llevar a decisiones clínicas erróneas o peligrosas."},{"text":"Porque los falsos amigos suelen provocar que el sistema de traducción automática se detenga.","isCorrect":false,"rationale":"Los falsos amigos no detienen el sistema; de hecho, producen frases fluidas que parecen correctas pero contienen errores graves."},{"text":"Porque los textos biomédicos están protegidos por leyes de propiedad intelectual muy estrictas.","isCorrect":false,"rationale":"Aunque es cierto, la seguridad comunicativa se refiere a la precisión del mensaje transmitido al paciente o médico."},{"text":"Porque el uso de expresiones regulares está prohibido en la industria farmacéutica.","isCorrect":false,"rationale":"Al contrario, son herramientas comunes para el control de calidad y la validación de textos técnicos."}],"hint":"Reflexiona sobre las consecuencias de un error terminológico en una receta o informe clínico."}];
+  var QUIZ_CUADERNO = [{"question":"¿Cuál es la función principal del límite de palabra `\\b` en una expresión regular de Python?","answerOptions":[{"text":"Asegurar que el patrón coincida únicamente con palabras completas y no con partes de otras.","isCorrect":true,"rationale":"El límite de palabra marca la frontera entre caracteres de palabra y espacios o signos, evitando coincidencias parciales."},{"text":"Indicar que la búsqueda debe comenzar exclusivamente al principio de una línea de texto.","isCorrect":false,"rationale":"Esa función la cumple el símbolo `^`, no el límite de palabra."},{"text":"Convertir automáticamente la cadena de texto completa en un formato crudo (raw string) antes de procesarla.","isCorrect":false,"rationale":"El formato raw se indica con el prefijo `r` antes de la cadena, no con `\\b`."},{"text":"Eliminar los espacios en blanco al inicio y al final de una oración procesada.","isCorrect":false,"rationale":"Esa tarea la realiza el método `.strip()`, no un límite de palabra dentro de una expresión regular."}],"hint":"Piensa en cómo evitar que, al buscar 'asistir', el sistema encuentre también 'desasistir'."},{"question":"¿Qué diferencia fundamental existe entre usar `re.findall()` y `re.search()` al analizar un texto en busca de un patrón?","answerOptions":[{"text":"`re.findall()` devuelve una lista con todas las apariciones, mientras que `re.search()` solo verifica la existencia de la primera.","isCorrect":true,"rationale":"findall() recorre todo el texto y devuelve todas las coincidencias; search() se detiene en la primera que encuentra."},{"text":"`re.search()` permite ignorar mayúsculas y minúsculas, pero `re.findall()` es siempre sensible a ellas.","isCorrect":false,"rationale":"Ambas funciones aceptan el flag re.IGNORECASE."},{"text":"`re.findall()` modifica el texto original resaltando en color las coincidencias encontradas durante la búsqueda.","isCorrect":false,"rationale":"Ninguna de las dos funciones modifica el texto original; solo lo analizan."},{"text":"`re.search()` solo funciona con cadenas simples y no admite expresiones regulares complejas.","isCorrect":false,"rationale":"re.search() admite cualquier patrón válido de expresión regular, igual que re.findall()."}],"hint":"Considera si necesitas saber cuántas veces aparece un error o simplemente si el error está presente."},{"question":"Al construir un patrón dinámico como `fr\"\\b{palabra}\\b\"`, ¿qué función cumple específicamente el prefijo `r`?","answerOptions":[{"text":"Permite que las barras invertidas se traten como caracteres literales y no como secuencias de escape de Python.","isCorrect":true,"rationale":"El prefijo r evita que Python interprete \\b como un carácter de retroceso antes de que llegue al motor de expresiones regulares."},{"text":"Indica a Python que debe formatear la variable entre llaves dentro de la cadena.","isCorrect":false,"rationale":"Esa función la cumple el prefijo f, no el prefijo r."},{"text":"Obliga a la expresión regular a realizar una búsqueda recursiva en todos los archivos de una carpeta.","isCorrect":false,"rationale":"Las expresiones regulares operan sobre cadenas de texto ya cargadas, no sobre sistemas de archivos."},{"text":"Activa un modo de compatibilidad para procesar textos en alfabetos no latinos, como el cirílico o el árabe.","isCorrect":false,"rationale":"El prefijo r no tiene relación con el alfabeto o la codificación del texto."}],"hint":"Tiene que ver con cómo interpreta Python el carácter de la barra invertida."},{"question":"En traducción biomédica del inglés al español, un 'falso amigo' es una palabra que se parece a una palabra española pero tiene un significado distinto, lo que puede provocar errores graves de interpretación clínica. ¿Cuál de las siguientes es un ejemplo de falso amigo en este ámbito?","answerOptions":[{"text":"Traducir el término inglés 'sensible' como el español 'sensible' en lugar de 'sensato'.","isCorrect":true,"rationale":"'Sensible' en inglés significa 'sensato' o 'razonable'; traducirlo literalmente altera el sentido de la frase."},{"text":"Traducir 'drug' como 'medicamento' en un informe oficial dirigido a las autoridades de farmacovigilancia.","isCorrect":false,"rationale":"Esa es una traducción correcta en ese contexto; no hay transferencia errónea de significado."},{"text":"Confundir las unidades de medida 'mg' con 'ml' al transcribir una receta.","isCorrect":false,"rationale":"Es un error de transcripción de unidades, no un problema de falso amigo léxico entre dos lenguas."},{"text":"Utilizar la palabra 'actual' en inglés para referirse a algo que es 'real' en español.","isCorrect":false,"rationale":"Esta frase describe el uso correcto en inglés, no la traducción errónea al español que constituiría el falso amigo."}],"hint":"Busca un par de palabras que suenan parecido en los dos idiomas pero significan cosas muy distintas al describir a una persona."},{"question":"En un pipeline que detecta traducciones incorrectas mediante falsos amigos, ¿por qué conviene comprobar la presencia de la palabra sospechosa tanto en el texto origen (TO) como en el texto meta (TM)?","answerOptions":[{"text":"Para evitar falsos positivos en oraciones donde el traductor humano ya corrigió el término correctamente.","isCorrect":true,"rationale":"Si la forma inglesa aparece en el origen pero la traducción es correcta, no debe marcarse como error."},{"text":"Para duplicar el recuento de errores y aumentar la precisión estadística del informe.","isCorrect":false,"rationale":"El objetivo no es duplicar recuentos, sino distinguir el riesgo (solo en el origen) del error confirmado (en ambos)."},{"text":"Porque el módulo `re` requiere obligatoriamente dos entradas de texto para poder ejecutarse.","isCorrect":false,"rationale":"El módulo re puede aplicarse a una sola cadena de texto sin ningún problema."},{"text":"Para verificar que el número de palabras en inglés sea exactamente igual al número de palabras en español.","isCorrect":false,"rationale":"La longitud de las dos versiones no tiene relación directa con la detección de falsos amigos."}],"hint":"Recuerda el caso de 'Eventually', que puede aparecer en el origen y, aun así, estar bien traducido como 'Al final'."},{"question":"Al recorrer un diccionario de Python con un bucle `for` sin especificar más, como en `for palabra in falsos_amigos:`, ¿qué sucede?","answerOptions":[{"text":"Python itera por defecto sobre las claves del diccionario.","isCorrect":true,"rationale":"Por defecto, iterar sobre un diccionario recorre sus claves; para obtener también los valores hace falta usar .items()."},{"text":"Python genera un error de ejecución porque los diccionarios no son objetos iterables.","isCorrect":false,"rationale":"Los diccionarios sí son iterables en Python; se puede recorrer sus claves directamente con un bucle for."},{"text":"Se obtienen simultáneamente la clave y el valor en una tupla de dos elementos.","isCorrect":false,"rationale":"Eso solo ocurre si se usa el método .items() en el bucle."},{"text":"El bucle se ejecuta en orden alfabético inverso de forma automática.","isCorrect":false,"rationale":"Python recorre los diccionarios en el orden en que se insertaron sus claves, no en orden alfabético."}],"hint":"Observa que, en el código, 'palabra' se usa después para acceder a la traducción errónea mediante 'falsos_amigos[palabra]'."},{"question":"¿Cuál es una limitación importante de las expresiones regulares a la hora de detectar errores de traducción?","answerOptions":[{"text":"Carecen de comprensión del contexto gramatical o semántico más amplio.","isCorrect":true,"rationale":"Una expresión regular reconoce formas, no significados; no distingue si una palabra concreta encaja bien en su contexto."},{"text":"Son incapaces de procesar archivos que contengan más de 100 oraciones.","isCorrect":false,"rationale":"El módulo re no tiene ningún límite de este tipo sobre la longitud del texto."},{"text":"No pueden integrarse con herramientas de traducción asistida por ordenador (TAO).","isCorrect":false,"rationale":"Las expresiones regulares pueden aplicarse sobre el texto extraído de cualquier herramienta, incluidas las TAO."},{"text":"Solo funcionan si el texto está escrito enteramente en mayúsculas.","isCorrect":false,"rationale":"El flag re.IGNORECASE permite trabajar sin distinguir mayúsculas de minúsculas."}],"hint":"Piensa en si una máquina puede saber si 'asistir' se refiere a 'ayudar' o a 'estar presente' solo con mirar la palabra."},{"question":"En un sistema de detección de falsos amigos, ¿qué información aporta un diccionario como `falsos_amigos_corr`, que asocia cada forma sospechosa con una alternativa en español?","answerOptions":[{"text":"Sugiere términos correctos en español para reemplazar la traducción literal incorrecta.","isCorrect":true,"rationale":"Este diccionario permite que el informe no solo señale el error, sino que proponga una corrección concreta."},{"text":"Contiene una lista de todas las palabras prohibidas por la empresa de traducción para sus clientes.","isCorrect":false,"rationale":"No se trata de una lista de prohibiciones, sino de equivalencias correctas para cada falso amigo detectado."},{"text":"Almacena las reglas de puntuación necesarias para separar las oraciones en inglés.","isCorrect":false,"rationale":"La segmentación de oraciones se resuelve con otras operaciones, no con este diccionario de correcciones."},{"text":"Es una base de datos de nombres propios de médicos y hospitales para su extracción.","isCorrect":false,"rationale":"El diccionario recoge pares de términos léxicos, no nombres propios de personas o instituciones."}],"hint":"Es la herramienta que permite al sistema sugerir una traducción correcta junto al error detectado."},{"question":"¿Cuál es la consecuencia principal de una mala traducción de un falso amigo en un informe clínico?","answerOptions":[{"text":"Podría modificar el sentido de un diagnóstico o confundir dosis de medicamentos.","isCorrect":true,"rationale":"Un error léxico en un contexto clínico puede alterar la interpretación de síntomas, tratamientos o instrucciones de dosis."},{"text":"Aumenta únicamente el coste de impresión de los documentos finales.","isCorrect":false,"rationale":"La consecuencia relevante es de seguridad clínica, no de coste material del documento."},{"text":"Hace que el software de Python deje de funcionar de manera permanente e irreversible.","isCorrect":false,"rationale":"Un error de traducción no afecta a la ejecución del programa; es un problema de contenido, no de código."},{"text":"Impide que el paciente pueda leer el informe en su idioma nativo.","isCorrect":false,"rationale":"El informe sigue siendo legible en el idioma de destino; el problema es que su contenido puede ser incorrecto."}],"hint":"Piensa en la gravedad que tiene para la seguridad del paciente un error de precisión terminológica."},{"question":"Si un texto bilingüe está organizado con cada línea conteniendo una oración en inglés seguida de su traducción al español, y se aplica `texto.split('\\n')`, ¿qué unidad textual se está intentando aislar para el análisis?","answerOptions":[{"text":"Cada línea o par de oraciones del corpus multilingüe.","isCorrect":true,"rationale":"Dividir por saltos de línea separa el texto en los pares origen-meta que se van a analizar uno a uno."},{"text":"Las palabras individuales separadas por espacios en blanco.","isCorrect":false,"rationale":"Para aislar palabras se usaría .split() sin argumentos, no .split('\\n')."},{"text":"Únicamente los signos de puntuación al final de cada párrafo.","isCorrect":false,"rationale":"Dividir por saltos de línea no aísla signos de puntuación, sino líneas completas de texto."},{"text":"Solo las palabras que están escritas en inglés.","isCorrect":false,"rationale":"La división por saltos de línea no distingue el idioma del contenido de cada línea."}],"hint":"Observa que el texto de entrada tiene una oración en inglés seguida de su traducción en la misma línea."}];
   var SESSION_KEY = "t2_unlocked";
+  var REPO = "blancahpardo/pln";
+  var LOCAL_CONFIG = "config.json";
+  var GH_CONFIG_PATH = "t2/config.json";
+  var isTeacher = false;
+  var configSha = null;
 
   function sha256Hex(text) {
     var enc = new TextEncoder().encode(text);
@@ -198,18 +218,139 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
     });
   }
 
-  function reveal() {
+  function applyStudentVisibility(config) {
+    document.querySelectorAll(".hub-btn[data-type]").forEach(function(btn) {
+      var t = btn.dataset.type;
+      btn.style.display = config[t] ? "" : "none";
+    });
+  }
+
+  function applyTeacherHints(config) {
+    document.querySelectorAll(".teacher-hint[data-hint]").forEach(function(span) {
+      var t = span.dataset.hint;
+      var on = !!config[t];
+      span.textContent = on ? "visible" : "oculto";
+      span.className = "teacher-hint " + (on ? "on" : "off");
+    });
+    document.querySelectorAll("#teacher-panel input[type=checkbox][data-type]").forEach(function(chk) {
+      chk.checked = !!config[chk.dataset.type];
+    });
+  }
+
+  function fetchConfig() {
+    return fetch(LOCAL_CONFIG + "?t=" + Date.now()).then(function(r) { return r.json(); });
+  }
+
+  function ghHeaders(token) {
+    return { "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json" };
+  }
+
+  function ghGetFile(token) {
+    return fetch("https://api.github.com/repos/" + REPO + "/contents/" + GH_CONFIG_PATH, { headers: ghHeaders(token) })
+      .then(function(r) {
+        if (!r.ok) throw new Error("No se pudo leer el fichero (" + r.status + ")");
+        return r.json();
+      })
+      .then(function(data) {
+        configSha = data.sha;
+        return JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, "")))));
+      });
+  }
+
+  function ghSaveFile(token, configObj) {
+    var content = btoa(unescape(encodeURIComponent(JSON.stringify(configObj, null, 2) + "\n")));
+    return fetch("https://api.github.com/repos/" + REPO + "/contents/" + GH_CONFIG_PATH, {
+      method: "PUT",
+      headers: Object.assign({ "Content-Type": "application/json" }, ghHeaders(token)),
+      body: JSON.stringify({
+        message: "Modo profesora: actualizar visibilidad de materiales (" + GH_CONFIG_PATH + ")",
+        content: content,
+        sha: configSha
+      })
+    }).then(function(r) {
+      if (!r.ok) return r.text().then(function(t) { throw new Error("Error al guardar (" + r.status + "): " + t); });
+      return r.json();
+    }).then(function(data) {
+      configSha = data.content.sha;
+    });
+  }
+
+  function getToken() {
+    try { return sessionStorage.getItem("gh_pat") || ""; } catch (e) { return ""; }
+  }
+  function setToken(t) {
+    try { sessionStorage.setItem("gh_pat", t); } catch (e) {}
+  }
+
+  function setStatus(msg, isError) {
+    var el = document.getElementById("teacher-status");
+    if (!el) return;
+    el.textContent = msg;
+    el.style.color = isError ? "#FFB3B3" : "#9FE6A0";
+  }
+
+  function initTeacherPanel() {
+    document.getElementById("teacher-panel").hidden = false;
+    var tokenInput = document.getElementById("gh-token");
+    tokenInput.value = getToken();
+
+    document.getElementById("gh-token-save").addEventListener("click", function() {
+      setToken(tokenInput.value.trim());
+      setStatus(tokenInput.value.trim() ? "Token guardado para esta sesión." : "Token borrado.");
+      refreshFromGithub();
+    });
+
+    document.querySelectorAll("#teacher-panel input[type=checkbox][data-type]").forEach(function(chk) {
+      chk.addEventListener("change", function() {
+        var token = getToken();
+        if (!token) { setStatus("Pega primero tu token de GitHub.", true); chk.checked = !chk.checked; return; }
+        setStatus("Guardando...");
+        ghGetFile(token).then(function(current) {
+          current[chk.dataset.type] = chk.checked;
+          return ghSaveFile(token, current).then(function() { return current; });
+        }).then(function(current) {
+          applyTeacherHints(current);
+          setStatus("Guardado ✓ — el alumnado lo verá en 1-2 minutos.");
+        }).catch(function(err) {
+          chk.checked = !chk.checked;
+          setStatus(err.message, true);
+        });
+      });
+    });
+
+    refreshFromGithub();
+
+    function refreshFromGithub() {
+      var token = getToken();
+      if (!token) { fetchConfig().then(applyTeacherHints); return; }
+      setStatus("Cargando estado actual...");
+      ghGetFile(token).then(function(current) {
+        applyTeacherHints(current);
+        setStatus("Conectado. Puedes marcar/desmarcar materiales.");
+      }).catch(function(err) { setStatus(err.message, true); fetchConfig().then(applyTeacherHints); });
+    }
+  }
+
+  function reveal(teacherMode) {
+    isTeacher = teacherMode;
     document.getElementById("content").innerHTML = decodeURIComponent(escape(atob(PAYLOAD)));
     document.getElementById("gate").style.display = "none";
     document.getElementById("page").style.display = "block";
     wireNav();
-    try { sessionStorage.setItem(SESSION_KEY, "1"); } catch (e) {}
+    if (teacherMode) {
+      document.querySelectorAll(".hub-btn[data-type]").forEach(function(btn) { btn.style.display = ""; });
+      initTeacherPanel();
+    } else {
+      fetchConfig().then(applyStudentVisibility);
+    }
+    try { sessionStorage.setItem(SESSION_KEY, teacherMode ? "teacher" : "1"); } catch (e) {}
   }
 
   function tryUnlock() {
     var val = document.getElementById("pw").value;
     sha256Hex(val).then(function(hex) {
-      if (hex === HASH) reveal();
+      if (hex === TEACHER_HASH) reveal(true);
+      else if (hex === HASH) reveal(false);
       else document.getElementById("err").textContent = "Contraseña incorrecta.";
     });
   }
@@ -217,7 +358,11 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
   document.getElementById("enter").addEventListener("click", tryUnlock);
   document.getElementById("pw").addEventListener("keydown", function(e) { if (e.key === "Enter") tryUnlock(); });
 
-  try { if (sessionStorage.getItem(SESSION_KEY) === "1") reveal(); } catch (e) {}
+  try {
+    var saved = sessionStorage.getItem(SESSION_KEY);
+    if (saved === "teacher") reveal(true);
+    else if (saved === "1") reveal(false);
+  } catch (e) {}
 })();
 </script>
 </body>

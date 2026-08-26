@@ -3,6 +3,8 @@ const path = require('path');
 const crypto = require('crypto');
 
 const ROOT = __dirname;
+const REPO = 'blancahpardo/pln';
+const TEACHER_PASSWORD = 'profe_llavemaestra27';
 
 function sha256(text) {
   return crypto.createHash('sha256').update(text, 'utf8').digest('hex');
@@ -63,7 +65,7 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .kicker { color:var(--amar); font-size:12px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px; }
 .view > h1 { color:var(--azul); font-size:32px; margin:0 0 34px; }
 .hub-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-bottom:30px; }
-.hub-btn { display:flex; flex-direction:column; align-items:flex-start; gap:6px; background:var(--claro); border:none; border-radius:12px; padding:26px 22px; cursor:pointer; text-align:left; box-shadow:0 2px 10px rgba(159,177,186,.28); font-family:Arial,Helvetica,sans-serif; }
+.hub-btn { display:flex; flex-direction:column; align-items:flex-start; gap:6px; background:var(--claro); border:none; border-radius:12px; padding:26px 22px; cursor:pointer; text-align:left; box-shadow:0 2px 10px rgba(159,177,186,.28); font-family:Arial,Helvetica,sans-serif; position:relative; }
 .hub-btn:hover { background:#E9ECEE; }
 .hub-icon { font-size:30px; margin-bottom:4px; }
 .hub-label { font-size:17px; font-weight:bold; color:var(--azul); }
@@ -93,6 +95,20 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .quiz-feedback { font-size:13px; color:var(--gris); background:#fff; border-radius:8px; padding:12px 16px; margin-top:4px; margin-bottom:16px; border-left:3px solid var(--azul); }
 .quiz-score { font-size:26px; font-weight:bold; color:var(--azul); margin-bottom:8px; }
 .quiz-result { background:var(--claro); border-radius:12px; padding:30px; text-align:center; }
+/* teacher panel */
+.teacher-banner { background:var(--azul-d); color:#fff; border-radius:12px; padding:18px 22px; margin-bottom:24px; }
+.teacher-banner strong { color: var(--amar); }
+.teacher-banner p { font-size:13px; margin:6px 0 0; color:var(--humo); }
+.teacher-token-row { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+.teacher-token-row input { flex:1; min-width:220px; padding:9px 12px; border-radius:8px; border:none; font-size:13px; font-family:Arial,Helvetica,sans-serif; }
+.teacher-token-row button { background:var(--amar); color:var(--azul-d); border:none; border-radius:8px; padding:9px 16px; font-size:13px; font-weight:bold; cursor:pointer; font-family:Arial,Helvetica,sans-serif; }
+.teacher-status { font-size:12px; margin-top:10px; min-height:16px; }
+.teacher-toggle-list { list-style:none; padding:0; margin:16px 0 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; }
+.teacher-toggle-list li { background:rgba(255,255,255,.08); border-radius:8px; padding:10px 14px; display:flex; align-items:center; gap:10px; font-size:13px; }
+.teacher-toggle-list input { width:18px; height:18px; }
+.hub-btn .teacher-hint { position:absolute; top:10px; right:12px; font-size:10px; font-weight:bold; padding:2px 8px; border-radius:10px; }
+.hub-btn .teacher-hint.on { background:#DFF3E0; color:var(--verde); }
+.hub-btn .teacher-hint.off { background:#FBEAEC; color:var(--rojo); }
 footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--humo); font-style:italic; }
 `;
 
@@ -113,16 +129,36 @@ function copyrightFooter(temaLabel) {
   return `© Dra. Blanca Hernández Pardo · Programación orientada a PLN${temaLabel ? ' · ' + temaLabel : ''}<br>Queda prohibida la difusión, distribución o reproducción total o parcial de este material sin autorización expresa de la autora.`;
 }
 
+function existingViews(tema) {
+  return tema.viewOrder.filter(v => tema.views[v] && tema.views[v].exists);
+}
+
 function buildHub(tema) {
-  const buttons = tema.viewOrder.filter(v => tema.views[v] && tema.views[v].enabled).map(v => {
-    return `<button class="hub-btn" data-view="${v}">
+  const buttons = existingViews(tema).map(v => {
+    return `<button class="hub-btn" data-view="${v}" data-type="${v}">
+      <span class="teacher-hint" data-hint="${v}"></span>
       <span class="hub-icon">${ICONS[v]}</span>
       <span class="hub-label">${LABELS[v]}</span>
       <span class="hub-desc">${DESCS[v]}</span>
     </button>`;
   }).join('\n    ');
+  const toggles = existingViews(tema).map(v =>
+    `<li><input type="checkbox" id="chk-${v}" data-type="${v}"><label for="chk-${v}">${LABELS[v]}</label></li>`
+  ).join('\n      ');
   return `<div id="hub" class="view">
   <div class="kicker">${esc(tema.kicker)}</div>
+  <div id="teacher-panel" class="teacher-banner" hidden>
+    <strong>⚙ Modo profesora</strong>
+    <p>Pega aquí tu token de GitHub (solo para esta sesión de navegador; se pierde al cerrar la pestaña) y marca qué materiales ve el alumnado. Los cambios se publican en 1-2 minutos.</p>
+    <div class="teacher-token-row">
+      <input type="password" id="gh-token" placeholder="Token de GitHub (ghp_... o github_pat_...)">
+      <button id="gh-token-save">Guardar token de esta sesión</button>
+    </div>
+    <div class="teacher-status" id="teacher-status"></div>
+    <ul class="teacher-toggle-list">
+      ${toggles}
+    </ul>
+  </div>
   <h1>¿Qué quieres consultar?</h1>
   <div class="hub-grid">
     ${buttons}
@@ -132,7 +168,7 @@ function buildHub(tema) {
 }
 
 function buildManualView(tema) {
-  if (!tema.views.manual || !tema.views.manual.enabled) return '';
+  if (!tema.views.manual || !tema.views.manual.exists) return '';
   const f = tema.views.manual.file;
   return `<div id="view-manual" class="view sub-view" hidden>
   <button class="back-btn" data-back="hub">← Volver</button>
@@ -145,7 +181,7 @@ function buildManualView(tema) {
 
 function buildDownloadView(viewKey, tema) {
   const cfg = tema.views[viewKey];
-  if (!cfg || !cfg.enabled) return '';
+  if (!cfg || !cfg.exists) return '';
   const label = LABELS[viewKey];
   return `<div id="view-${viewKey}" class="view sub-view" hidden>
   <button class="back-btn" data-back="hub">← Volver</button>
@@ -157,7 +193,7 @@ function buildDownloadView(viewKey, tema) {
 
 function buildPracticaView(tema) {
   const cfg = tema.views.practica;
-  if (!cfg || !cfg.enabled) return '';
+  if (!cfg || !cfg.exists) return '';
   if (cfg.items.length === 1) {
     const it = cfg.items[0];
     return `<div id="view-practica" class="view sub-view" hidden>
@@ -167,7 +203,6 @@ function buildPracticaView(tema) {
   <iframe class="pdf-frame" src="${it.file}#toolbar=0&navpanes=0" title="Práctica ${esc(tema.titleShort)}"></iframe>
 </div>`;
   }
-  // multiple practices -> sub-hub with its own buttons, then leaf viewers
   const subButtons = cfg.items.map(it => `<button class="hub-btn" data-view="practica-${it.id}">
       <span class="hub-icon">🧪</span>
       <span class="hub-label">${esc(it.label)}</span>
@@ -192,7 +227,7 @@ ${leaves}`;
 
 function buildQuizView(tema) {
   const cfg = tema.views.quiz;
-  if (!cfg || !cfg.enabled) return '';
+  if (!cfg || !cfg.exists) return '';
   return `<div id="view-quiz" class="view sub-view" hidden>
   <button class="back-btn" data-back="hub">← Volver</button>
   <h2>Cuestionario de práctica · ${esc(tema.titleShort)}</h2>
@@ -211,10 +246,11 @@ function buildTopicHtml(tema) {
   ].filter(Boolean).join('\n');
 
   const hash = sha256(tema.password);
+  const teacherHash = sha256(TEACHER_PASSWORD);
   const payloadB64 = b64(payloadHtml);
 
   let quizManual = '[]', quizCuaderno = '[]';
-  if (tema.views.quiz && tema.views.quiz.enabled) {
+  if (tema.views.quiz && tema.views.quiz.exists) {
     quizManual = JSON.stringify(JSON.parse(fs.readFileSync(path.join(ROOT, tema.dir, 'quiz_manual.json'), 'utf8')).quiz);
     quizCuaderno = JSON.stringify(JSON.parse(fs.readFileSync(path.join(ROOT, tema.dir, 'quiz_cuaderno.json'), 'utf8')).quiz);
   }
@@ -250,10 +286,16 @@ function buildTopicHtml(tema) {
 <script>
 (function() {
   var HASH = "${hash}";
+  var TEACHER_HASH = "${teacherHash}";
   var PAYLOAD = "${payloadB64}";
   var QUIZ_MANUAL = ${quizManual};
   var QUIZ_CUADERNO = ${quizCuaderno};
   var SESSION_KEY = "${tema.dir}_unlocked";
+  var REPO = "${REPO}";
+  var LOCAL_CONFIG = "config.json";
+  var GH_CONFIG_PATH = "${tema.dir}/config.json";
+  var isTeacher = false;
+  var configSha = null;
 
   function sha256Hex(text) {
     var enc = new TextEncoder().encode(text);
@@ -357,18 +399,139 @@ function buildTopicHtml(tema) {
     });
   }
 
-  function reveal() {
+  function applyStudentVisibility(config) {
+    document.querySelectorAll(".hub-btn[data-type]").forEach(function(btn) {
+      var t = btn.dataset.type;
+      btn.style.display = config[t] ? "" : "none";
+    });
+  }
+
+  function applyTeacherHints(config) {
+    document.querySelectorAll(".teacher-hint[data-hint]").forEach(function(span) {
+      var t = span.dataset.hint;
+      var on = !!config[t];
+      span.textContent = on ? "visible" : "oculto";
+      span.className = "teacher-hint " + (on ? "on" : "off");
+    });
+    document.querySelectorAll("#teacher-panel input[type=checkbox][data-type]").forEach(function(chk) {
+      chk.checked = !!config[chk.dataset.type];
+    });
+  }
+
+  function fetchConfig() {
+    return fetch(LOCAL_CONFIG + "?t=" + Date.now()).then(function(r) { return r.json(); });
+  }
+
+  function ghHeaders(token) {
+    return { "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json" };
+  }
+
+  function ghGetFile(token) {
+    return fetch("https://api.github.com/repos/" + REPO + "/contents/" + GH_CONFIG_PATH, { headers: ghHeaders(token) })
+      .then(function(r) {
+        if (!r.ok) throw new Error("No se pudo leer el fichero (" + r.status + ")");
+        return r.json();
+      })
+      .then(function(data) {
+        configSha = data.sha;
+        return JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\\n/g, "")))));
+      });
+  }
+
+  function ghSaveFile(token, configObj) {
+    var content = btoa(unescape(encodeURIComponent(JSON.stringify(configObj, null, 2) + "\\n")));
+    return fetch("https://api.github.com/repos/" + REPO + "/contents/" + GH_CONFIG_PATH, {
+      method: "PUT",
+      headers: Object.assign({ "Content-Type": "application/json" }, ghHeaders(token)),
+      body: JSON.stringify({
+        message: "Modo profesora: actualizar visibilidad de materiales (" + GH_CONFIG_PATH + ")",
+        content: content,
+        sha: configSha
+      })
+    }).then(function(r) {
+      if (!r.ok) return r.text().then(function(t) { throw new Error("Error al guardar (" + r.status + "): " + t); });
+      return r.json();
+    }).then(function(data) {
+      configSha = data.content.sha;
+    });
+  }
+
+  function getToken() {
+    try { return sessionStorage.getItem("gh_pat") || ""; } catch (e) { return ""; }
+  }
+  function setToken(t) {
+    try { sessionStorage.setItem("gh_pat", t); } catch (e) {}
+  }
+
+  function setStatus(msg, isError) {
+    var el = document.getElementById("teacher-status");
+    if (!el) return;
+    el.textContent = msg;
+    el.style.color = isError ? "#FFB3B3" : "#9FE6A0";
+  }
+
+  function initTeacherPanel() {
+    document.getElementById("teacher-panel").hidden = false;
+    var tokenInput = document.getElementById("gh-token");
+    tokenInput.value = getToken();
+
+    document.getElementById("gh-token-save").addEventListener("click", function() {
+      setToken(tokenInput.value.trim());
+      setStatus(tokenInput.value.trim() ? "Token guardado para esta sesión." : "Token borrado.");
+      refreshFromGithub();
+    });
+
+    document.querySelectorAll("#teacher-panel input[type=checkbox][data-type]").forEach(function(chk) {
+      chk.addEventListener("change", function() {
+        var token = getToken();
+        if (!token) { setStatus("Pega primero tu token de GitHub.", true); chk.checked = !chk.checked; return; }
+        setStatus("Guardando...");
+        ghGetFile(token).then(function(current) {
+          current[chk.dataset.type] = chk.checked;
+          return ghSaveFile(token, current).then(function() { return current; });
+        }).then(function(current) {
+          applyTeacherHints(current);
+          setStatus("Guardado ✓ — el alumnado lo verá en 1-2 minutos.");
+        }).catch(function(err) {
+          chk.checked = !chk.checked;
+          setStatus(err.message, true);
+        });
+      });
+    });
+
+    refreshFromGithub();
+
+    function refreshFromGithub() {
+      var token = getToken();
+      if (!token) { fetchConfig().then(applyTeacherHints); return; }
+      setStatus("Cargando estado actual...");
+      ghGetFile(token).then(function(current) {
+        applyTeacherHints(current);
+        setStatus("Conectado. Puedes marcar/desmarcar materiales.");
+      }).catch(function(err) { setStatus(err.message, true); fetchConfig().then(applyTeacherHints); });
+    }
+  }
+
+  function reveal(teacherMode) {
+    isTeacher = teacherMode;
     document.getElementById("content").innerHTML = decodeURIComponent(escape(atob(PAYLOAD)));
     document.getElementById("gate").style.display = "none";
     document.getElementById("page").style.display = "block";
     wireNav();
-    try { sessionStorage.setItem(SESSION_KEY, "1"); } catch (e) {}
+    if (teacherMode) {
+      document.querySelectorAll(".hub-btn[data-type]").forEach(function(btn) { btn.style.display = ""; });
+      initTeacherPanel();
+    } else {
+      fetchConfig().then(applyStudentVisibility);
+    }
+    try { sessionStorage.setItem(SESSION_KEY, teacherMode ? "teacher" : "1"); } catch (e) {}
   }
 
   function tryUnlock() {
     var val = document.getElementById("pw").value;
     sha256Hex(val).then(function(hex) {
-      if (hex === HASH) reveal();
+      if (hex === TEACHER_HASH) reveal(true);
+      else if (hex === HASH) reveal(false);
       else document.getElementById("err").textContent = "Contraseña incorrecta.";
     });
   }
@@ -376,7 +539,11 @@ function buildTopicHtml(tema) {
   document.getElementById("enter").addEventListener("click", tryUnlock);
   document.getElementById("pw").addEventListener("keydown", function(e) { if (e.key === "Enter") tryUnlock(); });
 
-  try { if (sessionStorage.getItem(SESSION_KEY) === "1") reveal(); } catch (e) {}
+  try {
+    var saved = sessionStorage.getItem(SESSION_KEY);
+    if (saved === "teacher") reveal(true);
+    else if (saved === "1") reveal(false);
+  } catch (e) {}
 })();
 </script>
 </body>
@@ -413,112 +580,124 @@ function buildIndexHtml(temas) {
 }
 
 // ---- Topic configuration ----
+// "exists" = el material existe de verdad (hay fichero) y por tanto tiene botón/subvista construidos.
+// La visibilidad real para el alumnado vive en tX/config.json (editable en vivo desde el modo profesora).
 const TEMAS = [
   { dir: 't0a', numLabel: 'TEMA 0', titleShort: 'Recordatorio', titleFull: 'Tema 0 · Recordatorio de Python', kicker: 'Tema 0 · Recordatorio', password: 't0_alcachofa',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
-      manual: { enabled: true, file: 'manual.pdf' },
-      principal: { enabled: false, file: 'cuaderno_principal.ipynb' },
-      evaluable: { enabled: false },
-      practica: { enabled: false, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
-      quiz: { enabled: false }
+      manual: { exists: true, file: 'manual.pdf' },
+      principal: { exists: true, file: 'cuaderno_principal.ipynb' },
+      evaluable: { exists: false },
+      practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
+      quiz: { exists: false }
     } },
   { dir: 't0b', numLabel: 'TEMA 0', titleShort: 'Regex', titleFull: 'Tema 0 · Regex', kicker: 'Tema 0 · Regex', password: 't0_playa',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
-      manual: { enabled: true, file: 'manual.pdf' },
-      principal: { enabled: false, file: 'cuaderno_principal.ipynb', note: 'Este cuaderno reúne teoría y práctica de Regex en un solo fichero.' },
-      evaluable: { enabled: false },
-      practica: { enabled: false, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
-      quiz: { enabled: false }
+      manual: { exists: true, file: 'manual.pdf' },
+      principal: { exists: true, file: 'cuaderno_principal.ipynb', note: 'Este cuaderno reúne teoría y práctica de Regex en un solo fichero.' },
+      evaluable: { exists: false },
+      practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
+      quiz: { exists: false }
     } },
   { dir: 't1', numLabel: 'TEMA 1', titleShort: 'Tema 1', titleFull: 'Tema 1', kicker: 'Tema 1', password: 't1_mariflor',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
-      manual: { enabled: true, file: 'manual.pdf' },
-      principal: { enabled: false, file: 'cuaderno_principal.ipynb' },
-      evaluable: { enabled: false, file: 'evaluable.ipynb' },
-      practica: { enabled: false, items: [] },
-      quiz: { enabled: false }
+      manual: { exists: true, file: 'manual.pdf' },
+      principal: { exists: true, file: 'cuaderno_principal.ipynb' },
+      evaluable: { exists: true, file: 'evaluable.ipynb' },
+      practica: { exists: false, items: [] },
+      quiz: { exists: true }
     } },
   { dir: 't2', numLabel: 'TEMA 2', titleShort: 'Tema 2', titleFull: 'Tema 2', kicker: 'Tema 2', password: 't2_cortavientos',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
-      manual: { enabled: true, file: 'manual.pdf' },
-      principal: { enabled: false, file: 'cuaderno_principal.ipynb' },
-      evaluable: { enabled: false, file: 'evaluable.ipynb' },
-      practica: { enabled: false, items: [] },
-      quiz: { enabled: false }
+      manual: { exists: true, file: 'manual.pdf' },
+      principal: { exists: true, file: 'cuaderno_principal.ipynb' },
+      evaluable: { exists: true, file: 'evaluable.ipynb' },
+      practica: { exists: false, items: [] },
+      quiz: { exists: true }
     } },
   { dir: 't3', numLabel: 'TEMA 3', titleShort: 'Tema 3', titleFull: 'Tema 3', kicker: 'Tema 3', password: 't3_boina',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
-      manual: { enabled: true, file: 'manual.pdf' },
-      principal: { enabled: false, file: 'cuaderno_principal.ipynb' },
-      evaluable: { enabled: false, file: 'evaluable.ipynb' },
-      practica: { enabled: false, items: [] },
-      quiz: { enabled: false }
+      manual: { exists: true, file: 'manual.pdf' },
+      principal: { exists: true, file: 'cuaderno_principal.ipynb' },
+      evaluable: { exists: true, file: 'evaluable.ipynb' },
+      practica: { exists: false, items: [] },
+      quiz: { exists: true }
     } },
   { dir: 't4', numLabel: 'TEMA 4', titleShort: 'Tema 4', titleFull: 'Tema 4', kicker: 'Tema 4', password: 't4_chascarrillo',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
-      manual: { enabled: true, file: 'manual.pdf' },
-      principal: { enabled: false, file: 'cuaderno_principal.zip', note: 'Incluye el cuaderno y los dos ficheros de texto (texto1.txt, texto2.txt) que necesita para funcionar.' },
-      evaluable: { enabled: false, file: 'evaluable.ipynb' },
-      practica: { enabled: false, items: [] },
-      quiz: { enabled: false }
+      manual: { exists: true, file: 'manual.pdf' },
+      principal: { exists: true, file: 'cuaderno_principal.zip', note: 'Incluye el cuaderno y los dos ficheros de texto (texto1.txt, texto2.txt) que necesita para funcionar.' },
+      evaluable: { exists: true, file: 'evaluable.ipynb' },
+      practica: { exists: false, items: [] },
+      quiz: { exists: true }
     } },
   { dir: 't5', numLabel: 'TEMA 5', titleShort: 'Tema 5', titleFull: 'Tema 5', kicker: 'Tema 5', password: 't5_cangrejo',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
-      manual: { enabled: true, file: 'manual.pdf' },
-      principal: { enabled: false, file: 'cuaderno_principal.ipynb' },
-      evaluable: { enabled: false, file: 'evaluable.ipynb' },
-      practica: { enabled: false, items: [] },
-      quiz: { enabled: false }
+      manual: { exists: true, file: 'manual.pdf' },
+      principal: { exists: true, file: 'cuaderno_principal.ipynb' },
+      evaluable: { exists: true, file: 'evaluable.ipynb' },
+      practica: { exists: false, items: [] },
+      quiz: { exists: true }
     } },
   { dir: 't6', numLabel: 'TEMA 6', titleShort: 'Tema 6', titleFull: 'Tema 6', kicker: 'Tema 6', password: 't6_ibuprofeno',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
-      manual: { enabled: true, file: 'manual.pdf' },
-      principal: { enabled: false, file: 'cuaderno_principal.ipynb' },
-      evaluable: { enabled: false },
-      practica: { enabled: false, items: [] },
-      quiz: { enabled: false }
+      manual: { exists: true, file: 'manual.pdf' },
+      principal: { exists: true, file: 'cuaderno_principal.ipynb' },
+      evaluable: { exists: false },
+      practica: { exists: false, items: [] },
+      quiz: { exists: true }
     } },
   { dir: 't7', numLabel: 'TEMA 7', titleShort: 'Tema 7', titleFull: 'Tema 7', kicker: 'Tema 7', password: 't7_cantamañanas',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
-      manual: { enabled: true, file: 'manual.pdf' },
-      principal: { enabled: false, file: 'cuaderno_principal.ipynb' },
-      evaluable: { enabled: false, file: 'evaluable.ipynb' },
-      practica: { enabled: false, items: [] },
-      quiz: { enabled: false }
+      manual: { exists: true, file: 'manual.pdf' },
+      principal: { exists: true, file: 'cuaderno_principal.ipynb' },
+      evaluable: { exists: true, file: 'evaluable.ipynb' },
+      practica: { exists: false, items: [] },
+      quiz: { exists: true }
     } },
   { dir: 't8', numLabel: 'TEMA 8', titleShort: 'Tema 8', titleFull: 'Tema 8', kicker: 'Tema 8', password: 't8_pagafantas',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
-      manual: { enabled: true, file: 'manual.pdf' },
-      principal: { enabled: false, file: 'cuaderno_principal.ipynb' },
-      evaluable: { enabled: false, file: 'evaluable.ipynb' },
-      practica: { enabled: false, items: [
+      manual: { exists: true, file: 'manual.pdf' },
+      principal: { exists: true, file: 'cuaderno_principal.ipynb' },
+      evaluable: { exists: true, file: 'evaluable.ipynb' },
+      practica: { exists: true, items: [
         { id: 'sms', label: 'Clasificación de SMS', file: 'practica_sms.pdf' },
         { id: 'agnews', label: 'Clasificación AG News', file: 'practica_agnews.pdf' },
         { id: 'imdb', label: 'Clasificación IMDB', file: 'practica_imdb.pdf' }
       ] },
-      quiz: { enabled: false }
+      quiz: { exists: true }
     } }
 ];
-// fix t0b manual to use the notebook-as-manual convention note (handled specially below)
 
-module.exports = { TEMAS, buildTopicHtml, buildIndexHtml };
+module.exports = { TEMAS, buildTopicHtml, buildIndexHtml, existingViews, TEACHER_PASSWORD };
 
 if (require.main === module) {
   for (const tema of TEMAS) {
     const html = buildTopicHtml(tema);
     fs.writeFileSync(path.join(ROOT, tema.dir, 'index.html'), html, 'utf8');
+
+    // Only (re)seed config.json if it doesn't already exist, so live teacher toggles
+    // made via GitHub are never clobbered by a later `node build.js` run.
+    const configPath = path.join(ROOT, tema.dir, 'config.json');
+    if (!fs.existsSync(configPath)) {
+      const seed = {};
+      existingViews(tema).forEach(v => { seed[v] = v === 'manual'; });
+      fs.writeFileSync(configPath, JSON.stringify(seed, null, 2) + '\n', 'utf8');
+      console.log('seeded config for', tema.dir, seed);
+    }
     console.log('built', tema.dir);
   }
   fs.writeFileSync(path.join(ROOT, 'index.html'), buildIndexHtml(TEMAS), 'utf8');
   console.log('built index.html');
+  console.log('\nContraseña de profesora (todas las páginas):', TEACHER_PASSWORD);
 }

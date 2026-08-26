@@ -35,7 +35,7 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .kicker { color:var(--amar); font-size:12px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px; }
 .view > h1 { color:var(--azul); font-size:32px; margin:0 0 34px; }
 .hub-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-bottom:30px; }
-.hub-btn { display:flex; flex-direction:column; align-items:flex-start; gap:6px; background:var(--claro); border:none; border-radius:12px; padding:26px 22px; cursor:pointer; text-align:left; box-shadow:0 2px 10px rgba(159,177,186,.28); font-family:Arial,Helvetica,sans-serif; }
+.hub-btn { display:flex; flex-direction:column; align-items:flex-start; gap:6px; background:var(--claro); border:none; border-radius:12px; padding:26px 22px; cursor:pointer; text-align:left; box-shadow:0 2px 10px rgba(159,177,186,.28); font-family:Arial,Helvetica,sans-serif; position:relative; }
 .hub-btn:hover { background:#E9ECEE; }
 .hub-icon { font-size:30px; margin-bottom:4px; }
 .hub-label { font-size:17px; font-weight:bold; color:var(--azul); }
@@ -65,6 +65,20 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .quiz-feedback { font-size:13px; color:var(--gris); background:#fff; border-radius:8px; padding:12px 16px; margin-top:4px; margin-bottom:16px; border-left:3px solid var(--azul); }
 .quiz-score { font-size:26px; font-weight:bold; color:var(--azul); margin-bottom:8px; }
 .quiz-result { background:var(--claro); border-radius:12px; padding:30px; text-align:center; }
+/* teacher panel */
+.teacher-banner { background:var(--azul-d); color:#fff; border-radius:12px; padding:18px 22px; margin-bottom:24px; }
+.teacher-banner strong { color: var(--amar); }
+.teacher-banner p { font-size:13px; margin:6px 0 0; color:var(--humo); }
+.teacher-token-row { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+.teacher-token-row input { flex:1; min-width:220px; padding:9px 12px; border-radius:8px; border:none; font-size:13px; font-family:Arial,Helvetica,sans-serif; }
+.teacher-token-row button { background:var(--amar); color:var(--azul-d); border:none; border-radius:8px; padding:9px 16px; font-size:13px; font-weight:bold; cursor:pointer; font-family:Arial,Helvetica,sans-serif; }
+.teacher-status { font-size:12px; margin-top:10px; min-height:16px; }
+.teacher-toggle-list { list-style:none; padding:0; margin:16px 0 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; }
+.teacher-toggle-list li { background:rgba(255,255,255,.08); border-radius:8px; padding:10px 14px; display:flex; align-items:center; gap:10px; font-size:13px; }
+.teacher-toggle-list input { width:18px; height:18px; }
+.hub-btn .teacher-hint { position:absolute; top:10px; right:12px; font-size:10px; font-weight:bold; padding:2px 8px; border-radius:10px; }
+.hub-btn .teacher-hint.on { background:#DFF3E0; color:var(--verde); }
+.hub-btn .teacher-hint.off { background:#FBEAEC; color:var(--rojo); }
 footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--humo); font-style:italic; }
 </style>
 </head>
@@ -91,10 +105,16 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
 <script>
 (function() {
   var HASH = "88c9e50e10f262e512ccec371e214e6a6c0dd65a4e657b4d0f38ded4e15fdc3b";
-  var PAYLOAD = "PGRpdiBpZD0iaHViIiBjbGFzcz0idmlldyI+CiAgPGRpdiBjbGFzcz0ia2lja2VyIj5UZW1hIDY8L2Rpdj4KICA8aDE+wr9RdcOpIHF1aWVyZXMgY29uc3VsdGFyPzwvaDE+CiAgPGRpdiBjbGFzcz0iaHViLWdyaWQiPgogICAgPGJ1dHRvbiBjbGFzcz0iaHViLWJ0biIgZGF0YS12aWV3PSJtYW51YWwiPgogICAgICA8c3BhbiBjbGFzcz0iaHViLWljb24iPvCfk5g8L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItbGFiZWwiPk1hbnVhbCB0ZcOzcmljbzwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1kZXNjIj5MZWN0dXJhIGVuIFBERiwgZGVzY2FyZ2FibGU8L3NwYW4+CiAgICA8L2J1dHRvbj4KICA8L2Rpdj4KICA8YSBjbGFzcz0iYmFjay1ob21lIiBocmVmPSIuLi9pbmRleC5odG1sIj7ihpAgVm9sdmVyIGEgbGEgYXNpZ25hdHVyYTwvYT4KPC9kaXY+CjxkaXYgaWQ9InZpZXctbWFudWFsIiBjbGFzcz0idmlldyBzdWItdmlldyIgaGlkZGVuPgogIDxidXR0b24gY2xhc3M9ImJhY2stYnRuIiBkYXRhLWJhY2s9Imh1YiI+4oaQIFZvbHZlcjwvYnV0dG9uPgogIDxoMj5NYW51YWwgdGXDs3JpY28gwrcgVGVtYSA2PC9oMj4KICA8cCBjbGFzcz0ic2VjdGlvbi1ub3RlIj5QdWVkZXMgbGVlcmxvIGFxdcOtIG8gZGVzY2FyZ2FybG8uPC9wPgogIDxhIGNsYXNzPSJkbC1iaWciIGhyZWY9Im1hbnVhbC5wZGYiIGRvd25sb2FkPuKshyBEZXNjYXJnYXIgUERGPC9hPgogIDxpZnJhbWUgY2xhc3M9InBkZi1mcmFtZSIgc3JjPSJtYW51YWwucGRmIiB0aXRsZT0iTWFudWFsIHRlw7NyaWNvIFRlbWEgNiI+PC9pZnJhbWU+CjwvZGl2Pg==";
-  var QUIZ_MANUAL = [];
-  var QUIZ_CUADERNO = [];
+  var TEACHER_HASH = "a6d2cc52cae095f428b5a970cb4420bb3e023e6dc8a6a4bcee26cab90eaa855a";
+  var PAYLOAD = "PGRpdiBpZD0iaHViIiBjbGFzcz0idmlldyI+CiAgPGRpdiBjbGFzcz0ia2lja2VyIj5UZW1hIDY8L2Rpdj4KICA8ZGl2IGlkPSJ0ZWFjaGVyLXBhbmVsIiBjbGFzcz0idGVhY2hlci1iYW5uZXIiIGhpZGRlbj4KICAgIDxzdHJvbmc+4pqZIE1vZG8gcHJvZmVzb3JhPC9zdHJvbmc+CiAgICA8cD5QZWdhIGFxdcOtIHR1IHRva2VuIGRlIEdpdEh1YiAoc29sbyBwYXJhIGVzdGEgc2VzacOzbiBkZSBuYXZlZ2Fkb3I7IHNlIHBpZXJkZSBhbCBjZXJyYXIgbGEgcGVzdGHDsWEpIHkgbWFyY2EgcXXDqSBtYXRlcmlhbGVzIHZlIGVsIGFsdW1uYWRvLiBMb3MgY2FtYmlvcyBzZSBwdWJsaWNhbiBlbiAxLTIgbWludXRvcy48L3A+CiAgICA8ZGl2IGNsYXNzPSJ0ZWFjaGVyLXRva2VuLXJvdyI+CiAgICAgIDxpbnB1dCB0eXBlPSJwYXNzd29yZCIgaWQ9ImdoLXRva2VuIiBwbGFjZWhvbGRlcj0iVG9rZW4gZGUgR2l0SHViIChnaHBfLi4uIG8gZ2l0aHViX3BhdF8uLi4pIj4KICAgICAgPGJ1dHRvbiBpZD0iZ2gtdG9rZW4tc2F2ZSI+R3VhcmRhciB0b2tlbiBkZSBlc3RhIHNlc2nDs248L2J1dHRvbj4KICAgIDwvZGl2PgogICAgPGRpdiBjbGFzcz0idGVhY2hlci1zdGF0dXMiIGlkPSJ0ZWFjaGVyLXN0YXR1cyI+PC9kaXY+CiAgICA8dWwgY2xhc3M9InRlYWNoZXItdG9nZ2xlLWxpc3QiPgogICAgICA8bGk+PGlucHV0IHR5cGU9ImNoZWNrYm94IiBpZD0iY2hrLW1hbnVhbCIgZGF0YS10eXBlPSJtYW51YWwiPjxsYWJlbCBmb3I9ImNoay1tYW51YWwiPk1hbnVhbCB0ZcOzcmljbzwvbGFiZWw+PC9saT4KICAgICAgPGxpPjxpbnB1dCB0eXBlPSJjaGVja2JveCIgaWQ9ImNoay1wcmluY2lwYWwiIGRhdGEtdHlwZT0icHJpbmNpcGFsIj48bGFiZWwgZm9yPSJjaGstcHJpbmNpcGFsIj5DdWFkZXJubyBwcmluY2lwYWw8L2xhYmVsPjwvbGk+CiAgICAgIDxsaT48aW5wdXQgdHlwZT0iY2hlY2tib3giIGlkPSJjaGstcXVpeiIgZGF0YS10eXBlPSJxdWl6Ij48bGFiZWwgZm9yPSJjaGstcXVpeiI+Q3Vlc3Rpb25hcmlvIGRlIHByw6FjdGljYTwvbGFiZWw+PC9saT4KICAgIDwvdWw+CiAgPC9kaXY+CiAgPGgxPsK/UXXDqSBxdWllcmVzIGNvbnN1bHRhcj88L2gxPgogIDxkaXYgY2xhc3M9Imh1Yi1ncmlkIj4KICAgIDxidXR0b24gY2xhc3M9Imh1Yi1idG4iIGRhdGEtdmlldz0ibWFudWFsIiBkYXRhLXR5cGU9Im1hbnVhbCI+CiAgICAgIDxzcGFuIGNsYXNzPSJ0ZWFjaGVyLWhpbnQiIGRhdGEtaGludD0ibWFudWFsIj48L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItaWNvbiI+8J+TmDwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1sYWJlbCI+TWFudWFsIHRlw7NyaWNvPC9zcGFuPgogICAgICA8c3BhbiBjbGFzcz0iaHViLWRlc2MiPkxlY3R1cmEgZW4gUERGLCBkZXNjYXJnYWJsZTwvc3Bhbj4KICAgIDwvYnV0dG9uPgogICAgPGJ1dHRvbiBjbGFzcz0iaHViLWJ0biIgZGF0YS12aWV3PSJwcmluY2lwYWwiIGRhdGEtdHlwZT0icHJpbmNpcGFsIj4KICAgICAgPHNwYW4gY2xhc3M9InRlYWNoZXItaGludCIgZGF0YS1oaW50PSJwcmluY2lwYWwiPjwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1pY29uIj7wn5OTPC9zcGFuPgogICAgICA8c3BhbiBjbGFzcz0iaHViLWxhYmVsIj5DdWFkZXJubyBwcmluY2lwYWw8L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItZGVzYyI+RGVzY2FyZ2EgZWwgY3VhZGVybm8gZGUgdHJhYmFqbzwvc3Bhbj4KICAgIDwvYnV0dG9uPgogICAgPGJ1dHRvbiBjbGFzcz0iaHViLWJ0biIgZGF0YS12aWV3PSJxdWl6IiBkYXRhLXR5cGU9InF1aXoiPgogICAgICA8c3BhbiBjbGFzcz0idGVhY2hlci1oaW50IiBkYXRhLWhpbnQ9InF1aXoiPjwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1pY29uIj7inZM8L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItbGFiZWwiPkN1ZXN0aW9uYXJpbyBkZSBwcsOhY3RpY2E8L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItZGVzYyI+MTAgcHJlZ3VudGFzIGFsIGF6YXIsIHB1bnR1YWNpw7NuIHNvYnJlIDEwPC9zcGFuPgogICAgPC9idXR0b24+CiAgPC9kaXY+CiAgPGEgY2xhc3M9ImJhY2staG9tZSIgaHJlZj0iLi4vaW5kZXguaHRtbCI+4oaQIFZvbHZlciBhIGxhIGFzaWduYXR1cmE8L2E+CjwvZGl2Pgo8ZGl2IGlkPSJ2aWV3LW1hbnVhbCIgY2xhc3M9InZpZXcgc3ViLXZpZXciIGhpZGRlbj4KICA8YnV0dG9uIGNsYXNzPSJiYWNrLWJ0biIgZGF0YS1iYWNrPSJodWIiPuKGkCBWb2x2ZXI8L2J1dHRvbj4KICA8aDI+TWFudWFsIHRlw7NyaWNvIMK3IFRlbWEgNjwvaDI+CiAgPHAgY2xhc3M9InNlY3Rpb24tbm90ZSI+UHVlZGVzIGxlZXJsbyBhcXXDrSBvIGRlc2NhcmdhcmxvLjwvcD4KICA8YSBjbGFzcz0iZGwtYmlnIiBocmVmPSJtYW51YWwucGRmIiBkb3dubG9hZD7irIcgRGVzY2FyZ2FyIFBERjwvYT4KICA8aWZyYW1lIGNsYXNzPSJwZGYtZnJhbWUiIHNyYz0ibWFudWFsLnBkZiIgdGl0bGU9Ik1hbnVhbCB0ZcOzcmljbyBUZW1hIDYiPjwvaWZyYW1lPgo8L2Rpdj4KPGRpdiBpZD0idmlldy1wcmluY2lwYWwiIGNsYXNzPSJ2aWV3IHN1Yi12aWV3IiBoaWRkZW4+CiAgPGJ1dHRvbiBjbGFzcz0iYmFjay1idG4iIGRhdGEtYmFjaz0iaHViIj7ihpAgVm9sdmVyPC9idXR0b24+CiAgPGgyPkN1YWRlcm5vIHByaW5jaXBhbCDCtyBUZW1hIDY8L2gyPgogIDxwIGNsYXNzPSJzZWN0aW9uLW5vdGUiPkRlc2NhcmdhIGVsIGZpY2hlcm8gcGFyYSB0cmFiYWphciBjb24gw6lsIGVuIHR1IG9yZGVuYWRvci48L3A+CiAgPGEgY2xhc3M9ImRsLWJpZyIgaHJlZj0iY3VhZGVybm9fcHJpbmNpcGFsLmlweW5iIiBkb3dubG9hZD7irIcgRGVzY2FyZ2FyPC9hPgo8L2Rpdj4KPGRpdiBpZD0idmlldy1xdWl6IiBjbGFzcz0idmlldyBzdWItdmlldyIgaGlkZGVuPgogIDxidXR0b24gY2xhc3M9ImJhY2stYnRuIiBkYXRhLWJhY2s9Imh1YiI+4oaQIFZvbHZlcjwvYnV0dG9uPgogIDxoMj5DdWVzdGlvbmFyaW8gZGUgcHLDoWN0aWNhIMK3IFRlbWEgNjwvaDI+CiAgPGRpdiBpZD0icXVpei1yb290Ij48L2Rpdj4KPC9kaXY+";
+  var QUIZ_MANUAL = [{"question":"Dentro del contexto de Veridia Text Lab, ¿cuál es el objetivo primordial de una auditoría lingüística transparente?","answerOptions":[{"text":"Construir herramientas que ayuden a especialistas humanos a observar patrones lingüísticos interpretables.","isCorrect":true,"rationale":"El valor profesional reside en la transparencia y en proporcionar indicios para que el criterio experto realice la interpretación final."},{"text":"Dictaminar de forma automática si un texto tiene una intención discriminatoria absoluta.","isCorrect":false,"rationale":"Una auditoría lingüística transparente no debe automatizar juicios morales ni declarar intenciones psicológicas."},{"text":"Maximizar el rendimiento predictivo mediante modelos generativos de caja negra.","isCorrect":false,"rationale":"El objetivo en esta fase no es el rendimiento máximo, sino la explicabilidad y comprensión de la operacionalización lingüística."},{"text":"Sustituir el análisis crítico del discurso por una clasificación binaria de sesgo.","isCorrect":false,"rationale":"Este tipo de análisis es asistido por corpus, lo que significa que el conteo orienta la mirada pero no sustituye el análisis crítico."}],"hint":"Considera la relación entre la herramienta computacional y el papel del lingüista experto."},{"question":"¿Cuál es la diferencia principal entre el sesgo representacional y el sesgo asignativo en el ámbito del PLN?","answerOptions":[{"text":"El sesgo representacional afecta a cómo se visibiliza a un grupo, mientras que el asignativo afecta a la distribución de recursos o decisiones.","isCorrect":true,"rationale":"Esta distinción separa la forma en que se describe a las comunidades de las consecuencias prácticas en la asignación de oportunidades."},{"text":"El sesgo representacional es puramente técnico y el asignativo es exclusivamente social, sin ninguna conexión posible entre ambos niveles de análisis lingüístico.","isCorrect":false,"rationale":"Ambos tipos de sesgo tienen dimensiones sociales y técnicas entrelazadas en los sistemas de procesamiento de lenguaje."},{"text":"El sesgo asignativo se detecta con léxicos y el representacional solo con aprendizaje automático.","isCorrect":false,"rationale":"Ambos pueden ser objeto de estudio mediante diversos métodos, incluyendo el análisis léxico y de coocurrencias."},{"text":"No existe diferencia real, son sinónimos utilizados para describir errores de anotación en los datos.","isCorrect":false,"rationale":"Estos dos niveles se distinguen claramente para precisar qué comportamiento problemático se está analizando."}],"hint":"Piensa en la diferencia entre describir un estereotipo y tomar una decisión basada en él."},{"question":"En el preprocesamiento de textos, ¿cuál es una implicación lingüística de eliminar las 'stopwords' en un análisis de sesgo?","answerOptions":[{"text":"Permite que las tablas de coocurrencias sean más legibles al centrarse en palabras con contenido temático.","isCorrect":true,"rationale":"Al retirar palabras funcionales muy frecuentes, los términos con carga léxica relevante ganan visibilidad en los conteos de asociación."},{"text":"Garantiza que el sistema comprenda perfectamente la ironía y el sarcasmo del texto.","isCorrect":false,"rationale":"Las listas de palabras vacías no ayudan a la comprensión pragmática; de hecho, pueden dificultarla al eliminar marcas sutiles."},{"text":"Es una operación neutra que no afecta de ninguna manera a la interpretación discursiva.","isCorrect":false,"rationale":"Toda limpieza es una interpretación; eliminar conectores o negaciones puede borrar marcas pragmáticas esenciales."},{"text":"Es obligatorio para poder aplicar expresiones regulares sobre el corpus antes de cualquier otro análisis.","isCorrect":false,"rationale":"Las expresiones regulares funcionan sobre el texto original; la eliminación de stopwords es una decisión metodológica independiente."}],"hint":"Recuerda el equilibrio entre la limpieza de ruido y la conservación de marcas discursivas."},{"question":"¿Qué función cumple la técnica KWIC (Key Word In Context) en una auditoría lingüística?","answerOptions":[{"text":"Permite pasar de la observación de frecuencias globales al análisis del uso contextual de una palabra.","isCorrect":true,"rationale":"Al mostrar el término con sus palabras adyacentes, ayuda al analista a entender cómo se está empleando realmente la forma detectada."},{"text":"Calcula automáticamente la polaridad positiva o negativa de un documento entero.","isCorrect":false,"rationale":"KWIC es una herramienta de visualización de contexto, no una métrica de clasificación de sentimiento."},{"text":"Normaliza el texto eliminando URLs y menciones de usuario mediante regex.","isCorrect":false,"rationale":"La normalización es un paso previo; KWIC se aplica sobre los tokens resultantes para su exploración cualitativa."},{"text":"Sirve para lematizar automáticamente los verbos irregulares en español antes de construir las tablas.","isCorrect":false,"rationale":"La lematización es una tarea morfológica, mientras que KWIC es una técnica de visualización de concordancias."}],"hint":"Considera qué herramienta permite 'mirar' lo que hay a la izquierda y derecha de un término objetivo."},{"question":"Al construir un léxico valorativo con un 'score' simple (+1, -1), ¿cuál es la principal limitación que se debe reconocer?","answerOptions":[{"text":"Que el sistema no es capaz de captar la ironía, la negación compleja o el contexto pragmático.","isCorrect":true,"rationale":"Una palabra como 'brillante' sumará +1 incluso si se usa de forma sarcástica para criticar una mala decisión."},{"text":"Que las palabras positivas siempre tienen mayor peso estadístico general que las palabras negativas del diccionario.","isCorrect":false,"rationale":"El peso depende de la frecuencia en el corpus, no de una propiedad inherente a la polaridad en este sistema."},{"text":"Que Python no permite sumar valores enteros dentro de una comprensión de listas de este tipo.","isCorrect":false,"rationale":"Python permite realizar estas operaciones aritméticas de forma eficiente; la limitación es conceptual y lingüística."},{"text":"Que es imposible crear diccionarios que contengan tanto claves positivas como negativas.","isCorrect":false,"rationale":"El uso de diccionarios y el método `.update()` permite integrar múltiples listas de polaridad en una sola estructura."}],"hint":"Reflexiona sobre lo que sucede cuando alguien dice '¡Qué inteligente eres!' para burlarse."},{"question":"¿Por qué es importante el uso de `\\b` en las expresiones regulares utilizadas para detectar términos de género?","answerOptions":[{"text":"Para evitar que se detecten secuencias de letras dentro de palabras más largas (como 'mujer' en 'mujeriego').","isCorrect":true,"rationale":"El marcador `\\b` indica un límite de palabra, asegurando que el patrón coincida solo con palabras completas y aisladas."},{"text":"Para asegurar que la búsqueda ignore las mayúsculas y minúsculas automáticamente.","isCorrect":false,"rationale":"La ignorancia de mayúsculas se gestiona con `re.IGNORECASE`, no con el marcador de límite de palabra."},{"text":"Para eliminar automáticamente los espacios en blanco sobrantes al final de la frase.","isCorrect":false,"rationale":"La eliminación de espacios se realiza generalmente con `.strip()` o sustituciones de espacios repetidos con `\\s+`."},{"text":"Para indicar que el patrón debe buscarse únicamente al principio del documento y no en el resto del texto.","isCorrect":false,"rationale":"El ancla para el inicio de una cadena suele ser `^`, mientras que `\\b` se refiere a cualquier límite de palabra en el texto."}],"hint":"Imagina que buscas la palabra 'sol' y el sistema te devuelve también 'soldado' y 'soledad'."},{"question":"En un análisis de corpus que localiza qué palabras aparecen cerca de un término objetivo dentro de una ventana de palabras definida, ¿qué representa una 'coocurrencia'?","answerOptions":[{"text":"La aparición recurrente de ciertas palabras en la vecindad de un término objetivo dentro de una ventana definida.","isCorrect":true,"rationale":"Cuantifica qué términos aparecen cerca del objetivo, sugiriendo marcos discursivos o asociaciones de ideas."},{"text":"La frecuencia total de una palabra en todo el corpus analizado, sin distinguir su posición ni las palabras que la rodean.","isCorrect":false,"rationale":"La frecuencia total es un conteo absoluto; la coocurrencia es una medida de asociación relativa a otro término."},{"text":"El error que ocurre cuando dos procesos de Python intentan acceder al mismo archivo de texto.","isCorrect":false,"rationale":"Ese es un problema de concurrencia informática, no un concepto de lingüística de corpus."},{"text":"La coincidencia exacta entre la etiqueta de sentimiento original y el resultado del análisis léxico.","isCorrect":false,"rationale":"Esa coincidencia sería una medida de acuerdo o precisión, no una coocurrencia lingüística."}],"hint":"Se relaciona con la idea de que 'conocerás a una palabra por la compañía que mantiene'."},{"question":"Al interpretar resultados automáticos sobre sesgo lingüístico, ¿qué precaución debe tener una lingüista antes de redactar sus conclusiones?","answerOptions":[{"text":"Evitar afirmaciones concluyentes como 'el algoritmo demuestra que el texto es sexista'.","isCorrect":true,"rationale":"La responsabilidad profesional exige prudencia y presentar los resultados como indicios observables, no como veredictos morales."},{"text":"Asegurarse de que el sistema clasifique al menos el 90% de los textos como problemáticos.","isCorrect":false,"rationale":"El objetivo es la observación objetiva de patrones, no alcanzar una cuota de detección predeterminada."},{"text":"Ignorar el contexto original una vez que se han obtenido las tablas de resultados.","isCorrect":false,"rationale":"Volver al texto original es fundamental para validar si el patrón detectado tiene relevancia discursiva real."},{"text":"Confiar plenamente en que los datos de redes sociales son neutrales y representativos.","isCorrect":false,"rationale":"Los datos de redes sociales contienen ruido, sesgos de muestreo y problemas éticos que deben documentarse."}],"hint":"Piensa en cómo formular un informe que sea científicamente riguroso y éticamente responsable."},{"question":"¿Cuál es la función del bloque `try...except` al cargar spaCy en el entorno de trabajo?","answerOptions":[{"text":"Garantizar que el código siga funcionando incluso si la librería o el modelo de idioma no están instalados.","isCorrect":true,"rationale":"Permite que el pipeline use alternativas (como tokenización por regex) si el entorno no dispone de spaCy, evitando que el programa se detenga."},{"text":"Optimizar la velocidad de procesamiento de las expresiones regulares.","isCorrect":false,"rationale":"La velocidad de las regex no depende de la carga exitosa o fallida de modelos lingüísticos externos como spaCy."},{"text":"Detectar automáticamente el idioma del texto antes de normalizarlo y aplicar el modelo correspondiente.","isCorrect":false,"rationale":"La detección de idioma es una tarea distinta; este bloque gestiona la disponibilidad de recursos técnicos específicos."},{"text":"Eliminar de forma segura las filas del DataFrame que contienen valores nulos.","isCorrect":false,"rationale":"La gestión de valores nulos en pandas se realiza con métodos como `.dropna()`, no mediante la carga condicional de librerías."}],"hint":"Es una práctica de programación profesional relacionada con la portabilidad del código."},{"question":"Si un análisis de lematización convierte 'candidatas' y 'candidata' en el lema único 'candidata', ¿qué riesgo lingüístico se asume en un estudio de género?","answerOptions":[{"text":"Que se pierda información valiosa sobre las marcas morfológicas superficiales de género y número.","isCorrect":true,"rationale":"Al reducir las formas a un lema común (a menudo el masculino o la forma singular), se puede invisibilizar la distinción de género que se pretendía estudiar."},{"text":"Que el sistema tarde demasiado tiempo en procesar cada documento del corpus que se está analizando.","isCorrect":false,"rationale":"La lematización es rápida; el riesgo real es la pérdida de información morfológica específica."},{"text":"Que las expresiones regulares dejen de funcionar sobre el texto original.","isCorrect":false,"rationale":"La lematización crea una nueva representación; el texto original suele conservarse en otra columna del DataFrame."},{"text":"Que las palabras resultantes sean imposibles de contar con la herramienta `Counter`.","isCorrect":false,"rationale":"`Counter` funciona con cualquier lista de elementos, sean formas originales o lemas."}],"hint":"Considera qué sucede con la distinción entre masculino y femenino cuando todo se reduce a la raíz o lema."}];
+  var QUIZ_CUADERNO = [{"question":"¿Cómo se manifiesta el sesgo lingüístico desde una perspectiva computacional en el procesamiento del lenguaje natural (PLN)?","answerOptions":[{"text":"A través de la identificación de patrones léxicos y frecuencias sistemáticas.","isCorrect":true,"rationale":"Desde el punto de vista del PLN, el sesgo se aborda identificando recurrencias en el uso de palabras y frecuencias de aparición."},{"text":"Mediante la detección automática de la intención maliciosa del autor.","isCorrect":false,"rationale":"El PLN no detecta la intención del autor directamente, sino que analiza las huellas léxicas dejadas en el texto."},{"text":"Únicamente mediante la corrección de errores gramaticales y sintácticos.","isCorrect":false,"rationale":"La corrección gramatical es una tarea de PLN, pero no define por sí misma el análisis de sesgo léxico o discursivo."},{"text":"Como una alucinación producida exclusivamente por modelos de inteligencia artificial generativa.","isCorrect":false,"rationale":"El sesgo puede analizarse mediante reglas definidas de antemano, sin necesidad de usar inteligencia artificial generativa."}],"hint":"Recuerda que el análisis se centra en lo que es medible a través de los términos utilizados en el corpus."},{"question":"En el contexto de la normalización de texto, ¿por qué se afirma que esta etapa no es 'neutra'?","answerOptions":[{"text":"Porque cada decisión de limpieza implica una hipótesis sobre qué información es relevante.","isCorrect":true,"rationale":"Decidir qué eliminar (como URLs o menciones) supone una interpretación previa sobre qué elementos aportan significado al análisis del sesgo."},{"text":"Porque requiere el uso obligatorio de modelos de Machine Learning muy complejos y costosos.","isCorrect":false,"rationale":"La normalización se basa en reglas, pero su falta de neutralidad reside en la toma de decisiones lingüísticas, no en la complejidad técnica."},{"text":"Porque el proceso de convertir a minúsculas altera el significado léxico de las palabras.","isCorrect":false,"rationale":"Aunque las mayúsculas pueden dar énfasis, la normalización a minúsculas es un paso técnico estándar para unificar tokens."},{"text":"Porque la eliminación de números impide realizar recuentos de frecuencia precisos.","isCorrect":false,"rationale":"La eliminación de números busca reducir el ruido, pero no es la razón principal por la cual la normalización se considera una decisión teórica."}],"hint":"Piensa en el impacto de descartar ciertos elementos del texto antes del análisis."},{"question":"Al trabajar con listas léxicas de género, ¿cuál es el objetivo de incluir términos como 'estudiante' o 'deportista'?","answerOptions":[{"text":"Servir como contraste para identificar términos neutrales y demostrar límites del sistema.","isCorrect":true,"rationale":"Se utilizan para mostrar que no todas las palabras que designan personas tienen una marca de género que el sistema pueda categorizar binariamente."},{"text":"Demostrar los límites de las palabras con género marcado frente a las que no llevan ninguna marca gramatical.","isCorrect":false,"rationale":"Estos términos son neutros, por lo que su función es mostrar precisamente la ausencia de marca de género visible."},{"text":"Facilitar la detección de insultos directos contra colectivos específicos.","isCorrect":false,"rationale":"Estos términos son sustantivos comunes que designan profesiones o roles, no términos ofensivos."},{"text":"Aumentar artificialmente el número de tokens positivos en el corpus.","isCorrect":false,"rationale":"La inclusión de términos neutrales busca precisión metodológica, no alterar los resultados de polaridad."}],"hint":"Considera cómo se comportan estos sustantivos frente a pares como 'jefe/jefa'."},{"question":"¿Qué problema estructural presenta la ironía para los métodos de análisis basados en diccionarios léxicos?","answerOptions":[{"text":"Puede invertir el sentido de un enunciado positivo sin cambiar las palabras utilizadas.","isCorrect":true,"rationale":"La ironía permite que un texto con términos positivos sea una crítica negativa, algo que un simple conteo de palabras no puede detectar."},{"text":"Requiere demasiada memoria RAM para procesar correctamente las oraciones sarcásticas.","isCorrect":false,"rationale":"La ironía es un problema de interpretación semántica y pragmática, no un problema de recursos de hardware."},{"text":"Los diccionarios no pueden contener palabras negativas usadas con intención irónica.","isCorrect":false,"rationale":"El problema no es el contenido del diccionario, sino la incapacidad de entender que el significado se invierte por el contexto."},{"text":"La ironía solo ocurre en textos de prensa formales y nunca en redes sociales como Twitter.","isCorrect":false,"rationale":"La ironía es sumamente frecuente en redes sociales, lo que la convierte en un desafío constante para el PLN."}],"hint":"Reflexiona sobre qué sucede cuando alguien dice algo 'bueno' para significar algo 'malo'."},{"question":"En el análisis comparativo entre 'jefa' y 'jefe', ¿qué fenómeno de sesgo se detecta si ambos exigen rigor pero solo una es llamada 'mandona'?","answerOptions":[{"text":"Una asimetría discursiva donde un mismo comportamiento se evalúa distinto según el género.","isCorrect":true,"rationale":"Este es el ejemplo canónico de sesgo, donde la misma conducta recibe una etiqueta negativa para las mujeres y neutra o positiva para los hombres."},{"text":"Un error en la tokenización de adjetivos calificativos que impide reconocer la forma femenina.","isCorrect":false,"rationale":"El sistema detecta los tokens correctamente; el problema reside en la asimetría de la evaluación social reflejada en el lenguaje."},{"text":"Un sesgo de confirmación por parte del algoritmo de Machine Learning.","isCorrect":false,"rationale":"El ejercicio utiliza reglas definidas de antemano, por lo que el sesgo proviene del texto original, no de un aprendizaje automático sesgado."},{"text":"La invisibilización absoluta del colectivo femenino en el entorno laboral.","isCorrect":false,"rationale":"En este caso no hay invisibilización (la palabra 'jefa' aparece), sino una evaluación peyorativa específica."}],"hint":"Fíjate en cómo cambia la valoración léxica para una misma acción."},{"question":"¿Cuál es la función principal de la técnica KWIC (Key Word In Context) en una auditoría lingüística?","answerOptions":[{"text":"Permitir al analista humano observar las palabras que rodean a un término específico.","isCorrect":true,"rationale":"El KWIC facilita la interpretación cualitativa al mostrar el contexto inmediato (izquierda y derecha) de una palabra de interés."},{"text":"Traducir automáticamente los términos sesgados a un lenguaje inclusivo.","isCorrect":false,"rationale":"El KWIC es una herramienta de visualización y análisis, no de traducción o corrección de textos."},{"text":"Eliminar las Stopwords del corpus para mejorar la velocidad de búsqueda.","isCorrect":false,"rationale":"Aunque se suele aplicar sobre texto limpio, su fin no es eliminar palabras sino mostrar el entorno de una palabra clave."},{"text":"Calcular la polaridad matemática total de un documento completo y ya procesado por el sistema.","isCorrect":false,"rationale":"La polaridad total se calcula con scores agregados; el KWIC se enfoca en la observación local de ocurrencias."}],"hint":"Esta técnica permite ver 'con quién se junta' una palabra en las oraciones."},{"question":"En un análisis de un subcorpus real de Twitter, se calcula para cada texto cuántos términos de género aparecen y cuántos términos valorativos (positivos o negativos) aparecen junto a ellos. ¿Qué significa que la métrica de términos de género sea alta pero el léxico valorativo sea casi nulo?","answerOptions":[{"text":"Que mencionar términos de género no equivale necesariamente a hablar sobre género.","isCorrect":true,"rationale":"En redes sociales, términos como 'chica' o 'chico' suelen usarse como vocativos o en contextos de fandom, sin tematizar problemas de género."},{"text":"Que el código tiene un error y no está detectando los adjetivos correctamente.","isCorrect":false,"rationale":"El código funciona; el resultado refleja que en muchos tweets el género se usa sin adjetivos valorativos del diccionario."},{"text":"Que los usuarios de Twitter siempre utilizan un lenguaje completamente neutral y objetivo.","isCorrect":false,"rationale":"Twitter es un entorno subjetivo, pero la valoración a menudo se transmite mediante emojis o ironía, no mediante el léxico del diccionario."},{"text":"Que el corpus es demasiado grande para que las métricas sean significativas.","isCorrect":false,"rationale":"Incluso en subcorpus pequeños (35 textos), estas discrepancias revelan la diferencia entre presencia léxica y carga discursiva."}],"hint":"Distingue entre la simple aparición de una palabra y el desarrollo de un tema o juicio."},{"question":"¿Por qué es recomendable realizar el análisis de co-ocurrencias sobre tokens o lemas en lugar de sobre el texto crudo?","answerOptions":[{"text":"Para evitar que el ruido de la plataforma (como URLs o símbolos) domine los resultados.","isCorrect":true,"rationale":"El preprocesamiento limpia el texto, permitiendo que las relaciones entre palabras con significado real sean más visibles y menos sesgadas por 'basura' digital."},{"text":"Porque el texto crudo es ilegal procesarlo debido a las políticas de privacidad.","isCorrect":false,"rationale":"El procesamiento de texto crudo es legalmente posible si se tiene acceso al dataset; el motivo de no usarlo es puramente metodológico."},{"text":"Para que el sistema pueda entender automáticamente la intención del sarcasmo del autor.","isCorrect":false,"rationale":"La lematización ayuda a unificar formas de palabras, pero no resuelve el problema de la detección de sarcasmo."},{"text":"Porque las co-ocurrencias solo funcionan si el texto está escrito en mayúsculas.","isCorrect":false,"rationale":"Al contrario, se normaliza a minúsculas para unificar ocurrencias de una misma palabra escrita de formas distintas."}],"hint":"Considera qué pasaría si términos como 'RT' o 'http' aparecieran en tu tabla de resultados."},{"question":"En el experimento con datos de Twitter, ¿qué función cumplen términos como 'sorteo', 'fandom' o 'One Direction' en las co-ocurrencias de género?","answerOptions":[{"text":"Representan el 'ruido' o contexto temático que domina el uso de estos términos en redes sociales.","isCorrect":true,"rationale":"Muestran que en Twitter, el léxico de género suele estar integrado en dinámicas de comunidad y cultura pop, no en debates ideológicos profundos."},{"text":"Indican un alto nivel de discurso político y activismo feminista en las publicaciones analizadas.","isCorrect":false,"rationale":"Estos términos se alejan de lo político y quedan más bien en el ámbito del entretenimiento y la promoción."},{"text":"Son palabras que el sistema debería clasificar siempre como polaridad negativa.","isCorrect":false,"rationale":"Estos términos suelen ser neutrales o positivos en el contexto de las interacciones de los fans."},{"text":"Demuestran que el PLN es capaz de identificar grupos musicales sin necesidad de diccionarios.","isCorrect":false,"rationale":"El sistema los identifica porque co-ocurren con los términos de búsqueda, no porque 'sepa' qué son grupos musicales por sí solo."}],"hint":"Piensa en el tipo de actividades que realizan los usuarios jóvenes en Twitter."},{"question":"¿Cuál es el papel del lingüista computacional frente a los resultados de un prototipo automático de detección de sesgo?","answerOptions":[{"text":"Interpretar críticamente los patrones detectados, ya que el PLN no sustituye a la interpretación.","isCorrect":true,"rationale":"El PLN actúa como apoyo para localizar fenómenos, pero la interpretación cualitativa y la detección de sesgos sutiles dependen del especialista humano."},{"text":"Delegar toda la responsabilidad ética en los resultados estadísticos generados automáticamente por el código.","isCorrect":false,"rationale":"La responsabilidad ética es humana; el código es solo una herramienta transparente que requiere supervisión."},{"text":"Ignorar los resultados del prototipo si estos no coinciden con su intuición personal.","isCorrect":false,"rationale":"El objetivo es usar los datos para informar la intuición y realizar una auditoría basada en evidencias, no descartar datos arbitrariamente."},{"text":"Modificar manualmente los textos originales para que el sistema no encuentre ningún sesgo.","isCorrect":false,"rationale":"La tarea es auditar y detectar el sesgo existente en los textos reales, no ocultarlo mediante la edición del corpus."}],"hint":"El PLN no sustituye la interpretación humana: la apoya, aportando indicios que hay que leer con criterio."}];
   var SESSION_KEY = "t6_unlocked";
+  var REPO = "blancahpardo/pln";
+  var LOCAL_CONFIG = "config.json";
+  var GH_CONFIG_PATH = "t6/config.json";
+  var isTeacher = false;
+  var configSha = null;
 
   function sha256Hex(text) {
     var enc = new TextEncoder().encode(text);
@@ -198,18 +218,139 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
     });
   }
 
-  function reveal() {
+  function applyStudentVisibility(config) {
+    document.querySelectorAll(".hub-btn[data-type]").forEach(function(btn) {
+      var t = btn.dataset.type;
+      btn.style.display = config[t] ? "" : "none";
+    });
+  }
+
+  function applyTeacherHints(config) {
+    document.querySelectorAll(".teacher-hint[data-hint]").forEach(function(span) {
+      var t = span.dataset.hint;
+      var on = !!config[t];
+      span.textContent = on ? "visible" : "oculto";
+      span.className = "teacher-hint " + (on ? "on" : "off");
+    });
+    document.querySelectorAll("#teacher-panel input[type=checkbox][data-type]").forEach(function(chk) {
+      chk.checked = !!config[chk.dataset.type];
+    });
+  }
+
+  function fetchConfig() {
+    return fetch(LOCAL_CONFIG + "?t=" + Date.now()).then(function(r) { return r.json(); });
+  }
+
+  function ghHeaders(token) {
+    return { "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json" };
+  }
+
+  function ghGetFile(token) {
+    return fetch("https://api.github.com/repos/" + REPO + "/contents/" + GH_CONFIG_PATH, { headers: ghHeaders(token) })
+      .then(function(r) {
+        if (!r.ok) throw new Error("No se pudo leer el fichero (" + r.status + ")");
+        return r.json();
+      })
+      .then(function(data) {
+        configSha = data.sha;
+        return JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, "")))));
+      });
+  }
+
+  function ghSaveFile(token, configObj) {
+    var content = btoa(unescape(encodeURIComponent(JSON.stringify(configObj, null, 2) + "\n")));
+    return fetch("https://api.github.com/repos/" + REPO + "/contents/" + GH_CONFIG_PATH, {
+      method: "PUT",
+      headers: Object.assign({ "Content-Type": "application/json" }, ghHeaders(token)),
+      body: JSON.stringify({
+        message: "Modo profesora: actualizar visibilidad de materiales (" + GH_CONFIG_PATH + ")",
+        content: content,
+        sha: configSha
+      })
+    }).then(function(r) {
+      if (!r.ok) return r.text().then(function(t) { throw new Error("Error al guardar (" + r.status + "): " + t); });
+      return r.json();
+    }).then(function(data) {
+      configSha = data.content.sha;
+    });
+  }
+
+  function getToken() {
+    try { return sessionStorage.getItem("gh_pat") || ""; } catch (e) { return ""; }
+  }
+  function setToken(t) {
+    try { sessionStorage.setItem("gh_pat", t); } catch (e) {}
+  }
+
+  function setStatus(msg, isError) {
+    var el = document.getElementById("teacher-status");
+    if (!el) return;
+    el.textContent = msg;
+    el.style.color = isError ? "#FFB3B3" : "#9FE6A0";
+  }
+
+  function initTeacherPanel() {
+    document.getElementById("teacher-panel").hidden = false;
+    var tokenInput = document.getElementById("gh-token");
+    tokenInput.value = getToken();
+
+    document.getElementById("gh-token-save").addEventListener("click", function() {
+      setToken(tokenInput.value.trim());
+      setStatus(tokenInput.value.trim() ? "Token guardado para esta sesión." : "Token borrado.");
+      refreshFromGithub();
+    });
+
+    document.querySelectorAll("#teacher-panel input[type=checkbox][data-type]").forEach(function(chk) {
+      chk.addEventListener("change", function() {
+        var token = getToken();
+        if (!token) { setStatus("Pega primero tu token de GitHub.", true); chk.checked = !chk.checked; return; }
+        setStatus("Guardando...");
+        ghGetFile(token).then(function(current) {
+          current[chk.dataset.type] = chk.checked;
+          return ghSaveFile(token, current).then(function() { return current; });
+        }).then(function(current) {
+          applyTeacherHints(current);
+          setStatus("Guardado ✓ — el alumnado lo verá en 1-2 minutos.");
+        }).catch(function(err) {
+          chk.checked = !chk.checked;
+          setStatus(err.message, true);
+        });
+      });
+    });
+
+    refreshFromGithub();
+
+    function refreshFromGithub() {
+      var token = getToken();
+      if (!token) { fetchConfig().then(applyTeacherHints); return; }
+      setStatus("Cargando estado actual...");
+      ghGetFile(token).then(function(current) {
+        applyTeacherHints(current);
+        setStatus("Conectado. Puedes marcar/desmarcar materiales.");
+      }).catch(function(err) { setStatus(err.message, true); fetchConfig().then(applyTeacherHints); });
+    }
+  }
+
+  function reveal(teacherMode) {
+    isTeacher = teacherMode;
     document.getElementById("content").innerHTML = decodeURIComponent(escape(atob(PAYLOAD)));
     document.getElementById("gate").style.display = "none";
     document.getElementById("page").style.display = "block";
     wireNav();
-    try { sessionStorage.setItem(SESSION_KEY, "1"); } catch (e) {}
+    if (teacherMode) {
+      document.querySelectorAll(".hub-btn[data-type]").forEach(function(btn) { btn.style.display = ""; });
+      initTeacherPanel();
+    } else {
+      fetchConfig().then(applyStudentVisibility);
+    }
+    try { sessionStorage.setItem(SESSION_KEY, teacherMode ? "teacher" : "1"); } catch (e) {}
   }
 
   function tryUnlock() {
     var val = document.getElementById("pw").value;
     sha256Hex(val).then(function(hex) {
-      if (hex === HASH) reveal();
+      if (hex === TEACHER_HASH) reveal(true);
+      else if (hex === HASH) reveal(false);
       else document.getElementById("err").textContent = "Contraseña incorrecta.";
     });
   }
@@ -217,7 +358,11 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
   document.getElementById("enter").addEventListener("click", tryUnlock);
   document.getElementById("pw").addEventListener("keydown", function(e) { if (e.key === "Enter") tryUnlock(); });
 
-  try { if (sessionStorage.getItem(SESSION_KEY) === "1") reveal(); } catch (e) {}
+  try {
+    var saved = sessionStorage.getItem(SESSION_KEY);
+    if (saved === "teacher") reveal(true);
+    else if (saved === "1") reveal(false);
+  } catch (e) {}
 })();
 </script>
 </body>

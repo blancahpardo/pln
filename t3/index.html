@@ -35,7 +35,7 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .kicker { color:var(--amar); font-size:12px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px; }
 .view > h1 { color:var(--azul); font-size:32px; margin:0 0 34px; }
 .hub-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-bottom:30px; }
-.hub-btn { display:flex; flex-direction:column; align-items:flex-start; gap:6px; background:var(--claro); border:none; border-radius:12px; padding:26px 22px; cursor:pointer; text-align:left; box-shadow:0 2px 10px rgba(159,177,186,.28); font-family:Arial,Helvetica,sans-serif; }
+.hub-btn { display:flex; flex-direction:column; align-items:flex-start; gap:6px; background:var(--claro); border:none; border-radius:12px; padding:26px 22px; cursor:pointer; text-align:left; box-shadow:0 2px 10px rgba(159,177,186,.28); font-family:Arial,Helvetica,sans-serif; position:relative; }
 .hub-btn:hover { background:#E9ECEE; }
 .hub-icon { font-size:30px; margin-bottom:4px; }
 .hub-label { font-size:17px; font-weight:bold; color:var(--azul); }
@@ -65,6 +65,20 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .quiz-feedback { font-size:13px; color:var(--gris); background:#fff; border-radius:8px; padding:12px 16px; margin-top:4px; margin-bottom:16px; border-left:3px solid var(--azul); }
 .quiz-score { font-size:26px; font-weight:bold; color:var(--azul); margin-bottom:8px; }
 .quiz-result { background:var(--claro); border-radius:12px; padding:30px; text-align:center; }
+/* teacher panel */
+.teacher-banner { background:var(--azul-d); color:#fff; border-radius:12px; padding:18px 22px; margin-bottom:24px; }
+.teacher-banner strong { color: var(--amar); }
+.teacher-banner p { font-size:13px; margin:6px 0 0; color:var(--humo); }
+.teacher-token-row { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+.teacher-token-row input { flex:1; min-width:220px; padding:9px 12px; border-radius:8px; border:none; font-size:13px; font-family:Arial,Helvetica,sans-serif; }
+.teacher-token-row button { background:var(--amar); color:var(--azul-d); border:none; border-radius:8px; padding:9px 16px; font-size:13px; font-weight:bold; cursor:pointer; font-family:Arial,Helvetica,sans-serif; }
+.teacher-status { font-size:12px; margin-top:10px; min-height:16px; }
+.teacher-toggle-list { list-style:none; padding:0; margin:16px 0 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; }
+.teacher-toggle-list li { background:rgba(255,255,255,.08); border-radius:8px; padding:10px 14px; display:flex; align-items:center; gap:10px; font-size:13px; }
+.teacher-toggle-list input { width:18px; height:18px; }
+.hub-btn .teacher-hint { position:absolute; top:10px; right:12px; font-size:10px; font-weight:bold; padding:2px 8px; border-radius:10px; }
+.hub-btn .teacher-hint.on { background:#DFF3E0; color:var(--verde); }
+.hub-btn .teacher-hint.off { background:#FBEAEC; color:var(--rojo); }
 footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--humo); font-style:italic; }
 </style>
 </head>
@@ -91,10 +105,16 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
 <script>
 (function() {
   var HASH = "bdfbdb4b833ea04aea68177791abf3f46c71c402f4913f87bbd9f3212b5fe838";
-  var PAYLOAD = "PGRpdiBpZD0iaHViIiBjbGFzcz0idmlldyI+CiAgPGRpdiBjbGFzcz0ia2lja2VyIj5UZW1hIDM8L2Rpdj4KICA8aDE+wr9RdcOpIHF1aWVyZXMgY29uc3VsdGFyPzwvaDE+CiAgPGRpdiBjbGFzcz0iaHViLWdyaWQiPgogICAgPGJ1dHRvbiBjbGFzcz0iaHViLWJ0biIgZGF0YS12aWV3PSJtYW51YWwiPgogICAgICA8c3BhbiBjbGFzcz0iaHViLWljb24iPvCfk5g8L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItbGFiZWwiPk1hbnVhbCB0ZcOzcmljbzwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1kZXNjIj5MZWN0dXJhIGVuIFBERiwgZGVzY2FyZ2FibGU8L3NwYW4+CiAgICA8L2J1dHRvbj4KICA8L2Rpdj4KICA8YSBjbGFzcz0iYmFjay1ob21lIiBocmVmPSIuLi9pbmRleC5odG1sIj7ihpAgVm9sdmVyIGEgbGEgYXNpZ25hdHVyYTwvYT4KPC9kaXY+CjxkaXYgaWQ9InZpZXctbWFudWFsIiBjbGFzcz0idmlldyBzdWItdmlldyIgaGlkZGVuPgogIDxidXR0b24gY2xhc3M9ImJhY2stYnRuIiBkYXRhLWJhY2s9Imh1YiI+4oaQIFZvbHZlcjwvYnV0dG9uPgogIDxoMj5NYW51YWwgdGXDs3JpY28gwrcgVGVtYSAzPC9oMj4KICA8cCBjbGFzcz0ic2VjdGlvbi1ub3RlIj5QdWVkZXMgbGVlcmxvIGFxdcOtIG8gZGVzY2FyZ2FybG8uPC9wPgogIDxhIGNsYXNzPSJkbC1iaWciIGhyZWY9Im1hbnVhbC5wZGYiIGRvd25sb2FkPuKshyBEZXNjYXJnYXIgUERGPC9hPgogIDxpZnJhbWUgY2xhc3M9InBkZi1mcmFtZSIgc3JjPSJtYW51YWwucGRmIiB0aXRsZT0iTWFudWFsIHRlw7NyaWNvIFRlbWEgMyI+PC9pZnJhbWU+CjwvZGl2Pg==";
-  var QUIZ_MANUAL = [];
-  var QUIZ_CUADERNO = [];
+  var TEACHER_HASH = "a6d2cc52cae095f428b5a970cb4420bb3e023e6dc8a6a4bcee26cab90eaa855a";
+  var PAYLOAD = "PGRpdiBpZD0iaHViIiBjbGFzcz0idmlldyI+CiAgPGRpdiBjbGFzcz0ia2lja2VyIj5UZW1hIDM8L2Rpdj4KICA8ZGl2IGlkPSJ0ZWFjaGVyLXBhbmVsIiBjbGFzcz0idGVhY2hlci1iYW5uZXIiIGhpZGRlbj4KICAgIDxzdHJvbmc+4pqZIE1vZG8gcHJvZmVzb3JhPC9zdHJvbmc+CiAgICA8cD5QZWdhIGFxdcOtIHR1IHRva2VuIGRlIEdpdEh1YiAoc29sbyBwYXJhIGVzdGEgc2VzacOzbiBkZSBuYXZlZ2Fkb3I7IHNlIHBpZXJkZSBhbCBjZXJyYXIgbGEgcGVzdGHDsWEpIHkgbWFyY2EgcXXDqSBtYXRlcmlhbGVzIHZlIGVsIGFsdW1uYWRvLiBMb3MgY2FtYmlvcyBzZSBwdWJsaWNhbiBlbiAxLTIgbWludXRvcy48L3A+CiAgICA8ZGl2IGNsYXNzPSJ0ZWFjaGVyLXRva2VuLXJvdyI+CiAgICAgIDxpbnB1dCB0eXBlPSJwYXNzd29yZCIgaWQ9ImdoLXRva2VuIiBwbGFjZWhvbGRlcj0iVG9rZW4gZGUgR2l0SHViIChnaHBfLi4uIG8gZ2l0aHViX3BhdF8uLi4pIj4KICAgICAgPGJ1dHRvbiBpZD0iZ2gtdG9rZW4tc2F2ZSI+R3VhcmRhciB0b2tlbiBkZSBlc3RhIHNlc2nDs248L2J1dHRvbj4KICAgIDwvZGl2PgogICAgPGRpdiBjbGFzcz0idGVhY2hlci1zdGF0dXMiIGlkPSJ0ZWFjaGVyLXN0YXR1cyI+PC9kaXY+CiAgICA8dWwgY2xhc3M9InRlYWNoZXItdG9nZ2xlLWxpc3QiPgogICAgICA8bGk+PGlucHV0IHR5cGU9ImNoZWNrYm94IiBpZD0iY2hrLW1hbnVhbCIgZGF0YS10eXBlPSJtYW51YWwiPjxsYWJlbCBmb3I9ImNoay1tYW51YWwiPk1hbnVhbCB0ZcOzcmljbzwvbGFiZWw+PC9saT4KICAgICAgPGxpPjxpbnB1dCB0eXBlPSJjaGVja2JveCIgaWQ9ImNoay1wcmluY2lwYWwiIGRhdGEtdHlwZT0icHJpbmNpcGFsIj48bGFiZWwgZm9yPSJjaGstcHJpbmNpcGFsIj5DdWFkZXJubyBwcmluY2lwYWw8L2xhYmVsPjwvbGk+CiAgICAgIDxsaT48aW5wdXQgdHlwZT0iY2hlY2tib3giIGlkPSJjaGstZXZhbHVhYmxlIiBkYXRhLXR5cGU9ImV2YWx1YWJsZSI+PGxhYmVsIGZvcj0iY2hrLWV2YWx1YWJsZSI+Q3VhZGVybm8gZXZhbHVhYmxlPC9sYWJlbD48L2xpPgogICAgICA8bGk+PGlucHV0IHR5cGU9ImNoZWNrYm94IiBpZD0iY2hrLXF1aXoiIGRhdGEtdHlwZT0icXVpeiI+PGxhYmVsIGZvcj0iY2hrLXF1aXoiPkN1ZXN0aW9uYXJpbyBkZSBwcsOhY3RpY2E8L2xhYmVsPjwvbGk+CiAgICA8L3VsPgogIDwvZGl2PgogIDxoMT7Cv1F1w6kgcXVpZXJlcyBjb25zdWx0YXI/PC9oMT4KICA8ZGl2IGNsYXNzPSJodWItZ3JpZCI+CiAgICA8YnV0dG9uIGNsYXNzPSJodWItYnRuIiBkYXRhLXZpZXc9Im1hbnVhbCIgZGF0YS10eXBlPSJtYW51YWwiPgogICAgICA8c3BhbiBjbGFzcz0idGVhY2hlci1oaW50IiBkYXRhLWhpbnQ9Im1hbnVhbCI+PC9zcGFuPgogICAgICA8c3BhbiBjbGFzcz0iaHViLWljb24iPvCfk5g8L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItbGFiZWwiPk1hbnVhbCB0ZcOzcmljbzwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1kZXNjIj5MZWN0dXJhIGVuIFBERiwgZGVzY2FyZ2FibGU8L3NwYW4+CiAgICA8L2J1dHRvbj4KICAgIDxidXR0b24gY2xhc3M9Imh1Yi1idG4iIGRhdGEtdmlldz0icHJpbmNpcGFsIiBkYXRhLXR5cGU9InByaW5jaXBhbCI+CiAgICAgIDxzcGFuIGNsYXNzPSJ0ZWFjaGVyLWhpbnQiIGRhdGEtaGludD0icHJpbmNpcGFsIj48L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItaWNvbiI+8J+Tkzwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1sYWJlbCI+Q3VhZGVybm8gcHJpbmNpcGFsPC9zcGFuPgogICAgICA8c3BhbiBjbGFzcz0iaHViLWRlc2MiPkRlc2NhcmdhIGVsIGN1YWRlcm5vIGRlIHRyYWJham88L3NwYW4+CiAgICA8L2J1dHRvbj4KICAgIDxidXR0b24gY2xhc3M9Imh1Yi1idG4iIGRhdGEtdmlldz0iZXZhbHVhYmxlIiBkYXRhLXR5cGU9ImV2YWx1YWJsZSI+CiAgICAgIDxzcGFuIGNsYXNzPSJ0ZWFjaGVyLWhpbnQiIGRhdGEtaGludD0iZXZhbHVhYmxlIj48L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItaWNvbiI+8J+TnTwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1sYWJlbCI+Q3VhZGVybm8gZXZhbHVhYmxlPC9zcGFuPgogICAgICA8c3BhbiBjbGFzcz0iaHViLWRlc2MiPkRlc2NhcmdhIGxhIHBsYW50aWxsYSBkZWwgZW50cmVnYWJsZTwvc3Bhbj4KICAgIDwvYnV0dG9uPgogICAgPGJ1dHRvbiBjbGFzcz0iaHViLWJ0biIgZGF0YS12aWV3PSJxdWl6IiBkYXRhLXR5cGU9InF1aXoiPgogICAgICA8c3BhbiBjbGFzcz0idGVhY2hlci1oaW50IiBkYXRhLWhpbnQ9InF1aXoiPjwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1pY29uIj7inZM8L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItbGFiZWwiPkN1ZXN0aW9uYXJpbyBkZSBwcsOhY3RpY2E8L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItZGVzYyI+MTAgcHJlZ3VudGFzIGFsIGF6YXIsIHB1bnR1YWNpw7NuIHNvYnJlIDEwPC9zcGFuPgogICAgPC9idXR0b24+CiAgPC9kaXY+CiAgPGEgY2xhc3M9ImJhY2staG9tZSIgaHJlZj0iLi4vaW5kZXguaHRtbCI+4oaQIFZvbHZlciBhIGxhIGFzaWduYXR1cmE8L2E+CjwvZGl2Pgo8ZGl2IGlkPSJ2aWV3LW1hbnVhbCIgY2xhc3M9InZpZXcgc3ViLXZpZXciIGhpZGRlbj4KICA8YnV0dG9uIGNsYXNzPSJiYWNrLWJ0biIgZGF0YS1iYWNrPSJodWIiPuKGkCBWb2x2ZXI8L2J1dHRvbj4KICA8aDI+TWFudWFsIHRlw7NyaWNvIMK3IFRlbWEgMzwvaDI+CiAgPHAgY2xhc3M9InNlY3Rpb24tbm90ZSI+UHVlZGVzIGxlZXJsbyBhcXXDrSBvIGRlc2NhcmdhcmxvLjwvcD4KICA8YSBjbGFzcz0iZGwtYmlnIiBocmVmPSJtYW51YWwucGRmIiBkb3dubG9hZD7irIcgRGVzY2FyZ2FyIFBERjwvYT4KICA8aWZyYW1lIGNsYXNzPSJwZGYtZnJhbWUiIHNyYz0ibWFudWFsLnBkZiIgdGl0bGU9Ik1hbnVhbCB0ZcOzcmljbyBUZW1hIDMiPjwvaWZyYW1lPgo8L2Rpdj4KPGRpdiBpZD0idmlldy1wcmluY2lwYWwiIGNsYXNzPSJ2aWV3IHN1Yi12aWV3IiBoaWRkZW4+CiAgPGJ1dHRvbiBjbGFzcz0iYmFjay1idG4iIGRhdGEtYmFjaz0iaHViIj7ihpAgVm9sdmVyPC9idXR0b24+CiAgPGgyPkN1YWRlcm5vIHByaW5jaXBhbCDCtyBUZW1hIDM8L2gyPgogIDxwIGNsYXNzPSJzZWN0aW9uLW5vdGUiPkRlc2NhcmdhIGVsIGZpY2hlcm8gcGFyYSB0cmFiYWphciBjb24gw6lsIGVuIHR1IG9yZGVuYWRvci48L3A+CiAgPGEgY2xhc3M9ImRsLWJpZyIgaHJlZj0iY3VhZGVybm9fcHJpbmNpcGFsLmlweW5iIiBkb3dubG9hZD7irIcgRGVzY2FyZ2FyPC9hPgo8L2Rpdj4KPGRpdiBpZD0idmlldy1ldmFsdWFibGUiIGNsYXNzPSJ2aWV3IHN1Yi12aWV3IiBoaWRkZW4+CiAgPGJ1dHRvbiBjbGFzcz0iYmFjay1idG4iIGRhdGEtYmFjaz0iaHViIj7ihpAgVm9sdmVyPC9idXR0b24+CiAgPGgyPkN1YWRlcm5vIGV2YWx1YWJsZSDCtyBUZW1hIDM8L2gyPgogIDxwIGNsYXNzPSJzZWN0aW9uLW5vdGUiPkRlc2NhcmdhIGVsIGZpY2hlcm8gcGFyYSB0cmFiYWphciBjb24gw6lsIGVuIHR1IG9yZGVuYWRvci48L3A+CiAgPGEgY2xhc3M9ImRsLWJpZyIgaHJlZj0iZXZhbHVhYmxlLmlweW5iIiBkb3dubG9hZD7irIcgRGVzY2FyZ2FyPC9hPgo8L2Rpdj4KPGRpdiBpZD0idmlldy1xdWl6IiBjbGFzcz0idmlldyBzdWItdmlldyIgaGlkZGVuPgogIDxidXR0b24gY2xhc3M9ImJhY2stYnRuIiBkYXRhLWJhY2s9Imh1YiI+4oaQIFZvbHZlcjwvYnV0dG9uPgogIDxoMj5DdWVzdGlvbmFyaW8gZGUgcHLDoWN0aWNhIMK3IFRlbWEgMzwvaDI+CiAgPGRpdiBpZD0icXVpei1yb290Ij48L2Rpdj4KPC9kaXY+";
+  var QUIZ_MANUAL = [{"question":"¿Cuál es la función principal de un pipeline lingüístico en el preprocesamiento de textos?","answerOptions":[{"text":"Ejecutar una secuencia ordenada de transformaciones para convertir texto bruto en datos estructurados.","isCorrect":true,"rationale":"Un pipeline se define como una cadena de pasos donde cada operación prepara la salida para el siguiente proceso, permitiendo una transformación coherente y reproducible."},{"text":"Eliminar automáticamente toda la información gramatical para simplificar el entrenamiento de modelos.","isCorrect":false,"rationale":"El objetivo no es destruir información gramatical, sino modelarla; de hecho, pasos como el PoS tagging añaden esta información."},{"text":"Traducir el texto de un dominio especializado a un lenguaje de dominio general.","isCorrect":false,"rationale":"El pipeline prepara el texto para tareas posteriores, como la traducción, pero su función central no es la traducción en sí misma."},{"text":"Garantizar que el sistema de PLN no necesite modelos estadísticos para funcionar.","isCorrect":false,"rationale":"El preprocesamiento suele ser el paso previo al uso de modelos estadísticos o neuronales, no un sustituto de estos."}],"hint":"Imagina una cadena de montaje donde cada estación realiza una tarea específica sobre el producto."},{"question":"En el contexto de un corpus farmacéutico, ¿qué riesgo conlleva aplicar la normalización con `.lower()` de forma indiscriminada?","answerOptions":[{"text":"La pérdida de distinción entre palabras comunes y siglas técnicas como AINE.","isCorrect":true,"rationale":"En textos médicos, las mayúsculas suelen diferenciar siglas, nombres comerciales o códigos institucionales que podrían confundirse con palabras comunes al pasar a minúsculas."},{"text":"Un aumento innecesario en la dispersión morfológica de los términos analizados en el corpus.","isCorrect":false,"rationale":"Al contrario, pasar a minúsculas suele reducir la dispersión al unificar variantes de la misma palabra."},{"text":"La imposibilidad de aplicar expresiones regulares en pasos posteriores.","isCorrect":false,"rationale":"Las expresiones regulares funcionan perfectamente con minúsculas; simplemente hay que ajustar el patrón de búsqueda."},{"text":"La eliminación de los saltos de línea y espacios en blanco del documento.","isCorrect":false,"rationale":"El método `.lower()` solo afecta a los caracteres alfabéticos, no a la estructura de espacios o puntuación."}],"hint":"Piensa en términos como 'AINE' (antiinflamatorios) frente a 'aine' como una posible cadena de texto sin sentido."},{"question":"Si utilizas el patrón de expresión regular `r'[^\\w\\s]'` en `re.sub()` para limpiar un texto médico, ¿cuál es el efecto principal?","answerOptions":[{"text":"Se eliminan todos los caracteres que no sean letras, números o espacios en blanco.","isCorrect":true,"rationale":"El símbolo `^` dentro de los corchetes niega la clase, afectando a todo lo que no sea un carácter de palabra (`\\w`) o espacio (`\\s`)."},{"text":"Se conservan únicamente los signos de puntuación y se eliminan las palabras.","isCorrect":false,"rationale":"Este sería el efecto si el patrón no incluyera la negación `^` dentro de la clase de caracteres."},{"text":"Se eliminan exclusivamente los números para evitar ruido en los datos clínicos.","isCorrect":false,"rationale":"El metacaracter `\\w` incluye números, por lo que este patrón los conservaría en lugar de eliminarlos."},{"text":"Se sustituyen los espacios en blanco por guiones bajos para facilitar la tokenización.","isCorrect":false,"rationale":"El patrón busca signos de puntuación y símbolos para eliminarlos, no realiza transformaciones sobre los espacios en blanco."}],"hint":"Analiza el significado del símbolo de intercalación `^` cuando aparece al principio de un conjunto entre corchetes."},{"question":"¿Por qué se afirma que la tokenización en spaCy es más compleja que simplemente dividir por espacios en blanco?","answerOptions":[{"text":"Porque identifica de forma inteligente unidades como abreviaturas, signos de puntuación y prefijos.","isCorrect":true,"rationale":"Un tokenizador lingüístico reconoce que una unidad como '10mg/kg' o una abreviatura no debe segmentarse igual que una frase simple separada por espacios."},{"text":"Porque requiere que el texto haya sido lematizado previamente para reconocer los límites de palabra.","isCorrect":false,"rationale":"La lematización es un paso posterior que depende de una tokenización ya realizada, no al revés."},{"text":"Porque convierte automáticamente cada palabra a su forma canónica de diccionario.","isCorrect":false,"rationale":"Esa es la definición de lematización, no de tokenización."},{"text":"Porque solo funciona si el texto se ha limpiado de signos de puntuación mediante expresiones regulares.","isCorrect":false,"rationale":"spaCy puede tokenizar texto con puntuación; de hecho, suele ser preferible para mantener la estructura oracional."}],"hint":"Considera cómo debería tratarse un punto al final de una frase o una unidad de medida como 'mg/kg'."},{"question":"En el preprocesamiento de un prospecto farmacéutico, ¿cuál es el principal argumento para NO eliminar la palabra 'no' de la lista de stopwords?","answerOptions":[{"text":"Su eliminación alteraría la polaridad de las advertencias y contraindicaciones médicas.","isCorrect":true,"rationale":"En medicina, la negación tiene un peso semántico decisivo; eliminar 'no' podría transformar una prohibición en una recomendación."},{"text":"Es una palabra de baja frecuencia que no afecta apenas al rendimiento general del sistema.","isCorrect":false,"rationale":"Al contrario, 'no' es una palabra de muy alta frecuencia, pero su importancia reside en su valor semántico, no en su frecuencia."},{"text":"spaCy no permite filtrar palabras de menos de tres letras en sus modelos estándar.","isCorrect":false,"rationale":"Las bibliotecas de PLN permiten filtrar cualquier palabra independientemente de su longitud; es una decisión del lingüista."},{"text":"La lematización de la palabra 'no' produce resultados inconsistentes en español.","isCorrect":false,"rationale":"La palabra 'no' es un adverbio invariable y su lematización es directa; el problema es su pérdida de significado contextual."}],"hint":"Piensa en la diferencia de seguridad clínica entre 'Se recomienda su uso' y 'No se recomienda su uso'."},{"question":"¿Cuál es la diferencia fundamental entre la lematización y la tokenización de un texto?","answerOptions":[{"text":"La tokenización identifica las unidades del texto, mientras que la lematización busca su forma base.","isCorrect":true,"rationale":"Son procesos complementarios: primero se divide el texto en unidades (tokens) y luego se asigna a cada una su forma canónica (lema)."},{"text":"La tokenización es exclusiva de NLTK y la lematización es exclusiva de spaCy.","isCorrect":false,"rationale":"Ambas bibliotecas pueden realizar ambas tareas, aunque spaCy las integra de forma más automática en su pipeline."},{"text":"La lematización elimina las stopwords y la tokenización limpia la puntuación.","isCorrect":false,"rationale":"Estas son tareas de filtrado y limpieza, diferentes de la segmentación en unidades o la reducción a formas base."},{"text":"La tokenización solo se aplica a sustantivos y la lematización a verbos.","isCorrect":false,"rationale":"Ambas operaciones se aplican a todas las categorías gramaticales relevantes del texto."}],"hint":"Una responde a '¿qué unidades hay?' y la otra a '¿cuál es la forma de diccionario de esta unidad?'."},{"question":"¿Qué utilidad ofrece el atributo `token.pos_` en el análisis de un corpus médico?","answerOptions":[{"text":"Permite identificar categorías gramaticales para extraer núcleos terminológicos como los sustantivos.","isCorrect":true,"rationale":"El etiquetado PoS (Part-of-Speech) facilita la extracción de términos técnicos, que frecuentemente son sustantivos o adjetivos."},{"text":"Indica la posición exacta del carácter inicial del token dentro del documento original.","isCorrect":false,"rationale":"Aunque spaCy registra la posición (offset), el atributo `.pos_` se refiere específicamente a la categoría gramatical (Part-of-Speech)."},{"text":"Calcula automáticamente la frecuencia de aparición del token en el conjunto del corpus.","isCorrect":false,"rationale":"La frecuencia se calcula con herramientas externas como `Counter`, no es un atributo intrínseco del objeto token en su análisis morfosintáctico."},{"text":"Determina si un token debe ser considerado como una stopword según el modelo cargado en la biblioteca spaCy en ese momento.","isCorrect":false,"rationale":"Esa función suele corresponder al atributo `.is_stop`, mientras que `.pos_` se ocupa de la gramática."}],"hint":"Las siglas PoS significan 'Part-of-Speech' (categoría gramatical)."},{"question":"En la organización de resultados con Pandas, ¿qué representa típicamente una fila en un DataFrame diseñado siguiendo el principio de 'tidy data' para PLN?","answerOptions":[{"text":"Una observación individual, como un token único con sus respectivos atributos.","isCorrect":true,"rationale":"En una tabla de anotación lingüística, cada fila suele corresponder a una unidad (token, lema o frase) y las columnas a sus propiedades (categoría, frecuencia, etc.)."},{"text":"El corpus completo transformado en una única cadena de texto normalizada.","isCorrect":false,"rationale":"Un DataFrame es una estructura tabular; una única cadena no aprovecharía las capacidades de organización por filas y columnas."},{"text":"Una lista de todas las stopwords que han sido filtradas durante el proceso.","isCorrect":false,"rationale":"Aunque se podría crear una tabla de stopwords, el uso principal es organizar los datos procesados que queremos analizar o exportar."},{"text":"Un comando de Python necesario para poder ejecutar correctamente el pipeline de spaCy.","isCorrect":false,"rationale":"Pandas es una herramienta de organización de datos, no un lenguaje de ejecución de comandos para otras bibliotecas."}],"hint":"Piensa en cómo se estructuraría una tabla de Excel donde cada fila es una palabra analizada."},{"question":"¿Por qué es recomendable conservar versiones intermedias del texto (ej. `texto_original`, `texto_sin_puntuacion`, `doc`) en un entorno profesional?","answerOptions":[{"text":"Para garantizar la trazabilidad y permitir que distintas tareas utilicen la versión más adecuada del texto.","isCorrect":true,"rationale":"Tareas como la segmentación de oraciones requieren puntuación, mientras que el conteo de frecuencias puede preferir un texto limpio; mantener versiones evita errores irreversibles."},{"text":"Para evitar que Python agote la memoria RAM al procesar archivos de gran tamaño.","isCorrect":false,"rationale":"Crear múltiples variables en realidad consume más memoria, pero se hace por rigor metodológico, no por eficiencia de hardware."},{"text":"Porque spaCy requiere obligatoriamente comparar el texto bruto con el procesado para validar el análisis.","isCorrect":false,"rationale":"spaCy no requiere esta comparación por defecto, es una buena práctica del lingüista para el control de calidad."},{"text":"Para asegurar que el modelo de traducción automática aprenda las reglas de las expresiones regulares.","isCorrect":false,"rationale":"Los modelos de traducción no aprenden código de Python (Regex), sino patrones lingüísticos a partir de los datos proporcionados."}],"hint":"Recuerda que algunas tareas necesitan los puntos y comas, mientras que otras los consideran ruido."},{"question":"¿Cuál es la principal diferencia metodológica entre NLTK y spaCy a la hora de trabajar con un pipeline de preprocesamiento?","answerOptions":[{"text":"NLTK es más transparente y pedagógico para tareas aisladas, mientras que spaCy es eficiente e integrado para pipelines industriales.","isCorrect":true,"rationale":"NLTK permite gestionar recursos como listas de stopwords de forma manual y directa, mientras que spaCy ofrece un flujo de trabajo optimizado y multilingüe."},{"text":"NLTK solo funciona para el idioma inglés y spaCy es exclusivo para el español, sin soporte para otras lenguas.","isCorrect":false,"rationale":"Ambas herramientas son multilingües, aunque spaCy destaca por sus modelos preentrenados específicos para diversos idiomas."},{"text":"NLTK es una biblioteca de visualización de datos y spaCy es un motor de base de datos.","isCorrect":false,"rationale":"Ambas son bibliotecas de procesamiento de lenguaje natural, no se dedican principalmente a la visualización o al almacenamiento de bases de datos."},{"text":"NLTK realiza el análisis morfosintáctico sin necesidad de cargar modelos de lengua.","isCorrect":false,"rationale":"Ambas bibliotecas requieren recursos lingüísticos o modelos para realizar análisis avanzados como el PoS tagging."}],"hint":"Considera cuál de las dos bibliotecas te permite ver y modificar más fácilmente una lista de palabras vacías."}];
+  var QUIZ_CUADERNO = [{"question":"¿Cuál es el objetivo principal de la fase de normalización durante el preprocesamiento de textos en PLN?","answerOptions":[{"text":"Transformar el texto en bruto en representaciones limpias y homogéneas, como el uso de minúsculas.","isCorrect":true,"rationale":"La normalización busca eliminar inconsistencias como diferencias de mayúsculas/minúsculas para estandarizar el corpus."},{"text":"Dividir el texto en unidades mínimas llamadas tokens antes de cualquier otro análisis posterior.","isCorrect":false,"rationale":"Esta es la definición de tokenización, que ocurre después o paralelamente a la normalización."},{"text":"Asignar funciones sintácticas a cada palabra dentro de una oración.","isCorrect":false,"rationale":"La asignación de funciones sintácticas pertenece al análisis morfosintáctico avanzado, no a la normalización básica."},{"text":"Identificar y extraer únicamente los sustantivos técnicos del documento.","isCorrect":false,"rationale":"La extracción de terminología es una tarea posterior que se beneficia del preprocesamiento, pero no define la normalización."}],"hint":"Piensa en el proceso de uniformar el texto para que palabras como 'Medicamento' y 'medicamento' sean tratadas igual."},{"question":"En el contexto de un pipeline con spaCy, ¿qué representa el etiquetado PoS (Part-of-Speech)?","answerOptions":[{"text":"La asignación de la categoría gramatical a cada palabra, como sustantivo o verbo.","isCorrect":true,"rationale":"PoS tagging identifica la función gramatical de cada token basándose en su contexto."},{"text":"La eliminación de palabras que no aportan carga semántica.","isCorrect":false,"rationale":"Ese proceso se conoce específicamente como eliminación de stopwords."},{"text":"La reducción de una palabra a su forma canónica o lema.","isCorrect":false,"rationale":"Este proceso se denomina lematización."},{"text":"La corrección automática de errores ortográficos en el corpus.","isCorrect":false,"rationale":"El etiquetado PoS analiza la estructura gramatical existente, no corrige la ortografía del texto original."}],"hint":"Se refiere a la clasificación de las palabras según su función (nombre, adjetivo, etc.)."},{"question":"¿Qué atributo de spaCy se debe utilizar para acceder a la forma base (lema) de una palabra en lugar de su texto original?","answerOptions":[{"text":"token.lemma_","isCorrect":true,"rationale":"El guion bajo al final indica que se desea la representación en cadena del lema de la palabra."},{"text":"token.text","isCorrect":false,"rationale":"Este atributo devuelve la cadena de caracteres exacta tal como aparece en el texto original."},{"text":"token.pos_","isCorrect":false,"rationale":"Este atributo devuelve la etiqueta de la categoría gramatical en formato de cadena."},{"text":"token.dep_","isCorrect":false,"rationale":"Este atributo se utiliza para identificar las relaciones de dependencia sintáctica, no la forma base."}],"hint":"Busca el término técnico que se refiere a la forma canónica de una palabra."},{"question":"En la limpieza de textos mediante expresiones regulares, ¿qué función cumple el patrón `r'[^\\w\\s]'`?","answerOptions":[{"text":"Identifica cualquier carácter que no sea alfanumérico ni un espacio en blanco para eliminarlo.","isCorrect":true,"rationale":"El símbolo `^` dentro de los corchetes actúa como negación de caracteres alfanuméricos (`\\w`) y espacios (`\\s`)."},{"text":"Busca y mantiene únicamente los números del texto, eliminando letras y signos de puntuación.","isCorrect":false,"rationale":"Para mantener solo números se usaría un patrón diferente como `r'\\d+'`."},{"text":"Convierte automáticamente todos los caracteres a minúsculas.","isCorrect":false,"rationale":"La conversión a minúsculas se realiza con métodos de cadena como `.lower()`."},{"text":"Separa el texto en oraciones individuales basándose en los puntos.","isCorrect":false,"rationale":"La segmentación de oraciones es una tarea de tokenización de frases, no de limpieza de caracteres especiales."}],"hint":"Analiza el significado del símbolo de intercalación dentro de los corchetes de la expresión regular."},{"question":"¿Por qué es tan importante personalizar la lista de 'stopwords' al preprocesar textos de un ámbito técnico como el médico?","answerOptions":[{"text":"Porque palabras comunes como 'no' o 'sin' pueden alterar drásticamente el sentido de una instrucción médica.","isCorrect":true,"rationale":"En medicina, la negación es vital para las contraindicaciones; su eliminación podría causar traducciones peligrosas."},{"text":"Porque las listas estándar de NLTK son demasiado largas y ralentizan el sistema.","isCorrect":false,"rationale":"La velocidad del sistema es una preocupación secundaria frente a la integridad del significado lingüístico."},{"text":"Porque los términos técnicos siempre deben considerarse palabras vacías para simplificar el motor de IA.","isCorrect":false,"rationale":"Los términos técnicos son los que más carga informativa tienen y nunca deben ser tratados como palabras vacías."},{"text":"Porque spaCy no permite utilizar listas de stopwords externas a su propio modelo.","isCorrect":false,"rationale":"spaCy y NLTK permiten la personalización total de sus listas de palabras vacías."}],"hint":"Considera cómo cambiaría el significado de 'sin efectos secundarios' si eliminamos la palabra funcional."},{"question":"¿Qué ventaja ofrece la lematización sobre la tokenización simple en el entrenamiento de modelos de traducción automática?","answerOptions":[{"text":"Reduce el vocabulario al agrupar diferentes formas flexivas de una misma palabra.","isCorrect":true,"rationale":"Al tratar 'pacientes' y 'paciente' como una sola entidad (paciente), el modelo generaliza mejor el aprendizaje."},{"text":"Permite que el sistema conserve todos los signos de puntuación originales.","isCorrect":false,"rationale":"La lematización se ocupa de la morfología de las palabras, no de la puntuación del texto."},{"text":"Aumenta el número de palabras únicas en el corpus para darle más complejidad al modelo.","isCorrect":false,"rationale":"Al contrario, la lematización reduce la diversidad superficial de palabras para centrarse en los conceptos base."},{"text":"Es el único paso necesario para limpiar un corpus ruidoso sin necesidad de normalización.","isCorrect":false,"rationale":"La lematización es un paso avanzado que requiere que el texto haya sido previamente tokenizado y, preferiblemente, normalizado."}],"hint":"Piensa en cómo se buscan las palabras en un diccionario, independientemente de si están en plural o singular."},{"question":"Al construir un glosario técnico, ¿por qué se prioriza la extracción de palabras con la etiqueta PoS 'NOUN'?","answerOptions":[{"text":"Porque los sustantivos suelen representar los conceptos y entidades clave (terminología) del dominio especializado.","isCorrect":true,"rationale":"En textos científicos, los sustantivos cargan con la mayor parte del significado terminológico específico."},{"text":"Porque son las palabras más fáciles de traducir por los motores de IA.","isCorrect":false,"rationale":"La facilidad de traducción no es el criterio; lo es la relevancia conceptual del término."},{"text":"Porque spaCy no puede extraer verbos o adjetivos de manera fiable en textos médicos especializados.","isCorrect":false,"rationale":"spaCy es capaz de extraer cualquier categoría gramatical con alta precisión."},{"text":"Porque los sustantivos nunca actúan como 'ruido' en un pipeline de PLN.","isCorrect":false,"rationale":"Aunque suelen ser valiosos, algunos sustantivos comunes pueden ser irrelevantes dependiendo del objetivo del análisis."}],"hint":"Identifica qué tipo de palabras suelen nombrar a los medicamentos, órganos o síntomas."},{"question":"¿Qué herramienta de Python se utiliza en el cuaderno para contar la frecuencia de aparición de los lemas extraídos?","answerOptions":[{"text":"Counter de la biblioteca collections","isCorrect":true,"rationale":"Counter es una subclase de diccionario diseñada específicamente para contar objetos hashables como palabras."},{"text":"re.sub","isCorrect":false,"rationale":"Esta función se utiliza para realizar sustituciones basadas en expresiones regulares, no para contar."},{"text":"spacy.load","isCorrect":false,"rationale":"Esta función se utiliza para cargar modelos lingüísticos preentrenados."},{"text":"nltk.download","isCorrect":false,"rationale":"Esta función se usa para descargar recursos adicionales como corpus o listas de palabras."}],"hint":"Es un contenedor que almacena elementos como claves de diccionario y sus conteos como valores."},{"question":"Al preparar un corpus especializado para entrenar o alimentar un motor de traducción automática neuronal (NMT), ¿qué consecuencia tendría un preprocesamiento deficiente, con ambigüedades y ruido sin eliminar?","answerOptions":[{"text":"La traducción podría ser inexacta o peligrosa debido a ambigüedades y ruido no eliminado.","isCorrect":true,"rationale":"El ruido y las inconsistencias confunden al modelo, lo cual resulta especialmente grave en sectores sensibles como el sanitario."},{"text":"El sistema tardaría más tiempo en procesar el texto pero la calidad sería idéntica.","isCorrect":false,"rationale":"La calidad de salida depende directamente de la calidad de los datos de entrada en los modelos de IA."},{"text":"El motor NMT corregiría automáticamente todos los errores de puntuación durante el entrenamiento.","isCorrect":false,"rationale":"Los modelos NMT tienden a replicar el ruido presente en los datos de entrenamiento si no se limpian previamente."},{"text":"Se reduciría el costo de computación sin afectar la precisión terminológica.","isCorrect":false,"rationale":"Un preprocesamiento deficiente suele aumentar los errores terminológicos, invalidando el ahorro de recursos."}],"hint":"Considera el lema 'garbage in, garbage out' aplicado a la IA lingüística."},{"question":"¿Qué diferencia fundamental existe entre tokenizar y lematizar un texto?","answerOptions":[{"text":"Tokenizar divide el texto en piezas; lematizar busca la raíz o forma canónica de dichas piezas.","isCorrect":true,"rationale":"La tokenización es una segmentación estructural, mientras que la lematización es un análisis morfológico."},{"text":"Lematizar es un paso previo obligatorio para poder realizar la tokenización.","isCorrect":false,"rationale":"Es al revés: primero se debe tokenizar el texto para que el sistema pueda analizar cada palabra individualmente y lematizarla."},{"text":"Tokenizar elimina las mayúsculas; lematizar elimina los signos de puntuación.","isCorrect":false,"rationale":"Ambas tareas de limpieza mencionadas pertenecen generalmente a la fase de normalización y preprocesamiento básico."},{"text":"No existe diferencia; ambos términos se usan indistintamente para referirse a la limpieza de texto.","isCorrect":false,"rationale":"Son procesos distintos con objetivos lingüísticos diferentes dentro del pipeline de PLN."}],"hint":"Una técnica trata sobre 'cortar' el texto y la otra sobre 'entender' la base de la palabra."}];
   var SESSION_KEY = "t3_unlocked";
+  var REPO = "blancahpardo/pln";
+  var LOCAL_CONFIG = "config.json";
+  var GH_CONFIG_PATH = "t3/config.json";
+  var isTeacher = false;
+  var configSha = null;
 
   function sha256Hex(text) {
     var enc = new TextEncoder().encode(text);
@@ -198,18 +218,139 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
     });
   }
 
-  function reveal() {
+  function applyStudentVisibility(config) {
+    document.querySelectorAll(".hub-btn[data-type]").forEach(function(btn) {
+      var t = btn.dataset.type;
+      btn.style.display = config[t] ? "" : "none";
+    });
+  }
+
+  function applyTeacherHints(config) {
+    document.querySelectorAll(".teacher-hint[data-hint]").forEach(function(span) {
+      var t = span.dataset.hint;
+      var on = !!config[t];
+      span.textContent = on ? "visible" : "oculto";
+      span.className = "teacher-hint " + (on ? "on" : "off");
+    });
+    document.querySelectorAll("#teacher-panel input[type=checkbox][data-type]").forEach(function(chk) {
+      chk.checked = !!config[chk.dataset.type];
+    });
+  }
+
+  function fetchConfig() {
+    return fetch(LOCAL_CONFIG + "?t=" + Date.now()).then(function(r) { return r.json(); });
+  }
+
+  function ghHeaders(token) {
+    return { "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json" };
+  }
+
+  function ghGetFile(token) {
+    return fetch("https://api.github.com/repos/" + REPO + "/contents/" + GH_CONFIG_PATH, { headers: ghHeaders(token) })
+      .then(function(r) {
+        if (!r.ok) throw new Error("No se pudo leer el fichero (" + r.status + ")");
+        return r.json();
+      })
+      .then(function(data) {
+        configSha = data.sha;
+        return JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, "")))));
+      });
+  }
+
+  function ghSaveFile(token, configObj) {
+    var content = btoa(unescape(encodeURIComponent(JSON.stringify(configObj, null, 2) + "\n")));
+    return fetch("https://api.github.com/repos/" + REPO + "/contents/" + GH_CONFIG_PATH, {
+      method: "PUT",
+      headers: Object.assign({ "Content-Type": "application/json" }, ghHeaders(token)),
+      body: JSON.stringify({
+        message: "Modo profesora: actualizar visibilidad de materiales (" + GH_CONFIG_PATH + ")",
+        content: content,
+        sha: configSha
+      })
+    }).then(function(r) {
+      if (!r.ok) return r.text().then(function(t) { throw new Error("Error al guardar (" + r.status + "): " + t); });
+      return r.json();
+    }).then(function(data) {
+      configSha = data.content.sha;
+    });
+  }
+
+  function getToken() {
+    try { return sessionStorage.getItem("gh_pat") || ""; } catch (e) { return ""; }
+  }
+  function setToken(t) {
+    try { sessionStorage.setItem("gh_pat", t); } catch (e) {}
+  }
+
+  function setStatus(msg, isError) {
+    var el = document.getElementById("teacher-status");
+    if (!el) return;
+    el.textContent = msg;
+    el.style.color = isError ? "#FFB3B3" : "#9FE6A0";
+  }
+
+  function initTeacherPanel() {
+    document.getElementById("teacher-panel").hidden = false;
+    var tokenInput = document.getElementById("gh-token");
+    tokenInput.value = getToken();
+
+    document.getElementById("gh-token-save").addEventListener("click", function() {
+      setToken(tokenInput.value.trim());
+      setStatus(tokenInput.value.trim() ? "Token guardado para esta sesión." : "Token borrado.");
+      refreshFromGithub();
+    });
+
+    document.querySelectorAll("#teacher-panel input[type=checkbox][data-type]").forEach(function(chk) {
+      chk.addEventListener("change", function() {
+        var token = getToken();
+        if (!token) { setStatus("Pega primero tu token de GitHub.", true); chk.checked = !chk.checked; return; }
+        setStatus("Guardando...");
+        ghGetFile(token).then(function(current) {
+          current[chk.dataset.type] = chk.checked;
+          return ghSaveFile(token, current).then(function() { return current; });
+        }).then(function(current) {
+          applyTeacherHints(current);
+          setStatus("Guardado ✓ — el alumnado lo verá en 1-2 minutos.");
+        }).catch(function(err) {
+          chk.checked = !chk.checked;
+          setStatus(err.message, true);
+        });
+      });
+    });
+
+    refreshFromGithub();
+
+    function refreshFromGithub() {
+      var token = getToken();
+      if (!token) { fetchConfig().then(applyTeacherHints); return; }
+      setStatus("Cargando estado actual...");
+      ghGetFile(token).then(function(current) {
+        applyTeacherHints(current);
+        setStatus("Conectado. Puedes marcar/desmarcar materiales.");
+      }).catch(function(err) { setStatus(err.message, true); fetchConfig().then(applyTeacherHints); });
+    }
+  }
+
+  function reveal(teacherMode) {
+    isTeacher = teacherMode;
     document.getElementById("content").innerHTML = decodeURIComponent(escape(atob(PAYLOAD)));
     document.getElementById("gate").style.display = "none";
     document.getElementById("page").style.display = "block";
     wireNav();
-    try { sessionStorage.setItem(SESSION_KEY, "1"); } catch (e) {}
+    if (teacherMode) {
+      document.querySelectorAll(".hub-btn[data-type]").forEach(function(btn) { btn.style.display = ""; });
+      initTeacherPanel();
+    } else {
+      fetchConfig().then(applyStudentVisibility);
+    }
+    try { sessionStorage.setItem(SESSION_KEY, teacherMode ? "teacher" : "1"); } catch (e) {}
   }
 
   function tryUnlock() {
     var val = document.getElementById("pw").value;
     sha256Hex(val).then(function(hex) {
-      if (hex === HASH) reveal();
+      if (hex === TEACHER_HASH) reveal(true);
+      else if (hex === HASH) reveal(false);
       else document.getElementById("err").textContent = "Contraseña incorrecta.";
     });
   }
@@ -217,7 +358,11 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
   document.getElementById("enter").addEventListener("click", tryUnlock);
   document.getElementById("pw").addEventListener("keydown", function(e) { if (e.key === "Enter") tryUnlock(); });
 
-  try { if (sessionStorage.getItem(SESSION_KEY) === "1") reveal(); } catch (e) {}
+  try {
+    var saved = sessionStorage.getItem(SESSION_KEY);
+    if (saved === "teacher") reveal(true);
+    else if (saved === "1") reveal(false);
+  } catch (e) {}
 })();
 </script>
 </body>
