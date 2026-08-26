@@ -1,6 +1,6 @@
 {
   "manual": true,
-  "principal": true,
+  "principal": false,
   "evaluable": false,
   "quiz": false
 }
