@@ -1,5 +1,5 @@
 {
   "manual": true,
-  "principal": true,
+  "principal": false,
   "practica": false
 }
