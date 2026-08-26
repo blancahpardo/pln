@@ -1,0 +1,279 @@
+{
+  "quiz": [
+    {
+      "question": "¿Cuál es el objetivo principal de realizar un preprocesamiento que incluya la eliminación de signos de puntuación y la conversión a minúsculas antes de evaluar una traducción?",
+      "answerOptions": [
+        {
+          "text": "Garantizar que el sistema no penalice palabras idénticas por diferencias puramente ortotipográficas.",
+          "isCorrect": true,
+          "rationale": "El preprocesamiento asegura que palabras como 'Mi' y 'mi' se cuenten como la misma unidad, evitando que la métrica de precisión sea artificialmente baja."
+        },
+        {
+          "text": "Aumentar artificialmente la puntuación BLEU para que los resultados parezcan mejores de lo que son.",
+          "isCorrect": false,
+          "rationale": "El objetivo es la consistencia en el recuento, no la manipulación de los resultados finales para inflar la calidad del sistema."
+        },
+        {
+          "text": "Reducir el tiempo de ejecución de las funciones de Python al procesar menos caracteres.",
+          "isCorrect": false,
+          "rationale": "Aunque se eliminan caracteres, el impacto en el rendimiento computacional es insignificante comparado con la necesidad de precisión léxica."
+        },
+        {
+          "text": "Permitir que el sistema reconozca automáticamente los sinónimos mediante la eliminación de símbolos.",
+          "isCorrect": false,
+          "rationale": "La limpieza del texto solo ayuda con la coincidencia literal de formas, no otorga al sistema la capacidad de entender la semántica de los sinónimos."
+        }
+      ],
+      "hint": "Piensa en qué ocurriría si comparas 'Casa.' con 'casa' sin realizar ninguna limpieza."
+    },
+    {
+      "question": "En el contexto de la evaluación de traducciones, ¿cómo se define la métrica de Precision (precisión léxica)?",
+      "answerOptions": [
+        {
+          "text": "La proporción de palabras de la traducción automática que coinciden con la traducción de referencia.",
+          "isCorrect": true,
+          "rationale": "La precisión mide cuántas de las palabras generadas por el sistema son correctas según la referencia humana, usando el total de la automática como denominador."
+        },
+        {
+          "text": "La proporción de palabras en la traducción humana que fueron recuperadas por la automática.",
+          "isCorrect": false,
+          "rationale": "Esta descripción corresponde al Recall, que se centra en la cobertura de la frase de referencia y no en el acierto de la máquina."
+        },
+        {
+          "text": "El promedio geométrico de los n-gramas coincidentes entre dos oraciones.",
+          "isCorrect": false,
+          "rationale": "Esta es una característica clave del cálculo de BLEU, no de la precisión léxica simple de palabras individuales."
+        },
+        {
+          "text": "La suma total de palabras únicas dividida por el total de palabras de ambos textos.",
+          "isCorrect": false,
+          "rationale": "Este concepto se acerca más a la lógica del índice Jaccard, que trata las palabras como conjuntos no ordenados."
+        }
+      ],
+      "hint": "Recuerda que esta métrica se pregunta: ¿Cuántas de las palabras que 'ha dicho' la máquina son correctas?"
+    },
+    {
+      "question": "Si una traducción automática genera la frase 'Los perros corren' y la referencia humana es 'Los perros corren rápido', ¿cuál es el valor del Recall?",
+      "answerOptions": [
+        {
+          "text": "0.75",
+          "isCorrect": true,
+          "rationale": "El Recall se calcula dividiendo las palabras coincidentes (3) entre el total de palabras de la referencia humana (4), resultando en 3/4 = 0.75."
+        },
+        {
+          "text": "0.50",
+          "isCorrect": false,
+          "rationale": "Esto implicaría que solo la mitad de la referencia fue capturada, pero en este caso se recuperaron tres de cuatro palabras."
+        },
+        {
+          "text": "1.00",
+          "isCorrect": false,
+          "rationale": "El valor máximo solo se alcanza si todas las palabras de la referencia humana están presentes en la automática."
+        },
+        {
+          "text": "0.33",
+          "isCorrect": false,
+          "rationale": "Este valor no se corresponde con ninguna de las proporciones léxicas directas de este ejemplo."
+        }
+      ],
+      "hint": "Para el Recall, el denominador siempre es el número total de palabras en la traducción humana de referencia."
+    },
+    {
+      "question": "¿Cuál es la principal limitación de la métrica 'Exact Match' en tareas de traducción natural?",
+      "answerOptions": [
+        {
+          "text": "Cualquier pequeña variación léxica o de orden resulta en un valor negativo, aunque el significado sea idéntico.",
+          "isCorrect": true,
+          "rationale": "Al comparar la igualdad total de las cadenas, un simple sinónimo hace que la métrica falle, lo cual no refleja la calidad real del lenguaje natural."
+        },
+        {
+          "text": "Es demasiado permisiva con el uso de sinónimos.",
+          "isCorrect": false,
+          "rationale": "Al contrario, es una métrica extremadamente rígida que no permite ninguna variación respecto a la referencia."
+        },
+        {
+          "text": "No considera la longitud de la frase original ni el contexto comunicativo en el que se produjo.",
+          "isCorrect": false,
+          "rationale": "Aunque esto es cierto, su principal limitación es la incapacidad de validar traducciones que son correctas pero diferentes en forma."
+        },
+        {
+          "text": "Requiere obligatoriamente que el texto esté en formato JSON para funcionar.",
+          "isCorrect": false,
+          "rationale": "Exact Match es una comparación booleana simple de cadenas o listas que no depende de formatos de archivo específicos."
+        }
+      ],
+      "hint": "Considera qué pasaría si una máquina traduce 'enormes' y el humano escribió 'grandes'."
+    },
+    {
+      "question": "¿Por qué la puntuación BLEU suele ser drásticamente más baja que la precisión léxica cuando hay un error al final de una frase?",
+      "answerOptions": [
+        {
+          "text": "Debido a que utiliza el promedio geométrico de n-gramas (1 a 4), y si un n-grama largo no coincide, la puntuación cae con fuerza.",
+          "isCorrect": true,
+          "rationale": "Al fallar una palabra al final, se rompen secuencias de pares, tríos y cuartetos de palabras, afectando múltiples niveles de precisión simultáneamente."
+        },
+        {
+          "text": "Porque BLEU solo tiene en cuenta la primera palabra de la frase y descarta el resto de la traducción.",
+          "isCorrect": false,
+          "rationale": "BLEU analiza toda la frase, pero su estructura multigramática es la que causa la sensibilidad al orden y las secuencias."
+        },
+        {
+          "text": "Porque BLEU no permite el uso de funciones de suavizado (smoothing).",
+          "isCorrect": false,
+          "rationale": "De hecho, BLEU permite funciones de suavizado precisamente para evitar que la puntuación llegue a cero absoluto en frases cortas."
+        },
+        {
+          "text": "Porque BLEU ignora los unigramas y solo cuenta grupos de cuatro palabras.",
+          "isCorrect": false,
+          "rationale": "BLEU combina unigramas, bigramas, trigramas y 4-gramas de forma equilibrada mediante su promedio."
+        }
+      ],
+      "hint": "BLEU no mira palabras sueltas únicamente; mira 'cadenas' de palabras de distintos tamaños."
+    },
+    {
+      "question": "¿Cuál es una ventaja clave de la métrica chrF frente a BLEU?",
+      "answerOptions": [
+        {
+          "text": "chrF puede detectar similitudes parciales entre palabras con variaciones morfológicas mediante n-gramas de caracteres.",
+          "isCorrect": true,
+          "rationale": "Al trabajar con fragmentos de caracteres, chrF reconoce raíces comunes (ej. 'traducir' vs 'traducción') que BLEU ignoraría por no ser palabras exactas."
+        },
+        {
+          "text": "chrF es la única métrica que garantiza una comprensión semántica profunda del texto.",
+          "isCorrect": false,
+          "rationale": "Ninguna métrica formal como chrF comprende el significado; solo analizan patrones superficiales de caracteres."
+        },
+        {
+          "text": "chrF siempre devuelve un valor entre 0 y 1, facilitando su lectura frente a la escala 0-100 de BLEU.",
+          "isCorrect": false,
+          "rationale": "Es al revés: BLEU suele presentarse entre 0 y 1, mientras que las implementaciones de chrF en librerías como 'evaluate' usan la escala 0-100."
+        },
+        {
+          "text": "chrF no requiere una traducción de referencia para ser calculada, a diferencia de BLEU y otras métricas clásicas.",
+          "isCorrect": false,
+          "rationale": "Al ser una métrica de coincidencia formal, chrF necesita obligatoriamente una referencia humana para realizar la comparación."
+        }
+      ],
+      "hint": "Piensa en palabras que comparten la misma raíz pero tienen diferentes terminaciones."
+    },
+    {
+      "question": "¿Qué mide específicamente el índice Jaccard en la evaluación de textos?",
+      "answerOptions": [
+        {
+          "text": "La similitud entre conjuntos de palabras únicas, comparando la intersección frente a la unión.",
+          "isCorrect": true,
+          "rationale": "Se calcula dividiendo el número de palabras compartidas entre el número total de palabras distintas que aparecen en ambos textos sumados."
+        },
+        {
+          "text": "La secuencia exacta de palabras respetando el orden sintáctico.",
+          "isCorrect": false,
+          "rationale": "Jaccard es una métrica de conjuntos que ignora por completo el orden de los elementos."
+        },
+        {
+          "text": "La media armónica entre la precisión y el recall, calculada palabra por palabra en cada segmento traducido.",
+          "isCorrect": false,
+          "rationale": "Esta es la definición del F1-score, que busca un equilibrio entre acierto y cobertura."
+        },
+        {
+          "text": "La cantidad de errores gramaticales cometidos por el motor de traducción.",
+          "isCorrect": false,
+          "rationale": "Jaccard solo observa la presencia o ausencia de léxico, no evalúa la corrección gramatical de las frases."
+        }
+      ],
+      "hint": "Imagina las palabras como elementos de un saco donde el orden en que se sacan no importa."
+    },
+    {
+      "question": "En el cálculo de BLEU, ¿qué es la 'Brevity Penalty' (penalización por brevedad)?",
+      "answerOptions": [
+        {
+          "text": "Un ajuste que castiga a las traducciones automáticas que son mucho más cortas que la referencia humana.",
+          "isCorrect": true,
+          "rationale": "Esta penalización evita que los sistemas obtengan puntuaciones altas simplemente por generar frases muy cortas con palabras fáciles de acertar."
+        },
+        {
+          "text": "Un proceso que elimina las palabras más cortas del texto (como preposiciones) antes del cálculo.",
+          "isCorrect": false,
+          "rationale": "BLEU no elimina palabras por su longitud; la penalización se aplica a la longitud total de la frase generada."
+        },
+        {
+          "text": "Una técnica para acelerar el cálculo de la métrica en ordenadores con pocos recursos.",
+          "isCorrect": false,
+          "rationale": "El término se refiere a una penalización estadística sobre la calidad de la traducción, no a una optimización de software."
+        },
+        {
+          "text": "Un error común en Python que ocurre cuando la lista de palabras está vacía.",
+          "isCorrect": false,
+          "rationale": "Es un componente diseñado de la fórmula matemática de BLEU, no un error de programación o excepción de código."
+        }
+      ],
+      "hint": "Piensa en por qué una traducción de una sola palabra correcta no debería tener un 100% de éxito si la referencia tiene diez palabras."
+    },
+    {
+      "question": "Si una traducción automática y una humana tienen un F1-score de 0.85, pero un Exact Match de 'No', ¿cuál es la interpretación más probable?",
+      "answerOptions": [
+        {
+          "text": "Hay una alta coincidencia de vocabulario, pero existe al menos una diferencia en palabras o en su orden.",
+          "isCorrect": true,
+          "rationale": "El F1 refleja la similitud léxica general, mientras que el Exact Match es binario y falla ante cualquier discrepancia mínima."
+        },
+        {
+          "text": "El sistema ha fallado completamente y la traducción no es útil.",
+          "isCorrect": false,
+          "rationale": "Un F1-score de 0.85 es muy alto, lo que indica que la traducción es de gran calidad a pesar de no ser idéntica."
+        },
+        {
+          "text": "La traducción automática es idéntica pero el código de Python tiene un error de comparación.",
+          "isCorrect": false,
+          "rationale": "Si el Exact Match es 'No', es porque los objetos comparados no son iguales, lo cual es lo normal en traducciones válidas pero diferentes."
+        },
+        {
+          "text": "El valor del F1-score es incorrecto porque nunca puede ser superior al índice Jaccard en ningún caso.",
+          "isCorrect": false,
+          "rationale": "Es común que el F1 sea superior al índice Jaccard, ya que este último es matemáticamente más exigente al considerar la unión total del vocabulario."
+        }
+      ],
+      "hint": "Recuerda que existen muchas formas correctas de traducir la misma idea."
+    },
+    {
+      "question": "¿Para qué sirve el parámetro 'smoothing_function' en la función sentence_bleu de NLTK?",
+      "answerOptions": [
+        {
+          "text": "Para evitar que la puntuación sea 0 cuando no hay coincidencias en n-gramas de orden superior en frases cortas.",
+          "isCorrect": true,
+          "rationale": "En frases cortas, es fácil que no haya coincidencias de 4 palabras seguidas; el suavizado asigna un valor pequeño para que el promedio geométrico no se anule."
+        },
+        {
+          "text": "Para corregir automáticamente la ortografía de la traducción automática.",
+          "isCorrect": false,
+          "rationale": "Las métricas evalúan el texto tal como es, no tienen capacidad de edición o corrección del contenido evaluado."
+        },
+        {
+          "text": "Para redondear el resultado final a dos decimales de forma automática antes de mostrarlo por pantalla.",
+          "isCorrect": false,
+          "rationale": "El redondeo se hace con funciones de formato de salida, mientras que el smoothing es un ajuste matemático interno del cálculo."
+        },
+        {
+          "text": "Para que la métrica ignore las mayúsculas y minúsculas sin necesidad de preprocesamiento.",
+          "isCorrect": false,
+          "rationale": "BLEU sigue comparando tokens exactos; el preprocesamiento manual sigue siendo necesario independientemente del suavizado."
+        }
+      ],
+      "hint": "Considera qué sucede al multiplicar varios números si uno de ellos es exactamente cero."
+    }
+  ],
+  "topics": {
+    "covered": [
+      "Métricas léxicas básicas",
+      "Preprocesamiento de texto en PLN",
+      "Evaluación con BLEU",
+      "Evaluación con chrF",
+      "Interpretación de métricas de traducción"
+    ],
+    "followUp": [
+      "Métrica METEOR",
+      "Uso de n-gramas en evaluación",
+      "Penalización por brevedad en BLEU",
+      "Diferencias morfológicas en métricas de caracteres"
+    ]
+  }
+}

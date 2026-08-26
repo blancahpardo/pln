@@ -1,0 +1,332 @@
+{
+  "quiz": [
+    {
+      "question": "¿Cuál es el objetivo principal del *recall* léxico en el contexto de la evaluación de traducción automática?",
+      "answerOptions": [
+        {
+          "text": "Medir qué proporción de las palabras de la referencia humana han sido recuperadas por la hipótesis.",
+          "isCorrect": true,
+          "rationale": "El recall se centra en la cobertura, asegurando que la información esperada en la traducción humana esté presente en la salida del sistema."
+        },
+        {
+          "text": "Calcular el porcentaje de palabras de la traducción automática que son correctas según la referencia.",
+          "isCorrect": false,
+          "rationale": "Esta descripción corresponde a la precisión léxica, que observa la exactitud de lo producido en lugar de la cobertura de la referencia."
+        },
+        {
+          "text": "Determinar si la hipótesis y la referencia son idénticas carácter por carácter.",
+          "isCorrect": false,
+          "rationale": "La identidad total es el dominio de la métrica Exact Match, no de una medida proporcional como el recall."
+        },
+        {
+          "text": "Evaluar la fluidez gramatical de la frase generada sin considerar el texto original.",
+          "isCorrect": false,
+          "rationale": "El recall léxico es una métrica de comparación con una referencia, no una evaluación intrínseca de la fluidez del lenguaje meta."
+        }
+      ],
+      "hint": "Piensa en si la métrica se enfoca en lo que el sistema 'ha logrado capturar' de lo que un humano escribió."
+    },
+    {
+      "question": "En el cálculo del F1-score léxico, ¿por qué se utiliza la media armónica entre precisión y recall?",
+      "answerOptions": [
+        {
+          "text": "Para penalizar los desequilibrios extremos entre la exactitud y la cobertura.",
+          "isCorrect": true,
+          "rationale": "La media armónica asegura que si una de las dos métricas es muy baja, el valor de F1 también lo sea, promoviendo un rendimiento equilibrado."
+        },
+        {
+          "text": "Para dar siempre más peso a la precisión que al recall en tareas de traducción.",
+          "isCorrect": false,
+          "rationale": "El F1-score estándar trata ambas métricas por igual; existen variantes ponderadas (F-beta) para asignar pesos diferentes."
+        },
+        {
+          "text": "Porque es matemáticamente más sencilla de calcular que la media aritmética.",
+          "isCorrect": false,
+          "rationale": "La media aritmética es más sencilla, pero no refleja adecuadamente el rendimiento cuando hay valores cercanos a cero."
+        },
+        {
+          "text": "Para eliminar la necesidad de realizar una limpieza previa de los textos.",
+          "isCorrect": false,
+          "rationale": "La fórmula matemática es independiente del proceso de normalización o limpieza de los datos de entrada."
+        }
+      ],
+      "hint": "Considera qué sucede con el resultado final si la precisión es muy alta pero el recall es casi cero."
+    },
+    {
+      "question": "¿Cuál es una limitación fundamental de la métrica Exact Match en la evaluación de traducciones?",
+      "answerOptions": [
+        {
+          "text": "Es demasiado estricta, ya que penaliza variaciones válidas como el uso de sinónimos o cambios menores en el orden.",
+          "isCorrect": true,
+          "rationale": "La traducción es una tarea abierta donde múltiples respuestas pueden ser correctas; Exact Match solo acepta la identidad total."
+        },
+        {
+          "text": "Requiere un entrenamiento previo con modelos de lenguaje masivos entrenados sobre corpus muy extensos.",
+          "isCorrect": false,
+          "rationale": "Exact Match es una comparación booleana simple que no requiere inteligencia artificial ni modelos preentrenados."
+        },
+        {
+          "text": "Solo se puede aplicar a textos en inglés debido a sus dependencias lingüísticas.",
+          "isCorrect": false,
+          "rationale": "Es una métrica universalmente aplicable a cualquier cadena de caracteres, independientemente del idioma."
+        },
+        {
+          "text": "No permite detectar si una palabra ha sido omitida en la traducción.",
+          "isCorrect": false,
+          "rationale": "Cualquier omisión rompe la igualdad de las cadenas, por lo que Exact Match detectaría la diferencia inmediatamente."
+        }
+      ],
+      "hint": "Recuerda que en traducción, una misma idea puede expresarse de varias formas correctas."
+    },
+    {
+      "question": "Si definimos el conjunto A como las palabras de la referencia y el conjunto B como las de la hipótesis, ¿cómo se calcula el índice Jaccard?",
+      "answerOptions": [
+        {
+          "text": "|A ∩ B| / |A ∪ B|",
+          "isCorrect": true,
+          "rationale": "El índice Jaccard mide el solapamiento dividiendo la intersección de los conjuntos entre su unión."
+        },
+        {
+          "text": "|A ∪ B| / |A ∩ B|",
+          "isCorrect": false,
+          "rationale": "Esta fórmula es la inversa de Jaccard y produciría valores mayores a 1, lo cual no es estándar para una métrica de similitud."
+        },
+        {
+          "text": "|A ∩ B| × |A ∪ B|",
+          "isCorrect": false,
+          "rationale": "Multiplicar la intersección por la unión no normaliza el resultado entre 0 y 1, lo que dificulta la comparación entre frases de distinta longitud."
+        },
+        {
+          "text": "|A| - |B|",
+          "isCorrect": false,
+          "rationale": "Restar el tamaño de los conjuntos solo indicaría la diferencia de longitud, ignorando por completo qué palabras coinciden."
+        }
+      ],
+      "hint": "Esta métrica busca la proporción de elementos compartidos respecto al total de elementos únicos en ambas versiones."
+    },
+    {
+      "question": "¿Qué representa un bigrama en el análisis de n-gramas aplicado a la evaluación de traducciones?",
+      "answerOptions": [
+        {
+          "text": "Una secuencia de dos palabras consecutivas en el texto.",
+          "isCorrect": true,
+          "rationale": "Los n-gramas capturan información sobre el orden; en el caso de los bigramas, el valor de n es 2."
+        },
+        {
+          "text": "Una palabra que aparece dos veces dentro de la misma frase.",
+          "isCorrect": false,
+          "rationale": "Eso se refiere a la frecuencia de un unigrama, no a una secuencia de elementos adyacentes."
+        },
+        {
+          "text": "Una traducción que ha sido revisada por dos personas distintas.",
+          "isCorrect": false,
+          "rationale": "El término bigrama es un concepto computacional de segmentación de texto, no un procedimiento de revisión humana."
+        },
+        {
+          "text": "El uso de dos sinónimos para una misma palabra del texto fuente.",
+          "isCorrect": false,
+          "rationale": "Aunque se relacione con el léxico, los bigramas se definen por la contigüidad posicional, no por la relación semántica de sinonimia."
+        }
+      ],
+      "hint": "El prefijo 'bi-' indica el número de elementos que conforman la secuencia."
+    },
+    {
+      "question": "¿Por qué la métrica BLEU incorpora una 'penalización por brevedad' (*brevity penalty*)?",
+      "answerOptions": [
+        {
+          "text": "Para evitar que traducciones muy cortas obtengan una precisión artificialmente alta al omitir información difícil.",
+          "isCorrect": true,
+          "rationale": "Sin esta penalización, un sistema podría traducir solo las dos palabras de las que está seguro y obtener un 1.0 en precisión de n-gramas."
+        },
+        {
+          "text": "Para incentivar que el sistema genere textos más largos que la referencia original.",
+          "isCorrect": false,
+          "rationale": "BLEU no busca que la traducción sea más larga, sino que tenga una longitud similar a la de las referencias humanas."
+        },
+        {
+          "text": "Para corregir errores derivados del uso de sinónimos en la hipótesis generada por el sistema automático.",
+          "isCorrect": false,
+          "rationale": "La penalización por brevedad se basa únicamente en la longitud de las cadenas, no en la semántica o elección de palabras."
+        },
+        {
+          "text": "Para reducir el tiempo de procesamiento necesario para calcular la métrica.",
+          "isCorrect": false,
+          "rationale": "La penalización es un ajuste matemático al final del cálculo y no afecta significativamente al rendimiento computacional."
+        }
+      ],
+      "hint": "Considera qué pasaría si un sistema solo traduce la primera palabra de una frase larga y esa palabra es correcta."
+    },
+    {
+      "question": "¿Cuál es la principal ventaja de chrF sobre métricas basadas exclusivamente en palabras como BLEU?",
+      "answerOptions": [
+        {
+          "text": "Es más capaz de detectar similitudes parciales y parentescos formales en lenguas con mucha variación morfológica.",
+          "isCorrect": true,
+          "rationale": "Al trabajar con n-gramas de caracteres, chrF reconoce raíces compartidas entre palabras con diferentes desinencias de género, número o tiempo."
+        },
+        {
+          "text": "Garantiza que la traducción sea semánticamente perfecta aunque cambie la forma.",
+          "isCorrect": false,
+          "rationale": "Como métrica superficial, chrF sigue basándose en la forma física de los caracteres y no comprende el significado profundo."
+        },
+        {
+          "text": "No requiere una traducción humana de referencia para realizar la evaluación.",
+          "isCorrect": false,
+          "rationale": "Al igual que BLEU, chrF es una métrica de referencia y necesita un texto humano para comparar la hipótesis."
+        },
+        {
+          "text": "Ignora por completo el orden de las palabras en la frase, tratándolas como un conjunto sin secuencia definida.",
+          "isCorrect": false,
+          "rationale": "Aunque trabaje con caracteres, estos siguen una secuencia, y la variante chrF++ incluso incorpora n-gramas de palabras para captar el orden léxico."
+        }
+      ],
+      "hint": "Piensa en idiomas donde las palabras cambian de forma según el género o el número (como el español)."
+    },
+    {
+      "question": "¿Qué característica distingue a METEOR en su intento de correlacionar mejor con los juicios humanos?",
+      "answerOptions": [
+        {
+          "text": "Permite coincidencias flexibles mediante el uso de raíces (*stemming*) y diccionarios de sinónimos.",
+          "isCorrect": true,
+          "rationale": "METEOR va más allá de la coincidencia exacta de cadenas, permitiendo que 'correr' y 'corrió' se consideren aciertos."
+        },
+        {
+          "text": "Utiliza únicamente modelos neuronales de última generación para comparar vectores.",
+          "isCorrect": false,
+          "rationale": "METEOR es una métrica clásica que utiliza recursos lingüísticos definidos de antemano (como WordNet), no necesariamente modelos de embeddings neuronales."
+        },
+        {
+          "text": "Se basa exclusivamente en la precisión de los unigramas, sin considerar en absoluto el orden de las palabras.",
+          "isCorrect": false,
+          "rationale": "METEOR incluye una penalización por fragmentación para tener en cuenta si las palabras coincidentes están en un orden coherente."
+        },
+        {
+          "text": "Evalúa la calidad de la traducción sin necesidad de preprocesamiento o limpieza previa.",
+          "isCorrect": false,
+          "rationale": "Como todas las métricas, METEOR se beneficia y a menudo requiere etapas de normalización para funcionar correctamente con sus recursos lingüísticos."
+        }
+      ],
+      "hint": "Busca una función que le permita reconocer que 'médico' y 'doctor' están relacionados."
+    },
+    {
+      "question": "¿Cómo utiliza BERTScore los modelos de lenguaje para evaluar la similitud entre frases?",
+      "answerOptions": [
+        {
+          "text": "Compara la similitud de los *embeddings* contextuales de cada *token* de la hipótesis con los de la referencia.",
+          "isCorrect": true,
+          "rationale": "Al usar modelos tipo BERT, la representación de cada palabra cambia según su contexto, permitiendo comparaciones semánticas más precisas."
+        },
+        {
+          "text": "Cuenta cuántas veces aparece la palabra 'BERT' en el texto fuente y en la traducción.",
+          "isCorrect": false,
+          "rationale": "El nombre de la métrica proviene del modelo utilizado (Bidirectional Encoder Representations from Transformers), no de la búsqueda de esa palabra clave."
+        },
+        {
+          "text": "Genera una nueva traducción automática y la compara con la original mediante Jaccard.",
+          "isCorrect": false,
+          "rationale": "BERTScore es una métrica de evaluación que utiliza representaciones vectoriales preexistentes, no un motor de traducción que genere nuevo texto."
+        },
+        {
+          "text": "Mide el tiempo que tarda un modelo neuronal en procesar la frase de referencia antes de devolver cualquier puntuación.",
+          "isCorrect": false,
+          "rationale": "La métrica se enfoca en la calidad lingüística y semántica del contenido, no en la eficiencia computacional o latencia del modelo."
+        }
+      ],
+      "hint": "Esta métrica sustituye la coincidencia de letras por la coincidencia de vectores que representan el significado en contexto."
+    },
+    {
+      "question": "¿Qué innovación fundamental introduce la métrica COMET respecto a métricas tradicionales como BLEU o chrF?",
+      "answerOptions": [
+        {
+          "text": "Es capaz de incorporar información del texto fuente, además de la hipótesis y la referencia.",
+          "isCorrect": true,
+          "rationale": "COMET utiliza un marco multilingüe que permite evaluar la adecuación de la traducción respecto al original, no solo su parecido con la referencia."
+        },
+        {
+          "text": "Es la única métrica que no requiere el uso de Python para su ejecución en ningún entorno de programación.",
+          "isCorrect": false,
+          "rationale": "COMET es un marco de trabajo altamente tecnológico que se implementa y ejecuta típicamente en entornos de programación como Python."
+        },
+        {
+          "text": "Reduce drásticamente el coste computacional al no utilizar redes neuronales.",
+          "isCorrect": false,
+          "rationale": "Al contrario, COMET es más exigente computacionalmente porque se basa en modelos neuronales profundos para codificar los textos."
+        },
+        {
+          "text": "Se basa exclusivamente en reglas gramaticales codificadas a mano por lingüistas.",
+          "isCorrect": false,
+          "rationale": "Es una métrica aprendida que se entrena con grandes volúmenes de datos y juicios humanos, alejándose de los sistemas basados puramente en reglas."
+        }
+      ],
+      "hint": "Piensa en qué elemento del proceso de traducción (fuente → destino) suelen ignorar las métricas que solo miran la referencia humana."
+    },
+    {
+      "question": "En el preprocesamiento de textos con Python, ¿por qué es común aplicar el método `.lower()` antes de comparar cadenas?",
+      "answerOptions": [
+        {
+          "text": "Para evitar que la métrica considere como diferentes palabras que solo varían en el uso de mayúsculas (como al inicio de frase).",
+          "isCorrect": true,
+          "rationale": "La normalización a minúsculas reduce el ruido superficial, permitiendo que 'Árbol' y 'árbol' se identifiquen como la misma unidad léxica."
+        },
+        {
+          "text": "Porque las métricas automáticas como BLEU solo funcionan con textos en minúsculas por diseño técnico.",
+          "isCorrect": false,
+          "rationale": "Las métricas pueden procesar cualquier carácter; el paso a minúsculas es una decisión metodológica del evaluador, no una restricción de la fórmula."
+        },
+        {
+          "text": "Para aumentar artificialmente la puntuación de las traducciones de baja calidad sin mejorar realmente su fidelidad al original.",
+          "isCorrect": false,
+          "rationale": "El objetivo es la consistencia y la eliminación de diferencias irrelevantes, no la manipulación de los resultados de calidad."
+        },
+        {
+          "text": "Porque el lenguaje Python no permite comparar un string con mayúsculas y otro con minúsculas.",
+          "isCorrect": false,
+          "rationale": "Python puede compararlos perfectamente, pero el operador `==` devolverá `False` si hay diferencias de caja, lo cual no siempre es deseable en evaluación lingüística."
+        }
+      ],
+      "hint": "Considera la diferencia entre 'La' al principio de una frase y 'la' en medio de ella desde un punto de vista léxico."
+    },
+    {
+      "question": "¿Cuál es la función del parámetro `smoothing_function` al calcular BLEU con la biblioteca NLTK?",
+      "answerOptions": [
+        {
+          "text": "Evitar que la puntuación sea cero en frases cortas cuando no hay coincidencias de n-gramas de mayor orden.",
+          "isCorrect": true,
+          "rationale": "El suavizado asigna un valor pequeño a los niveles sin coincidencia para que el promedio geométrico no colapse a cero."
+        },
+        {
+          "text": "Traducir automáticamente los términos que el sistema no ha sabido procesar.",
+          "isCorrect": false,
+          "rationale": "BLEU es una métrica de evaluación pasiva; no tiene capacidad para generar o corregir traducciones."
+        },
+        {
+          "text": "Eliminar automáticamente los signos de puntuación y las palabras vacías (*stop words*).",
+          "isCorrect": false,
+          "rationale": "La limpieza y el filtrado de palabras son pasos de preprocesamiento manual; el smoothing es un ajuste estadístico del cálculo."
+        },
+        {
+          "text": "Aumentar la velocidad de cálculo de la métrica en corpus de gran tamaño mediante paralelización interna.",
+          "isCorrect": false,
+          "rationale": "El smoothing añade una pequeña complejidad adicional al cálculo, por lo que no está diseñado para la optimización de la velocidad."
+        }
+      ],
+      "hint": "Recuerda que BLEU combina la precisión de 1-gramas, 2-gramas, 3-gramas y 4-gramas mediante una multiplicación."
+    }
+  ],
+  "topics": {
+    "covered": [
+      "Métricas léxicas básicas (Precisión, Recall, F1)",
+      "Índice Jaccard y Exact Match",
+      "Métrica BLEU y n-gramas",
+      "Métrica chrF y evaluación por caracteres",
+      "Métricas neuronales y semánticas (BERTScore, BLEURT, COMET)",
+      "Interpretación lingüística y preprocesamiento en Python"
+    ],
+    "followUp": [
+      "Modelos de lenguaje tipo Transformer (BERT, RoBERTa)",
+      "Arquitecturas de Traducción Automática Neuronal (NMT)",
+      "Análisis de errores y tipologías de calidad lingüística (MQM, DQF)",
+      "Tratamiento avanzado de la morfología en PLN"
+    ]
+  }
+}

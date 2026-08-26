@@ -1,0 +1,281 @@
+{
+  "quiz": [
+    {
+      "question": "¿Cuál es la función principal de un pipeline lingüístico en el preprocesamiento de textos?",
+      "answerOptions": [
+        {
+          "text": "Ejecutar una secuencia ordenada de transformaciones para convertir texto bruto en datos estructurados.",
+          "isCorrect": true,
+          "rationale": "Un pipeline se define como una cadena de pasos donde cada operación prepara la salida para el siguiente proceso, permitiendo una transformación coherente y reproducible."
+        },
+        {
+          "text": "Eliminar automáticamente toda la información gramatical para simplificar el entrenamiento de modelos.",
+          "isCorrect": false,
+          "rationale": "El objetivo no es destruir información gramatical, sino modelarla; de hecho, pasos como el PoS tagging añaden esta información."
+        },
+        {
+          "text": "Traducir el texto de un dominio especializado a un lenguaje de dominio general.",
+          "isCorrect": false,
+          "rationale": "El pipeline prepara el texto para tareas posteriores, como la traducción, pero su función central no es la traducción en sí misma."
+        },
+        {
+          "text": "Garantizar que el sistema de PLN no necesite modelos estadísticos para funcionar.",
+          "isCorrect": false,
+          "rationale": "El preprocesamiento suele ser el paso previo al uso de modelos estadísticos o neuronales, no un sustituto de estos."
+        }
+      ],
+      "hint": "Imagina una cadena de montaje donde cada estación realiza una tarea específica sobre el producto."
+    },
+    {
+      "question": "En el contexto de un corpus farmacéutico, ¿qué riesgo conlleva aplicar la normalización con `.lower()` de forma indiscriminada?",
+      "answerOptions": [
+        {
+          "text": "La pérdida de distinción entre palabras comunes y siglas técnicas como AINE.",
+          "isCorrect": true,
+          "rationale": "En textos médicos, las mayúsculas suelen diferenciar siglas, nombres comerciales o códigos institucionales que podrían confundirse con palabras comunes al pasar a minúsculas."
+        },
+        {
+          "text": "Un aumento innecesario en la dispersión morfológica de los términos analizados en el corpus.",
+          "isCorrect": false,
+          "rationale": "Al contrario, pasar a minúsculas suele reducir la dispersión al unificar variantes de la misma palabra."
+        },
+        {
+          "text": "La imposibilidad de aplicar expresiones regulares en pasos posteriores.",
+          "isCorrect": false,
+          "rationale": "Las expresiones regulares funcionan perfectamente con minúsculas; simplemente hay que ajustar el patrón de búsqueda."
+        },
+        {
+          "text": "La eliminación de los saltos de línea y espacios en blanco del documento.",
+          "isCorrect": false,
+          "rationale": "El método `.lower()` solo afecta a los caracteres alfabéticos, no a la estructura de espacios o puntuación."
+        }
+      ],
+      "hint": "Piensa en términos como 'AINE' (antiinflamatorios) frente a 'aine' como una posible cadena de texto sin sentido."
+    },
+    {
+      "question": "Si utilizas el patrón de expresión regular `r'[^\\w\\s]'` en `re.sub()` para limpiar un texto médico, ¿cuál es el efecto principal?",
+      "answerOptions": [
+        {
+          "text": "Se eliminan todos los caracteres que no sean letras, números o espacios en blanco.",
+          "isCorrect": true,
+          "rationale": "El símbolo `^` dentro de los corchetes niega la clase, afectando a todo lo que no sea un carácter de palabra (`\\w`) o espacio (`\\s`)."
+        },
+        {
+          "text": "Se conservan únicamente los signos de puntuación y se eliminan las palabras.",
+          "isCorrect": false,
+          "rationale": "Este sería el efecto si el patrón no incluyera la negación `^` dentro de la clase de caracteres."
+        },
+        {
+          "text": "Se eliminan exclusivamente los números para evitar ruido en los datos clínicos.",
+          "isCorrect": false,
+          "rationale": "El metacaracter `\\w` incluye números, por lo que este patrón los conservaría en lugar de eliminarlos."
+        },
+        {
+          "text": "Se sustituyen los espacios en blanco por guiones bajos para facilitar la tokenización.",
+          "isCorrect": false,
+          "rationale": "El patrón busca signos de puntuación y símbolos para eliminarlos, no realiza transformaciones sobre los espacios en blanco."
+        }
+      ],
+      "hint": "Analiza el significado del símbolo de intercalación `^` cuando aparece al principio de un conjunto entre corchetes."
+    },
+    {
+      "question": "¿Por qué se afirma que la tokenización en spaCy es más compleja que simplemente dividir por espacios en blanco?",
+      "answerOptions": [
+        {
+          "text": "Porque identifica de forma inteligente unidades como abreviaturas, signos de puntuación y prefijos.",
+          "isCorrect": true,
+          "rationale": "Un tokenizador lingüístico reconoce que una unidad como '10mg/kg' o una abreviatura no debe segmentarse igual que una frase simple separada por espacios."
+        },
+        {
+          "text": "Porque requiere que el texto haya sido lematizado previamente para reconocer los límites de palabra.",
+          "isCorrect": false,
+          "rationale": "La lematización es un paso posterior que depende de una tokenización ya realizada, no al revés."
+        },
+        {
+          "text": "Porque convierte automáticamente cada palabra a su forma canónica de diccionario.",
+          "isCorrect": false,
+          "rationale": "Esa es la definición de lematización, no de tokenización."
+        },
+        {
+          "text": "Porque solo funciona si el texto se ha limpiado de signos de puntuación mediante expresiones regulares.",
+          "isCorrect": false,
+          "rationale": "spaCy puede tokenizar texto con puntuación; de hecho, suele ser preferible para mantener la estructura oracional."
+        }
+      ],
+      "hint": "Considera cómo debería tratarse un punto al final de una frase o una unidad de medida como 'mg/kg'."
+    },
+    {
+      "question": "En el preprocesamiento de un prospecto farmacéutico, ¿cuál es el principal argumento para NO eliminar la palabra 'no' de la lista de stopwords?",
+      "answerOptions": [
+        {
+          "text": "Su eliminación alteraría la polaridad de las advertencias y contraindicaciones médicas.",
+          "isCorrect": true,
+          "rationale": "En medicina, la negación tiene un peso semántico decisivo; eliminar 'no' podría transformar una prohibición en una recomendación."
+        },
+        {
+          "text": "Es una palabra de baja frecuencia que no afecta apenas al rendimiento general del sistema.",
+          "isCorrect": false,
+          "rationale": "Al contrario, 'no' es una palabra de muy alta frecuencia, pero su importancia reside en su valor semántico, no en su frecuencia."
+        },
+        {
+          "text": "spaCy no permite filtrar palabras de menos de tres letras en sus modelos estándar.",
+          "isCorrect": false,
+          "rationale": "Las bibliotecas de PLN permiten filtrar cualquier palabra independientemente de su longitud; es una decisión del lingüista."
+        },
+        {
+          "text": "La lematización de la palabra 'no' produce resultados inconsistentes en español.",
+          "isCorrect": false,
+          "rationale": "La palabra 'no' es un adverbio invariable y su lematización es directa; el problema es su pérdida de significado contextual."
+        }
+      ],
+      "hint": "Piensa en la diferencia de seguridad clínica entre 'Se recomienda su uso' y 'No se recomienda su uso'."
+    },
+    {
+      "question": "¿Cuál es la diferencia fundamental entre la lematización y la tokenización de un texto?",
+      "answerOptions": [
+        {
+          "text": "La tokenización identifica las unidades del texto, mientras que la lematización busca su forma base.",
+          "isCorrect": true,
+          "rationale": "Son procesos complementarios: primero se divide el texto en unidades (tokens) y luego se asigna a cada una su forma canónica (lema)."
+        },
+        {
+          "text": "La tokenización es exclusiva de NLTK y la lematización es exclusiva de spaCy.",
+          "isCorrect": false,
+          "rationale": "Ambas bibliotecas pueden realizar ambas tareas, aunque spaCy las integra de forma más automática en su pipeline."
+        },
+        {
+          "text": "La lematización elimina las stopwords y la tokenización limpia la puntuación.",
+          "isCorrect": false,
+          "rationale": "Estas son tareas de filtrado y limpieza, diferentes de la segmentación en unidades o la reducción a formas base."
+        },
+        {
+          "text": "La tokenización solo se aplica a sustantivos y la lematización a verbos.",
+          "isCorrect": false,
+          "rationale": "Ambas operaciones se aplican a todas las categorías gramaticales relevantes del texto."
+        }
+      ],
+      "hint": "Una responde a '¿qué unidades hay?' y la otra a '¿cuál es la forma de diccionario de esta unidad?'."
+    },
+    {
+      "question": "¿Qué utilidad ofrece el atributo `token.pos_` en el análisis de un corpus médico?",
+      "answerOptions": [
+        {
+          "text": "Permite identificar categorías gramaticales para extraer núcleos terminológicos como los sustantivos.",
+          "isCorrect": true,
+          "rationale": "El etiquetado PoS (Part-of-Speech) facilita la extracción de términos técnicos, que frecuentemente son sustantivos o adjetivos."
+        },
+        {
+          "text": "Indica la posición exacta del carácter inicial del token dentro del documento original.",
+          "isCorrect": false,
+          "rationale": "Aunque spaCy registra la posición (offset), el atributo `.pos_` se refiere específicamente a la categoría gramatical (Part-of-Speech)."
+        },
+        {
+          "text": "Calcula automáticamente la frecuencia de aparición del token en el conjunto del corpus.",
+          "isCorrect": false,
+          "rationale": "La frecuencia se calcula con herramientas externas como `Counter`, no es un atributo intrínseco del objeto token en su análisis morfosintáctico."
+        },
+        {
+          "text": "Determina si un token debe ser considerado como una stopword según el modelo cargado en la biblioteca spaCy en ese momento.",
+          "isCorrect": false,
+          "rationale": "Esa función suele corresponder al atributo `.is_stop`, mientras que `.pos_` se ocupa de la gramática."
+        }
+      ],
+      "hint": "Las siglas PoS significan 'Part-of-Speech' (categoría gramatical)."
+    },
+    {
+      "question": "En la organización de resultados con Pandas, ¿qué representa típicamente una fila en un DataFrame diseñado siguiendo el principio de 'tidy data' para PLN?",
+      "answerOptions": [
+        {
+          "text": "Una observación individual, como un token único con sus respectivos atributos.",
+          "isCorrect": true,
+          "rationale": "En una tabla de anotación lingüística, cada fila suele corresponder a una unidad (token, lema o frase) y las columnas a sus propiedades (categoría, frecuencia, etc.)."
+        },
+        {
+          "text": "El corpus completo transformado en una única cadena de texto normalizada.",
+          "isCorrect": false,
+          "rationale": "Un DataFrame es una estructura tabular; una única cadena no aprovecharía las capacidades de organización por filas y columnas."
+        },
+        {
+          "text": "Una lista de todas las stopwords que han sido filtradas durante el proceso.",
+          "isCorrect": false,
+          "rationale": "Aunque se podría crear una tabla de stopwords, el uso principal es organizar los datos procesados que queremos analizar o exportar."
+        },
+        {
+          "text": "Un comando de Python necesario para poder ejecutar correctamente el pipeline de spaCy.",
+          "isCorrect": false,
+          "rationale": "Pandas es una herramienta de organización de datos, no un lenguaje de ejecución de comandos para otras bibliotecas."
+        }
+      ],
+      "hint": "Piensa en cómo se estructuraría una tabla de Excel donde cada fila es una palabra analizada."
+    },
+    {
+      "question": "¿Por qué es recomendable conservar versiones intermedias del texto (ej. `texto_original`, `texto_sin_puntuacion`, `doc`) en un entorno profesional?",
+      "answerOptions": [
+        {
+          "text": "Para garantizar la trazabilidad y permitir que distintas tareas utilicen la versión más adecuada del texto.",
+          "isCorrect": true,
+          "rationale": "Tareas como la segmentación de oraciones requieren puntuación, mientras que el conteo de frecuencias puede preferir un texto limpio; mantener versiones evita errores irreversibles."
+        },
+        {
+          "text": "Para evitar que Python agote la memoria RAM al procesar archivos de gran tamaño.",
+          "isCorrect": false,
+          "rationale": "Crear múltiples variables en realidad consume más memoria, pero se hace por rigor metodológico, no por eficiencia de hardware."
+        },
+        {
+          "text": "Porque spaCy requiere obligatoriamente comparar el texto bruto con el procesado para validar el análisis.",
+          "isCorrect": false,
+          "rationale": "spaCy no requiere esta comparación por defecto, es una buena práctica del lingüista para el control de calidad."
+        },
+        {
+          "text": "Para asegurar que el modelo de traducción automática aprenda las reglas de las expresiones regulares.",
+          "isCorrect": false,
+          "rationale": "Los modelos de traducción no aprenden código de Python (Regex), sino patrones lingüísticos a partir de los datos proporcionados."
+        }
+      ],
+      "hint": "Recuerda que algunas tareas necesitan los puntos y comas, mientras que otras los consideran ruido."
+    },
+    {
+      "question": "¿Cuál es la principal diferencia metodológica entre NLTK y spaCy a la hora de trabajar con un pipeline de preprocesamiento?",
+      "answerOptions": [
+        {
+          "text": "NLTK es más transparente y pedagógico para tareas aisladas, mientras que spaCy es eficiente e integrado para pipelines industriales.",
+          "isCorrect": true,
+          "rationale": "NLTK permite gestionar recursos como listas de stopwords de forma manual y directa, mientras que spaCy ofrece un flujo de trabajo optimizado y multilingüe."
+        },
+        {
+          "text": "NLTK solo funciona para el idioma inglés y spaCy es exclusivo para el español, sin soporte para otras lenguas.",
+          "isCorrect": false,
+          "rationale": "Ambas herramientas son multilingües, aunque spaCy destaca por sus modelos preentrenados específicos para diversos idiomas."
+        },
+        {
+          "text": "NLTK es una biblioteca de visualización de datos y spaCy es un motor de base de datos.",
+          "isCorrect": false,
+          "rationale": "Ambas son bibliotecas de procesamiento de lenguaje natural, no se dedican principalmente a la visualización o al almacenamiento de bases de datos."
+        },
+        {
+          "text": "NLTK realiza el análisis morfosintáctico sin necesidad de cargar modelos de lengua.",
+          "isCorrect": false,
+          "rationale": "Ambas bibliotecas requieren recursos lingüísticos o modelos para realizar análisis avanzados como el PoS tagging."
+        }
+      ],
+      "hint": "Considera cuál de las dos bibliotecas te permite ver y modificar más fácilmente una lista de palabras vacías."
+    }
+  ],
+  "topics": {
+    "covered": [
+      "Pipelines de preprocesamiento lingüístico",
+      "Normalización y limpieza con expresiones regulares",
+      "Tokenización y lematización",
+      "Manejo de stopwords en dominios especializados",
+      "Análisis morfosintáctico (PoS tagging)",
+      "Organización de resultados con Pandas"
+    ],
+    "followUp": [
+      "Adaptación de dominio en traducción automática neuronal",
+      "Extracción de unidades terminológicas multipalabra",
+      "Análisis de la negación e incertidumbre en textos clínicos",
+      "Modelado de lengua con $es\\_core\\_news\\_sm$",
+      "Uso de Universal Dependencies para anotación gramatical"
+    ]
+  }
+}

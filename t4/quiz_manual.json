@@ -1,0 +1,281 @@
+{
+  "quiz": [
+    {
+      "question": "En un proyecto de revisión lingüística donde se comparan varias versiones de un mismo documento institucional redactadas por distintos proveedores, ¿cuál es la característica principal de los llamados 'textos paralelos monolingües'?",
+      "answerOptions": [
+        {
+          "text": "Son versiones en la misma lengua que representan un mismo contenido o función comunicativa.",
+          "isCorrect": true,
+          "rationale": "El concepto se refiere a la comparación de diferentes variantes (como las de distintos proveedores) de un mismo documento en español."
+        },
+        {
+          "text": "Son traducciones directas de una lengua origen a una lengua meta distinta.",
+          "isCorrect": false,
+          "rationale": "Eso describe un corpus paralelo tradicional, no la variante monolingüe utilizada para comparar versiones en el mismo idioma."
+        },
+        {
+          "text": "Son textos de diferentes géneros literarios que comparten un mismo autor.",
+          "isCorrect": false,
+          "rationale": "El paralelismo en este caso es de contenido y función, no necesariamente de autoría o género literario diverso."
+        },
+        {
+          "text": "Son textos en lenguas diferentes que no guardan relación de traducción entre sí.",
+          "isCorrect": false,
+          "rationale": "Esto se ajustaría más a la definición de un corpus comparable multilingüe, no paralelo monolingüe."
+        }
+      ],
+      "hint": "Observa el término «monolingüe» y cómo se aplican a la comparación de versiones de un mismo documento."
+    },
+    {
+      "question": "Al leer archivos en Python para el procesamiento de textos en español, ¿por qué es fundamental especificar `encoding=\"utf-8\"`?",
+      "answerOptions": [
+        {
+          "text": "Para asegurar la correcta interpretación de caracteres como tildes y eñes.",
+          "isCorrect": true,
+          "rationale": "UTF-8 es el estándar que permite representar correctamente los caracteres especiales del español, evitando errores de lectura."
+        },
+        {
+          "text": "Para comprimir el tamaño del archivo de texto en la memoria RAM.",
+          "isCorrect": false,
+          "rationale": "La codificación define cómo se representan los caracteres, no es un método de compresión de datos."
+        },
+        {
+          "text": "Para convertir automáticamente el texto de formato `.pdf` a `.txt`.",
+          "isCorrect": false,
+          "rationale": "La función 'open' con codificación no realiza conversiones de formato de archivo, solo lee el flujo de bytes del archivo plano."
+        },
+        {
+          "text": "Para que Python pueda ejecutar funciones matemáticas complejas sobre el texto.",
+          "isCorrect": false,
+          "rationale": "La codificación de caracteres no tiene relación con la capacidad de ejecución de funciones lógicas o matemáticas del lenguaje."
+        }
+      ],
+      "hint": "Piensa en las dificultades que presentan los caracteres especiales del español si se usa una codificación por defecto errónea."
+    },
+    {
+      "question": "¿Qué limitación principal presenta el uso de `texto.split(\".\")` para segmentar oraciones en español?",
+      "answerOptions": [
+        {
+          "text": "No distingue entre un punto final de oración y un punto de abreviatura o cifra.",
+          "isCorrect": true,
+          "rationale": "El punto se usa en abreviaturas (Sr.), decimales o siglas, lo que genera cortes incorrectos en unidades que no son oraciones."
+        },
+        {
+          "text": "Produce un error de sintaxis si el texto contiene más de diez puntos.",
+          "isCorrect": false,
+          "rationale": "Python puede manejar cualquier cantidad de separadores; el límite no es técnico, sino lingüístico."
+        },
+        {
+          "text": "Elimina automáticamente todas las palabras que están escritas justo junto al punto.",
+          "isCorrect": false,
+          "rationale": "El método 'split' solo elimina el carácter separador, conservando el resto de las palabras intactas."
+        },
+        {
+          "text": "Solo funciona si el texto está escrito íntegramente en letras mayúsculas.",
+          "isCorrect": false,
+          "rationale": "La segmentación por caracteres es independiente de la capitalización de las letras en la cadena de texto."
+        }
+      ],
+      "hint": "Considera otros usos del punto en la escritura normal que no implican el cierre de una idea completa."
+    },
+    {
+      "question": "En el análisis de frecuencias, ¿qué ventaja aporta aplicar `.lower()` antes de usar `.count()`?",
+      "answerOptions": [
+        {
+          "text": "Agrupa variantes de capitalización para contar 'Empresa' e 'empresa' como la misma unidad.",
+          "isCorrect": true,
+          "rationale": "Al normalizar a minúsculas, se ignoran las diferencias de mayúsculas iniciales, facilitando el recuento léxico global."
+        },
+        {
+          "text": "Permite que Python cuente palabras de diferentes idiomas simultáneamente.",
+          "isCorrect": false,
+          "rationale": "La normalización a minúsculas solo afecta a la grafía de los caracteres, no a la detección del idioma."
+        },
+        {
+          "text": "Elimina los espacios en blanco innecesarios al final de las oraciones.",
+          "isCorrect": false,
+          "rationale": "La eliminación de espacios se realiza con el método 'strip', mientras que 'lower' solo afecta a la caja de las letras."
+        },
+        {
+          "text": "Identifica automáticamente los sinónimos del término buscado.",
+          "isCorrect": false,
+          "rationale": "El método 'count' busca secuencias de caracteres exactas y no posee conocimiento semántico de la lengua."
+        }
+      ],
+      "hint": "Recuerda que para Python, 'A' y 'a' son caracteres totalmente distintos si no se normalizan."
+    },
+    {
+      "question": "La expresión regular `r\"[.,][^\\\\s]\"` se utiliza específicamente para localizar:",
+      "answerOptions": [
+        {
+          "text": "La ausencia de un espacio después de un signo de puntuación.",
+          "isCorrect": true,
+          "rationale": "El patrón detecta un punto o coma seguido inmediatamente de un carácter que no es un espacio en blanco."
+        },
+        {
+          "text": "Cualquier punto o coma que esté al final de un párrafo.",
+          "isCorrect": false,
+          "rationale": "El patrón busca específicamente un carácter que NO sea un espacio después del signo, no el final de un bloque."
+        },
+        {
+          "text": "Palabras que contienen un punto o coma en su interior, como direcciones web.",
+          "isCorrect": false,
+          "rationale": "Aunque podría detectarlas, su propósito en revisión lingüística es hallar errores tipográficos de espaciado."
+        },
+        {
+          "text": "Todos los espacios dobles que aparecen entre dos oraciones.",
+          "isCorrect": false,
+          "rationale": "Para los dobles espacios se buscaría una secuencia de dos caracteres de espacio, no signos de puntuación."
+        }
+      ],
+      "hint": "Analiza el significado del metacarácter `[^\\\\s]`, que representa la negación de un espacio en blanco."
+    },
+    {
+      "question": "Desde un punto de vista metodológico, ¿cuál es la diferencia entre un indicio automático y un diagnóstico lingüístico?",
+      "answerOptions": [
+        {
+          "text": "El indicio es una señal mecánica localizada por el código; el diagnóstico es la interpretación profesional.",
+          "isCorrect": true,
+          "rationale": "La máquina localiza patrones sospechosos (indicios), pero solo la lingüista decide si es un error basándose en el contexto."
+        },
+        {
+          "text": "No hay diferencia; si el programa detecta un patrón, es un error confirmado.",
+          "isCorrect": false,
+          "rationale": "Las reglas automáticas pueden generar falsos positivos que requieren validación humana experta."
+        },
+        {
+          "text": "El indicio se refiere a errores gramaticales y el diagnóstico a errores de formato.",
+          "isCorrect": false,
+          "rationale": "Ambos términos se aplican a cualquier tipo de fenómeno detectado, independientemente de su categoría lingüística o formal."
+        },
+        {
+          "text": "El diagnóstico es lo que hace Python de forma automática y el indicio es lo que entrega finalmente el cliente.",
+          "isCorrect": false,
+          "rationale": "Es al revés: la herramienta automatizada provee indicios y la especialista realiza el diagnóstico."
+        }
+      ],
+      "hint": "Considera quién tiene la responsabilidad final de decidir si un cambio es necesario."
+    },
+    {
+      "question": "¿Qué ocurre si una función de revisión lingüística en Python termina sus operaciones sin una instrucción `return`?",
+      "answerOptions": [
+        {
+          "text": "La función devuelve automáticamente el valor `None` y el resultado no se puede guardar en una variable.",
+          "isCorrect": true,
+          "rationale": "Sin 'return', la función ejecuta sus procesos pero no entrega nada al flujo principal del programa para su uso posterior."
+        },
+        {
+          "text": "El programa se detiene y muestra un error de tipo 'MemoryLeak' que interrumpe toda la ejecución.",
+          "isCorrect": false,
+          "rationale": "La falta de un 'return' no detiene el programa con un error grave; simplemente la función no devuelve datos."
+        },
+        {
+          "text": "La función borra el archivo de texto original para liberar espacio.",
+          "isCorrect": false,
+          "rationale": "Python nunca realiza acciones destructivas sobre archivos a menos que se programen para ello."
+        },
+        {
+          "text": "La función imprime automáticamente todos los resultados en la consola por defecto.",
+          "isCorrect": false,
+          "rationale": "Imprimir y devolver son acciones distintas; si no hay 'print' ni 'return', el resultado se pierde en el ámbito local."
+        }
+      ],
+      "hint": "Diferencia entre ver un resultado en la pantalla y poder procesar ese dato en otra parte del código."
+    },
+    {
+      "question": "¿Por qué se consideran «candidatos a revisión» las estructuras de `a + infinitivo` detectadas por un patrón como `r\"(\\\\w+)\\\\s+a\\\\s+(\\\\w+(ar|er|ir))\\\\b\"`?",
+      "answerOptions": [
+        {
+          "text": "Porque el patrón no puede distinguir entre usos legítimos como perífrasis y posibles galicismos.",
+          "isCorrect": true,
+          "rationale": "Muchas estructuras correctas (empezó a leer) comparten la misma forma superficial que los usos desaconsejados (temas a tratar)."
+        },
+        {
+          "text": "Porque la preposición 'a' siempre es incorrecta antes de cualquier verbo en infinitivo en español.",
+          "isCorrect": false,
+          "rationale": "Existen numerosas construcciones en español que requieren obligatoriamente la preposición 'a' antes del infinitivo."
+        },
+        {
+          "text": "Porque Python solo puede detectar verbos que terminen en '-ar', ignorando '-er' e '-ir'.",
+          "isCorrect": false,
+          "rationale": "El patrón de la expresión regular incluye las tres terminaciones del infinitivo español."
+        },
+        {
+          "text": "Porque esas estructuras solo aparecen en textos traducidos del inglés, nunca del francés.",
+          "isCorrect": false,
+          "rationale": "Estas estructuras (a + infinitivo) suelen analizarse como posibles calcos del francés, no específicamente del inglés."
+        }
+      ],
+      "hint": "Reflexiona sobre si la forma externa de una frase es suficiente para juzgar su corrección gramatical sin conocer su función sintáctica."
+    },
+    {
+      "question": "En el desarrollo de un informe de revisión, ¿cuál es la utilidad de la función `enumerate(lista, start=1)`?",
+      "answerOptions": [
+        {
+          "text": "Permite recorrer los elementos obteniendo simultáneamente un índice legible para humanos.",
+          "isCorrect": true,
+          "rationale": "Al usar 'start=1', facilitamos la creación de informes donde las versiones u oraciones se numeran desde el 1 en lugar del 0 de Python."
+        },
+        {
+          "text": "Ordena alfabéticamente los textos de la lista completa antes de empezar a procesarlos uno por uno.",
+          "isCorrect": false,
+          "rationale": "La función 'enumerate' no altera el orden de los elementos; solo genera un contador asociado a ellos."
+        },
+        {
+          "text": "Multiplica el contenido del texto por el número de versión indicado.",
+          "isCorrect": false,
+          "rationale": "La función no realiza operaciones aritméticas sobre el contenido del texto, solo gestiona el conteo de iteraciones."
+        },
+        {
+          "text": "Filtra la lista para eliminar los elementos que no contengan números.",
+          "isCorrect": false,
+          "rationale": "No es una función de filtrado; actúa sobre todos los elementos de la lista proporcionando un índice correlativo."
+        }
+      ],
+      "hint": "Piensa en cómo facilitarías la lectura de un informe técnico a una persona que no sabe programación."
+    },
+    {
+      "question": "Al buscar gerundios con expresiones regulares para revisión, ¿cuál es la ventaja de capturar palabras anteriores y posteriores al gerundio?",
+      "answerOptions": [
+        {
+          "text": "Proporciona el contexto necesario para que el lingüista evalúe la corrección del uso detectado.",
+          "isCorrect": true,
+          "rationale": "Sin el contexto (las palabras de alrededor), es imposible decidir si un gerundio es correcto o constituye un error de estilo."
+        },
+        {
+          "text": "Permite que Python aprenda automáticamente si el gerundio es de simultaneidad o de posterioridad.",
+          "isCorrect": false,
+          "rationale": "Las reglas de expresiones regulares no poseen capacidad de aprendizaje semántico ni de análisis lógico-temporal autónomo."
+        },
+        {
+          "text": "Aumenta la velocidad de ejecución del programa al reducir el número de búsquedas.",
+          "isCorrect": false,
+          "rationale": "Capturar más información suele aumentar ligeramente el tiempo de procesamiento, no reducirlo."
+        },
+        {
+          "text": "Garantiza que el gerundio se convierta automáticamente en un participio si es incorrecto.",
+          "isCorrect": false,
+          "rationale": "La detección de patrones no implica la corrección o sustitución automática del texto a menos que se use una función de reemplazo."
+        }
+      ],
+      "hint": "Recuerda que la decisión final de revisión depende de la relación del gerundio con el resto de la frase."
+    }
+  ],
+  "topics": {
+    "covered": [
+      "Textos paralelos monolingües",
+      "Automatización de la revisión lingüística",
+      "Expresiones regulares en Python para PLN",
+      "Segmentación y normalización de textos",
+      "Funciones y trazabilidad en el análisis textual",
+      "Gestión de errores: Falsos positivos y negativos"
+    ],
+    "followUp": [
+      "Técnicas avanzadas de preprocesamiento: Tokenización y Lematización",
+      "Evaluación de calidad según estándares ISO 17100 y 5060",
+      "Lingüística de corpus aplicada a la traducción institucional",
+      "Modelos de anotación de errores (MQM)",
+      "Análisis morfosintáctico con bibliotecas de PLN"
+    ]
+  }
+}

@@ -1,0 +1,282 @@
+{
+  "quiz": [
+    {
+      "question": "¿Cuál es la distinción fundamental entre un término y una palabra de uso general según la teoría de Cabré?",
+      "answerOptions": [
+        {
+          "text": "Un término designa un concepto específico dentro de un dominio de conocimiento especializado.",
+          "isCorrect": true,
+          "rationale": "La terminología se define por la conexión entre la unidad lingüística y un campo de especialidad concreto."
+        },
+        {
+          "text": "Un término es necesariamente una unidad léxica de baja frecuencia en cualquier tipo de texto.",
+          "isCorrect": false,
+          "rationale": "La frecuencia absoluta no define el estatus terminológico; un término puede ser muy frecuente dentro de su dominio especializado."
+        },
+        {
+          "text": "Los términos solo existen en forma de expresiones multipalabra complejas.",
+          "isCorrect": false,
+          "rationale": "Los términos pueden ser unigramas (una sola palabra) o multipalabra (n-gramas)."
+        },
+        {
+          "text": "Un término es cualquier palabra que resulta difícil de entender para un hablante no nativo.",
+          "isCorrect": false,
+          "rationale": "La dificultad de comprensión no es el criterio técnico, sino la designación de un concepto en un área profesional o científica."
+        }
+      ],
+      "hint": "Considere la relación entre el lenguaje y el ámbito de especialidad."
+    },
+    {
+      "question": "En el contexto de la extracción terminológica, ¿qué mide específicamente el concepto de 'termhood'?",
+      "answerOptions": [
+        {
+          "text": "La probabilidad de que una unidad sea propia o relevante para un dominio especializado.",
+          "isCorrect": true,
+          "rationale": "El termhood cuantifica la especificidad de una unidad respecto a un campo temático frente a un corpus general."
+        },
+        {
+          "text": "El grado de estabilidad sintáctica de una combinación específica de palabras en una oración.",
+          "isCorrect": false,
+          "rationale": "Esta descripción corresponde a la unithood, que se centra en la cohesión de la unidad."
+        },
+        {
+          "text": "La cantidad de variantes gramaticales que presenta un término en un corpus.",
+          "isCorrect": false,
+          "rationale": "La variación es un fenómeno terminológico, pero no es lo que define el grado de pertenencia al dominio."
+        },
+        {
+          "text": "La velocidad con la que un sistema de PLN procesa los tokens de un documento.",
+          "isCorrect": false,
+          "rationale": "La eficiencia del procesamiento es una cuestión técnica de computación, no una propiedad lingüística de los términos."
+        }
+      ],
+      "hint": "Piense en la relevancia de una palabra para un área del conocimiento específica."
+    },
+    {
+      "question": "Si un corpus especializado tiene 10 000 tokens en total y el término 'tokenización' aparece 50 veces, ¿cuál es su frecuencia relativa?",
+      "answerOptions": [
+        {
+          "text": "0.005",
+          "isCorrect": true,
+          "rationale": "La frecuencia relativa se calcula dividiendo la frecuencia absoluta entre el total de tokens: 50 / 10000 = 0.005."
+        },
+        {
+          "text": "200",
+          "isCorrect": false,
+          "rationale": "Este resultado se obtiene dividiendo el total de tokens por la frecuencia, lo cual es el proceso inverso al cálculo de la frecuencia relativa."
+        },
+        {
+          "text": "0.05",
+          "isCorrect": false,
+          "rationale": "Este valor implicaría una frecuencia absoluta de 500 apariciones en lugar de 50 para el tamaño de corpus dado."
+        },
+        {
+          "text": "500.000",
+          "isCorrect": false,
+          "rationale": "Este valor es el producto de la frecuencia por el tamaño del corpus, no su proporción."
+        }
+      ],
+      "hint": "Aplique la fórmula de normalización por tamaño de corpus."
+    },
+    {
+      "question": "En la fórmula de 'weirdness' aplicada en la unidad, ¿cuál es la función del parámetro epsilon?",
+      "answerOptions": [
+        {
+          "text": "Evitar el error de división por cero cuando un candidato no aparece en el corpus general.",
+          "isCorrect": true,
+          "rationale": "Si la frecuencia relativa en el corpus general es cero, añadir un valor mínimo permite realizar la división sin romper el programa."
+        },
+        {
+          "text": "Aumentar artificialmente la frecuencia de los términos en el corpus general.",
+          "isCorrect": false,
+          "rationale": "No busca alterar las frecuencias, sino proteger la integridad del cálculo matemático."
+        },
+        {
+          "text": "Eliminar automáticamente las stopwords del ranking final.",
+          "isCorrect": false,
+          "rationale": "El filtrado de stopwords es un proceso de preprocesamiento independiente de la fórmula de especificidad."
+        },
+        {
+          "text": "Calcular el logaritmo natural de la frecuencia absoluta antes de aplicar cualquier otro filtro.",
+          "isCorrect": false,
+          "rationale": "Epsilon es una constante de suavizado, no un operador logarítmico."
+        }
+      ],
+      "hint": "Piense en qué sucede matemáticamente si el denominador de una fracción es cero."
+    },
+    {
+      "question": "¿Por qué se utilizan tuplas en Python para representar n-gramas antes de contarlos con un objeto Counter?",
+      "answerOptions": [
+        {
+          "text": "Porque las tuplas son inmutables y, por lo tanto, pueden usarse como claves en un diccionario o Counter.",
+          "isCorrect": true,
+          "rationale": "En Python, los objetos mutables como las listas no pueden ser claves de diccionarios; se requiere una estructura inmutable como la tupla."
+        },
+        {
+          "text": "Porque las tuplas permiten almacenar más información que las listas simples.",
+          "isCorrect": false,
+          "rationale": "El problema no es la capacidad de almacenamiento, sino las propiedades de la estructura de datos."
+        },
+        {
+          "text": "Porque las tuplas eliminan automáticamente los espacios en blanco al construir cada secuencia de tokens.",
+          "isCorrect": false,
+          "rationale": "La limpieza de espacios se realiza durante la tokenización, no por el simple hecho de usar tuplas."
+        },
+        {
+          "text": "Porque facilitan la conversión de todos los tokens a minúsculas.",
+          "isCorrect": false,
+          "rationale": "La conversión a minúsculas es un paso previo que se aplica a los strings antes de generar los n-gramas."
+        }
+      ],
+      "hint": "Considere los requisitos técnicos para que un objeto sea 'hashable' en Python."
+    },
+    {
+      "question": "Al extraer términos multipalabra en español, ¿cuál es el riesgo de eliminar todas las stopwords antes de generar los n-gramas?",
+      "answerOptions": [
+        {
+          "text": "Que se pierdan conectores internos esenciales, produciendo candidatos incompletos como 'modelo lenguaje' en lugar de 'modelo de lenguaje'.",
+          "isCorrect": true,
+          "rationale": "Muchas unidades terminológicas en español dependen de preposiciones internas; eliminarlas deforma el término natural."
+        },
+        {
+          "text": "Que el sistema no pueda contar la frecuencia absoluta correctamente en ningún nivel del corpus, incluidos unigramas, bigramas y trigramas.",
+          "isCorrect": false,
+          "rationale": "La frecuencia se puede contar igual, el problema reside en la integridad estructural del término."
+        },
+        {
+          "text": "Que el corpus especializado se vuelva más grande que el corpus general.",
+          "isCorrect": false,
+          "rationale": "El filtrado de palabras funcionales reduce el tamaño de ambos corpus, pero no invierte su relación de tamaño."
+        },
+        {
+          "text": "Que las expresiones regulares dejen de funcionar para la limpieza de URLs.",
+          "isCorrect": false,
+          "rationale": "La limpieza de URLs ocurre normalmente antes de la gestión de stopwords y n-gramas."
+        }
+      ],
+      "hint": "Piense en cómo se forman los términos técnicos en nuestra lengua."
+    },
+    {
+      "question": "¿Cuál es la utilidad primordial de una herramienta KWIC (Key Word In Context) para una persona terminóloga?",
+      "answerOptions": [
+        {
+          "text": "Permitir la validación de un candidato al observar cómo se utiliza en su entorno lingüístico real.",
+          "isCorrect": true,
+          "rationale": "El contexto proporcionado por el KWIC ayuda a decidir si una unidad es un concepto estable o una combinación casual."
+        },
+        {
+          "text": "Sustituir la necesidad de un corpus general de contraste.",
+          "isCorrect": false,
+          "rationale": "El KWIC no sustituye el contraste estadístico; sirve para la validación cualitativa posterior."
+        },
+        {
+          "text": "Calcular automáticamente el valor de precisión y recall del sistema.",
+          "isCorrect": false,
+          "rationale": "La evaluación de precisión y recall requiere una comparación con un estándar de oro, no solo la visualización de contextos."
+        },
+        {
+          "text": "Reducir el tiempo de ejecución de la función de tokenización sobre corpus de gran tamaño.",
+          "isCorrect": false,
+          "rationale": "El KWIC es una función de visualización y análisis, no un optimizador del rendimiento del código."
+        }
+      ],
+      "hint": "Imagine que tiene una lista de palabras y necesita saber si realmente funcionan como términos."
+    },
+    {
+      "question": "Al aplicar una 'lista negra' (blacklist) en el refinamiento de candidatos, ¿qué criterio se sugiere para eliminar una unidad?",
+      "answerOptions": [
+        {
+          "text": "Eliminar candidatos compuestos exclusivamente por palabras consideradas demasiado generales o ruidosas por el analista.",
+          "isCorrect": true,
+          "rationale": "Las listas negras permiten descartar unidades como 'sistema' o 'uso' que, aunque frecuentes, no aportan valor específico al glosario."
+        },
+        {
+          "text": "Eliminar cualquier palabra que aparezca más de diez veces en el corpus especializado.",
+          "isCorrect": false,
+          "rationale": "La alta frecuencia suele ser un indicador de termhood; eliminarla por sistema sería contraproducente."
+        },
+        {
+          "text": "Descartar términos que tengan menos de cinco caracteres, sin importar su frecuencia real ni su relevancia en el dominio.",
+          "isCorrect": false,
+          "rationale": "La longitud del string no determina su valor terminológico; hay términos cortos muy importantes."
+        },
+        {
+          "text": "Filtrar todos los términos que ya existan en un diccionario de la Real Academia Española.",
+          "isCorrect": false,
+          "rationale": "Muchos términos especializados están en diccionarios generales, pero siguen siendo relevantes para el dominio estudiado."
+        }
+      ],
+      "hint": "Considere cómo reducir el ruido provocado por palabras procedimentales comunes."
+    },
+    {
+      "question": "Al construir la lista de tokens de un corpus en Python, ¿cuál es la diferencia clave entre usar .append() y .extend()?",
+      "answerOptions": [
+        {
+          "text": ".append() añadiría una lista de tokens como un solo elemento, mientras que .extend() añade cada token individualmente a la lista principal.",
+          "isCorrect": true,
+          "rationale": "Para obtener una lista plana de todos los tokens del corpus, se requiere .extend() para integrar los elementos de cada documento."
+        },
+        {
+          "text": ".append() convierte los tokens a minúsculas, mientras que .extend() los mantiene igual.",
+          "isCorrect": false,
+          "rationale": "La transformación de casos es una operación de strings, no una propiedad del método de lista."
+        },
+        {
+          "text": ".extend() solo funciona correctamente con unigramas, mientras que .append() está limitado exclusivamente a trigramas de tres elementos consecutivos.",
+          "isCorrect": false,
+          "rationale": "Ambos métodos funcionan con cualquier tipo de objeto en Python; la diferencia es cómo se agregan."
+        },
+        {
+          "text": "No hay diferencia real; ambos métodos producen el mismo resultado en la memoria de Python.",
+          "isCorrect": false,
+          "rationale": "La diferencia estructural es decisiva: una produce una lista de listas y la otra una lista plana."
+        }
+      ],
+      "hint": "Piense en la estructura resultante: ¿una lista que contiene otra lista, o una lista con todos los elementos sueltos?"
+    },
+    {
+      "question": "¿Qué significa que un sistema de extracción terminológica sea 'transparente' frente a uno 'neuronal'?",
+      "answerOptions": [
+        {
+          "text": "Que cada decisión y posición en el ranking puede explicarse mediante reglas estadísticas y lingüísticas claramente definidas.",
+          "isCorrect": true,
+          "rationale": "En los métodos transparentes, se puede trazar el origen de un candidato (frecuencia, contraste, filtros) sin depender de procesos opacos."
+        },
+        {
+          "text": "Que el sistema transparente solo puede procesar archivos de texto plano.",
+          "isCorrect": false,
+          "rationale": "La transparencia se refiere a la interpretación de los procesos, no al formato de los archivos de entrada."
+        },
+        {
+          "text": "Que el sistema neuronal es incapaz de detectar términos multipalabra sin un entrenamiento previo extenso sobre datos anotados.",
+          "isCorrect": false,
+          "rationale": "Los modelos neuronales son muy potentes detectando n-gramas, aunque su lógica interna sea más difícil de interpretar."
+        },
+        {
+          "text": "Que los métodos transparentes son siempre más precisos que los modelos de lenguaje modernos.",
+          "isCorrect": false,
+          "rationale": "La precisión depende de muchos factores; la ventaja del método transparente es su explicabilidad, no necesariamente una precisión superior."
+        }
+      ],
+      "hint": "Relacione el concepto con la capacidad del analista para justificar los resultados."
+    }
+  ],
+  "topics": {
+    "covered": [
+      "Teoría de la terminología",
+      "Termhood y unithood",
+      "Cálculo de frecuencia relativa",
+      "Medida contrastiva Weirdness",
+      "Preprocesamiento de corpus con Python",
+      "Extracción y gestión de n-gramas",
+      "Validación mediante KWIC"
+    ],
+    "followUp": [
+      "Algoritmos C-value/NC-value para términos anidados",
+      "Análisis morfosintáctico para filtrado de candidatos",
+      "Uso de Universal Dependencies en extracción terminológica",
+      "Población de bases de datos terminológicas (Termout)",
+      "Evaluación formal de ATE: métricas de Precision y Recall"
+    ]
+  }
+}

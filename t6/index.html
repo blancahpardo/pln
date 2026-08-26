@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tema 6 — PLN</title>
+<style>
+
+:root {
+  --azul: #003B5C;
+  --azul-d: #00283F;
+  --amar: #F4C542;
+  --gris: #34484F;
+  --claro: #F3F3F4;
+  --humo: #9FB1BA;
+  --verde: #2E7D32;
+  --rojo: #B00020;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: var(--gris); background:#fff; }
+a { color: inherit; }
+
+#gate { position:fixed; inset:0; background:var(--azul); display:flex; align-items:center; justify-content:center; padding:24px; z-index:999; }
+#gate .box { max-width:380px; width:100%; text-align:center; }
+#gate .kicker { color:var(--amar); font-size:12px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:10px; }
+#gate h1 { color:#fff; font-size:26px; margin:0 0 10px; }
+#gate p { color:var(--humo); font-size:14px; margin:0 0 26px; }
+#gate input { width:100%; padding:13px 16px; border-radius:8px; border:none; font-size:15px; font-family:Arial,Helvetica,sans-serif; margin-bottom:14px; outline:2px solid transparent; }
+#gate input:focus { outline:2px solid var(--amar); }
+#gate button.submit { width:100%; padding:13px 16px; border-radius:8px; border:none; background:var(--amar); color:var(--azul-d); font-size:15px; font-weight:bold; font-family:Arial,Helvetica,sans-serif; cursor:pointer; }
+#gate button.submit:hover { filter:brightness(1.06); }
+#gate .error { color:#FFB3B3; font-size:13px; margin-top:12px; min-height:18px; }
+#page { display:none; }
+main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
+.kicker { color:var(--amar); font-size:12px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px; }
+.view > h1 { color:var(--azul); font-size:32px; margin:0 0 34px; }
+.hub-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-bottom:30px; }
+.hub-btn { display:flex; flex-direction:column; align-items:flex-start; gap:6px; background:var(--claro); border:none; border-radius:12px; padding:26px 22px; cursor:pointer; text-align:left; box-shadow:0 2px 10px rgba(159,177,186,.28); font-family:Arial,Helvetica,sans-serif; }
+.hub-btn:hover { background:#E9ECEE; }
+.hub-icon { font-size:30px; margin-bottom:4px; }
+.hub-label { font-size:17px; font-weight:bold; color:var(--azul); }
+.hub-desc { font-size:12.5px; color:var(--humo); }
+.back-home { font-size:13px; color:var(--humo); text-decoration:none; }
+.back-home:hover { color:var(--azul); }
+.sub-view h2 { color:var(--azul); font-size:24px; margin:18px 0 4px; }
+.sub-view .section-note { font-size:13px; color:var(--humo); margin:0 0 24px; }
+.back-btn { background:none; border:1.5px solid var(--azul); color:var(--azul); font-size:13px; font-weight:bold; padding:6px 14px; border-radius:20px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; }
+.back-btn:hover { background:var(--azul); color:#fff; }
+.dl-big { display:inline-block; background:var(--amar); color:var(--azul-d); font-weight:bold; font-size:14px; text-decoration:none; padding:10px 20px; border-radius:20px; margin-bottom:18px; }
+.pdf-frame { width:100%; height:78vh; border:none; border-radius:8px; box-shadow:0 2px 10px rgba(159,177,186,.28); }
+.notice { font-size:12px; color:var(--humo); font-style:italic; margin-top:10px; }
+/* quiz */
+.quiz-start { background:var(--claro); border-radius:12px; padding:26px; }
+.quiz-start p { font-size:14px; margin:0 0 18px; }
+.quiz-btn { background:var(--azul); color:#fff; border:none; border-radius:20px; padding:11px 22px; font-size:14px; font-weight:bold; cursor:pointer; font-family:Arial,Helvetica,sans-serif; }
+.quiz-btn:hover { filter:brightness(1.15); }
+.quiz-progress { font-size:12px; color:var(--humo); margin-bottom:6px; }
+.quiz-q { background:var(--claro); border-radius:12px; padding:24px; margin-bottom:18px; }
+.quiz-q h3 { color:var(--azul); font-size:17px; margin:0 0 18px; }
+.quiz-opt { display:block; width:100%; text-align:left; background:#fff; border:1.5px solid var(--humo); border-radius:8px; padding:12px 16px; margin-bottom:10px; font-size:14px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; color:var(--gris); }
+.quiz-opt:hover { border-color:var(--azul); }
+.quiz-opt.correct { border-color:var(--verde); background:#EAF6EB; font-weight:bold; }
+.quiz-opt.incorrect { border-color:var(--rojo); background:#FBEAEC; }
+.quiz-opt[disabled] { cursor:default; }
+.quiz-feedback { font-size:13px; color:var(--gris); background:#fff; border-radius:8px; padding:12px 16px; margin-top:4px; margin-bottom:16px; border-left:3px solid var(--azul); }
+.quiz-score { font-size:26px; font-weight:bold; color:var(--azul); margin-bottom:8px; }
+.quiz-result { background:var(--claro); border-radius:12px; padding:30px; text-align:center; }
+footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--humo); font-style:italic; }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="box">
+    <div class="kicker">Tema 6</div>
+    <h1>PLN</h1>
+    <p>Contenido protegido. Introduce la contraseña facilitada en clase.</p>
+    <input type="password" id="pw" placeholder="Contraseña" autofocus>
+    <button class="submit" id="enter">Acceder</button>
+    <div class="error" id="err"></div>
+  </div>
+</div>
+
+<div id="page">
+  <main id="content"></main>
+  <footer>
+    © Dra. Blanca Hernández Pardo · Programación orientada a PLN · Tema 6<br>Queda prohibida la difusión, distribución o reproducción total o parcial de este material sin autorización expresa de la autora.
+  </footer>
+</div>
+
+<script>
+(function() {
+  var HASH = "88c9e50e10f262e512ccec371e214e6a6c0dd65a4e657b4d0f38ded4e15fdc3b";
+  var PAYLOAD = "PGRpdiBpZD0iaHViIiBjbGFzcz0idmlldyI+CiAgPGRpdiBjbGFzcz0ia2lja2VyIj5UZW1hIDY8L2Rpdj4KICA8aDE+wr9RdcOpIHF1aWVyZXMgY29uc3VsdGFyPzwvaDE+CiAgPGRpdiBjbGFzcz0iaHViLWdyaWQiPgogICAgPGJ1dHRvbiBjbGFzcz0iaHViLWJ0biIgZGF0YS12aWV3PSJtYW51YWwiPgogICAgICA8c3BhbiBjbGFzcz0iaHViLWljb24iPvCfk5g8L3NwYW4+CiAgICAgIDxzcGFuIGNsYXNzPSJodWItbGFiZWwiPk1hbnVhbCB0ZcOzcmljbzwvc3Bhbj4KICAgICAgPHNwYW4gY2xhc3M9Imh1Yi1kZXNjIj5MZWN0dXJhIGVuIFBERiwgZGVzY2FyZ2FibGU8L3NwYW4+CiAgICA8L2J1dHRvbj4KICA8L2Rpdj4KICA8YSBjbGFzcz0iYmFjay1ob21lIiBocmVmPSIuLi9pbmRleC5odG1sIj7ihpAgVm9sdmVyIGEgbGEgYXNpZ25hdHVyYTwvYT4KPC9kaXY+CjxkaXYgaWQ9InZpZXctbWFudWFsIiBjbGFzcz0idmlldyBzdWItdmlldyIgaGlkZGVuPgogIDxidXR0b24gY2xhc3M9ImJhY2stYnRuIiBkYXRhLWJhY2s9Imh1YiI+4oaQIFZvbHZlcjwvYnV0dG9uPgogIDxoMj5NYW51YWwgdGXDs3JpY28gwrcgVGVtYSA2PC9oMj4KICA8cCBjbGFzcz0ic2VjdGlvbi1ub3RlIj5QdWVkZXMgbGVlcmxvIGFxdcOtIG8gZGVzY2FyZ2FybG8uPC9wPgogIDxhIGNsYXNzPSJkbC1iaWciIGhyZWY9Im1hbnVhbC5wZGYiIGRvd25sb2FkPuKshyBEZXNjYXJnYXIgUERGPC9hPgogIDxpZnJhbWUgY2xhc3M9InBkZi1mcmFtZSIgc3JjPSJtYW51YWwucGRmIiB0aXRsZT0iTWFudWFsIHRlw7NyaWNvIFRlbWEgNiI+PC9pZnJhbWU+CjwvZGl2Pg==";
+  var QUIZ_MANUAL = [];
+  var QUIZ_CUADERNO = [];
+  var SESSION_KEY = "t6_unlocked";
+
+  function sha256Hex(text) {
+    var enc = new TextEncoder().encode(text);
+    return crypto.subtle.digest("SHA-256", enc).then(function(buf) {
+      return Array.prototype.map.call(new Uint8Array(buf), function(b) {
+        return b.toString(16).padStart(2, "0");
+      }).join("");
+    });
+  }
+
+  function showView(id) {
+    document.querySelectorAll(".view").forEach(function(v) { v.hidden = true; });
+    var el = document.getElementById(id) || document.getElementById("view-" + id);
+    if (el) el.hidden = false;
+  }
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  var quizState = null;
+
+  function renderQuizStart() {
+    var root = document.getElementById("quiz-root");
+    if (!root) return;
+    root.innerHTML =
+      '<div class="quiz-start">' +
+      '<p>10 preguntas: 5 elegidas al azar del banco del manual y 5 del banco del cuaderno. Puedes repetir el intento tantas veces como quieras — cada vez se vuelven a elegir y reordenar las preguntas.</p>' +
+      '<button class="quiz-btn" id="quiz-begin">Empezar</button>' +
+      '</div>';
+    document.getElementById("quiz-begin").addEventListener("click", startQuiz);
+  }
+
+  function startQuiz() {
+    var fromManual = shuffle(QUIZ_MANUAL).slice(0, 5);
+    var fromCuaderno = shuffle(QUIZ_CUADERNO).slice(0, 5);
+    quizState = { questions: shuffle(fromManual.concat(fromCuaderno)), index: 0, score: 0 };
+    renderQuizQuestion();
+  }
+
+  function renderQuizQuestion() {
+    var root = document.getElementById("quiz-root");
+    var total = quizState.questions.length;
+    if (quizState.index >= total) {
+      root.innerHTML =
+        '<div class="quiz-result">' +
+        '<div class="quiz-score">' + quizState.score + ' / ' + total + '</div>' +
+        '<p>Puntuación de este intento.</p>' +
+        '<button class="quiz-btn" id="quiz-retry">Volver a intentar</button>' +
+        '</div>';
+      document.getElementById("quiz-retry").addEventListener("click", startQuiz);
+      return;
+    }
+    var q = quizState.questions[quizState.index];
+    var opts = shuffle(q.answerOptions);
+    var html = '<div class="quiz-progress">Pregunta ' + (quizState.index + 1) + ' de ' + total + ' · Puntuación provisional: ' + quizState.score + '</div>';
+    html += '<div class="quiz-q"><h3>' + q.question + '</h3>';
+    opts.forEach(function(opt, i) {
+      html += '<button class="quiz-opt" data-idx="' + i + '">' + opt.text + '</button>';
+    });
+    html += '<div class="quiz-feedback" id="quiz-feedback" hidden></div>';
+    html += '</div>';
+    root.innerHTML = html;
+    var buttons = root.querySelectorAll(".quiz-opt");
+    buttons.forEach(function(btn, i) {
+      btn.addEventListener("click", function() {
+        buttons.forEach(function(b) { b.disabled = true; });
+        var chosen = opts[i];
+        if (chosen.isCorrect) { btn.classList.add("correct"); quizState.score++; }
+        else {
+          btn.classList.add("incorrect");
+          buttons.forEach(function(b2, j) { if (opts[j].isCorrect) b2.classList.add("correct"); });
+        }
+        var fb = document.getElementById("quiz-feedback");
+        fb.hidden = false;
+        fb.textContent = chosen.rationale || (chosen.isCorrect ? "Correcto." : "Incorrecto.");
+        var next = document.createElement("button");
+        next.className = "quiz-btn";
+        next.style.marginTop = "14px";
+        next.textContent = quizState.index + 1 < total ? "Siguiente" : "Ver puntuación";
+        next.addEventListener("click", function() { quizState.index++; renderQuizQuestion(); });
+        root.querySelector(".quiz-q").appendChild(next);
+      });
+    });
+  }
+
+  function wireNav() {
+    document.querySelectorAll(".hub-btn").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        showView(btn.dataset.view);
+        if (btn.dataset.view === "quiz") renderQuizStart();
+      });
+    });
+    document.querySelectorAll("[data-back]").forEach(function(btn) {
+      btn.addEventListener("click", function() { showView(btn.dataset.back); });
+    });
+  }
+
+  function reveal() {
+    document.getElementById("content").innerHTML = decodeURIComponent(escape(atob(PAYLOAD)));
+    document.getElementById("gate").style.display = "none";
+    document.getElementById("page").style.display = "block";
+    wireNav();
+    try { sessionStorage.setItem(SESSION_KEY, "1"); } catch (e) {}
+  }
+
+  function tryUnlock() {
+    var val = document.getElementById("pw").value;
+    sha256Hex(val).then(function(hex) {
+      if (hex === HASH) reveal();
+      else document.getElementById("err").textContent = "Contraseña incorrecta.";
+    });
+  }
+
+  document.getElementById("enter").addEventListener("click", tryUnlock);
+  document.getElementById("pw").addEventListener("keydown", function(e) { if (e.key === "Enter") tryUnlock(); });
+
+  try { if (sessionStorage.getItem(SESSION_KEY) === "1") reveal(); } catch (e) {}
+})();
+</script>
+</body>
+</html>

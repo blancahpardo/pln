@@ -1,0 +1,280 @@
+{
+  "quiz": [
+    {
+      "question": "¿Cuál es el objetivo principal de un sistema de extracción automática de terminología?",
+      "answerOptions": [
+        {
+          "text": "Detectar automáticamente términos candidatos comparando un corpus especializado con uno general.",
+          "isCorrect": true,
+          "rationale": "La esencia de este tipo de sistema es identificar palabras o secuencias que son significativamente más frecuentes en el dominio de interés que en el lenguaje común."
+        },
+        {
+          "text": "Entrenar un modelo neuronal complejo para traducir documentos de forma automática.",
+          "isCorrect": false,
+          "rationale": "No se busca construir una inteligencia artificial gigantesca ni un modelo neuronal, sino un prototipo interpretable basado en la comparación de corpus."
+        },
+        {
+          "text": "Sustituir por completo el trabajo de los traductores humanos en la empresa LexiData.",
+          "isCorrect": false,
+          "rationale": "El sistema se define como una herramienta de apoyo semiautomática para agilizar la labor humana, no para eliminarla."
+        },
+        {
+          "text": "Crear una base de datos de todas las palabras existentes en el idioma español, incluidas sus variantes regionales.",
+          "isCorrect": false,
+          "rationale": "El enfoque no es el léxico general, sino la detección de términos característicos de dominios especializados como la medicina o el derecho."
+        }
+      ],
+      "hint": "Fíjate en la técnica de contraste que utiliza dos tipos de conjuntos de textos."
+    },
+    {
+      "question": "En el proceso de limpieza y preprocesamiento, ¿qué función cumplen las 'stopwords'?",
+      "answerOptions": [
+        {
+          "text": "Son palabras muy frecuentes pero con poco valor terminológico que deben filtrarse para reducir el ruido.",
+          "isCorrect": true,
+          "rationale": "Artículos, preposiciones y conjunciones aparecen mucho en cualquier texto pero no definen un dominio especializado."
+        },
+        {
+          "text": "Son términos especializados que deben resaltarse en el glosario final.",
+          "isCorrect": false,
+          "rationale": "Las stopwords son palabras vacías de contenido terminológico, justo lo opuesto a los términos especializados."
+        },
+        {
+          "text": "Son unidades lingüísticas que ayudan a detectar el sentimiento del texto.",
+          "isCorrect": false,
+          "rationale": "El análisis de sentimiento no es el objetivo de este pipeline, que se centra en la extracción de terminología técnica."
+        },
+        {
+          "text": "Son marcadores que indican el inicio y el fin de cada n-grama dentro del corpus ya procesado y filtrado.",
+          "isCorrect": false,
+          "rationale": "Aunque afectan a la formación de n-gramas si se eliminan, su definición principal es la de palabras funcionales frecuentes."
+        }
+      ],
+      "hint": "Piensa en palabras como 'de', 'la', 'el' o 'y'."
+    },
+    {
+      "question": "Si a la expresión 'modelo de lenguaje' se le aplica un preprocesamiento simple que elimina las stopwords y conserva el resto de palabras en su mismo orden, ¿en qué se convierte?",
+      "answerOptions": [
+        {
+          "text": "modelo lenguaje",
+          "isCorrect": true,
+          "rationale": "Al eliminar la stopword 'de', el n-grama resultante une los tokens con significado léxico restantes."
+        },
+        {
+          "text": "lenguaje modelo",
+          "isCorrect": false,
+          "rationale": "El sistema mantiene el orden secuencial original de los tokens supervivientes, no los invierte."
+        },
+        {
+          "text": "modelo_de_lenguaje",
+          "isCorrect": false,
+          "rationale": "Este preprocesamiento utiliza la eliminación de palabras vacías y la división por espacios, no la unión con guiones bajos."
+        },
+        {
+          "text": "modelo",
+          "isCorrect": false,
+          "rationale": "Esto sería un unigrama; la formación de bigramas tras el filtrado conserva dos palabras consecutivas."
+        }
+      ],
+      "hint": "Considera qué sucede cuando se elimina una palabra funcional entre dos sustantivos."
+    },
+    {
+      "question": "¿Cuál es la utilidad de utilizar la frecuencia relativa en lugar de la frecuencia absoluta al comparar dos corpus?",
+      "answerOptions": [
+        {
+          "text": "Permite comparar corpus de diferentes tamaños de forma justa.",
+          "isCorrect": true,
+          "rationale": "La frecuencia relativa normaliza los datos dividiendo el número de apariciones por el total de tokens, evitando sesgos por la extensión del texto."
+        },
+        {
+          "text": "Es más fácil de calcular manualmente que la frecuencia absoluta.",
+          "isCorrect": false,
+          "rationale": "Requiere una operación matemática adicional (división), por lo que técnicamente es un paso más que el simple conteo."
+        },
+        {
+          "text": "Elimina automáticamente todas las palabras que no son sustantivos.",
+          "isCorrect": false,
+          "rationale": "La frecuencia relativa es una medida estadística de probabilidad, no un filtro gramatical o de categoría de palabra."
+        },
+        {
+          "text": "Asegura que los términos aparezcan siempre en orden alfabético.",
+          "isCorrect": false,
+          "rationale": "El orden alfabético es independiente de las métricas de frecuencia utilizadas para el ranking."
+        }
+      ],
+      "hint": "Piensa en lo que sucede si comparas un libro de mil páginas con un artículo de una página."
+    },
+    {
+      "question": "La medida de contraste denominada 'weirdness' se calcula mediante la fórmula:",
+      "answerOptions": [
+        {
+          "text": "weirdness(t) = (f_esp(t) / N_esp) / (f_gen(t) / N_gen + epsilon)",
+          "isCorrect": true,
+          "rationale": "Esta fórmula representa la proporción de la frecuencia relativa del término en el corpus especializado frente al general, con un factor epsilon para evitar errores."
+        },
+        {
+          "text": "weirdness(t) = f_esp(t) - f_gen(t)",
+          "isCorrect": false,
+          "rationale": "Una simple resta de frecuencias absolutas no tiene en cuenta el tamaño total de los corpus (N)."
+        },
+        {
+          "text": "weirdness(t) = N_esp / N_gen, sin tener en cuenta la frecuencia del término",
+          "isCorrect": false,
+          "rationale": "Esta fórmula solo compararía el tamaño total de los textos, no la representatividad de un término específico."
+        },
+        {
+          "text": "weirdness(t) = log(f_esp(t) × f_gen(t))",
+          "isCorrect": false,
+          "rationale": "La multiplicación no permitiría identificar qué términos son 'raros' o únicos en comparación con el corpus general."
+        }
+      ],
+      "hint": "Busca la relación entre las frecuencias relativas del corpus especializado y el general."
+    },
+    {
+      "question": "¿Qué es un n-grama en el contexto del procesamiento de lenguaje natural?",
+      "answerOptions": [
+        {
+          "text": "Una secuencia de n tokens o palabras consecutivas.",
+          "isCorrect": true,
+          "rationale": "Los n-gramas permiten capturar unidades multipalabra (bigramas, trigramas) que a menudo funcionan como términos únicos."
+        },
+        {
+          "text": "Un tipo de gráfico para visualizar la frecuencia de las letras.",
+          "isCorrect": false,
+          "rationale": "Aunque suene similar a 'diagrama', se refiere a unidades de texto, no a representaciones gráficas."
+        },
+        {
+          "text": "Un modelo neuronal especializado en detectar errores gramaticales.",
+          "isCorrect": false,
+          "rationale": "Es una técnica estadística y estructural básica de PLN, no un modelo de aprendizaje profundo por sí mismo."
+        },
+        {
+          "text": "Una lista de palabras que deben ser eliminadas del corpus.",
+          "isCorrect": false,
+          "rationale": "Esa descripción corresponde a las 'stopwords' o 'listas negras', no a los n-gramas."
+        }
+      ],
+      "hint": "El término proviene de la lingüística computacional y se refiere a cadenas de unidades."
+    },
+    {
+      "question": "En un sistema de extracción de terminología que prioriza la transparencia y la interpretabilidad de cada candidato, ¿por qué requiere la generación de concordancias KWIC (Keyword in Context)?",
+      "answerOptions": [
+        {
+          "text": "Para permitir que un experto humano valide si el candidato tiene sentido como término real.",
+          "isCorrect": true,
+          "rationale": "Ver el entorno inmediato de la palabra ayuda a confirmar si su uso es técnico o puramente accidental."
+        },
+        {
+          "text": "Para traducir automáticamente los términos candidatos a otros idiomas.",
+          "isCorrect": false,
+          "rationale": "El sistema es un detector de terminología para extracción, no un traductor automático."
+        },
+        {
+          "text": "Para reducir el tamaño del archivo de salida y ahorrar memoria.",
+          "isCorrect": false,
+          "rationale": "Las concordancias KWIC en realidad aumentan la cantidad de información presentada en el glosario."
+        },
+        {
+          "text": "Para eliminar los números y URLs que hayan quedado en el texto.",
+          "isCorrect": false,
+          "rationale": "Esa tarea se realiza en la fase inicial de limpieza y tokenización, no en la fase de KWIC."
+        }
+      ],
+      "hint": "Considera la necesidad de que cada candidato a término pueda revisarse y justificarse ante una persona experta."
+    },
+    {
+      "question": "En el filtrado de candidatos, ¿qué criterio se suele aplicar para evitar que el ranking se llene de errores tipográficos o coincidencias únicas?",
+      "answerOptions": [
+        {
+          "text": "Filtro de frecuencia mínima (umbral).",
+          "isCorrect": true,
+          "rationale": "Si una unidad aparece solo una vez, es probable que sea ruido o un error; establecer un umbral de frecuencia mínima asegura representatividad."
+        },
+        {
+          "text": "Filtro de frecuencia máxima.",
+          "isCorrect": false,
+          "rationale": "Eliminar palabras muy frecuentes podría quitar términos clave del dominio; lo que se busca es eliminar lo poco frecuente."
+        },
+        {
+          "text": "Ordenamiento por longitud de caracteres.",
+          "isCorrect": false,
+          "rationale": "La longitud de la palabra no garantiza su relevancia terminológica en comparación con su frecuencia de uso."
+        },
+        {
+          "text": "Uso exclusivo de diccionarios de la RAE.",
+          "isCorrect": false,
+          "rationale": "Los términos especializados a menudo no están en diccionarios generales, por lo que este filtro sería contraproducente."
+        }
+      ],
+      "hint": "Se trata de decidir cuántas veces debe aparecer algo para ser 'tomado en serio'."
+    },
+    {
+      "question": "¿Cuál es una limitación reconocida del pipeline de extracción simple cuando se eliminan stopwords antes de crear n-gramas?",
+      "answerOptions": [
+        {
+          "text": "Produce candidatos deformados lingüísticamente como 'lingüística corpus'.",
+          "isCorrect": true,
+          "rationale": "Al quitar las preposiciones, se pierden los nexos naturales del español, lo que genera términos que requieren interpretación humana adicional."
+        },
+        {
+          "text": "Aumenta demasiado el tiempo de procesamiento del ordenador.",
+          "isCorrect": false,
+          "rationale": "Eliminar stopwords en realidad reduce la cantidad de datos y acelera el proceso computacional."
+        },
+        {
+          "text": "Impide que el sistema pueda leer correctamente archivos guardados en formato PDF.",
+          "isCorrect": false,
+          "rationale": "El procesamiento lingüístico es independiente de la extensión del archivo, siempre que el texto sea extraído previamente."
+        },
+        {
+          "text": "Hace que todos los términos resultantes sean obligatoriamente unigramas.",
+          "isCorrect": false,
+          "rationale": "El sistema sigue permitiendo crear bigramas o trigramas, solo que estos carecerán de las palabras funcionales eliminadas."
+        }
+      ],
+      "hint": "Piensa en el 'conflicto profesional' mencionado sobre la forma de los términos multi-palabra."
+    },
+    {
+      "question": "En el contexto de LexiData Solutions, el prototipo debe entregar un 'mini-glosario' que incluya:",
+      "answerOptions": [
+        {
+          "text": "Candidatos, frecuencias, puntuación de relevancia y ejemplos de uso.",
+          "isCorrect": true,
+          "rationale": "Esta información permite al equipo humano revisar, justificar y decidir qué unidades entran en la base terminológica final."
+        },
+        {
+          "text": "Código fuente en Python y una lista de todas las URLs eliminadas.",
+          "isCorrect": false,
+          "rationale": "Aunque el código es necesario para el equipo de PLN, el producto final para los traductores debe ser una tabla de resultados."
+        },
+        {
+          "text": "Una traducción automática completa de todo el corpus especializado.",
+          "isCorrect": false,
+          "rationale": "El encargo es de extracción terminológica, no de traducción de documentos."
+        },
+        {
+          "text": "Un ranking de los traductores más eficientes de toda la empresa de traducción.",
+          "isCorrect": false,
+          "rationale": "El sistema analiza textos para extraer términos, no evalúa el desempeño del personal humano."
+        }
+      ],
+      "hint": "Busca los elementos que componen la tabla final del encargo."
+    }
+  ],
+  "topics": {
+    "covered": [
+      "Extracción automática de terminología",
+      "Preprocesamiento de texto y limpieza",
+      "N-gramas en PLN",
+      "Medidas de contraste estadístico (Weirdness)",
+      "Concordancias KWIC",
+      "Normalización mediante frecuencia relativa"
+    ],
+    "followUp": [
+      "Análisis morfosintáctico (PoS tagging) para filtrado",
+      "Uso de lematización en la extracción terminológica",
+      "Gestión de bases de datos terminológicas",
+      "Evaluación de sistemas de extracción de términos"
+    ]
+  }
+}

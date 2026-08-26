@@ -1,0 +1,281 @@
+{
+  "quiz": [
+    {
+      "question": "¿Cuál es la principal razón por la que Python se ha convertido en el lenguaje predominante para el procesamiento del lenguaje natural?",
+      "answerOptions": [
+        {
+          "text": "Su simplicidad sintáctica y su ecosistema de librerías especializadas.",
+          "isCorrect": true,
+          "rationale": "Estas características han consolidado a Python como el estándar en este campo."
+        },
+        {
+          "text": "Su capacidad para ejecutarse sin necesidad de una conexión a internet.",
+          "isCorrect": false,
+          "rationale": "Aunque Python puede ejecutarse localmente, en este curso se trabaja en la nube mediante Google Colab, que sí requiere conexión."
+        },
+        {
+          "text": "Que es el único lenguaje compatible con el análisis de signos de puntuación.",
+          "isCorrect": false,
+          "rationale": "Muchos lenguajes pueden analizar puntuación, pero Python se prefiere por su facilidad de uso en tareas lingüísticas."
+        },
+        {
+          "text": "Su diseño exclusivo para alumnos que nunca han programado.",
+          "isCorrect": false,
+          "rationale": "Si bien el cuaderno está diseñado para principiantes, Python es un lenguaje profesional de propósito general."
+        }
+      ],
+      "hint": "Observa los beneficios que facilitan la lectura y escritura del código para los lingüistas."
+    },
+    {
+      "question": "Al utilizar el método `.split()` sin argumentos sobre una cadena de texto, ¿qué comportamiento por defecto realiza Python?",
+      "answerOptions": [
+        {
+          "text": "Divide la cadena de texto donde hay espacios en blanco.",
+          "isCorrect": true,
+          "rationale": "Por defecto, .split() utiliza cualquier espacio en blanco como delimitador para crear una lista de subcadenas."
+        },
+        {
+          "text": "Divide el texto en cada punto final encontrado.",
+          "isCorrect": false,
+          "rationale": "Para dividir por puntos, hay que indicar el argumento \".\" dentro del método; sin él, .split() separa por espacios en blanco."
+        },
+        {
+          "text": "Elimina todos los caracteres que no sean letras.",
+          "isCorrect": false,
+          "rationale": "El método split se encarga de segmentar la cadena, no de limpiar caracteres específicos."
+        },
+        {
+          "text": "Cuenta el número total de caracteres incluyendo espacios.",
+          "isCorrect": false,
+          "rationale": "Contar caracteres es una función de len(), mientras que split segmenta el contenido."
+        }
+      ],
+      "hint": "Piensa en el elemento más común que separa las palabras en una oración escrita."
+    },
+    {
+      "question": "Para contar los signos de puntuación de un texto usando el módulo `string`, ¿cuál es la constante que contiene los caracteres a filtrar?",
+      "answerOptions": [
+        {
+          "text": "string.punctuation",
+          "isCorrect": true,
+          "rationale": "Esta constante contiene todos los caracteres de puntuación estándar definidos por Python."
+        },
+        {
+          "text": "string.all_symbols",
+          "isCorrect": false,
+          "rationale": "Esta constante no existe en el módulo string estándar de Python."
+        },
+        {
+          "text": "string.signs",
+          "isCorrect": false,
+          "rationale": "Aunque el nombre parece lógico, la biblioteca estándar utiliza un término más técnico para los signos."
+        },
+        {
+          "text": "string.markers",
+          "isCorrect": false,
+          "rationale": "La biblioteca string no utiliza el término 'markers' para referirse a la puntuación."
+        }
+      ],
+      "hint": "Busca el término en inglés que se refiere específicamente a la puntuación."
+    },
+    {
+      "question": "Antes de dividir un texto en oraciones con .split(\".\"), puede sustituirse primero cada punto y coma por un punto mediante .replace(\";\", \".\"). ¿Por qué tiene sentido lingüístico hacer esa sustitución antes de dividir el texto?",
+      "answerOptions": [
+        {
+          "text": "Porque desde una perspectiva lingüística, el punto y coma suele delimitar unidades con sentido completo.",
+          "isCorrect": true,
+          "rationale": "El reemplazo permite que el divisor de oraciones reconozca más de un tipo de signo como límite de oración."
+        },
+        {
+          "text": "Porque el punto y coma consume demasiada memoria en Google Colab y ralentiza la ejecución de las celdas siguientes.",
+          "isCorrect": false,
+          "rationale": "El reemplazo de caracteres no tiene un impacto significativo en el uso de memoria para estas tareas."
+        },
+        {
+          "text": "Para evitar que el código confunda los signos de puntuación con variables.",
+          "isCorrect": false,
+          "rationale": "Los signos dentro de una cadena de texto no se confunden con variables de código."
+        },
+        {
+          "text": "Para eliminar los espacios en blanco innecesarios entre oraciones.",
+          "isCorrect": false,
+          "rationale": "La eliminación de espacios se realiza con el método .strip(), no con el reemplazo de signos."
+        }
+      ],
+      "hint": "Considera cómo una máquina interpreta los límites de una idea frente a cómo lo hace un humano."
+    },
+    {
+      "question": "Un índice de legibilidad aproximado puede construirse combinando dos promedios: uno basado en el número de sílabas por palabra y otro en el número de palabras por oración. ¿Cuál de las siguientes expresiones representa correctamente esa combinación?",
+      "answerOptions": [
+        {
+          "text": "indice = (num_silabas / num_palabras) + (num_palabras / num_oraciones)",
+          "isCorrect": true,
+          "rationale": "El índice combina el promedio de complejidad de las palabras con el promedio de extensión de las oraciones."
+        },
+        {
+          "text": "indice = num_silabas / num_oraciones, redondeado a dos decimales con round()",
+          "isCorrect": false,
+          "rationale": "Esta fórmula ignoraría la relación necesaria entre sílabas y palabras individuales."
+        },
+        {
+          "text": "indice = num_palabras * num_silabas",
+          "isCorrect": false,
+          "rationale": "La multiplicación de estos valores no ofrece una métrica de promedio útil para la legibilidad."
+        },
+        {
+          "text": "indice = num_signos / num_palabras",
+          "isCorrect": false,
+          "rationale": "Aunque los signos importan, la métrica del cuaderno se centra en sílabas, palabras y oraciones."
+        }
+      ],
+      "hint": "El índice suma dos promedios: uno a nivel de palabra y otro a nivel de oración."
+    },
+    {
+      "question": "Al usar la expresión regular `re.findall(r'[aeiouáéíóúü]+', texto, re.IGNORECASE)`, ¿qué representa el símbolo `+`?",
+      "answerOptions": [
+        {
+          "text": "Que el patrón busca una coincidencia de uno o más caracteres consecutivos del grupo anterior.",
+          "isCorrect": true,
+          "rationale": "En expresiones regulares, el símbolo + indica que el elemento precedente debe aparecer al menos una vez para ser contado."
+        },
+        {
+          "text": "Que solo se deben buscar vocales en mayúsculas, ignorando cualquier vocal acentuada o con diéresis.",
+          "isCorrect": false,
+          "rationale": "La búsqueda de mayúsculas se gestiona con la bandera re.IGNORECASE, no con el símbolo plus."
+        },
+        {
+          "text": "Que se sumará el valor numérico de cada vocal encontrada.",
+          "isCorrect": false,
+          "rationale": "Las expresiones regulares identifican patrones de texto, no realizan operaciones aritméticas por sí solas."
+        },
+        {
+          "text": "Que la búsqueda debe ser obligatoriamente en orden alfabético.",
+          "isCorrect": false,
+          "rationale": "El orden de los resultados depende de su aparición en el texto, no del alfabeto."
+        }
+      ],
+      "hint": "Este símbolo es un cuantificador que permite detectar grupos como 'io' o 'ue' como una sola unidad."
+    },
+    {
+      "question": "¿Por qué se utiliza `if s.strip()` dentro de la lista por comprensión al contar oraciones?",
+      "answerOptions": [
+        {
+          "text": "Para asegurar que solo se cuenten fragmentos que contienen texto real y no solo espacios vacíos.",
+          "isCorrect": true,
+          "rationale": "Después de un split, pueden quedar fragmentos vacíos (como el espacio tras el punto final) que no deben contarse como oraciones."
+        },
+        {
+          "text": "Para traducir las oraciones a un formato procesable por la máquina.",
+          "isCorrect": false,
+          "rationale": "El método strip no realiza traducción, sino manipulación de espacios en blanco."
+        },
+        {
+          "text": "Para convertir todas las letras de la oración en minúsculas antes de mostrarla por pantalla.",
+          "isCorrect": false,
+          "rationale": "La conversión a minúsculas se realiza con .lower(), no con .strip()."
+        },
+        {
+          "text": "Para añadir automáticamente un punto al final de cada frase.",
+          "isCorrect": false,
+          "rationale": "El condicional filtra elementos existentes, no modifica el contenido añadiendo puntuación."
+        }
+      ],
+      "hint": "Considera qué sucede con el espacio que queda después del último punto de un párrafo."
+    },
+    {
+      "question": "¿Cuál de las siguientes es una limitación importante de las métricas de legibilidad automatizadas más básicas, las que solo cuentan sílabas, palabras y oraciones?",
+      "answerOptions": [
+        {
+          "text": "No distinguen matices lingüísticos como la familiaridad del vocabulario o la complejidad sintáctica real.",
+          "isCorrect": true,
+          "rationale": "Las métricas matemáticas basadas solo en conteos ignoran si una palabra es de uso común o si la estructura es difícil de seguir."
+        },
+        {
+          "text": "No pueden procesar textos de más de 50 palabras.",
+          "isCorrect": false,
+          "rationale": "El código puede procesar textos de cualquier longitud, siempre que la memoria lo permita."
+        },
+        {
+          "text": "Requieren que el usuario sepa programar en lenguajes complejos como C++.",
+          "isCorrect": false,
+          "rationale": "El análisis se realiza de forma sencilla en Python, como muestra el cuaderno."
+        },
+        {
+          "text": "Solo funcionan con textos escritos en inglés, ya que las fórmulas se calibraron con corpus anglosajones.",
+          "isCorrect": false,
+          "rationale": "Aunque hay diferencias, el cuaderno demuestra cómo adaptar el script para el español."
+        }
+      ],
+      "hint": "Piensa si un número puede detectar si una palabra es 'rara' o 'común' para un lector."
+    },
+    {
+      "question": "¿Cuál es la función del prefijo `r` en una cadena de Python, como en `r'[aeiou]+'`?",
+      "answerOptions": [
+        {
+          "text": "Indica que es una cadena 'raw' (cruda) que trata los símbolos (como las barras invertidas) literalmente.",
+          "isCorrect": true,
+          "rationale": "Esto es fundamental en expresiones regulares para evitar que Python interprete caracteres especiales de forma errónea."
+        },
+        {
+          "text": "Indica que la cadena es de solo lectura (read-only) y no puede modificarse durante la ejecución.",
+          "isCorrect": false,
+          "rationale": "El acceso de lectura o escritura depende de otros factores, no de este prefijo de cadena."
+        },
+        {
+          "text": "Se utiliza para revertir el orden del texto en la cadena.",
+          "isCorrect": false,
+          "rationale": "Para revertir texto se utilizan técnicas de rebanado (slicing) o funciones específicas."
+        },
+        {
+          "text": "Indica que el texto debe ser procesado como una respuesta (response).",
+          "isCorrect": false,
+          "rationale": "El prefijo 'r' tiene un significado técnico específico relacionado con el tratamiento de caracteres de escape."
+        }
+      ],
+      "hint": "Se usa mucho en expresiones regulares para evitar problemas con la barra invertida."
+    },
+    {
+      "question": "¿Qué beneficio principal ofrece un entorno como Google Colab a quienes empiezan a programar para el procesamiento del lenguaje natural?",
+      "answerOptions": [
+        {
+          "text": "Permite trabajar en la nube sin instalar software adicional.",
+          "isCorrect": true,
+          "rationale": "Es una ventaja clave de Colab para facilitar el acceso a alumnos sin experiencia técnica previa."
+        },
+        {
+          "text": "Garantiza que el código escrito sea automáticamente perfecto gramaticalmente.",
+          "isCorrect": false,
+          "rationale": "Colab es un entorno de ejecución; la lógica y corrección del código dependen del programador."
+        },
+        {
+          "text": "Traduce automáticamente el código de Python a lenguaje humano.",
+          "isCorrect": false,
+          "rationale": "Colab ejecuta código; la interpretación de los resultados sigue siendo una tarea humana."
+        },
+        {
+          "text": "Es el único lugar donde se pueden usar expresiones regulares.",
+          "isCorrect": false,
+          "rationale": "Las expresiones regulares son una característica del lenguaje Python y funcionan en cualquier entorno compatible."
+        }
+      ],
+      "hint": "Piensa en la comodidad de no tener que configurar nada en tu propio ordenador."
+    }
+  ],
+  "topics": {
+    "covered": [
+      "Fundamentos de Python para PLN",
+      "Manipulación de cadenas y listas",
+      "Tokenización básica",
+      "Uso del módulo string y expresiones regulares (re)",
+      "Cálculo de índices de legibilidad",
+      "Entorno Google Colab"
+    ],
+    "followUp": [
+      "Integración de bibliotecas lingüísticas avanzadas (spaCy)",
+      "Análisis morfosintáctico automático",
+      "Métricas validadas de legibilidad (Flesch-Szigriszt)",
+      "Uso de analizadores silábicos precisos (Pyphen)",
+      "Detección de estructuras sintácticas complejas (pasivas y subordinadas)"
+    ]
+  }
+}

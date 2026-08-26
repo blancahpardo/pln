@@ -1,0 +1,282 @@
+{
+  "quiz": [
+    {
+      "question": "Dentro del contexto de Veridia Text Lab, ¿cuál es el objetivo primordial de una auditoría lingüística transparente?",
+      "answerOptions": [
+        {
+          "text": "Construir herramientas que ayuden a especialistas humanos a observar patrones lingüísticos interpretables.",
+          "isCorrect": true,
+          "rationale": "El valor profesional reside en la transparencia y en proporcionar indicios para que el criterio experto realice la interpretación final."
+        },
+        {
+          "text": "Dictaminar de forma automática si un texto tiene una intención discriminatoria absoluta.",
+          "isCorrect": false,
+          "rationale": "Una auditoría lingüística transparente no debe automatizar juicios morales ni declarar intenciones psicológicas."
+        },
+        {
+          "text": "Maximizar el rendimiento predictivo mediante modelos generativos de caja negra.",
+          "isCorrect": false,
+          "rationale": "El objetivo en esta fase no es el rendimiento máximo, sino la explicabilidad y comprensión de la operacionalización lingüística."
+        },
+        {
+          "text": "Sustituir el análisis crítico del discurso por una clasificación binaria de sesgo.",
+          "isCorrect": false,
+          "rationale": "Este tipo de análisis es asistido por corpus, lo que significa que el conteo orienta la mirada pero no sustituye el análisis crítico."
+        }
+      ],
+      "hint": "Considera la relación entre la herramienta computacional y el papel del lingüista experto."
+    },
+    {
+      "question": "¿Cuál es la diferencia principal entre el sesgo representacional y el sesgo asignativo en el ámbito del PLN?",
+      "answerOptions": [
+        {
+          "text": "El sesgo representacional afecta a cómo se visibiliza a un grupo, mientras que el asignativo afecta a la distribución de recursos o decisiones.",
+          "isCorrect": true,
+          "rationale": "Esta distinción separa la forma en que se describe a las comunidades de las consecuencias prácticas en la asignación de oportunidades."
+        },
+        {
+          "text": "El sesgo representacional es puramente técnico y el asignativo es exclusivamente social, sin ninguna conexión posible entre ambos niveles de análisis lingüístico.",
+          "isCorrect": false,
+          "rationale": "Ambos tipos de sesgo tienen dimensiones sociales y técnicas entrelazadas en los sistemas de procesamiento de lenguaje."
+        },
+        {
+          "text": "El sesgo asignativo se detecta con léxicos y el representacional solo con aprendizaje automático.",
+          "isCorrect": false,
+          "rationale": "Ambos pueden ser objeto de estudio mediante diversos métodos, incluyendo el análisis léxico y de coocurrencias."
+        },
+        {
+          "text": "No existe diferencia real, son sinónimos utilizados para describir errores de anotación en los datos.",
+          "isCorrect": false,
+          "rationale": "Estos dos niveles se distinguen claramente para precisar qué comportamiento problemático se está analizando."
+        }
+      ],
+      "hint": "Piensa en la diferencia entre describir un estereotipo y tomar una decisión basada en él."
+    },
+    {
+      "question": "En el preprocesamiento de textos, ¿cuál es una implicación lingüística de eliminar las 'stopwords' en un análisis de sesgo?",
+      "answerOptions": [
+        {
+          "text": "Permite que las tablas de coocurrencias sean más legibles al centrarse en palabras con contenido temático.",
+          "isCorrect": true,
+          "rationale": "Al retirar palabras funcionales muy frecuentes, los términos con carga léxica relevante ganan visibilidad en los conteos de asociación."
+        },
+        {
+          "text": "Garantiza que el sistema comprenda perfectamente la ironía y el sarcasmo del texto.",
+          "isCorrect": false,
+          "rationale": "Las listas de palabras vacías no ayudan a la comprensión pragmática; de hecho, pueden dificultarla al eliminar marcas sutiles."
+        },
+        {
+          "text": "Es una operación neutra que no afecta de ninguna manera a la interpretación discursiva.",
+          "isCorrect": false,
+          "rationale": "Toda limpieza es una interpretación; eliminar conectores o negaciones puede borrar marcas pragmáticas esenciales."
+        },
+        {
+          "text": "Es obligatorio para poder aplicar expresiones regulares sobre el corpus antes de cualquier otro análisis.",
+          "isCorrect": false,
+          "rationale": "Las expresiones regulares funcionan sobre el texto original; la eliminación de stopwords es una decisión metodológica independiente."
+        }
+      ],
+      "hint": "Recuerda el equilibrio entre la limpieza de ruido y la conservación de marcas discursivas."
+    },
+    {
+      "question": "¿Qué función cumple la técnica KWIC (Key Word In Context) en una auditoría lingüística?",
+      "answerOptions": [
+        {
+          "text": "Permite pasar de la observación de frecuencias globales al análisis del uso contextual de una palabra.",
+          "isCorrect": true,
+          "rationale": "Al mostrar el término con sus palabras adyacentes, ayuda al analista a entender cómo se está empleando realmente la forma detectada."
+        },
+        {
+          "text": "Calcula automáticamente la polaridad positiva o negativa de un documento entero.",
+          "isCorrect": false,
+          "rationale": "KWIC es una herramienta de visualización de contexto, no una métrica de clasificación de sentimiento."
+        },
+        {
+          "text": "Normaliza el texto eliminando URLs y menciones de usuario mediante regex.",
+          "isCorrect": false,
+          "rationale": "La normalización es un paso previo; KWIC se aplica sobre los tokens resultantes para su exploración cualitativa."
+        },
+        {
+          "text": "Sirve para lematizar automáticamente los verbos irregulares en español antes de construir las tablas.",
+          "isCorrect": false,
+          "rationale": "La lematización es una tarea morfológica, mientras que KWIC es una técnica de visualización de concordancias."
+        }
+      ],
+      "hint": "Considera qué herramienta permite 'mirar' lo que hay a la izquierda y derecha de un término objetivo."
+    },
+    {
+      "question": "Al construir un léxico valorativo con un 'score' simple (+1, -1), ¿cuál es la principal limitación que se debe reconocer?",
+      "answerOptions": [
+        {
+          "text": "Que el sistema no es capaz de captar la ironía, la negación compleja o el contexto pragmático.",
+          "isCorrect": true,
+          "rationale": "Una palabra como 'brillante' sumará +1 incluso si se usa de forma sarcástica para criticar una mala decisión."
+        },
+        {
+          "text": "Que las palabras positivas siempre tienen mayor peso estadístico general que las palabras negativas del diccionario.",
+          "isCorrect": false,
+          "rationale": "El peso depende de la frecuencia en el corpus, no de una propiedad inherente a la polaridad en este sistema."
+        },
+        {
+          "text": "Que Python no permite sumar valores enteros dentro de una comprensión de listas de este tipo.",
+          "isCorrect": false,
+          "rationale": "Python permite realizar estas operaciones aritméticas de forma eficiente; la limitación es conceptual y lingüística."
+        },
+        {
+          "text": "Que es imposible crear diccionarios que contengan tanto claves positivas como negativas.",
+          "isCorrect": false,
+          "rationale": "El uso de diccionarios y el método `.update()` permite integrar múltiples listas de polaridad en una sola estructura."
+        }
+      ],
+      "hint": "Reflexiona sobre lo que sucede cuando alguien dice '¡Qué inteligente eres!' para burlarse."
+    },
+    {
+      "question": "¿Por qué es importante el uso de `\\b` en las expresiones regulares utilizadas para detectar términos de género?",
+      "answerOptions": [
+        {
+          "text": "Para evitar que se detecten secuencias de letras dentro de palabras más largas (como 'mujer' en 'mujeriego').",
+          "isCorrect": true,
+          "rationale": "El marcador `\\b` indica un límite de palabra, asegurando que el patrón coincida solo con palabras completas y aisladas."
+        },
+        {
+          "text": "Para asegurar que la búsqueda ignore las mayúsculas y minúsculas automáticamente.",
+          "isCorrect": false,
+          "rationale": "La ignorancia de mayúsculas se gestiona con `re.IGNORECASE`, no con el marcador de límite de palabra."
+        },
+        {
+          "text": "Para eliminar automáticamente los espacios en blanco sobrantes al final de la frase.",
+          "isCorrect": false,
+          "rationale": "La eliminación de espacios se realiza generalmente con `.strip()` o sustituciones de espacios repetidos con `\\s+`."
+        },
+        {
+          "text": "Para indicar que el patrón debe buscarse únicamente al principio del documento y no en el resto del texto.",
+          "isCorrect": false,
+          "rationale": "El ancla para el inicio de una cadena suele ser `^`, mientras que `\\b` se refiere a cualquier límite de palabra en el texto."
+        }
+      ],
+      "hint": "Imagina que buscas la palabra 'sol' y el sistema te devuelve también 'soldado' y 'soledad'."
+    },
+    {
+      "question": "En un análisis de corpus que localiza qué palabras aparecen cerca de un término objetivo dentro de una ventana de palabras definida, ¿qué representa una 'coocurrencia'?",
+      "answerOptions": [
+        {
+          "text": "La aparición recurrente de ciertas palabras en la vecindad de un término objetivo dentro de una ventana definida.",
+          "isCorrect": true,
+          "rationale": "Cuantifica qué términos aparecen cerca del objetivo, sugiriendo marcos discursivos o asociaciones de ideas."
+        },
+        {
+          "text": "La frecuencia total de una palabra en todo el corpus analizado, sin distinguir su posición ni las palabras que la rodean.",
+          "isCorrect": false,
+          "rationale": "La frecuencia total es un conteo absoluto; la coocurrencia es una medida de asociación relativa a otro término."
+        },
+        {
+          "text": "El error que ocurre cuando dos procesos de Python intentan acceder al mismo archivo de texto.",
+          "isCorrect": false,
+          "rationale": "Ese es un problema de concurrencia informática, no un concepto de lingüística de corpus."
+        },
+        {
+          "text": "La coincidencia exacta entre la etiqueta de sentimiento original y el resultado del análisis léxico.",
+          "isCorrect": false,
+          "rationale": "Esa coincidencia sería una medida de acuerdo o precisión, no una coocurrencia lingüística."
+        }
+      ],
+      "hint": "Se relaciona con la idea de que 'conocerás a una palabra por la compañía que mantiene'."
+    },
+    {
+      "question": "Al interpretar resultados automáticos sobre sesgo lingüístico, ¿qué precaución debe tener una lingüista antes de redactar sus conclusiones?",
+      "answerOptions": [
+        {
+          "text": "Evitar afirmaciones concluyentes como 'el algoritmo demuestra que el texto es sexista'.",
+          "isCorrect": true,
+          "rationale": "La responsabilidad profesional exige prudencia y presentar los resultados como indicios observables, no como veredictos morales."
+        },
+        {
+          "text": "Asegurarse de que el sistema clasifique al menos el 90% de los textos como problemáticos.",
+          "isCorrect": false,
+          "rationale": "El objetivo es la observación objetiva de patrones, no alcanzar una cuota de detección predeterminada."
+        },
+        {
+          "text": "Ignorar el contexto original una vez que se han obtenido las tablas de resultados.",
+          "isCorrect": false,
+          "rationale": "Volver al texto original es fundamental para validar si el patrón detectado tiene relevancia discursiva real."
+        },
+        {
+          "text": "Confiar plenamente en que los datos de redes sociales son neutrales y representativos.",
+          "isCorrect": false,
+          "rationale": "Los datos de redes sociales contienen ruido, sesgos de muestreo y problemas éticos que deben documentarse."
+        }
+      ],
+      "hint": "Piensa en cómo formular un informe que sea científicamente riguroso y éticamente responsable."
+    },
+    {
+      "question": "¿Cuál es la función del bloque `try...except` al cargar spaCy en el entorno de trabajo?",
+      "answerOptions": [
+        {
+          "text": "Garantizar que el código siga funcionando incluso si la librería o el modelo de idioma no están instalados.",
+          "isCorrect": true,
+          "rationale": "Permite que el pipeline use alternativas (como tokenización por regex) si el entorno no dispone de spaCy, evitando que el programa se detenga."
+        },
+        {
+          "text": "Optimizar la velocidad de procesamiento de las expresiones regulares.",
+          "isCorrect": false,
+          "rationale": "La velocidad de las regex no depende de la carga exitosa o fallida de modelos lingüísticos externos como spaCy."
+        },
+        {
+          "text": "Detectar automáticamente el idioma del texto antes de normalizarlo y aplicar el modelo correspondiente.",
+          "isCorrect": false,
+          "rationale": "La detección de idioma es una tarea distinta; este bloque gestiona la disponibilidad de recursos técnicos específicos."
+        },
+        {
+          "text": "Eliminar de forma segura las filas del DataFrame que contienen valores nulos.",
+          "isCorrect": false,
+          "rationale": "La gestión de valores nulos en pandas se realiza con métodos como `.dropna()`, no mediante la carga condicional de librerías."
+        }
+      ],
+      "hint": "Es una práctica de programación profesional relacionada con la portabilidad del código."
+    },
+    {
+      "question": "Si un análisis de lematización convierte 'candidatas' y 'candidata' en el lema único 'candidata', ¿qué riesgo lingüístico se asume en un estudio de género?",
+      "answerOptions": [
+        {
+          "text": "Que se pierda información valiosa sobre las marcas morfológicas superficiales de género y número.",
+          "isCorrect": true,
+          "rationale": "Al reducir las formas a un lema común (a menudo el masculino o la forma singular), se puede invisibilizar la distinción de género que se pretendía estudiar."
+        },
+        {
+          "text": "Que el sistema tarde demasiado tiempo en procesar cada documento del corpus que se está analizando.",
+          "isCorrect": false,
+          "rationale": "La lematización es rápida; el riesgo real es la pérdida de información morfológica específica."
+        },
+        {
+          "text": "Que las expresiones regulares dejen de funcionar sobre el texto original.",
+          "isCorrect": false,
+          "rationale": "La lematización crea una nueva representación; el texto original suele conservarse en otra columna del DataFrame."
+        },
+        {
+          "text": "Que las palabras resultantes sean imposibles de contar con la herramienta `Counter`.",
+          "isCorrect": false,
+          "rationale": "`Counter` funciona con cualquier lista de elementos, sean formas originales o lemas."
+        }
+      ],
+      "hint": "Considera qué sucede con la distinción entre masculino y femenino cuando todo se reduce a la raíz o lema."
+    }
+  ],
+  "topics": {
+    "covered": [
+      "Auditoría lingüística transparente",
+      "Tipos de sesgo en PLN",
+      "Análisis asistido por corpus vs. Análisis crítico del discurso",
+      "Preprocesamiento de texto (normalización, tokenización, lematización)",
+      "Análisis léxico y diccionarios de polaridad",
+      "Herramientas de contexto (KWIC y coocurrencias)",
+      "Ética e interpretación responsable de resultados"
+    ],
+    "followUp": [
+      "Sesgos en embeddings distribucionales (Bolukbasi et al. 2016)",
+      "Detección de discurso ofensivo y variación dialectal",
+      "Modelos pre-entrenados para redes sociales en español (RoBERTuito)",
+      "Datasheets para transparencia en conjuntos de datos (Gebru et al. 2021)",
+      "Evaluación de sesgo de género en modelos de lengua para español"
+    ]
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "quiz": [
+    {
+      "question": "¿Cuál es el objetivo principal de un sistema de clasificación temática basado en palabras clave y similitud coseno?",
+      "answerOptions": [
+        {
+          "text": "Asignar una clase temática de forma que la decisión sea explicable y auditable.",
+          "isCorrect": true,
+          "rationale": "La meta central es clasificar textos basándose en criterios claros y evidencias visibles que un humano pueda validar."
+        },
+        {
+          "text": "Entrenar redes neuronales profundas para maximizar la precisión del modelo final.",
+          "isCorrect": false,
+          "rationale": "Este enfoque evita el uso de modelos de 'caja negra' o redes neuronales complejas en favor de la interpretabilidad."
+        },
+        {
+          "text": "Eliminar por completo la necesidad de revisión humana en el archivo digital.",
+          "isCorrect": false,
+          "rationale": "El sistema está diseñado precisamente para permitir y facilitar la revisión por parte de profesionales como archiveros o juristas."
+        },
+        {
+          "text": "Utilizar embeddings opacos para capturar relaciones semánticas profundas.",
+          "isCorrect": false,
+          "rationale": "Se evita el uso de embeddings sin explicación para mantener el sistema transparente y basado en palabras clave directas."
+        }
+      ],
+      "hint": "Busca el equilibrio entre la automatización y la capacidad de justificar el 'porqué' del resultado."
+    },
+    {
+      "question": "En el contexto de este modelo, ¿qué representa un vector de frecuencia de términos (TF)?",
+      "answerOptions": [
+        {
+          "text": "Un diccionario que asocia cada lema con el número de veces que aparece en el texto.",
+          "isCorrect": true,
+          "rationale": "La representación vectorial simple (TF) se basa en el recuento de frecuencias de las palabras importantes (lemas) tras el preprocesamiento."
+        },
+        {
+          "text": "Una lista de las coordenadas espaciales de cada frase en el documento.",
+          "isCorrect": false,
+          "rationale": "El vector TF no guarda información sobre la posición o estructura de las frases, sino sobre el conteo de términos."
+        },
+        {
+          "text": "Un modelo probabilístico que predice la siguiente palabra más probable.",
+          "isCorrect": false,
+          "rationale": "Predecir la siguiente palabra es una tarea de modelos de lenguaje, no de una representación simple de bolsa de palabras para clasificación."
+        },
+        {
+          "text": "Un índice de la dificultad gramatical del texto analizado.",
+          "isCorrect": false,
+          "rationale": "Aunque la frecuencia puede dar pistas sobre el registro, el vector TF se usa aquí para identificar la temática, no la complejidad gramatical."
+        }
+      ],
+      "hint": "Piensa en cómo se traduce un texto a números basándose únicamente en el recuento de palabras."
+    },
+    {
+      "question": "¿Cómo se interpreta conceptualmente una similitud coseno con valor de 1 entre un texto y un prototipo?",
+      "answerOptions": [
+        {
+          "text": "Ambos comparten las mismas palabras importantes en proporciones muy similares.",
+          "isCorrect": true,
+          "rationale": "Un valor cercano a 1 indica una alta coincidencia en el vocabulario y en la distribución de las palabras clave."
+        },
+        {
+          "text": "Los textos no comparten ninguna palabra en absoluto.",
+          "isCorrect": false,
+          "rationale": "Un valor de 0 indicaría que no hay ninguna relación léxica o vocabulario compartido entre los vectores."
+        },
+        {
+          "text": "El texto tiene exactamente la misma longitud que el prototipo.",
+          "isCorrect": false,
+          "rationale": "La similitud coseno es independiente de la longitud del texto; mide el ángulo entre los vectores de frecuencia, no su magnitud."
+        },
+        {
+          "text": "El texto es un fragmento literario con muchas metáforas.",
+          "isCorrect": false,
+          "rationale": "El valor de la similitud es una medida matemática de parecido léxico, no una etiqueta temática por sí misma."
+        }
+      ],
+      "hint": "Recuerda la analogía del 'ángulo' entre dos flechas que apuntan en la misma dirección."
+    },
+    {
+      "question": "¿Cuál es la función de la lematización dentro del pipeline de preprocesamiento con spaCy?",
+      "answerOptions": [
+        {
+          "text": "Agrupar variantes de una palabra, como 'ley' y 'leyes', bajo una forma común.",
+          "isCorrect": true,
+          "rationale": "Normalizar las palabras a su lema permite que el sistema reconozca que diferentes formas flexivas pertenecen al mismo concepto temático."
+        },
+        {
+          "text": "Traducir términos técnicos complejos a un lenguaje más divulgativo.",
+          "isCorrect": false,
+          "rationale": "La lematización no cambia el registro del lenguaje, sino que reduce las palabras a su forma base o de diccionario."
+        },
+        {
+          "text": "Identificar y corregir errores ortográficos automáticamente.",
+          "isCorrect": false,
+          "rationale": "La lematización asume que las palabras están correctamente escritas para encontrar su raíz lingüística; no es un corrector."
+        },
+        {
+          "text": "Eliminar palabras comunes como preposiciones, artículos y conjunciones del texto.",
+          "isCorrect": false,
+          "rationale": "Esa función corresponde específicamente a la eliminación de 'stopwords', no a la lematización."
+        }
+      ],
+      "hint": "Considera cómo podrías hacer que el sistema entienda que 'cantamos' y 'cantó' se refieren a la misma acción."
+    },
+    {
+      "question": "¿Qué constituye una 'evidencia léxica' en el informe final de clasificación?",
+      "answerOptions": [
+        {
+          "text": "Los lemas del texto que coinciden con el prototipo de la clase ganadora.",
+          "isCorrect": true,
+          "rationale": "Las evidencias son las palabras clave detectadas que 'empujaron' la similitud hacia una categoría determinada, permitiendo la justificación."
+        },
+        {
+          "text": "La mención de la fuente bibliográfica original y completa del texto analizado.",
+          "isCorrect": false,
+          "rationale": "Aunque citar la fuente es importante para la autenticidad, no es una evidencia técnica utilizada por el clasificador."
+        },
+        {
+          "text": "El tiempo total que el algoritmo tardó en procesar el documento.",
+          "isCorrect": false,
+          "rationale": "La eficiencia temporal no explica por qué se eligió una etiqueta temática específica."
+        },
+        {
+          "text": "El número de signos de puntuación y exclamaciones detectados.",
+          "isCorrect": false,
+          "rationale": "El preprocesamiento suele filtrar los signos de puntuación, centrándose solo en caracteres alfabéticos para la clasificación temática."
+        }
+      ],
+      "hint": "Es el rastro de palabras que justifica la decisión del sistema ante un revisor humano."
+    },
+    {
+      "question": "¿Por qué el sistema podría fallar al clasificar un texto que utiliza mucha ironía o lenguaje indirecto?",
+      "answerOptions": [
+        {
+          "text": "Porque el método se basa en la presencia literal de palabras clave y no en el sentido figurado.",
+          "isCorrect": true,
+          "rationale": "Al ser un modelo de 'bolsa de palabras', solo detecta la aparición de términos, perdiendo el matiz del contexto o la intención del autor."
+        },
+        {
+          "text": "Porque la ironía aumenta demasiado la frecuencia de las 'stopwords'.",
+          "isCorrect": false,
+          "rationale": "Las 'stopwords' se eliminan siempre; el problema de la ironía radica en el significado, no en las palabras comunes."
+        },
+        {
+          "text": "Porque los textos irónicos siempre son demasiado cortos para generar vectores TF.",
+          "isCorrect": false,
+          "rationale": "La longitud no es el factor determinante, sino la discrepancia entre las palabras usadas y la intención real detrás de ellas."
+        },
+        {
+          "text": "Porque la librería spaCy no puede procesar textos que no sean estrictamente formales.",
+          "isCorrect": false,
+          "rationale": "spaCy puede procesar cualquier texto; la limitación está en la regla de decisión basada en frecuencias simples."
+        }
+      ],
+      "hint": "Piensa en lo que sucede cuando las palabras dicen una cosa pero el autor quiere decir lo contrario."
+    },
+    {
+      "question": "Si dos temáticas diferentes comparten mucho vocabulario (por ejemplo, 'sistema' en técnica y divulgación), ¿qué fenómeno explica que un clasificador basado en palabras clave pueda confundirlas?",
+      "answerOptions": [
+        {
+          "text": "Ambigüedad léxica que puede derivar en un sesgo de diseño del modelo.",
+          "isCorrect": true,
+          "rationale": "Cuando los términos se solapan, el resultado depende de qué tan bien haya seleccionado el humano las palabras clave para diferenciar las clases."
+        },
+        {
+          "text": "Sinonimia perfecta entre categorías profesionales.",
+          "isCorrect": false,
+          "rationale": "Que compartan vocabulario no significa que las categorías sean iguales, sino que el lenguaje es compartido."
+        },
+        {
+          "text": "Necesidad obligatoria de usar redes neuronales para separar los textos.",
+          "isCorrect": false,
+          "rationale": "Aunque es un reto, el enfoque explicable busca resolverlo ajustando los prototipos, no cambiando a modelos opacos."
+        },
+        {
+          "text": "Error de tokenización por parte de la librería spaCy.",
+          "isCorrect": false,
+          "rationale": "La tokenización es correcta; el problema es semántico y de distribución de frecuencias en la clasificación."
+        }
+      ],
+      "hint": "Considera cómo las decisiones del 'ingeniero' al elegir palabras clave afectan la neutralidad del sistema."
+    },
+    {
+      "question": "En el desarrollo práctico, ¿qué función cumple la variable `class_keywords`?",
+      "answerOptions": [
+        {
+          "text": "Definir los perfiles o 'prototipos' de cada temática mediante palabras señal.",
+          "isCorrect": true,
+          "rationale": "Esta variable actúa como el conocimiento experto que el sistema usa para comparar los nuevos textos."
+        },
+        {
+          "text": "Almacenar el texto completo que se desea clasificar.",
+          "isCorrect": false,
+          "rationale": "El texto a clasificar se guarda usualmente en variables como `texts_to_classify`."
+        },
+        {
+          "text": "Listar todas las palabras que el sistema debe ignorar (stopwords).",
+          "isCorrect": false,
+          "rationale": "Las palabras a ignorar se gestionan internamente en el pipeline de spaCy o mediante listas de 'stopwords'."
+        },
+        {
+          "text": "Guardar los resultados finales de las similitudes calculadas.",
+          "isCorrect": false,
+          "rationale": "Los resultados se suelen almacenar en un DataFrame o una lista de diccionarios tras ejecutar la clasificación."
+        }
+      ],
+      "hint": "Es el conjunto de 'pistas' que representan a cada grupo temático."
+    },
+    {
+      "question": "¿Cuál es una ventaja competitiva de este enfoque en el ámbito de las Humanidades?",
+      "answerOptions": [
+        {
+          "text": "Que permite discutir y argumentar los criterios de clasificación basándose en datos visibles.",
+          "isCorrect": true,
+          "rationale": "La interpretabilidad permite que un investigador humano valide, cuestione y ajuste el modelo con lógica lingüística."
+        },
+        {
+          "text": "Que procesa millones de documentos por segundo en tiempo real.",
+          "isCorrect": false,
+          "rationale": "Aunque es rápido, su ventaja principal en Humanidades no es la velocidad bruta, sino la transparencia."
+        },
+        {
+          "text": "Que sustituye la necesidad de conocimientos lingüísticos por parte del analista.",
+          "isCorrect": false,
+          "rationale": "Al contrario, requiere que el analista defina buenos perfiles temáticos basados en su conocimiento del lenguaje."
+        },
+        {
+          "text": "Que no requiere ningún tipo de preprocesamiento de los datos antes de aplicar el modelo de clasificación final.",
+          "isCorrect": false,
+          "rationale": "El preprocesamiento es una etapa fundamental y obligatoria para que la representación vectorial sea útil."
+        }
+      ],
+      "hint": "Piensa en la importancia de poder 'explicar' un resultado en una investigación académica."
+    },
+    {
+      "question": "Al aplicar el filtro `tok.is_alpha` en spaCy, ¿qué elementos estamos excluyendo del análisis?",
+      "answerOptions": [
+        {
+          "text": "Números, signos de puntuación y símbolos especiales.",
+          "isCorrect": true,
+          "rationale": "`is_alpha` devuelve verdadero solo para tokens que consisten únicamente en letras, limpiando el ruido del vector TF."
+        },
+        {
+          "text": "Solo las palabras que están escritas completamente en mayúsculas.",
+          "isCorrect": false,
+          "rationale": "Las mayúsculas se suelen manejar convirtiendo el texto a minúsculas (`lower()`), no con `is_alpha`."
+        },
+        {
+          "text": "Los verbos conjugados y los adverbios de modo.",
+          "isCorrect": false,
+          "rationale": "Tanto verbos como adverbios son alfabéticos y se mantienen si no son 'stopwords'."
+        },
+        {
+          "text": "Las palabras que tienen menos de tres letras.",
+          "isCorrect": false,
+          "rationale": "La longitud de la palabra se controla con una condición adicional como `len(tok) >= 2`."
+        }
+      ],
+      "hint": "Considera qué partes de un texto no son estrictamente 'letras del alfabeto'."
+    }
+  ],
+  "topics": {
+    "covered": [
+      "Clasificación temática explicable",
+      "Vectores de frecuencia (TF)",
+      "Similitud coseno conceptual",
+      "Preprocesamiento lingüístico con spaCy",
+      "Interpretación de evidencias léxicas"
+    ],
+    "followUp": [
+      "Modelos de clasificación híbridos",
+      "Análisis de sesgo en la selección de keywords",
+      "Aplicaciones de PLN en Humanidades Digitales",
+      "Técnicas avanzadas de normalización de textos"
+    ]
+  }
+}

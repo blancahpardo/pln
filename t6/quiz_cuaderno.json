@@ -1,0 +1,279 @@
+{
+  "quiz": [
+    {
+      "question": "¿Cómo se manifiesta el sesgo lingüístico desde una perspectiva computacional en el procesamiento del lenguaje natural (PLN)?",
+      "answerOptions": [
+        {
+          "text": "A través de la identificación de patrones léxicos y frecuencias sistemáticas.",
+          "isCorrect": true,
+          "rationale": "Desde el punto de vista del PLN, el sesgo se aborda identificando recurrencias en el uso de palabras y frecuencias de aparición."
+        },
+        {
+          "text": "Mediante la detección automática de la intención maliciosa del autor.",
+          "isCorrect": false,
+          "rationale": "El PLN no detecta la intención del autor directamente, sino que analiza las huellas léxicas dejadas en el texto."
+        },
+        {
+          "text": "Únicamente mediante la corrección de errores gramaticales y sintácticos.",
+          "isCorrect": false,
+          "rationale": "La corrección gramatical es una tarea de PLN, pero no define por sí misma el análisis de sesgo léxico o discursivo."
+        },
+        {
+          "text": "Como una alucinación producida exclusivamente por modelos de inteligencia artificial generativa.",
+          "isCorrect": false,
+          "rationale": "El sesgo puede analizarse mediante reglas definidas de antemano, sin necesidad de usar inteligencia artificial generativa."
+        }
+      ],
+      "hint": "Recuerda que el análisis se centra en lo que es medible a través de los términos utilizados en el corpus."
+    },
+    {
+      "question": "En el contexto de la normalización de texto, ¿por qué se afirma que esta etapa no es 'neutra'?",
+      "answerOptions": [
+        {
+          "text": "Porque cada decisión de limpieza implica una hipótesis sobre qué información es relevante.",
+          "isCorrect": true,
+          "rationale": "Decidir qué eliminar (como URLs o menciones) supone una interpretación previa sobre qué elementos aportan significado al análisis del sesgo."
+        },
+        {
+          "text": "Porque requiere el uso obligatorio de modelos de Machine Learning muy complejos y costosos.",
+          "isCorrect": false,
+          "rationale": "La normalización se basa en reglas, pero su falta de neutralidad reside en la toma de decisiones lingüísticas, no en la complejidad técnica."
+        },
+        {
+          "text": "Porque el proceso de convertir a minúsculas altera el significado léxico de las palabras.",
+          "isCorrect": false,
+          "rationale": "Aunque las mayúsculas pueden dar énfasis, la normalización a minúsculas es un paso técnico estándar para unificar tokens."
+        },
+        {
+          "text": "Porque la eliminación de números impide realizar recuentos de frecuencia precisos.",
+          "isCorrect": false,
+          "rationale": "La eliminación de números busca reducir el ruido, pero no es la razón principal por la cual la normalización se considera una decisión teórica."
+        }
+      ],
+      "hint": "Piensa en el impacto de descartar ciertos elementos del texto antes del análisis."
+    },
+    {
+      "question": "Al trabajar con listas léxicas de género, ¿cuál es el objetivo de incluir términos como 'estudiante' o 'deportista'?",
+      "answerOptions": [
+        {
+          "text": "Servir como contraste para identificar términos neutrales y demostrar límites del sistema.",
+          "isCorrect": true,
+          "rationale": "Se utilizan para mostrar que no todas las palabras que designan personas tienen una marca de género que el sistema pueda categorizar binariamente."
+        },
+        {
+          "text": "Demostrar los límites de las palabras con género marcado frente a las que no llevan ninguna marca gramatical.",
+          "isCorrect": false,
+          "rationale": "Estos términos son neutros, por lo que su función es mostrar precisamente la ausencia de marca de género visible."
+        },
+        {
+          "text": "Facilitar la detección de insultos directos contra colectivos específicos.",
+          "isCorrect": false,
+          "rationale": "Estos términos son sustantivos comunes que designan profesiones o roles, no términos ofensivos."
+        },
+        {
+          "text": "Aumentar artificialmente el número de tokens positivos en el corpus.",
+          "isCorrect": false,
+          "rationale": "La inclusión de términos neutrales busca precisión metodológica, no alterar los resultados de polaridad."
+        }
+      ],
+      "hint": "Considera cómo se comportan estos sustantivos frente a pares como 'jefe/jefa'."
+    },
+    {
+      "question": "¿Qué problema estructural presenta la ironía para los métodos de análisis basados en diccionarios léxicos?",
+      "answerOptions": [
+        {
+          "text": "Puede invertir el sentido de un enunciado positivo sin cambiar las palabras utilizadas.",
+          "isCorrect": true,
+          "rationale": "La ironía permite que un texto con términos positivos sea una crítica negativa, algo que un simple conteo de palabras no puede detectar."
+        },
+        {
+          "text": "Requiere demasiada memoria RAM para procesar correctamente las oraciones sarcásticas.",
+          "isCorrect": false,
+          "rationale": "La ironía es un problema de interpretación semántica y pragmática, no un problema de recursos de hardware."
+        },
+        {
+          "text": "Los diccionarios no pueden contener palabras negativas usadas con intención irónica.",
+          "isCorrect": false,
+          "rationale": "El problema no es el contenido del diccionario, sino la incapacidad de entender que el significado se invierte por el contexto."
+        },
+        {
+          "text": "La ironía solo ocurre en textos de prensa formales y nunca en redes sociales como Twitter.",
+          "isCorrect": false,
+          "rationale": "La ironía es sumamente frecuente en redes sociales, lo que la convierte en un desafío constante para el PLN."
+        }
+      ],
+      "hint": "Reflexiona sobre qué sucede cuando alguien dice algo 'bueno' para significar algo 'malo'."
+    },
+    {
+      "question": "En el análisis comparativo entre 'jefa' y 'jefe', ¿qué fenómeno de sesgo se detecta si ambos exigen rigor pero solo una es llamada 'mandona'?",
+      "answerOptions": [
+        {
+          "text": "Una asimetría discursiva donde un mismo comportamiento se evalúa distinto según el género.",
+          "isCorrect": true,
+          "rationale": "Este es el ejemplo canónico de sesgo, donde la misma conducta recibe una etiqueta negativa para las mujeres y neutra o positiva para los hombres."
+        },
+        {
+          "text": "Un error en la tokenización de adjetivos calificativos que impide reconocer la forma femenina.",
+          "isCorrect": false,
+          "rationale": "El sistema detecta los tokens correctamente; el problema reside en la asimetría de la evaluación social reflejada en el lenguaje."
+        },
+        {
+          "text": "Un sesgo de confirmación por parte del algoritmo de Machine Learning.",
+          "isCorrect": false,
+          "rationale": "El ejercicio utiliza reglas definidas de antemano, por lo que el sesgo proviene del texto original, no de un aprendizaje automático sesgado."
+        },
+        {
+          "text": "La invisibilización absoluta del colectivo femenino en el entorno laboral.",
+          "isCorrect": false,
+          "rationale": "En este caso no hay invisibilización (la palabra 'jefa' aparece), sino una evaluación peyorativa específica."
+        }
+      ],
+      "hint": "Fíjate en cómo cambia la valoración léxica para una misma acción."
+    },
+    {
+      "question": "¿Cuál es la función principal de la técnica KWIC (Key Word In Context) en una auditoría lingüística?",
+      "answerOptions": [
+        {
+          "text": "Permitir al analista humano observar las palabras que rodean a un término específico.",
+          "isCorrect": true,
+          "rationale": "El KWIC facilita la interpretación cualitativa al mostrar el contexto inmediato (izquierda y derecha) de una palabra de interés."
+        },
+        {
+          "text": "Traducir automáticamente los términos sesgados a un lenguaje inclusivo.",
+          "isCorrect": false,
+          "rationale": "El KWIC es una herramienta de visualización y análisis, no de traducción o corrección de textos."
+        },
+        {
+          "text": "Eliminar las Stopwords del corpus para mejorar la velocidad de búsqueda.",
+          "isCorrect": false,
+          "rationale": "Aunque se suele aplicar sobre texto limpio, su fin no es eliminar palabras sino mostrar el entorno de una palabra clave."
+        },
+        {
+          "text": "Calcular la polaridad matemática total de un documento completo y ya procesado por el sistema.",
+          "isCorrect": false,
+          "rationale": "La polaridad total se calcula con scores agregados; el KWIC se enfoca en la observación local de ocurrencias."
+        }
+      ],
+      "hint": "Esta técnica permite ver 'con quién se junta' una palabra en las oraciones."
+    },
+    {
+      "question": "En un análisis de un subcorpus real de Twitter, se calcula para cada texto cuántos términos de género aparecen y cuántos términos valorativos (positivos o negativos) aparecen junto a ellos. ¿Qué significa que la métrica de términos de género sea alta pero el léxico valorativo sea casi nulo?",
+      "answerOptions": [
+        {
+          "text": "Que mencionar términos de género no equivale necesariamente a hablar sobre género.",
+          "isCorrect": true,
+          "rationale": "En redes sociales, términos como 'chica' o 'chico' suelen usarse como vocativos o en contextos de fandom, sin tematizar problemas de género."
+        },
+        {
+          "text": "Que el código tiene un error y no está detectando los adjetivos correctamente.",
+          "isCorrect": false,
+          "rationale": "El código funciona; el resultado refleja que en muchos tweets el género se usa sin adjetivos valorativos del diccionario."
+        },
+        {
+          "text": "Que los usuarios de Twitter siempre utilizan un lenguaje completamente neutral y objetivo.",
+          "isCorrect": false,
+          "rationale": "Twitter es un entorno subjetivo, pero la valoración a menudo se transmite mediante emojis o ironía, no mediante el léxico del diccionario."
+        },
+        {
+          "text": "Que el corpus es demasiado grande para que las métricas sean significativas.",
+          "isCorrect": false,
+          "rationale": "Incluso en subcorpus pequeños (35 textos), estas discrepancias revelan la diferencia entre presencia léxica y carga discursiva."
+        }
+      ],
+      "hint": "Distingue entre la simple aparición de una palabra y el desarrollo de un tema o juicio."
+    },
+    {
+      "question": "¿Por qué es recomendable realizar el análisis de co-ocurrencias sobre tokens o lemas en lugar de sobre el texto crudo?",
+      "answerOptions": [
+        {
+          "text": "Para evitar que el ruido de la plataforma (como URLs o símbolos) domine los resultados.",
+          "isCorrect": true,
+          "rationale": "El preprocesamiento limpia el texto, permitiendo que las relaciones entre palabras con significado real sean más visibles y menos sesgadas por 'basura' digital."
+        },
+        {
+          "text": "Porque el texto crudo es ilegal procesarlo debido a las políticas de privacidad.",
+          "isCorrect": false,
+          "rationale": "El procesamiento de texto crudo es legalmente posible si se tiene acceso al dataset; el motivo de no usarlo es puramente metodológico."
+        },
+        {
+          "text": "Para que el sistema pueda entender automáticamente la intención del sarcasmo del autor.",
+          "isCorrect": false,
+          "rationale": "La lematización ayuda a unificar formas de palabras, pero no resuelve el problema de la detección de sarcasmo."
+        },
+        {
+          "text": "Porque las co-ocurrencias solo funcionan si el texto está escrito en mayúsculas.",
+          "isCorrect": false,
+          "rationale": "Al contrario, se normaliza a minúsculas para unificar ocurrencias de una misma palabra escrita de formas distintas."
+        }
+      ],
+      "hint": "Considera qué pasaría si términos como 'RT' o 'http' aparecieran en tu tabla de resultados."
+    },
+    {
+      "question": "En el experimento con datos de Twitter, ¿qué función cumplen términos como 'sorteo', 'fandom' o 'One Direction' en las co-ocurrencias de género?",
+      "answerOptions": [
+        {
+          "text": "Representan el 'ruido' o contexto temático que domina el uso de estos términos en redes sociales.",
+          "isCorrect": true,
+          "rationale": "Muestran que en Twitter, el léxico de género suele estar integrado en dinámicas de comunidad y cultura pop, no en debates ideológicos profundos."
+        },
+        {
+          "text": "Indican un alto nivel de discurso político y activismo feminista en las publicaciones analizadas.",
+          "isCorrect": false,
+          "rationale": "Estos términos se alejan de lo político y quedan más bien en el ámbito del entretenimiento y la promoción."
+        },
+        {
+          "text": "Son palabras que el sistema debería clasificar siempre como polaridad negativa.",
+          "isCorrect": false,
+          "rationale": "Estos términos suelen ser neutrales o positivos en el contexto de las interacciones de los fans."
+        },
+        {
+          "text": "Demuestran que el PLN es capaz de identificar grupos musicales sin necesidad de diccionarios.",
+          "isCorrect": false,
+          "rationale": "El sistema los identifica porque co-ocurren con los términos de búsqueda, no porque 'sepa' qué son grupos musicales por sí solo."
+        }
+      ],
+      "hint": "Piensa en el tipo de actividades que realizan los usuarios jóvenes en Twitter."
+    },
+    {
+      "question": "¿Cuál es el papel del lingüista computacional frente a los resultados de un prototipo automático de detección de sesgo?",
+      "answerOptions": [
+        {
+          "text": "Interpretar críticamente los patrones detectados, ya que el PLN no sustituye a la interpretación.",
+          "isCorrect": true,
+          "rationale": "El PLN actúa como apoyo para localizar fenómenos, pero la interpretación cualitativa y la detección de sesgos sutiles dependen del especialista humano."
+        },
+        {
+          "text": "Delegar toda la responsabilidad ética en los resultados estadísticos generados automáticamente por el código.",
+          "isCorrect": false,
+          "rationale": "La responsabilidad ética es humana; el código es solo una herramienta transparente que requiere supervisión."
+        },
+        {
+          "text": "Ignorar los resultados del prototipo si estos no coinciden con su intuición personal.",
+          "isCorrect": false,
+          "rationale": "El objetivo es usar los datos para informar la intuición y realizar una auditoría basada en evidencias, no descartar datos arbitrariamente."
+        },
+        {
+          "text": "Modificar manualmente los textos originales para que el sistema no encuentre ningún sesgo.",
+          "isCorrect": false,
+          "rationale": "La tarea es auditar y detectar el sesgo existente en los textos reales, no ocultarlo mediante la edición del corpus."
+        }
+      ],
+      "hint": "El PLN no sustituye la interpretación humana: la apoya, aportando indicios que hay que leer con criterio."
+    }
+  ],
+  "topics": {
+    "covered": [
+      "Análisis de sesgo léxico",
+      "Normalización y preprocesamiento de texto",
+      "Detección de sesgo de género en PLN",
+      "Interpretación cualitativa mediante KWIC y co-ocurrencias",
+      "Limitaciones éticas y lingüísticas del análisis automático"
+    ],
+    "followUp": [
+      "Modelos de Machine Learning para detección de discurso de odio",
+      "Análisis de sentimientos avanzado en redes sociales",
+      "Mitigación de sesgos en modelos de lenguaje (IA generativa)",
+      "Pragmática computacional e ironía"
+    ]
+  }
+}

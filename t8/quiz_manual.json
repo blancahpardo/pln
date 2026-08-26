@@ -1,0 +1,280 @@
+{
+  "quiz": [
+    {
+      "question": "¿Cuál es la principal ventaja de utilizar la similitud coseno en lugar de contar simplemente las palabras compartidas entre dos documentos?",
+      "answerOptions": [
+        {
+          "text": "Normaliza los vectores para que la longitud del texto no determine la similitud.",
+          "isCorrect": true,
+          "rationale": "La similitud coseno utiliza la norma de los vectores en el denominador para evitar que los textos más largos parezcan más similares solo por tener más palabras."
+        },
+        {
+          "text": "Permite capturar el orden sintáctico completo de las palabras en la oración analizada.",
+          "isCorrect": false,
+          "rationale": "El modelo de bolsa de palabras utilizado en la unidad pierde por definición el orden sintáctico y discursivo."
+        },
+        {
+          "text": "Identifica automáticamente sinónimos y relaciones semánticas complejas.",
+          "isCorrect": false,
+          "rationale": "Este método se basa en la coincidencia léxica literal y no detecta sinónimos a menos que se incluyan directamente en los prototipos."
+        },
+        {
+          "text": "Garantiza que las palabras comunes como las 'stopwords' tengan más peso.",
+          "isCorrect": false,
+          "rationale": "Las 'stopwords' suelen eliminarse en el preprocesamiento porque aportan poco valor distintivo a la clasificación temática."
+        }
+      ],
+      "hint": "Piense en qué sucede cuando comparamos un documento muy breve con uno muy extenso."
+    },
+    {
+      "question": "Al preprocesar un texto con spaCy antes de clasificarlo, ¿qué se almacena finalmente en la lista de tokens para su posterior conteo?",
+      "answerOptions": [
+        {
+          "text": "Los lemas de los tokens que son alfabéticos, no son 'stopwords' y tienen longitud mínima.",
+          "isCorrect": true,
+          "rationale": "El código utiliza el atributo `tok.lemma_` tras aplicar filtros de tipo de carácter, pertenencia a lista de parada y longitud."
+        },
+        {
+          "text": "El texto original en minúsculas sin ningún otro cambio.",
+          "isCorrect": false,
+          "rationale": "El preprocesamiento implica filtrar palabras y transformar su morfología, no solo cambiar la capitalización."
+        },
+        {
+          "text": "Únicamente las palabras que aparecen en el diccionario de palabras clave.",
+          "isCorrect": false,
+          "rationale": "Se procesa todo el texto del documento para generar su vector, aunque luego se compare con los prototipos."
+        },
+        {
+          "text": "Las etiquetas de categoría gramatical (POS tags) de cada palabra del texto, sin ningún filtrado adicional.",
+          "isCorrect": false,
+          "rationale": "Aunque spaCy puede extraer categorías gramaticales, este proceso utiliza lemas para la clasificación temática."
+        }
+      ],
+      "hint": "Considere la función que permite agrupar variantes como 'leyes' y 'ley' bajo una misma forma."
+    },
+    {
+      "question": "¿Cuál es el propósito de la medida IDF (Inverse Document Frequency) al ponderar los términos de un documento?",
+      "answerOptions": [
+        {
+          "text": "Reducir el peso de términos generales y resaltar términos que son más específicos o raros.",
+          "isCorrect": true,
+          "rationale": "IDF asume que una palabra es más informativa si aparece en pocos documentos de un corpus."
+        },
+        {
+          "text": "Contar cuántas veces aparece un término dentro de un solo documento específico.",
+          "isCorrect": false,
+          "rationale": "Esa es la definición de TF (Term Frequency), no de IDF."
+        },
+        {
+          "text": "Aumentar el peso de las palabras que aparecen en casi todos los documentos de la colección.",
+          "isCorrect": false,
+          "rationale": "IDF hace lo contrario: penaliza las palabras que son demasiado comunes en toda la colección porque son menos informativas."
+        },
+        {
+          "text": "Determinar la longitud euclidiana de un vector de texto.",
+          "isCorrect": false,
+          "rationale": "La longitud del vector se calcula mediante la norma, mientras que IDF es un factor de ponderación de términos."
+        }
+      ],
+      "hint": "Reflexione sobre por qué palabras como 'documento' podrían ser menos útiles que 'cláusula' en una colección mixta."
+    },
+    {
+      "question": "En un sistema de clasificación temática que compara cada texto con perfiles de clase construidos a partir de palabras clave, ¿cómo se define conceptualmente un 'prototipo temático'?",
+      "answerOptions": [
+        {
+          "text": "Un vector de frecuencias construido a partir de una lista de palabras clave seleccionadas manualmente.",
+          "isCorrect": true,
+          "rationale": "Los prototipos se crean preprocesando y vectorizando las palabras clave que definen cada clase (jurídico, técnico, etc.)."
+        },
+        {
+          "text": "Un modelo neuronal de caja negra entrenado con miles de ejemplos etiquetados por un equipo de anotadores.",
+          "isCorrect": false,
+          "rationale": "El sistema se aleja deliberadamente de los modelos opacos para priorizar la explicabilidad humana."
+        },
+        {
+          "text": "El centroide matemático de todos los documentos clasificados previamente.",
+          "isCorrect": false,
+          "rationale": "Aunque se menciona la relación con los clasificadores de centroides, en esta unidad los prototipos se construyen de forma manual y pedagógica."
+        },
+        {
+          "text": "Una regla lógica de tipo 'si-entonces' basada en la posición de las palabras.",
+          "isCorrect": false,
+          "rationale": "El sistema utiliza un modelo de espacio vectorial, no un sistema de reglas de producción gramatical."
+        }
+      ],
+      "hint": "Se trata de la representación vectorial de las categorías que el analista desea identificar."
+    },
+    {
+      "question": "En la implementación de la similitud coseno, ¿qué ocurre si el numerador (producto escalar) es igual a 0?",
+      "answerOptions": [
+        {
+          "text": "Significa que los dos vectores no comparten ningún término relevante del vocabulario.",
+          "isCorrect": true,
+          "rationale": "El producto escalar suma los productos de las frecuencias de términos comunes; si no hay comunes, la suma es cero."
+        },
+        {
+          "text": "La similitud es máxima (1.0) porque no existe ninguna interferencia posible entre los textos.",
+          "isCorrect": false,
+          "rationale": "Un producto escalar de 0 indica ausencia de coincidencia, lo cual implica similitud nula, no máxima."
+        },
+        {
+          "text": "El sistema asigna automáticamente la clase 'divulgativo' por defecto en estos casos.",
+          "isCorrect": false,
+          "rationale": "La clasificación depende del cálculo matemático de todas las clases; no hay una asignación por defecto sin evidencia."
+        },
+        {
+          "text": "Indica que uno de los documentos es exactamente el doble de largo que el otro.",
+          "isCorrect": false,
+          "rationale": "La longitud relativa no se determina por el producto escalar, sino por la comparación de las normas."
+        }
+      ],
+      "hint": "Piense en la operación matemática que multiplica las frecuencias de las palabras que aparecen en ambos vectores."
+    },
+    {
+      "question": "Señale un límite lingüístico importante del enfoque de clasificación basado en 'bolsa de palabras' y similitud coseno.",
+      "answerOptions": [
+        {
+          "text": "No puede distinguir el sentido de palabras polisémicas que cambian según el contexto.",
+          "isCorrect": true,
+          "rationale": "Al perder el orden y el contexto sintáctico, palabras como 'artículo' (jurídico vs. periodístico) pueden causar confusión."
+        },
+        {
+          "text": "Es incapaz de procesar correctamente textos en español debido a su compleja morfología verbal.",
+          "isCorrect": false,
+          "rationale": "El uso de spaCy y la lematización permiten manejar eficazmente la morfología del español."
+        },
+        {
+          "text": "Requiere obligatoriamente el uso de GPU para realizar los cálculos vectoriales.",
+          "isCorrect": false,
+          "rationale": "La similitud coseno y el conteo de frecuencias son operaciones ligeras que se ejecutan fácilmente en CPU."
+        },
+        {
+          "text": "Obliga a que todos los documentos tengan exactamente el mismo número de palabras.",
+          "isCorrect": false,
+          "rationale": "La normalización del coseno permite comparar documentos de longitudes muy distintas."
+        }
+      ],
+      "hint": "Considere qué ocurre cuando una misma palabra tiene significados distintos en diferentes dominios."
+    },
+    {
+      "question": "En el contexto de la 'clasificación responsable', ¿qué función cumplen las evidencias léxicas?",
+      "answerOptions": [
+        {
+          "text": "Permiten que una persona audite y comprenda qué términos específicos justifican la etiqueta asignada.",
+          "isCorrect": true,
+          "rationale": "Mostrar los lemas compartidos entre el texto y el prototipo permite validar o discutir la decisión del sistema."
+        },
+        {
+          "text": "Sirven para ocultar los errores del algoritmo ante el usuario final.",
+          "isCorrect": false,
+          "rationale": "Las evidencias buscan la transparencia, no ocultar los fallos del sistema."
+        },
+        {
+          "text": "Son necesarias para calcular la raíz cuadrada de la norma del vector.",
+          "isCorrect": false,
+          "rationale": "El cálculo de la norma es una operación matemática previa e independiente de la generación de informes de evidencia."
+        },
+        {
+          "text": "Garantizan que el sistema siempre acierte en su clasificación final, incluso en textos ambiguos.",
+          "isCorrect": false,
+          "rationale": "Las evidencias explican la decisión, pero no eliminan la posibilidad de error si el prototipo está mal diseñado."
+        }
+      ],
+      "hint": "Recuerde el encargo del Centro Atlas sobre la necesidad de justificar las decisiones de archivo."
+    },
+    {
+      "question": "¿Cuál es la fórmula correcta de la similitud coseno entre dos vectores A y B?",
+      "answerOptions": [
+        {
+          "text": "coseno(A, B) = (A · B) / (||A|| × ||B||)",
+          "isCorrect": true,
+          "rationale": "Esta fórmula representa el producto escalar de los vectores dividido por el producto de sus normas (longitudes)."
+        },
+        {
+          "text": "coseno(A, B) = A · B - (||A|| + ||B||)",
+          "isCorrect": false,
+          "rationale": "La similitud coseno se basa en una división para normalizar, no en una resta de longitudes."
+        },
+        {
+          "text": "coseno(A, B) = √(A² + B²)",
+          "isCorrect": false,
+          "rationale": "Esta fórmula se asemeja más al cálculo de una hipotenusa o distancia euclidiana, no a una medida de ángulo entre vectores."
+        },
+        {
+          "text": "coseno(A, B) = (||A|| × ||B||) / (A · B)",
+          "isCorrect": false,
+          "rationale": "En esta opción los términos están invertidos; el producto escalar debe estar en el numerador."
+        }
+      ],
+      "hint": "La medida busca evaluar la orientación de los vectores independientemente de su magnitud."
+    },
+    {
+      "question": "Al construir un clasificador con Python, ¿por qué se utiliza la clase `Counter` de la librería `collections`?",
+      "answerOptions": [
+        {
+          "text": "Para representar vectores dispersos de forma eficiente, guardando solo las palabras presentes.",
+          "isCorrect": true,
+          "rationale": "Un `Counter` solo almacena las palabras que aparecen en el texto, lo que ahorra memoria frente a matrices completas de vocabulario."
+        },
+        {
+          "text": "Para cifrar el contenido de los textos por motivos de seguridad.",
+          "isCorrect": false,
+          "rationale": "La seguridad no es el objetivo de `Counter`; su función es el análisis estadístico simple de frecuencias."
+        },
+        {
+          "text": "Para traducir automáticamente los términos del español al inglés antes de clasificarlos en su categoría.",
+          "isCorrect": false,
+          "rationale": "El conteo de frecuencias no implica traducción de idiomas."
+        },
+        {
+          "text": "Para eliminar permanentemente todas las palabras del sistema una vez clasificadas.",
+          "isCorrect": false,
+          "rationale": "El objetivo es representar el texto para su análisis, no borrar la información."
+        }
+      ],
+      "hint": "Piense en cómo se representa un texto donde la inmensa mayoría de las palabras del idioma no aparecen."
+    },
+    {
+      "question": "Si un texto trata sobre un 'manual para configurar un dispositivo', pero la clase 'técnico' solo tiene palabras clave como 'instalar' y 'puerto', ¿qué limitación podría presentarse?",
+      "answerOptions": [
+        {
+          "text": "Un problema de sinonimia o falta de cobertura en el prototipo.",
+          "isCorrect": true,
+          "rationale": "Si las señales del texto no coinciden con las del prototipo (aunque el tema sea el mismo), la similitud será baja."
+        },
+        {
+          "text": "Un error de polisemia, ya que la misma palabra podría pertenecer a varias clases distintas.",
+          "isCorrect": false,
+          "rationale": "La polisemia ocurre cuando una palabra tiene varios significados, no cuando faltan palabras en el perfil."
+        },
+        {
+          "text": "Un exceso de 'stopwords' en el texto.",
+          "isCorrect": false,
+          "rationale": "El problema descrito se refiere a términos de contenido técnico que no están mapeados, no a palabras funcionales."
+        },
+        {
+          "text": "Un fallo en la normalización del coseno.",
+          "isCorrect": false,
+          "rationale": "La normalización funciona correctamente; el problema es que el producto escalar será 0 por falta de términos comunes."
+        }
+      ],
+      "hint": "Reflexione sobre la importancia de la calidad y variedad de la lista de palabras clave manuales."
+    }
+  ],
+  "topics": {
+    "covered": [
+      "Clasificación temática de textos",
+      "Modelo de Espacio Vectorial",
+      "Similitud Coseno",
+      "Representación Bag-of-Words (TF)",
+      "Preprocesamiento lingüístico con spaCy",
+      "Explicabilidad y evidencias léxicas"
+    ],
+    "followUp": [
+      "Ponderación TF-IDF y su impacto en la recuperación de información",
+      "Extracción automática de palabras clave mediante RAKE",
+      "Clasificadores supervisados como Naive Bayes y SVM",
+      "Límites éticos y transparencia en sistemas de decisión automática"
+    ]
+  }
+}

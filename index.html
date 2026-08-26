@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programación orientada a PLN</title>
+<style>
+
+:root {
+  --azul: #003B5C;
+  --azul-d: #00283F;
+  --amar: #F4C542;
+  --gris: #34484F;
+  --claro: #F3F3F4;
+  --humo: #9FB1BA;
+  --verde: #2E7D32;
+  --rojo: #B00020;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: var(--gris); background:#fff; }
+a { color: inherit; }
+
+body { background: var(--azul); min-height:100vh; display:flex; flex-direction:column; }
+header { padding: 60px 6vw 20px; text-align:center; }
+header .kicker { color: var(--amar); font-size:12px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:10px; }
+header h1 { color:#fff; font-size:clamp(26px,4.2vw,40px); margin:0 0 10px; }
+header p { color: var(--humo); font-size:14px; margin:0; }
+main { flex:1; max-width:1000px; width:100%; margin:0 auto; padding:40px 6vw 60px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; align-content:start; }
+.tema-btn { display:flex; flex-direction:column; align-items:flex-start; gap:8px; background:#fff; border:none; border-radius:14px; padding:28px 24px; text-decoration:none; box-shadow:0 4px 16px rgba(0,0,0,.18); transition:transform .15s ease; }
+.tema-btn:hover { transform:translateY(-3px); }
+.tema-num { font-size:13px; font-weight:bold; color:var(--amar); background:var(--azul); padding:4px 12px; border-radius:20px; letter-spacing:1px; }
+.tema-title { font-size:19px; font-weight:bold; color:var(--azul); margin-top:4px; }
+footer { text-align:center; padding:20px 6vw 34px; font-size:11px; color:var(--humo); font-style:italic; }
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">Programación orientada a PLN</div>
+  <h1>Materiales de la asignatura</h1>
+  <p>Elige un tema para acceder a su material</p>
+</header>
+<main>
+  <a class="tema-btn" href="t0a/index.html">
+    <span class="tema-num">TEMA 0</span>
+    <span class="tema-title">Recordatorio</span>
+  </a>
+  <a class="tema-btn" href="t0b/index.html">
+    <span class="tema-num">TEMA 0</span>
+    <span class="tema-title">Regex</span>
+  </a>
+  <a class="tema-btn" href="t1/index.html">
+    <span class="tema-num">TEMA 1</span>
+    <span class="tema-title">Tema 1</span>
+  </a>
+  <a class="tema-btn" href="t2/index.html">
+    <span class="tema-num">TEMA 2</span>
+    <span class="tema-title">Tema 2</span>
+  </a>
+  <a class="tema-btn" href="t3/index.html">
+    <span class="tema-num">TEMA 3</span>
+    <span class="tema-title">Tema 3</span>
+  </a>
+  <a class="tema-btn" href="t4/index.html">
+    <span class="tema-num">TEMA 4</span>
+    <span class="tema-title">Tema 4</span>
+  </a>
+  <a class="tema-btn" href="t5/index.html">
+    <span class="tema-num">TEMA 5</span>
+    <span class="tema-title">Tema 5</span>
+  </a>
+  <a class="tema-btn" href="t6/index.html">
+    <span class="tema-num">TEMA 6</span>
+    <span class="tema-title">Tema 6</span>
+  </a>
+  <a class="tema-btn" href="t7/index.html">
+    <span class="tema-num">TEMA 7</span>
+    <span class="tema-title">Tema 7</span>
+  </a>
+  <a class="tema-btn" href="t8/index.html">
+    <span class="tema-num">TEMA 8</span>
+    <span class="tema-title">Tema 8</span>
+  </a>
+</main>
+<footer>
+  © Dra. Blanca Hernández Pardo · Programación orientada a PLN<br>Queda prohibida la difusión, distribución o reproducción total o parcial de este material sin autorización expresa de la autora.
+</footer>
+</body>
+</html>
