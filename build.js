@@ -133,17 +133,21 @@ function existingViews(tema) {
   return tema.viewOrder.filter(v => tema.views[v] && tema.views[v].exists);
 }
 
+function viewIcon(v, tema) { return tema.views[v].icon || ICONS[v] || '📄'; }
+function viewLabel(v, tema) { return tema.views[v].label || LABELS[v] || v; }
+function viewDesc(v, tema) { return tema.views[v].desc || DESCS[v] || ''; }
+
 function buildHub(tema) {
   const buttons = existingViews(tema).map(v => {
     return `<button class="hub-btn" data-view="${v}" data-type="${v}">
       <span class="teacher-hint" data-hint="${v}"></span>
-      <span class="hub-icon">${ICONS[v]}</span>
-      <span class="hub-label">${LABELS[v]}</span>
-      <span class="hub-desc">${DESCS[v]}</span>
+      <span class="hub-icon">${viewIcon(v, tema)}</span>
+      <span class="hub-label">${esc(viewLabel(v, tema))}</span>
+      <span class="hub-desc">${esc(viewDesc(v, tema))}</span>
     </button>`;
   }).join('\n    ');
   const toggles = existingViews(tema).map(v =>
-    `<li><input type="checkbox" id="chk-${v}" data-type="${v}"><label for="chk-${v}">${LABELS[v]}</label></li>`
+    `<li><input type="checkbox" id="chk-${v}" data-type="${v}"><label for="chk-${v}">${esc(viewLabel(v, tema))}</label></li>`
   ).join('\n      ');
   return `<div id="hub" class="view">
   <div class="kicker">${esc(tema.kicker)}</div>
@@ -182,42 +186,48 @@ function buildManualView(tema) {
 function buildDownloadView(viewKey, tema) {
   const cfg = tema.views[viewKey];
   if (!cfg || !cfg.exists) return '';
-  const label = LABELS[viewKey];
+  const label = viewLabel(viewKey, tema);
   return `<div id="view-${viewKey}" class="view sub-view" hidden>
   <button class="back-btn" data-back="hub">← Volver</button>
-  <h2>${label} · ${esc(tema.titleShort)}</h2>
+  <h2>${esc(label)} · ${esc(tema.titleShort)}</h2>
   <p class="section-note">${cfg.note || 'Descarga el fichero para trabajar con él en tu ordenador.'}</p>
   <a class="dl-big" href="${cfg.file}" download>⬇ Descargar</a>
 </div>`;
 }
 
-function buildPracticaView(tema) {
-  const cfg = tema.views.practica;
+function buildViewerGroupView(viewKey, tema) {
+  const cfg = tema.views[viewKey];
   if (!cfg || !cfg.exists) return '';
+  const label = viewLabel(viewKey, tema);
+  const extraLink = cfg.extraDownload
+    ? `<a class="dl-big" href="${cfg.extraDownload.file}" download>⬇ ${esc(cfg.extraDownload.label)}</a>`
+    : '';
   if (cfg.items.length === 1) {
     const it = cfg.items[0];
-    return `<div id="view-practica" class="view sub-view" hidden>
+    return `<div id="view-${viewKey}" class="view sub-view" hidden>
   <button class="back-btn" data-back="hub">← Volver</button>
-  <h2>Prácticas · ${esc(tema.titleShort)}</h2>
-  <p class="section-note">Documento de la práctica. Solo lectura, sin descarga.</p>
-  <iframe class="pdf-frame" src="${it.file}#toolbar=0&navpanes=0" title="Práctica ${esc(tema.titleShort)}"></iframe>
+  <h2>${esc(label)} · ${esc(tema.titleShort)}</h2>
+  <p class="section-note">Documento de solo lectura, sin descarga.${cfg.extraDownload ? ' Los materiales que necesitas para trabajarla se descargan aparte, más abajo.' : ''}</p>
+  ${extraLink}
+  <iframe class="pdf-frame" src="${it.file}#toolbar=0&navpanes=0" title="${esc(label)}"></iframe>
 </div>`;
   }
-  const subButtons = cfg.items.map(it => `<button class="hub-btn" data-view="practica-${it.id}">
+  const subButtons = cfg.items.map(it => `<button class="hub-btn" data-view="${viewKey}-${it.id}">
       <span class="hub-icon">🧪</span>
       <span class="hub-label">${esc(it.label)}</span>
-      <span class="hub-desc">Documento de la práctica (solo lectura)</span>
+      <span class="hub-desc">Documento (solo lectura)</span>
     </button>`).join('\n    ');
-  const leaves = cfg.items.map(it => `<div id="view-practica-${it.id}" class="view sub-view" hidden>
-  <button class="back-btn" data-back="practica">← Volver</button>
+  const leaves = cfg.items.map(it => `<div id="view-${viewKey}-${it.id}" class="view sub-view" hidden>
+  <button class="back-btn" data-back="${viewKey}">← Volver</button>
   <h2>${esc(it.label)} · ${esc(tema.titleShort)}</h2>
-  <p class="section-note">Documento de la práctica. Solo lectura, sin descarga.</p>
+  <p class="section-note">Documento de solo lectura, sin descarga.</p>
   <iframe class="pdf-frame" src="${it.file}#toolbar=0&navpanes=0" title="${esc(it.label)}"></iframe>
 </div>`).join('\n');
-  return `<div id="view-practica" class="view sub-view" hidden>
+  return `<div id="view-${viewKey}" class="view sub-view" hidden>
   <button class="back-btn" data-back="hub">← Volver</button>
-  <h2>Prácticas · ${esc(tema.titleShort)}</h2>
-  <p class="section-note">Elige la práctica que quieras consultar.</p>
+  <h2>${esc(label)} · ${esc(tema.titleShort)}</h2>
+  <p class="section-note">Elige el documento que quieras consultar.</p>
+  ${extraLink}
   <div class="hub-grid">
     ${subButtons}
   </div>
@@ -236,12 +246,21 @@ function buildQuizView(tema) {
 }
 
 function buildTopicHtml(tema) {
+  const fixedViews = ['manual', 'principal', 'evaluable', 'practica', 'quiz'];
+  const extraKeys = tema.viewOrder.filter(v => !fixedViews.includes(v));
+  const extraHtml = extraKeys.map(v => {
+    const cfg = tema.views[v];
+    if (!cfg || !cfg.exists) return '';
+    return cfg.kind === 'viewergroup' ? buildViewerGroupView(v, tema) : buildDownloadView(v, tema);
+  });
+
   const payloadHtml = [
     buildHub(tema),
     buildManualView(tema),
     buildDownloadView('principal', tema),
     buildDownloadView('evaluable', tema),
-    buildPracticaView(tema),
+    buildViewerGroupView('practica', tema),
+    ...extraHtml,
     buildQuizView(tema)
   ].filter(Boolean).join('\n');
 
@@ -589,7 +608,10 @@ const TEMAS = [
       manual: { exists: true, file: 'manual.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: false },
-      practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
+      practica: { exists: true, items: [
+        { id: 'p1', label: 'Prácticas 1', file: 'practica.pdf' },
+        { id: 'p2', label: 'Prácticas 2', file: 'practica2.pdf' }
+      ] },
       quiz: { exists: false }
     } },
   { dir: 't0b', numLabel: 'TEMA 0', titleShort: 'Regex', titleFull: 'Tema 0 · Regex', kicker: 'Tema 0 · Regex', password: 't0_playa',
@@ -607,7 +629,7 @@ const TEMAS = [
       manual: { exists: true, file: 'manual.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
-      practica: { exists: false, items: [] },
+      practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
   { dir: 't2', numLabel: 'TEMA 2', titleShort: 'Tema 2', titleFull: 'Tema 2', kicker: 'Tema 2', password: 't2_cortavientos',
@@ -616,7 +638,7 @@ const TEMAS = [
       manual: { exists: true, file: 'manual.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
-      practica: { exists: false, items: [] },
+      practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
   { dir: 't3', numLabel: 'TEMA 3', titleShort: 'Tema 3', titleFull: 'Tema 3', kicker: 'Tema 3', password: 't3_boina',
@@ -625,7 +647,10 @@ const TEMAS = [
       manual: { exists: true, file: 'manual.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
-      practica: { exists: false, items: [] },
+      practica: { exists: true, items: [
+        { id: 'p1', label: 'Prácticas 3.1', file: 'practica1.pdf' },
+        { id: 'p2', label: 'Prácticas 3.2', file: 'practica2.pdf' }
+      ] },
       quiz: { exists: true }
     } },
   { dir: 't4', numLabel: 'TEMA 4', titleShort: 'Tema 4', titleFull: 'Tema 4', kicker: 'Tema 4', password: 't4_chascarrillo',
@@ -634,16 +659,19 @@ const TEMAS = [
       manual: { exists: true, file: 'manual.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.zip', note: 'Incluye el cuaderno y los dos ficheros de texto (texto1.txt, texto2.txt) que necesita para funcionar.' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
-      practica: { exists: false, items: [] },
+      practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }],
+        extraDownload: { file: 'materiales_practica.zip', label: 'Descargar los 6 textos del corpus' } },
       quiz: { exists: true }
     } },
   { dir: 't5', numLabel: 'TEMA 5', titleShort: 'Tema 5', titleFull: 'Tema 5', kicker: 'Tema 5', password: 't5_cangrejo',
-    viewOrder: ['manual','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','principal','evaluable','practica','metric2','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
-      practica: { exists: false, items: [] },
+      practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
+      metric2: { exists: true, kind: 'download', label: 'Métricas parte II', icon: '📐',
+        desc: 'Cuaderno complementario sobre METEOR, para descargar', file: 'metrica2.ipynb' },
       quiz: { exists: true }
     } },
   { dir: 't6', numLabel: 'TEMA 6', titleShort: 'Tema 6', titleFull: 'Tema 6', kicker: 'Tema 6', password: 't6_ibuprofeno',
@@ -652,7 +680,7 @@ const TEMAS = [
       manual: { exists: true, file: 'manual.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: false },
-      practica: { exists: false, items: [] },
+      practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
   { dir: 't7', numLabel: 'TEMA 7', titleShort: 'Tema 7', titleFull: 'Tema 7', kicker: 'Tema 7', password: 't7_cantamañanas',
@@ -661,7 +689,7 @@ const TEMAS = [
       manual: { exists: true, file: 'manual.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
-      practica: { exists: false, items: [] },
+      practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
   { dir: 't8', numLabel: 'TEMA 8', titleShort: 'Tema 8', titleFull: 'Tema 8', kicker: 'Tema 8', password: 't8_pagafantas',
