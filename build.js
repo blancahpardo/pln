@@ -98,6 +98,10 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .dl-big { display:inline-block; background:var(--amar); color:var(--azul-d); font-weight:bold; font-size:14px; text-decoration:none; padding:10px 20px; border-radius:20px; margin-bottom:18px; }
 .pdf-frame { width:100%; height:78vh; border:none; border-radius:8px; box-shadow:0 2px 10px rgba(159,177,186,.28); }
 .img-frame { display:block; width:100%; height:auto; border-radius:8px; box-shadow:0 2px 10px rgba(159,177,186,.28); }
+.ref-intro { color:var(--azul); font-size:16px; margin:0 0 16px; }
+.ref-item { font-size:13.5px; color:var(--gris); line-height:1.6; margin:0 0 16px; padding-left:28px; text-indent:-28px; }
+.ref-item a { color:var(--azul); word-break:break-all; }
+.ref-item em { font-style:italic; }
 .notice { font-size:12px; color:var(--humo); font-style:italic; margin-top:10px; }
 /* quiz */
 .quiz-start { background:var(--claro); border-radius:12px; padding:26px; }
@@ -228,6 +232,19 @@ function buildImageView(viewKey, tema) {
 </div>`;
 }
 
+function buildReflistView(viewKey, tema) {
+  const cfg = tema.views[viewKey];
+  if (!cfg || !cfg.exists) return '';
+  const label = viewLabel(viewKey, tema);
+  const items = cfg.refs.map(r => `<p class="ref-item">${esc(r.author)} (${esc(r.date)}). ${esc(r.title)} <em>[${esc(r.type)}]</em>. ${esc(r.platform)}. <a href="${r.url}" target="_blank" rel="noopener">${esc(r.url)}</a></p>`).join('\n  ');
+  return `<div id="view-${viewKey}" class="view sub-view" hidden>
+  <button class="back-btn" data-back="hub">← Volver</button>
+  <h2>${esc(label)} · ${esc(tema.titleShort)}</h2>
+  <h3 class="ref-intro">Recursos de LinguAIstica</h3>
+  ${items}
+</div>`;
+}
+
 function buildDownloadView(viewKey, tema) {
   const cfg = tema.views[viewKey];
   if (!cfg || !cfg.exists) return '';
@@ -299,6 +316,7 @@ function buildTopicHtml(tema) {
     if (cfg.kind === 'viewergroup') return buildViewerGroupView(v, tema);
     if (cfg.kind === 'viewerdownload') return buildViewerDownloadView(v, tema);
     if (cfg.kind === 'image') return buildImageView(v, tema);
+    if (cfg.kind === 'reflist') return buildReflistView(v, tema);
     return buildDownloadView(v, tema);
   });
 
@@ -827,10 +845,35 @@ function buildIndexHtml(temas) {
 // "exists" = el material existe de verdad (hay fichero) y por tanto tiene botón/subvista construidos.
 // La visibilidad real para el alumnado vive en tX/config.json (editable en vivo desde el modo profesora).
 const TEMAS = [
+  { dir: 'inicio', numLabel: 'INICIO', titleShort: 'Inicio', titleFull: 'Inicio', kicker: 'Inicio',
+    viewOrder: ['vscode', 'ipynb', 'adicionales'],
+    views: {
+      vscode: { exists: true, kind: 'viewerdownload', label: 'Entornos de Python y VS Code', icon: '💻',
+        desc: 'Guía de instalación y primeros pasos, para consultar o descargar', file: 'entornos_python_vscode.pdf' },
+      ipynb: { exists: true, kind: 'viewerdownload', label: 'Trabajar con ficheros .ipynb', icon: '📓',
+        desc: 'Cómo abrir, ejecutar y guardar cuadernos en Colab y VS Code, para consultar o descargar', file: 'trabajar_con_ipynb.pdf' },
+      adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
+        desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
+          { author: 'linguAIstica', date: '2026, 27 de mayo', title: '5 mitos sobre la lingüística computacional', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DY2RmVODdai/' },
+          { author: 'linguAIstica', date: '2026, 7 de agosto', title: 'La "prehistoria" del NLP conversacional: cuando los chatbots solo sabían seguir reglas', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DbvWKLWDyYp/' },
+          { author: 'linguAIstica', date: '2026, 12 de agosto', title: 'La historia reciente del NLP conversacional: de los asistentes a los LLM', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/Db8iuToDcmG/' },
+          { author: 'linguAIstica', date: '2026, 1 de agosto', title: 'Historia de los chatbots: de ELIZA a ChatGPT y más allá', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=uKnjZx3jKeg' },
+          { author: 'linguAIstica', date: '2026, 15 de junio', title: 'Historia completa del NLP: de las reglas al deep learning', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=bFyUm1m2_4A' },
+          { author: 'linguAIstica', date: '2026, 25 de mayo', title: '¿Qué hace un lingüista computacional?', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=HmM6Z5dfnoc' },
+        ] },
+    } },
   { dir: 't0a', numLabel: 'TEMA 0', titleShort: 'Recordatorio', titleFull: 'Tema 0 · Recordatorio de Python', kicker: 'Tema 0 · Recordatorio',
-    viewOrder: ['manual','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','adicionales','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
+        desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
+          { author: 'linguAIstica', date: '2026, 24 de julio', title: 'Python para análisis de texto: tus primeras 6 armas', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DbLh6IEDZFS/' },
+          { author: 'linguAIstica', date: '2026, 20 de julio', title: 'Python no muerde: por qué es la herramienta perfecta para lingüistas', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DbBNp_ijVEo/' },
+          { author: 'linguAIstica', date: '2026, 15 de julio', title: 'Python para lingüistas aterrorizados (primeros pasos)', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=LXpGwHU2eOM' },
+          { author: 'linguAIstica', date: '2026, 20 de julio', title: 'Python para lingüistas: decisiones y herramientas', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/10pIuQ2DJHY' },
+          { author: 'linguAIstica', date: '2026, 24 de julio', title: 'Python para lingüistas: organiza y automatiza', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/QB-UFoS52YA' },
+        ] },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: false },
       practica: { exists: true, items: [
@@ -849,9 +892,18 @@ const TEMAS = [
       quiz: { exists: false }
     } },
   { dir: 't1', numLabel: 'TEMA 1', titleShort: 'Tema 1', titleFull: 'Tema 1', kicker: 'Tema 1',
-    viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','adicionales','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
+        desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
+          { author: 'linguAIstica', date: '2026, 1 de junio', title: 'Tokenización: el arte de cortar texto para que la IA lo entienda', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DZDa4tNjcOn/' },
+          { author: 'linguAIstica', date: '2026, 1 de junio', title: 'Fundamentos del NLP: tokenización, stop words, stemming y lematización', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=KEww-OoMDLI' },
+          { author: 'linguAIstica', date: '2026, 8 de julio', title: 'Tu texto se deshace así dentro de una IA', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/_guUwlMJqw8' },
+          { author: 'linguAIstica', date: '2026, 27 de julio', title: 'Analizando obras literarias con Python (parte 1: importación con spaCy y NLTK)', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/ja19CYEZ4kg' },
+          { author: 'linguAIstica', date: '2026, 17 de agosto', title: 'Tokenización práctica: ejemplos en múltiples idiomas (¡parte 1!)', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=H3vKfUj5ZSM' },
+          { author: 'linguAIstica', date: '2026, 20 de agosto', title: '5 tokenizadores, una frase, 5 visiones', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/Wh35H7lOSxU' },
+        ] },
       infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
@@ -860,9 +912,15 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't2', numLabel: 'TEMA 2', titleShort: 'Tema 2', titleFull: 'Tema 2', kicker: 'Tema 2',
-    viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','adicionales','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
+        desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
+          { author: 'linguAIstica', date: '2026, 19 de junio', title: 'NLP antes del machine learning: la era de las reglas y la estadística', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DZxocbUDXtV/' },
+          { author: 'linguAIstica', date: '2026, 7 de agosto', title: 'La "prehistoria" del NLP conversacional: cuando los chatbots solo sabían seguir reglas', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DbvWKLWDyYp/' },
+          { author: 'linguAIstica', date: '2026, 1 de agosto', title: 'Historia de los chatbots: de ELIZA a ChatGPT y más allá', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=uKnjZx3jKeg' },
+        ] },
       infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
@@ -871,9 +929,20 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't3', numLabel: 'TEMA 3', titleShort: 'Tema 3', titleFull: 'Tema 3', kicker: 'Tema 3',
-    viewOrder: ['manual','stopwords','pandas','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','adicionales','stopwords','pandas','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
+        desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
+          { author: 'linguAIstica', date: '2026, 25 de agosto', title: 'Errores de tokenización que arruinan proyectos multilingües', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/Dcd6OP7jdQv/' },
+          { author: 'linguAIstica', date: '2026, 18 de agosto', title: 'Tipos de tokenización según el idioma que se trabaje: 5 estrategias para cortar los textos', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DcL4tvHDfEc/' },
+          { author: 'linguAIstica', date: '2026, 15 de junio', title: 'Stop words, stemming y lematización: limpiando texto para la IA', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DZmnvaGDdAd/' },
+          { author: 'linguAIstica', date: '2026, 17 de agosto', title: 'Tokenización práctica: ejemplos en múltiples idiomas (¡parte 1!)', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=H3vKfUj5ZSM' },
+          { author: 'linguAIstica', date: '2026, 24 de agosto', title: 'Tokenización práctica: ejemplos en múltiples idiomas (¡parte 2!)', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=t4jCHD8kLss' },
+          { author: 'linguAIstica', date: '2026, 20 de agosto', title: '5 tokenizadores, una frase, 5 visiones', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/Wh35H7lOSxU' },
+          { author: 'linguAIstica', date: '2026, 25 de agosto', title: '¿Puede un sistema de NLP tokenizar mal y aun así "funcionar"?', type: 'Publicación', platform: 'LinkedIn', url: 'https://es.linkedin.com/posts/linguaistica_linguaistica-nlp-tokenizaci%C3%B3n-activity-7498031528334045184-ueIN' },
+          { author: 'linguAIstica', date: '2026, 18 de agosto', title: '¿Y si tokenizar un texto no significara simplemente separarlo por espacios?', type: 'Publicación', platform: 'LinkedIn', url: 'https://es.linkedin.com/posts/linguaistica_linguaistica-nlp-tokenizaci%C3%B3n-activity-7495494733327310848-Dtsx' },
+        ] },
       stopwords: { exists: true, kind: 'viewerdownload', label: 'Diferencias entre las stopwords de spaCy y NLTK', icon: '📄',
         desc: 'Documento comparativo, para consultar o descargar', file: 'stopwords.pdf' },
       pandas: { exists: true, kind: 'viewerdownload', label: 'Pandas para lingüistas', icon: '📄',
@@ -887,9 +956,14 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't4', numLabel: 'TEMA 4', titleShort: 'Tema 4', titleFull: 'Tema 4', kicker: 'Tema 4',
-    viewOrder: ['manual','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','adicionales','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
+        desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
+          { author: 'linguAIstica', date: '2026, 19 de junio', title: 'NLP antes del machine learning: la era de las reglas y la estadística', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DZxocbUDXtV/' },
+          { author: 'linguAIstica', date: '2026, 1 de agosto', title: 'Historia de los chatbots: de ELIZA a ChatGPT y más allá', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=uKnjZx3jKeg' },
+        ] },
       principal: { exists: true, file: 'cuaderno_principal.zip', note: 'Incluye el cuaderno y los dos ficheros de texto (texto1.txt, texto2.txt) que necesita para funcionar.' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }],
@@ -897,9 +971,14 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't5', numLabel: 'TEMA 5', titleShort: 'Tema 5', titleFull: 'Tema 5', kicker: 'Tema 5',
-    viewOrder: ['manual','principal','evaluable','practica','metric2','quiz'],
+    viewOrder: ['manual','adicionales','principal','evaluable','practica','metric2','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
+        desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
+          { author: 'linguAIstica', date: '2026, 4 de julio', title: 'La IA traduce Shakespeare... pero no esto', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/yU7lt82hy_M' },
+          { author: 'linguAIstica', date: '2026, 3 de julio', title: 'La IA reemplazará a los traductores', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/4z_qvGFZwCU' },
+        ] },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
@@ -908,9 +987,14 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't6', numLabel: 'TEMA 6', titleShort: 'Tema 6', titleFull: 'Tema 6', kicker: 'Tema 6',
-    viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','adicionales','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
+        desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
+          { author: 'linguAIstica', date: '2026, 10 de agosto', title: 'El chatbot que se volvió n*zi en 24 horas', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/fCbntlnKXwg' },
+          { author: 'linguAIstica', date: '2026, 10 de agosto', title: 'A veces, los mayores avances en inteligencia artificial nacen de sus mayores fracasos', type: 'Publicación', platform: 'LinkedIn', url: 'https://es.linkedin.com/posts/linguaistica_linguaistica-artificialintelligence-llm-activity-7492542781912158208-rSmX' },
+        ] },
       infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
@@ -919,9 +1003,13 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't7', numLabel: 'TEMA 7', titleShort: 'Tema 7', titleFull: 'Tema 7', kicker: 'Tema 7',
-    viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','adicionales','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
+        desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
+          { author: 'linguAIstica', date: '2026, 29 de julio', title: 'Analizando obras literarias con Python (parte 3: definir qué buscamos)', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/oE19LAsrVbw' },
+        ] },
       infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
@@ -930,9 +1018,14 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't8', numLabel: 'TEMA 8', titleShort: 'Tema 8', titleFull: 'Tema 8', kicker: 'Tema 8',
-    viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','adicionales','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
+        desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
+          { author: 'linguAIstica', date: '2026, 12 de julio', title: 'El PDF que cambió el mundo (Attention is all you need)', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/2OJT5H0wnio' },
+          { author: 'linguAIstica', date: '2026, 25 de junio', title: 'NLP moderno: deep learning, transformers y la revolución actual', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DaBBKuJDa3v/' },
+        ] },
       infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },

@@ -68,6 +68,7 @@ footer { text-align:center; padding:20px 6vw 34px; font-size:11px; color:var(--h
     </div>
     <div class="teacher-status" id="teacher-status"></div>
     <ul class="teacher-toggle-list">
+      <li><input type="checkbox" id="chk-tema-inicio" data-tema="inicio"><label for="chk-tema-inicio">INICIO · Inicio</label></li>
       <li><input type="checkbox" id="chk-tema-t0a" data-tema="t0a"><label for="chk-tema-t0a">TEMA 0 · Recordatorio</label></li>
       <li><input type="checkbox" id="chk-tema-t0b" data-tema="t0b"><label for="chk-tema-t0b">TEMA 0 · Regex</label></li>
       <li><input type="checkbox" id="chk-tema-t1" data-tema="t1"><label for="chk-tema-t1">TEMA 1 · Tema 1</label></li>
@@ -82,6 +83,11 @@ footer { text-align:center; padding:20px 6vw 34px; font-size:11px; color:var(--h
   </div>
 </div>
 <main>
+  <a class="tema-btn" data-tema="inicio" href="inicio/index.html">
+    <span class="teacher-hint" data-hint="inicio"></span>
+    <span class="tema-num">INICIO</span>
+    <span class="tema-title">Inicio</span>
+  </a>
   <a class="tema-btn" data-tema="t0a" href="t0a/index.html">
     <span class="teacher-hint" data-hint="t0a"></span>
     <span class="tema-num">TEMA 0</span>
