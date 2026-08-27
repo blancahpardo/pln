@@ -97,6 +97,7 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .back-btn:hover { background:var(--azul); color:#fff; }
 .dl-big { display:inline-block; background:var(--amar); color:var(--azul-d); font-weight:bold; font-size:14px; text-decoration:none; padding:10px 20px; border-radius:20px; margin-bottom:18px; }
 .pdf-frame { width:100%; height:78vh; border:none; border-radius:8px; box-shadow:0 2px 10px rgba(159,177,186,.28); }
+.img-frame { display:block; width:100%; height:auto; border-radius:8px; box-shadow:0 2px 10px rgba(159,177,186,.28); }
 .notice { font-size:12px; color:var(--humo); font-style:italic; margin-top:10px; }
 /* quiz */
 .quiz-start { background:var(--claro); border-radius:12px; padding:26px; }
@@ -215,6 +216,18 @@ function buildViewerDownloadView(viewKey, tema) {
 </div>`;
 }
 
+function buildImageView(viewKey, tema) {
+  const cfg = tema.views[viewKey];
+  if (!cfg || !cfg.exists) return '';
+  const label = viewLabel(viewKey, tema);
+  return `<div id="view-${viewKey}" class="view sub-view" hidden>
+  <button class="back-btn" data-back="hub">← Volver</button>
+  <h2>${esc(label)} · ${esc(tema.titleShort)}</h2>
+  <p class="section-note">Solo puede consultarse aquí, sin descarga.</p>
+  <img class="img-frame" src="${cfg.file}" alt="${esc(label)} · ${esc(tema.titleShort)}">
+</div>`;
+}
+
 function buildDownloadView(viewKey, tema) {
   const cfg = tema.views[viewKey];
   if (!cfg || !cfg.exists) return '';
@@ -285,6 +298,7 @@ function buildTopicHtml(tema) {
     if (!cfg || !cfg.exists) return '';
     if (cfg.kind === 'viewergroup') return buildViewerGroupView(v, tema);
     if (cfg.kind === 'viewerdownload') return buildViewerDownloadView(v, tema);
+    if (cfg.kind === 'image') return buildImageView(v, tema);
     return buildDownloadView(v, tema);
   });
 
@@ -838,8 +852,8 @@ const TEMAS = [
     viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
-      infografia: { exists: true, kind: 'viewerdownload', label: 'Infografía', icon: '🖼️',
-        desc: 'Resumen visual del tema, para consultar o descargar', file: 'infografia.pdf' },
+      infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
+        desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
@@ -849,8 +863,8 @@ const TEMAS = [
     viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
-      infografia: { exists: true, kind: 'viewerdownload', label: 'Infografía', icon: '🖼️',
-        desc: 'Resumen visual del tema, para consultar o descargar', file: 'infografia.pdf' },
+      infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
+        desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
@@ -897,8 +911,8 @@ const TEMAS = [
     viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
-      infografia: { exists: true, kind: 'viewerdownload', label: 'Infografía', icon: '🖼️',
-        desc: 'Resumen visual del tema, para consultar o descargar', file: 'infografia.pdf' },
+      infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
+        desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: false },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
@@ -908,8 +922,8 @@ const TEMAS = [
     viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
-      infografia: { exists: true, kind: 'viewerdownload', label: 'Infografía', icon: '🖼️',
-        desc: 'Resumen visual del tema, para consultar o descargar', file: 'infografia.pdf' },
+      infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
+        desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
@@ -919,8 +933,8 @@ const TEMAS = [
     viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
-      infografia: { exists: true, kind: 'viewerdownload', label: 'Infografía', icon: '🖼️',
-        desc: 'Resumen visual del tema, para consultar o descargar', file: 'infografia.pdf' },
+      infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
+        desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
       practica: { exists: true, items: [
