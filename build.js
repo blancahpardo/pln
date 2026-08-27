@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const ROOT = __dirname;
 const REPO = 'blancahpardo/pln';
 const TEACHER_PASSWORD = 'profe_llavemaestra27';
+const STUDENT_PASSWORD = 'caracola';
 
 function sha256(text) {
   return crypto.createHash('sha256').update(text, 'utf8').digest('hex');
@@ -38,14 +39,32 @@ ${CSS_BASE}
 body { background: var(--azul); min-height:100vh; display:flex; flex-direction:column; }
 header { padding: 60px 6vw 20px; text-align:center; }
 header .kicker { color: var(--amar); font-size:12px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:10px; }
-header h1 { color:#fff; font-size:clamp(26px,4.2vw,40px); margin:0 0 10px; }
+header h1 { color:#fff; font-size:clamp(26px,4.2vw,40px); margin:0 0 6px; }
+header .author { color: var(--amar); font-size:14px; font-weight:bold; margin:0 0 12px; }
 header p { color: var(--humo); font-size:14px; margin:0; }
 main { flex:1; max-width:1000px; width:100%; margin:0 auto; padding:40px 6vw 60px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; align-content:start; }
 .tema-btn { display:flex; flex-direction:column; align-items:flex-start; gap:8px; background:#fff; border:none; border-radius:14px; padding:28px 24px; text-decoration:none; box-shadow:0 4px 16px rgba(0,0,0,.18); transition:transform .15s ease; }
 .tema-btn:hover { transform:translateY(-3px); }
 .tema-num { font-size:13px; font-weight:bold; color:var(--amar); background:var(--azul); padding:4px 12px; border-radius:20px; letter-spacing:1px; }
 .tema-title { font-size:19px; font-weight:bold; color:var(--azul); margin-top:4px; }
+.tema-btn { position:relative; }
+.tema-btn .teacher-hint { position:absolute; top:12px; right:14px; font-size:10px; font-weight:bold; padding:2px 8px; border-radius:10px; }
+.tema-btn .teacher-hint.on { background:#DFF3E0; color:var(--verde); }
+.tema-btn .teacher-hint.off { background:#FBEAEC; color:var(--rojo); }
 footer { text-align:center; padding:20px 6vw 34px; font-size:11px; color:var(--humo); font-style:italic; }
+.teacher-link { display:block; margin:0 auto 18px; background:none; border:none; color:var(--humo); font-size:12px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; text-decoration:underline; }
+.teacher-link:hover { color:#fff; }
+.teacher-wrap { max-width:1000px; width:100%; margin:0 auto; padding:0 6vw; }
+.teacher-banner { background:var(--azul-d); color:#fff; border-radius:12px; padding:18px 22px; margin:0 0 10px; }
+.teacher-banner strong { color: var(--amar); }
+.teacher-banner p { font-size:13px; margin:6px 0 0; color:var(--humo); }
+.teacher-token-row { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+.teacher-token-row input { flex:1; min-width:220px; padding:9px 12px; border-radius:8px; border:none; font-size:13px; font-family:Arial,Helvetica,sans-serif; }
+.teacher-token-row button { background:var(--amar); color:var(--azul-d); border:none; border-radius:8px; padding:9px 16px; font-size:13px; font-weight:bold; cursor:pointer; font-family:Arial,Helvetica,sans-serif; }
+.teacher-status { font-size:12px; margin-top:10px; min-height:16px; }
+.teacher-toggle-list { list-style:none; padding:0; margin:16px 0 0; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; }
+.teacher-toggle-list li { background:rgba(255,255,255,.08); border-radius:8px; padding:10px 14px; display:flex; align-items:center; gap:10px; font-size:13px; }
+.teacher-toggle-list input { width:18px; height:18px; }
 `;
 
 const CSS_TOPIC = `
@@ -264,7 +283,7 @@ function buildTopicHtml(tema) {
     buildQuizView(tema)
   ].filter(Boolean).join('\n');
 
-  const hash = sha256(tema.password);
+  const hash = sha256(STUDENT_PASSWORD);
   const teacherHash = sha256(TEACHER_PASSWORD);
   const payloadB64 = b64(payloadHtml);
 
@@ -313,6 +332,8 @@ function buildTopicHtml(tema) {
   var REPO = "${REPO}";
   var LOCAL_CONFIG = "config.json";
   var GH_CONFIG_PATH = "${tema.dir}/config.json";
+  var ROOT_CONFIG = "../config.json";
+  var TEMA_KEY = "${tema.dir}";
   var isTeacher = false;
   var configSha = null;
 
@@ -549,9 +570,18 @@ function buildTopicHtml(tema) {
   function tryUnlock() {
     var val = document.getElementById("pw").value;
     sha256Hex(val).then(function(hex) {
-      if (hex === TEACHER_HASH) reveal(true);
-      else if (hex === HASH) reveal(false);
-      else document.getElementById("err").textContent = "Contraseña incorrecta.";
+      if (hex === TEACHER_HASH) { reveal(true); return; }
+      if (hex === HASH) {
+        fetch(ROOT_CONFIG + "?t=" + Date.now()).then(function(r) { return r.json(); }).then(function(rootCfg) {
+          if (rootCfg[TEMA_KEY] === false) {
+            document.getElementById("err").textContent = "Este tema no está disponible por el momento.";
+          } else {
+            reveal(false);
+          }
+        }).catch(function() { reveal(false); });
+        return;
+      }
+      document.getElementById("err").textContent = "Contraseña incorrecta.";
     });
   }
 
@@ -570,10 +600,15 @@ function buildTopicHtml(tema) {
 }
 
 function buildIndexHtml(temas) {
-  const buttons = temas.map(t => `<a class="tema-btn" href="${t.dir}/index.html">
+  const buttons = temas.map(t => `<a class="tema-btn" data-tema="${t.dir}" href="${t.dir}/index.html">
+    <span class="teacher-hint" data-hint="${t.dir}"></span>
     <span class="tema-num">${esc(t.numLabel)}</span>
     <span class="tema-title">${esc(t.titleShort)}</span>
   </a>`).join('\n  ');
+  const teacherHash = sha256(TEACHER_PASSWORD);
+  const toggles = temas.map(t =>
+    `<li><input type="checkbox" id="chk-tema-${t.dir}" data-tema="${t.dir}"><label for="chk-tema-${t.dir}">${esc(t.numLabel)} · ${esc(t.titleShort)}</label></li>`
+  ).join('\n      ');
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -586,14 +621,175 @@ function buildIndexHtml(temas) {
 <header>
   <div class="kicker">Programación orientada a PLN</div>
   <h1>Materiales de la asignatura</h1>
+  <p class="author">Dra. Blanca Hernández Pardo</p>
   <p>Elige un tema para acceder a su material</p>
 </header>
+<div class="teacher-wrap">
+  <div id="teacher-panel-index" class="teacher-banner" hidden>
+    <strong>⚙ Modo profesora</strong>
+    <p>Pega aquí tu token de GitHub (solo para esta sesión de navegador; se pierde al cerrar la pestaña) y marca qué temas ve el alumnado. Los cambios se publican en 1-2 minutos.</p>
+    <div class="teacher-token-row">
+      <input type="password" id="gh-token" placeholder="Token de GitHub (ghp_... o github_pat_...)">
+      <button id="gh-token-save">Guardar token de esta sesión</button>
+    </div>
+    <div class="teacher-status" id="teacher-status"></div>
+    <ul class="teacher-toggle-list">
+      ${toggles}
+    </ul>
+  </div>
+</div>
 <main>
   ${buttons}
 </main>
+<button class="teacher-link" id="teacher-toggle-link">⚙ Modo profesora</button>
 <footer>
   ${copyrightFooter()}
 </footer>
+<script>
+(function() {
+  var TEACHER_HASH = "${teacherHash}";
+  var REPO = "${REPO}";
+  var LOCAL_CONFIG = "config.json";
+  var GH_CONFIG_PATH = "config.json";
+  var configSha = null;
+  var isTeacher = false;
+
+  function sha256Hex(text) {
+    var enc = new TextEncoder().encode(text);
+    return crypto.subtle.digest("SHA-256", enc).then(function(buf) {
+      return Array.prototype.map.call(new Uint8Array(buf), function(b) {
+        return b.toString(16).padStart(2, "0");
+      }).join("");
+    });
+  }
+
+  function fetchConfig() {
+    return fetch(LOCAL_CONFIG + "?t=" + Date.now()).then(function(r) { return r.json(); });
+  }
+
+  function ghHeaders(token) {
+    return { "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json" };
+  }
+
+  function ghGetFile(token) {
+    return fetch("https://api.github.com/repos/" + REPO + "/contents/" + GH_CONFIG_PATH, { headers: ghHeaders(token) })
+      .then(function(r) {
+        if (!r.ok) throw new Error("No se pudo leer el fichero (" + r.status + ")");
+        return r.json();
+      })
+      .then(function(data) {
+        configSha = data.sha;
+        return JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\\n/g, "")))));
+      });
+  }
+
+  function ghSaveFile(token, configObj) {
+    var content = btoa(unescape(encodeURIComponent(JSON.stringify(configObj, null, 2) + "\\n")));
+    return fetch("https://api.github.com/repos/" + REPO + "/contents/" + GH_CONFIG_PATH, {
+      method: "PUT",
+      headers: Object.assign({ "Content-Type": "application/json" }, ghHeaders(token)),
+      body: JSON.stringify({
+        message: "Modo profesora: actualizar visibilidad de temas (" + GH_CONFIG_PATH + ")",
+        content: content,
+        sha: configSha
+      })
+    }).then(function(r) {
+      if (!r.ok) return r.text().then(function(t) { throw new Error("Error al guardar (" + r.status + "): " + t); });
+      return r.json();
+    }).then(function(data) {
+      configSha = data.content.sha;
+    });
+  }
+
+  function getToken() {
+    try { return sessionStorage.getItem("gh_pat") || ""; } catch (e) { return ""; }
+  }
+  function setToken(t) {
+    try { sessionStorage.setItem("gh_pat", t); } catch (e) {}
+  }
+
+  function setStatus(msg, isError) {
+    var el = document.getElementById("teacher-status");
+    if (!el) return;
+    el.textContent = msg;
+    el.style.color = isError ? "#FFB3B3" : "#9FE6A0";
+  }
+
+  function applyVisibility(config) {
+    document.querySelectorAll(".tema-btn[data-tema]").forEach(function(btn) {
+      if (isTeacher) { btn.style.display = ""; return; }
+      var k = btn.dataset.tema;
+      btn.style.display = (config[k] === false) ? "none" : "";
+    });
+  }
+
+  function applyTeacherHints(config) {
+    document.querySelectorAll(".teacher-hint[data-hint]").forEach(function(span) {
+      var k = span.dataset.hint;
+      var on = config[k] !== false;
+      span.textContent = on ? "visible" : "oculto";
+      span.className = "teacher-hint " + (on ? "on" : "off");
+    });
+    document.querySelectorAll("#teacher-panel-index input[type=checkbox][data-tema]").forEach(function(chk) {
+      chk.checked = config[chk.dataset.tema] !== false;
+    });
+  }
+
+  function initTeacherPanel() {
+    document.getElementById("teacher-panel-index").hidden = false;
+    applyVisibility({});
+    var tokenInput = document.getElementById("gh-token");
+    tokenInput.value = getToken();
+
+    document.getElementById("gh-token-save").addEventListener("click", function() {
+      setToken(tokenInput.value.trim());
+      setStatus(tokenInput.value.trim() ? "Token guardado para esta sesión." : "Token borrado.");
+      refreshFromGithub();
+    });
+
+    document.querySelectorAll("#teacher-panel-index input[type=checkbox][data-tema]").forEach(function(chk) {
+      chk.addEventListener("change", function() {
+        var token = getToken();
+        if (!token) { setStatus("Pega primero tu token de GitHub.", true); chk.checked = !chk.checked; return; }
+        setStatus("Guardando...");
+        ghGetFile(token).then(function(current) {
+          current[chk.dataset.tema] = chk.checked;
+          return ghSaveFile(token, current).then(function() { return current; });
+        }).then(function(current) {
+          applyTeacherHints(current);
+          setStatus("Guardado ✓ — el alumnado lo verá en 1-2 minutos.");
+        }).catch(function(err) {
+          chk.checked = !chk.checked;
+          setStatus(err.message, true);
+        });
+      });
+    });
+
+    refreshFromGithub();
+
+    function refreshFromGithub() {
+      var token = getToken();
+      if (!token) { fetchConfig().then(applyTeacherHints); return; }
+      setStatus("Cargando estado actual...");
+      ghGetFile(token).then(function(current) {
+        applyTeacherHints(current);
+        setStatus("Conectado. Puedes marcar/desmarcar temas.");
+      }).catch(function(err) { setStatus(err.message, true); fetchConfig().then(applyTeacherHints); });
+    }
+  }
+
+  document.getElementById("teacher-toggle-link").addEventListener("click", function() {
+    var val = prompt("Contraseña de profesora:");
+    if (val === null) return;
+    sha256Hex(val).then(function(hex) {
+      if (hex === TEACHER_HASH) { isTeacher = true; initTeacherPanel(); }
+      else alert("Contraseña incorrecta.");
+    });
+  });
+
+  fetchConfig().then(applyVisibility).catch(function() {});
+})();
+</script>
 </body>
 </html>`;
 }
@@ -602,7 +798,7 @@ function buildIndexHtml(temas) {
 // "exists" = el material existe de verdad (hay fichero) y por tanto tiene botón/subvista construidos.
 // La visibilidad real para el alumnado vive en tX/config.json (editable en vivo desde el modo profesora).
 const TEMAS = [
-  { dir: 't0a', numLabel: 'TEMA 0', titleShort: 'Recordatorio', titleFull: 'Tema 0 · Recordatorio de Python', kicker: 'Tema 0 · Recordatorio', password: 't0_alcachofa',
+  { dir: 't0a', numLabel: 'TEMA 0', titleShort: 'Recordatorio', titleFull: 'Tema 0 · Recordatorio de Python', kicker: 'Tema 0 · Recordatorio',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
@@ -614,7 +810,7 @@ const TEMAS = [
       ] },
       quiz: { exists: false }
     } },
-  { dir: 't0b', numLabel: 'TEMA 0', titleShort: 'Regex', titleFull: 'Tema 0 · Regex', kicker: 'Tema 0 · Regex', password: 't0_playa',
+  { dir: 't0b', numLabel: 'TEMA 0', titleShort: 'Regex', titleFull: 'Tema 0 · Regex', kicker: 'Tema 0 · Regex',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
@@ -623,7 +819,7 @@ const TEMAS = [
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: false }
     } },
-  { dir: 't1', numLabel: 'TEMA 1', titleShort: 'Tema 1', titleFull: 'Tema 1', kicker: 'Tema 1', password: 't1_mariflor',
+  { dir: 't1', numLabel: 'TEMA 1', titleShort: 'Tema 1', titleFull: 'Tema 1', kicker: 'Tema 1',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
@@ -632,7 +828,7 @@ const TEMAS = [
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
-  { dir: 't2', numLabel: 'TEMA 2', titleShort: 'Tema 2', titleFull: 'Tema 2', kicker: 'Tema 2', password: 't2_cortavientos',
+  { dir: 't2', numLabel: 'TEMA 2', titleShort: 'Tema 2', titleFull: 'Tema 2', kicker: 'Tema 2',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
@@ -641,7 +837,7 @@ const TEMAS = [
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
-  { dir: 't3', numLabel: 'TEMA 3', titleShort: 'Tema 3', titleFull: 'Tema 3', kicker: 'Tema 3', password: 't3_boina',
+  { dir: 't3', numLabel: 'TEMA 3', titleShort: 'Tema 3', titleFull: 'Tema 3', kicker: 'Tema 3',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
@@ -653,7 +849,7 @@ const TEMAS = [
       ] },
       quiz: { exists: true }
     } },
-  { dir: 't4', numLabel: 'TEMA 4', titleShort: 'Tema 4', titleFull: 'Tema 4', kicker: 'Tema 4', password: 't4_chascarrillo',
+  { dir: 't4', numLabel: 'TEMA 4', titleShort: 'Tema 4', titleFull: 'Tema 4', kicker: 'Tema 4',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
@@ -663,7 +859,7 @@ const TEMAS = [
         extraDownload: { file: 'materiales_practica.zip', label: 'Descargar los 6 textos del corpus' } },
       quiz: { exists: true }
     } },
-  { dir: 't5', numLabel: 'TEMA 5', titleShort: 'Tema 5', titleFull: 'Tema 5', kicker: 'Tema 5', password: 't5_cangrejo',
+  { dir: 't5', numLabel: 'TEMA 5', titleShort: 'Tema 5', titleFull: 'Tema 5', kicker: 'Tema 5',
     viewOrder: ['manual','principal','evaluable','practica','metric2','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
@@ -674,7 +870,7 @@ const TEMAS = [
         desc: 'Cuaderno complementario sobre METEOR, para descargar', file: 'metrica2.ipynb' },
       quiz: { exists: true }
     } },
-  { dir: 't6', numLabel: 'TEMA 6', titleShort: 'Tema 6', titleFull: 'Tema 6', kicker: 'Tema 6', password: 't6_ibuprofeno',
+  { dir: 't6', numLabel: 'TEMA 6', titleShort: 'Tema 6', titleFull: 'Tema 6', kicker: 'Tema 6',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
@@ -683,7 +879,7 @@ const TEMAS = [
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
-  { dir: 't7', numLabel: 'TEMA 7', titleShort: 'Tema 7', titleFull: 'Tema 7', kicker: 'Tema 7', password: 't7_cantamañanas',
+  { dir: 't7', numLabel: 'TEMA 7', titleShort: 'Tema 7', titleFull: 'Tema 7', kicker: 'Tema 7',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
@@ -692,7 +888,7 @@ const TEMAS = [
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
-  { dir: 't8', numLabel: 'TEMA 8', titleShort: 'Tema 8', titleFull: 'Tema 8', kicker: 'Tema 8', password: 't8_pagafantas',
+  { dir: 't8', numLabel: 'TEMA 8', titleShort: 'Tema 8', titleFull: 'Tema 8', kicker: 'Tema 8',
     viewOrder: ['manual','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
@@ -707,7 +903,7 @@ const TEMAS = [
     } }
 ];
 
-module.exports = { TEMAS, buildTopicHtml, buildIndexHtml, existingViews, TEACHER_PASSWORD };
+module.exports = { TEMAS, buildTopicHtml, buildIndexHtml, existingViews, TEACHER_PASSWORD, STUDENT_PASSWORD };
 
 if (require.main === module) {
   for (const tema of TEMAS) {
@@ -727,5 +923,17 @@ if (require.main === module) {
   }
   fs.writeFileSync(path.join(ROOT, 'index.html'), buildIndexHtml(TEMAS), 'utf8');
   console.log('built index.html');
-  console.log('\nContraseña de profesora (todas las páginas):', TEACHER_PASSWORD);
+
+  // Root-level config.json controls whether each topic's card/link is shown at all.
+  // Only seeded if missing, so it never clobbers a live teacher toggle.
+  const rootConfigPath = path.join(ROOT, 'config.json');
+  if (!fs.existsSync(rootConfigPath)) {
+    const rootSeed = {};
+    TEMAS.forEach(t => { rootSeed[t.dir] = true; });
+    fs.writeFileSync(rootConfigPath, JSON.stringify(rootSeed, null, 2) + '\n', 'utf8');
+    console.log('seeded root config.json', rootSeed);
+  }
+
+  console.log('\nContraseña del alumnado (todas las páginas):', STUDENT_PASSWORD);
+  console.log('Contraseña de profesora (todas las páginas):', TEACHER_PASSWORD);
 }
