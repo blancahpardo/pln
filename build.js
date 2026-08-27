@@ -202,6 +202,19 @@ function buildManualView(tema) {
 </div>`;
 }
 
+function buildViewerDownloadView(viewKey, tema) {
+  const cfg = tema.views[viewKey];
+  if (!cfg || !cfg.exists) return '';
+  const label = viewLabel(viewKey, tema);
+  return `<div id="view-${viewKey}" class="view sub-view" hidden>
+  <button class="back-btn" data-back="hub">← Volver</button>
+  <h2>${esc(label)} · ${esc(tema.titleShort)}</h2>
+  <p class="section-note">Puedes leerlo aquí o descargarlo.</p>
+  <a class="dl-big" href="${cfg.file}" download>⬇ Descargar PDF</a>
+  <iframe class="pdf-frame" src="${cfg.file}" title="${esc(label)}"></iframe>
+</div>`;
+}
+
 function buildDownloadView(viewKey, tema) {
   const cfg = tema.views[viewKey];
   if (!cfg || !cfg.exists) return '';
@@ -270,7 +283,9 @@ function buildTopicHtml(tema) {
   const extraHtml = extraKeys.map(v => {
     const cfg = tema.views[v];
     if (!cfg || !cfg.exists) return '';
-    return cfg.kind === 'viewergroup' ? buildViewerGroupView(v, tema) : buildDownloadView(v, tema);
+    if (cfg.kind === 'viewergroup') return buildViewerGroupView(v, tema);
+    if (cfg.kind === 'viewerdownload') return buildViewerDownloadView(v, tema);
+    return buildDownloadView(v, tema);
   });
 
   const payloadHtml = [
@@ -820,27 +835,35 @@ const TEMAS = [
       quiz: { exists: false }
     } },
   { dir: 't1', numLabel: 'TEMA 1', titleShort: 'Tema 1', titleFull: 'Tema 1', kicker: 'Tema 1',
-    viewOrder: ['manual','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      infografia: { exists: true, kind: 'viewerdownload', label: 'Infografía', icon: '🖼️',
+        desc: 'Resumen visual del tema, para consultar o descargar', file: 'infografia.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
   { dir: 't2', numLabel: 'TEMA 2', titleShort: 'Tema 2', titleFull: 'Tema 2', kicker: 'Tema 2',
-    viewOrder: ['manual','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      infografia: { exists: true, kind: 'viewerdownload', label: 'Infografía', icon: '🖼️',
+        desc: 'Resumen visual del tema, para consultar o descargar', file: 'infografia.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
   { dir: 't3', numLabel: 'TEMA 3', titleShort: 'Tema 3', titleFull: 'Tema 3', kicker: 'Tema 3',
-    viewOrder: ['manual','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','stopwords','pandas','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      stopwords: { exists: true, kind: 'viewerdownload', label: 'Diferencias entre las stopwords de spaCy y NLTK', icon: '📄',
+        desc: 'Documento comparativo, para consultar o descargar', file: 'stopwords.pdf' },
+      pandas: { exists: true, kind: 'viewerdownload', label: 'Pandas para lingüistas', icon: '📄',
+        desc: 'Guía práctica de pandas, para consultar o descargar', file: 'pandas.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
       practica: { exists: true, items: [
@@ -871,27 +894,33 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't6', numLabel: 'TEMA 6', titleShort: 'Tema 6', titleFull: 'Tema 6', kicker: 'Tema 6',
-    viewOrder: ['manual','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      infografia: { exists: true, kind: 'viewerdownload', label: 'Infografía', icon: '🖼️',
+        desc: 'Resumen visual del tema, para consultar o descargar', file: 'infografia.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: false },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
   { dir: 't7', numLabel: 'TEMA 7', titleShort: 'Tema 7', titleFull: 'Tema 7', kicker: 'Tema 7',
-    viewOrder: ['manual','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      infografia: { exists: true, kind: 'viewerdownload', label: 'Infografía', icon: '🖼️',
+        desc: 'Resumen visual del tema, para consultar o descargar', file: 'infografia.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
   { dir: 't8', numLabel: 'TEMA 8', titleShort: 'Tema 8', titleFull: 'Tema 8', kicker: 'Tema 8',
-    viewOrder: ['manual','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      infografia: { exists: true, kind: 'viewerdownload', label: 'Infografía', icon: '🖼️',
+        desc: 'Resumen visual del tema, para consultar o descargar', file: 'infografia.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.ipynb' },
       practica: { exists: true, items: [

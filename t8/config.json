@@ -3,5 +3,6 @@
   "principal": false,
   "evaluable": false,
   "practica": false,
-  "quiz": false
+  "quiz": false,
+  "infografia": false
 }

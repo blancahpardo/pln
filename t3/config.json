@@ -2,5 +2,7 @@
   "manual": false,
   "principal": false,
   "evaluable": false,
-  "quiz": false
+  "quiz": false,
+  "stopwords": false,
+  "pandas": false
 }

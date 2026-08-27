@@ -2,5 +2,6 @@
   "manual": false,
   "principal": false,
   "evaluable": false,
-  "quiz": false
+  "quiz": false,
+  "infografia": false
 }
