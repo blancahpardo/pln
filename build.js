@@ -130,6 +130,61 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .quiz-feedback { font-size:13px; color:var(--gris); background:#fff; border-radius:8px; padding:12px 16px; margin-top:4px; margin-bottom:16px; border-left:3px solid var(--azul); }
 .quiz-score { font-size:26px; font-weight:bold; color:var(--azul); margin-bottom:8px; }
 .quiz-result { background:var(--claro); border-radius:12px; padding:30px; text-align:center; }
+/* interactive manual (prueba) */
+.im-badge { display:inline-block; background:var(--amar); color:var(--azul-d); font-size:11px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:20px; margin-bottom:10px; }
+.im-root { margin-top:10px; }
+.im-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+.im-card { text-align:left; background:var(--claro); border:none; border-radius:12px; padding:20px 20px 18px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; box-shadow:0 2px 10px rgba(159,177,186,.28); transition:transform .12s ease, background .12s ease; }
+.im-card:hover { background:#E9ECEE; transform:translateY(-2px); }
+.im-card.im-card-bib { background:var(--azul); }
+.im-card.im-card-bib .im-card-title, .im-card.im-card-bib .im-card-meta { color:#fff; }
+.im-card-icon { font-size:22px; }
+.im-card-num { display:block; font-size:11px; font-weight:bold; color:var(--humo); letter-spacing:1px; text-transform:uppercase; margin:8px 0 4px; }
+.im-card-title { display:block; font-size:16px; font-weight:bold; color:var(--azul); line-height:1.3; }
+.im-card-meta { display:block; font-size:12px; color:var(--humo); margin-top:6px; }
+.im-chapter { }
+.im-crumb { background:none; border:none; color:var(--humo); font-size:13px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; padding:0; margin-bottom:16px; text-decoration:underline; }
+.im-crumb:hover { color:var(--azul); }
+.im-chapter-title { color:var(--azul); font-size:23px; margin:0 0 16px; }
+.im-block-p { font-size:14.5px; line-height:1.7; color:var(--gris); margin:0 0 14px; }
+.im-block-ul, .im-block-ol { margin:0 0 14px; padding-left:22px; }
+.im-block-ul li, .im-block-ol li { font-size:14.5px; line-height:1.65; color:var(--gris); margin-bottom:6px; }
+.im-sub { border-top:1px solid #E3E7E9; }
+.im-sub:first-child { border-top:none; }
+.im-sub-head { width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; background:none; border:none; text-align:left; padding:16px 4px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; }
+.im-sub-head:hover .im-sub-title { color:var(--azul-d); }
+.im-sub-title { font-size:15.5px; font-weight:bold; color:var(--azul); }
+.im-sub-arrow { color:var(--humo); font-size:13px; transition:transform .15s ease; flex:none; }
+.im-sub.open .im-sub-arrow { transform:rotate(90deg); }
+.im-sub-body { max-height:0; overflow:hidden; padding:0 4px; transition:max-height .25s ease; }
+.im-sub.open .im-sub-body { max-height:none; padding-bottom:14px; }
+.im-code-toggle { display:inline-flex; align-items:center; gap:6px; background:#fff; border:1.5px dashed var(--humo); color:var(--azul); font-size:12.5px; font-weight:bold; border-radius:20px; padding:7px 14px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; margin:2px 0 14px; }
+.im-code-toggle:hover { border-color:var(--azul); }
+.im-code-box { display:none; background:#F2F4F5; border-radius:8px; padding:14px 16px; margin:0 0 14px; overflow-x:auto; }
+.im-code-box.open { display:block; }
+.im-code-box pre { margin:0; font-family:"Courier New",monospace; font-size:13px; line-height:1.55; color:#1c2a30; white-space:pre-wrap; word-break:break-word; }
+.im-table-toggle { display:inline-flex; align-items:center; gap:6px; background:#fff; border:1.5px solid var(--azul); color:var(--azul); font-size:12.5px; font-weight:bold; border-radius:20px; padding:7px 14px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; margin:2px 0 14px; }
+.im-table-toggle:hover { background:var(--azul); color:#fff; }
+.im-table-wrap { display:none; overflow-x:auto; margin:0 0 16px; border-radius:8px; box-shadow:0 2px 10px rgba(159,177,186,.28); }
+.im-table-wrap.open { display:block; }
+.im-table-wrap table { border-collapse:collapse; width:100%; font-size:13px; }
+.im-table-wrap th { background:var(--azul); color:#fff; text-align:left; padding:9px 12px; font-size:12.5px; }
+.im-table-wrap td { padding:9px 12px; border-bottom:1px solid #E3E7E9; color:var(--gris); }
+.im-table-wrap tr:nth-child(even) td { background:var(--claro); }
+.im-errorlist { list-style:none; padding:0; margin:0 0 6px; }
+.im-errorlist li { background:var(--claro); border-left:3px solid var(--rojo); border-radius:0 8px 8px 0; padding:12px 16px; margin-bottom:10px; }
+.im-errorlist .im-error-term { display:block; font-weight:bold; color:var(--azul); font-size:14px; margin-bottom:4px; }
+.im-errorlist .im-error-desc { font-size:13.5px; color:var(--gris); line-height:1.6; }
+.im-cite { color:var(--azul); font-weight:bold; cursor:pointer; border-bottom:1.5px dotted var(--azul); white-space:normal; }
+.im-cite:hover { color:var(--azul-d); }
+.im-cite-pop { display:none; background:var(--azul-d); color:#fff; border-radius:8px; padding:12px 16px; font-size:12.5px; line-height:1.6; margin:6px 0 14px; }
+.im-cite-pop.open { display:block; }
+.im-cite-pop p { margin:0 0 8px; }
+.im-cite-pop p:last-child { margin-bottom:0; }
+.im-cite-pop a { color:var(--amar); }
+.im-bib-list { margin-top:6px; }
+.im-bib-item.im-bib-highlight { background:#FDF1C7; border-radius:8px; padding:10px 14px; margin-left:-14px; margin-right:-14px; }
+code.im-inline { background:#F2F4F5; padding:1px 6px; border-radius:4px; font-family:"Courier New",monospace; font-size:.93em; }
 /* teacher panel */
 .teacher-banner { background:var(--azul-d); color:#fff; border-radius:12px; padding:18px 22px; margin-bottom:24px; }
 .teacher-banner strong { color: var(--amar); }
@@ -308,6 +363,19 @@ function buildViewerGroupView(viewKey, tema) {
 ${leaves}`;
 }
 
+function buildInteractiveManualView(viewKey, tema) {
+  const cfg = tema.views[viewKey];
+  if (!cfg || !cfg.exists) return '';
+  const label = viewLabel(viewKey, tema);
+  return `<div id="view-${viewKey}" class="view sub-view" hidden>
+  <button class="back-btn" data-back="hub">← Volver</button>
+  <div class="im-badge">Prueba · versión interactiva</div>
+  <h2>${esc(label)} · ${esc(tema.titleShort)}</h2>
+  <p class="section-note">Mismo contenido que el manual en PDF, en formato navegable por paneles. Pulsa un capítulo para explorarlo.</p>
+  <div id="im-root-${viewKey}" class="im-root"></div>
+</div>`;
+}
+
 function buildQuizView(tema) {
   const cfg = tema.views.quiz;
   if (!cfg || !cfg.exists) return '';
@@ -328,6 +396,7 @@ function buildTopicHtml(tema) {
     if (cfg.kind === 'viewerdownload') return buildViewerDownloadView(v, tema);
     if (cfg.kind === 'image') return buildImageView(v, tema);
     if (cfg.kind === 'reflist') return buildReflistView(v, tema);
+    if (cfg.kind === 'interactive_manual') return buildInteractiveManualView(v, tema);
     return buildDownloadView(v, tema);
   });
 
@@ -350,6 +419,16 @@ function buildTopicHtml(tema) {
     quizManual = JSON.stringify(JSON.parse(fs.readFileSync(path.join(ROOT, tema.dir, 'quiz_manual.json'), 'utf8')).quiz);
     quizCuaderno = JSON.stringify(JSON.parse(fs.readFileSync(path.join(ROOT, tema.dir, 'quiz_cuaderno.json'), 'utf8')).quiz);
   }
+
+  // Interactive-manual data: one JSON payload per view key using kind 'interactive_manual',
+  // e.g. tX/manual_interactivo.json — read at build time and inlined like the quiz banks above.
+  const imViewKeys = tema.viewOrder.filter(v => tema.views[v] && tema.views[v].exists && tema.views[v].kind === 'interactive_manual');
+  const imData = {};
+  imViewKeys.forEach(v => {
+    const file = tema.views[v].dataFile || (v + '.json');
+    imData[v] = JSON.parse(fs.readFileSync(path.join(ROOT, tema.dir, file), 'utf8'));
+  });
+  const imDataJson = JSON.stringify(imData);
 
   return `<!DOCTYPE html>
 <html lang="es">
@@ -386,6 +465,8 @@ function buildTopicHtml(tema) {
   var PAYLOAD = "${payloadB64}";
   var QUIZ_MANUAL = ${quizManual};
   var QUIZ_CUADERNO = ${quizCuaderno};
+  var IM_DATA = ${imDataJson};
+  var imRendered = {};
   var SESSION_KEY = "pln_unlocked";
   var REPO = "${REPO}";
   var LOCAL_CONFIG = "config.json";
@@ -485,11 +566,169 @@ function buildTopicHtml(tema) {
     });
   }
 
+  // ---- Interactive manual engine (self-contained mini-app rendered lazily into #im-root-<key>) ----
+  function imEsc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+  function imFormatBackticks(s) {
+    var parts = s.split("\`"), out = "";
+    for (var i = 0; i < parts.length; i++) out += (i % 2 === 1) ? '<code class="im-inline">' + imEsc(parts[i]) + "</code>" : imEsc(parts[i]);
+    return out;
+  }
+  function imFormatInline(raw) {
+    var re = /{{cite:([^}]*)}}([\\s\\S]*?){{\\/cite}}/g;
+    var out = "", last = 0, m;
+    while ((m = re.exec(raw))) {
+      out += imFormatBackticks(raw.slice(last, m.index));
+      out += '<span class="im-cite" data-refs="' + m[1] + '">' + imFormatBackticks(m[2]) + ' <span aria-hidden="true">ⓘ</span></span>';
+      last = re.lastIndex;
+    }
+    out += imFormatBackticks(raw.slice(last));
+    return out;
+  }
+  function imBibText(text) {
+    var re = /(https?:\\/\\/[^\\s]+)/g;
+    var out = "", last = 0, m;
+    while ((m = re.exec(text))) {
+      out += imEsc(text.slice(last, m.index));
+      var url = m[1].replace(/[.,;]+$/, "");
+      out += '<a href="' + imEsc(url) + '" target="_blank" rel="noopener">' + imEsc(url) + "</a>";
+      last = m.index + url.length;
+    }
+    out += imEsc(text.slice(last));
+    return out;
+  }
+  function imRefLookup(data) {
+    var m = {};
+    data.references.forEach(function(r) { m[r.key] = r.text; });
+    return m;
+  }
+  function imRenderTable(rows, key) {
+    var head = rows[0], body = rows.slice(1);
+    var t = "<table><thead><tr>" + head.map(function(h) { return "<th>" + imEsc(h) + "</th>"; }).join("") + "</tr></thead><tbody>";
+    body.forEach(function(r) { t += "<tr>" + r.map(function(c) { return "<td>" + imEsc(c) + "</td>"; }).join("") + "</tr>"; });
+    t += "</tbody></table>";
+    return '<button class="im-table-toggle" data-im-table="' + key + '">▤ Ver tabla (' + body.length + ' filas)</button>' +
+      '<div class="im-table-wrap" id="im-table-' + key + '">' + t + "</div>";
+  }
+  function imRenderBlocks(blocks, keyPrefix) {
+    var html = "";
+    blocks.forEach(function(b, i) {
+      var key = keyPrefix + "-" + i;
+      if (b.type === "p") html += '<p class="im-block-p">' + imFormatInline(b.text) + "</p>";
+      else if (b.type === "ul") html += '<ul class="im-block-ul">' + b.items.map(function(t) { return "<li>" + imFormatInline(t) + "</li>"; }).join("") + "</ul>";
+      else if (b.type === "ol") html += '<ol class="im-block-ol">' + b.items.map(function(t) { return "<li>" + imFormatInline(t) + "</li>"; }).join("") + "</ol>";
+      else if (b.type === "code") html += '<button class="im-code-toggle" data-im-code="' + key + '">🔎 Descubre el código</button>' +
+        '<div class="im-code-box" id="im-code-' + key + '"><pre>' + imEsc(b.code) + "</pre></div>";
+      else if (b.type === "table") html += imRenderTable(b.rows, key);
+      else if (b.type === "errorlist") html += '<ul class="im-errorlist">' + b.items.map(function(it) {
+        return '<li><span class="im-error-term">' + imFormatInline(it.term) + '</span><span class="im-error-desc">' + imFormatInline(it.desc) + "</span></li>";
+      }).join("") + "</ul>";
+    });
+    return html;
+  }
+  function imWireCommon(root, data) {
+    root.querySelectorAll("[data-im-code]").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        var box = document.getElementById("im-code-" + btn.dataset.imCode);
+        var open = box.classList.toggle("open");
+        btn.textContent = open ? "🔽 Ocultar el código" : "🔎 Descubre el código";
+      });
+    });
+    root.querySelectorAll("[data-im-table]").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        document.getElementById("im-table-" + btn.dataset.imTable).classList.toggle("open");
+      });
+    });
+    root.querySelectorAll(".im-cite").forEach(function(span) {
+      span.addEventListener("click", function() {
+        var existing = span.nextElementSibling;
+        if (existing && existing.classList && existing.classList.contains("im-cite-pop")) {
+          existing.classList.toggle("open");
+          return;
+        }
+        var refs = imRefLookup(data);
+        var keys = span.dataset.refs.split(",");
+        var pop = document.createElement("div");
+        pop.className = "im-cite-pop open";
+        pop.innerHTML = keys.map(function(k) { return "<p>" + imBibText(refs[k] || k) + "</p>"; }).join("") +
+          '<p><a href="#" data-im-goto-bib="' + keys[0] + '">Ver en Bibliografía →</a></p>';
+        span.parentNode.insertBefore(pop, span.nextSibling);
+        pop.querySelector("[data-im-goto-bib]").addEventListener("click", function(e) {
+          e.preventDefault();
+          imShowBib(root, data, this.dataset.imGotoBib);
+        });
+      });
+    });
+  }
+  function imShowBib(root, data, highlightKey) {
+    var html = '<button class="im-crumb" data-im-back="1">← Índice del manual</button>';
+    html += '<h3 class="im-chapter-title">Bibliografía</h3>';
+    html += '<h4 class="ref-intro">Referencias en formato APA (7ª edición)</h4>';
+    html += '<div class="im-bib-list">' + data.references.map(function(r) {
+      var cls = "ref-item im-bib-item" + (r.key === highlightKey ? " im-bib-highlight" : "");
+      return '<p class="' + cls + '" id="im-bib-' + r.key + '">' + imBibText(r.text) + "</p>";
+    }).join("") + "</div>";
+    root.innerHTML = html;
+    root.querySelector("[data-im-back]").addEventListener("click", function() { imShowIndex(root, data); });
+    if (highlightKey) {
+      var el = document.getElementById("im-bib-" + highlightKey);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+  function imShowChapter(root, data, idx) {
+    var sec = data.sections[idx];
+    var html = '<button class="im-crumb" data-im-back="1">← Índice del manual</button>';
+    html += '<h3 class="im-chapter-title">' + imEsc(sec.title) + "</h3>";
+    html += imRenderBlocks(sec.blocks, idx + "-i");
+    sec.subsections.forEach(function(sub, j) {
+      html += '<div class="im-sub" data-im-sub="' + j + '">' +
+        '<button class="im-sub-head"><span class="im-sub-title">' + imEsc(sub.title) + '</span><span class="im-sub-arrow">▶</span></button>' +
+        '<div class="im-sub-body">' + imRenderBlocks(sub.blocks, idx + "-" + j) + "</div></div>";
+    });
+    root.innerHTML = html;
+    imWireCommon(root, data);
+    root.querySelector("[data-im-back]").addEventListener("click", function() { imShowIndex(root, data); });
+    root.querySelectorAll(".im-sub-head").forEach(function(head) {
+      head.addEventListener("click", function() { head.parentElement.classList.toggle("open"); });
+    });
+  }
+  function imShowIndex(root, data) {
+    var cards = data.sections.map(function(sec, i) {
+      return '<button class="im-card" data-im-chapter="' + i + '">' +
+        '<span class="im-card-icon">📖</span>' +
+        '<span class="im-card-num">Capítulo ' + (i + 1) + "</span>" +
+        '<span class="im-card-title">' + imEsc(sec.title) + "</span>" +
+        (sec.subsections.length ? '<span class="im-card-meta">' + sec.subsections.length + " apartados</span>" : "") +
+        "</button>";
+    }).join("");
+    var bibCard = '<button class="im-card im-card-bib" data-im-bib="1">' +
+      '<span class="im-card-icon">📚</span><span class="im-card-num">Referencias</span>' +
+      '<span class="im-card-title">Bibliografía</span>' +
+      '<span class="im-card-meta">' + data.references.length + ' referencias en APA 7ª ed.</span></button>';
+    root.innerHTML = '<div class="im-grid">' + cards + bibCard + "</div>";
+    root.querySelectorAll("[data-im-chapter]").forEach(function(btn) {
+      btn.addEventListener("click", function() { imShowChapter(root, data, parseInt(btn.dataset.imChapter, 10)); });
+    });
+    var bibBtn = root.querySelector("[data-im-bib]");
+    if (bibBtn) bibBtn.addEventListener("click", function() { imShowBib(root, data, null); });
+  }
+  function renderInteractiveManual(viewKey) {
+    if (imRendered[viewKey]) return;
+    imRendered[viewKey] = true;
+    var data = IM_DATA[viewKey];
+    if (!data) return;
+    var root = document.getElementById("im-root-" + viewKey);
+    if (!root) return;
+    imShowIndex(root, data);
+  }
+
   function wireNav() {
     document.querySelectorAll(".hub-btn").forEach(function(btn) {
       btn.addEventListener("click", function() {
         showView(btn.dataset.view);
         if (btn.dataset.view === "quiz") renderQuizStart();
+        if (IM_DATA[btn.dataset.view]) renderInteractiveManual(btn.dataset.view);
       });
     });
     document.querySelectorAll("[data-back]").forEach(function(btn) {
@@ -949,9 +1188,11 @@ const TEMAS = [
       quiz: { exists: false }
     } },
   { dir: 't1', numLabel: 'TEMA 1', titleShort: 'Tema 1', titleFull: 'Tema 1', kicker: 'Tema 1',
-    viewOrder: ['manual','adicionales','infografia','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','manual_interactivo','adicionales','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico interactivo (prueba)', icon: '✨',
+        desc: 'Mismo contenido del manual, navegable por paneles — versión de prueba', dataFile: 'manual_interactivo.json' },
       adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
         desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
           { author: 'linguAIstica', date: '2026, 1 de junio', title: 'Tokenización: el arte de cortar texto para que la IA lo entienda', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DZDa4tNjcOn/' },
