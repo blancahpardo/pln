@@ -131,18 +131,33 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .quiz-score { font-size:26px; font-weight:bold; color:var(--azul); margin-bottom:8px; }
 .quiz-result { background:var(--claro); border-radius:12px; padding:30px; text-align:center; }
 /* interactive manual (prueba) */
-.im-badge { display:inline-block; background:var(--amar); color:var(--azul-d); font-size:11px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:20px; margin-bottom:10px; }
-.im-root { margin-top:10px; }
+.im-root { margin-top:0; }
+.im-hero { position:relative; background:linear-gradient(135deg, var(--azul) 0%, var(--azul-d) 100%); border-radius:16px; padding:34px 26px 30px; margin-bottom:22px; overflow:hidden; }
+.im-hero::before { content:""; position:absolute; top:-46px; right:-46px; width:190px; height:190px; border-radius:50%; background:rgba(244,197,66,.12); }
+.im-hero::after { content:""; position:absolute; bottom:-60px; left:30%; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,.05); }
+.im-hero-dl { position:absolute; top:16px; right:16px; background:var(--amar); color:var(--azul-d); border:none; border-radius:20px; padding:9px 16px; font-size:12px; font-weight:bold; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-family:Arial,Helvetica,sans-serif; z-index:1; }
+.im-hero-dl:hover { filter:brightness(1.08); }
+.im-hero-pill { display:inline-block; background:rgba(255,255,255,.14); color:#fff; font-size:10.5px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:20px; margin-bottom:14px; position:relative; z-index:1; }
+.im-hero-kicker { color:var(--amar); font-size:12.5px; font-weight:bold; letter-spacing:.4px; margin:0 0 8px; position:relative; z-index:1; }
+.im-hero-title { color:#fff; font-size:clamp(21px,3.2vw,30px); line-height:1.28; margin:0; max-width:620px; position:relative; z-index:1; }
 .im-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
-.im-card { text-align:left; background:var(--claro); border:none; border-radius:12px; padding:20px 20px 18px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; box-shadow:0 2px 10px rgba(159,177,186,.28); transition:transform .12s ease, background .12s ease; }
+.im-card { text-align:left; background:var(--claro); border:none; border-radius:12px; padding:20px 20px 18px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; box-shadow:0 2px 10px rgba(159,177,186,.28); transition:transform .12s ease, background .12s ease; opacity:0; transform:translateY(10px); animation:imCardIn .35s ease forwards; }
 .im-card:hover { background:#E9ECEE; transform:translateY(-2px); }
 .im-card.im-card-bib { background:var(--azul); }
 .im-card.im-card-bib .im-card-title, .im-card.im-card-bib .im-card-meta { color:#fff; }
-.im-card-icon { font-size:22px; }
-.im-card-num { display:block; font-size:11px; font-weight:bold; color:var(--humo); letter-spacing:1px; text-transform:uppercase; margin:8px 0 4px; }
-.im-card-title { display:block; font-size:16px; font-weight:bold; color:var(--azul); line-height:1.3; }
+.im-card-icon { font-size:24px; }
+.im-card-title { display:block; font-size:16px; font-weight:bold; color:var(--azul); line-height:1.3; margin-top:10px; }
 .im-card-meta { display:block; font-size:12px; color:var(--humo); margin-top:6px; }
-.im-chapter { }
+@keyframes imCardIn { to { opacity:1; transform:translateY(0); } }
+.im-rail { display:flex; gap:6px; overflow-x:auto; padding:2px 2px 14px; margin-bottom:18px; border-bottom:1px solid #E3E7E9; }
+.im-rail-btn { flex:none; display:flex; flex-direction:column; align-items:center; gap:4px; background:none; border:none; cursor:pointer; padding:6px 9px; border-radius:10px; font-family:Arial,Helvetica,sans-serif; opacity:.5; transition:opacity .15s ease, background .15s ease; }
+.im-rail-btn:hover { opacity:.85; }
+.im-rail-btn.active { opacity:1; background:var(--claro); }
+.im-rail-icon { font-size:16px; }
+.im-rail-label { font-size:9.5px; font-weight:bold; color:var(--gris); max-width:62px; text-align:center; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.im-rail-btn.active .im-rail-label { color:var(--azul); }
+.im-chapter { animation:imFadeIn .25s ease; }
+@keyframes imFadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
 .im-crumb { background:none; border:none; color:var(--humo); font-size:13px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; padding:0; margin-bottom:16px; text-decoration:underline; }
 .im-crumb:hover { color:var(--azul); }
 .im-chapter-title { color:var(--azul); font-size:23px; margin:0 0 16px; }
@@ -156,21 +171,27 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .im-sub-title { font-size:15.5px; font-weight:bold; color:var(--azul); }
 .im-sub-arrow { color:var(--humo); font-size:13px; transition:transform .15s ease; flex:none; }
 .im-sub.open .im-sub-arrow { transform:rotate(90deg); }
-.im-sub-body { max-height:0; overflow:hidden; padding:0 4px; transition:max-height .25s ease; }
+.im-sub-body { max-height:0; overflow:hidden; padding:0 4px; transition:max-height .3s ease; }
 .im-sub.open .im-sub-body { max-height:none; padding-bottom:14px; }
 .im-code-toggle { display:inline-flex; align-items:center; gap:6px; background:#fff; border:1.5px dashed var(--humo); color:var(--azul); font-size:12.5px; font-weight:bold; border-radius:20px; padding:7px 14px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; margin:2px 0 14px; }
 .im-code-toggle:hover { border-color:var(--azul); }
-.im-code-box { display:none; background:#F2F4F5; border-radius:8px; padding:14px 16px; margin:0 0 14px; overflow-x:auto; }
+.im-code-box { display:none; background:#F2F4F5; border-radius:8px; padding:14px 16px; margin:0 0 14px; overflow-x:auto; animation:imFadeIn .2s ease; }
 .im-code-box.open { display:block; }
 .im-code-box pre { margin:0; font-family:"Courier New",monospace; font-size:13px; line-height:1.55; color:#1c2a30; white-space:pre-wrap; word-break:break-word; }
 .im-table-toggle { display:inline-flex; align-items:center; gap:6px; background:#fff; border:1.5px solid var(--azul); color:var(--azul); font-size:12.5px; font-weight:bold; border-radius:20px; padding:7px 14px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; margin:2px 0 14px; }
 .im-table-toggle:hover { background:var(--azul); color:#fff; }
-.im-table-wrap { display:none; overflow-x:auto; margin:0 0 16px; border-radius:8px; box-shadow:0 2px 10px rgba(159,177,186,.28); }
-.im-table-wrap.open { display:block; }
-.im-table-wrap table { border-collapse:collapse; width:100%; font-size:13px; }
-.im-table-wrap th { background:var(--azul); color:#fff; text-align:left; padding:9px 12px; font-size:12.5px; }
-.im-table-wrap td { padding:9px 12px; border-bottom:1px solid #E3E7E9; color:var(--gris); }
-.im-table-wrap tr:nth-child(even) td { background:var(--claro); }
+.im-table-bare { overflow-x:auto; margin:0 0 16px; border-radius:8px; box-shadow:0 2px 10px rgba(159,177,186,.28); }
+.im-table-bare table, .im-modal table { border-collapse:collapse; width:100%; font-size:13px; }
+.im-table-bare th, .im-modal th { background:var(--azul); color:#fff; text-align:left; padding:9px 12px; font-size:12.5px; }
+.im-table-bare td, .im-modal td { padding:9px 12px; border-bottom:1px solid #E3E7E9; color:var(--gris); }
+.im-table-bare tr:nth-child(even) td, .im-modal tr:nth-child(even) td { background:var(--claro); }
+.im-modal-overlay { position:fixed; inset:0; background:rgba(10,20,26,.55); display:flex; align-items:center; justify-content:center; padding:5vh 4vw; z-index:500; animation:imFadeIn .15s ease; }
+.im-modal { background:#fff; border-radius:14px; max-width:760px; width:100%; max-height:88vh; display:flex; flex-direction:column; box-shadow:0 12px 40px rgba(0,0,0,.3); }
+.im-modal-head { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid #E3E7E9; flex:none; }
+.im-modal-head h4 { margin:0; color:var(--azul); font-size:15.5px; }
+.im-modal-close { background:var(--claro); border:none; width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:14px; color:var(--gris); flex:none; }
+.im-modal-close:hover { background:#E3E7E9; }
+.im-modal-body { overflow:auto; padding:16px 20px 20px; }
 .im-errorlist { list-style:none; padding:0; margin:0 0 6px; }
 .im-errorlist li { background:var(--claro); border-left:3px solid var(--rojo); border-radius:0 8px 8px 0; padding:12px 16px; margin-bottom:10px; }
 .im-errorlist .im-error-term { display:block; font-weight:bold; color:var(--azul); font-size:14px; margin-bottom:4px; }
@@ -366,13 +387,10 @@ ${leaves}`;
 function buildInteractiveManualView(viewKey, tema) {
   const cfg = tema.views[viewKey];
   if (!cfg || !cfg.exists) return '';
-  const label = viewLabel(viewKey, tema);
+  const pdfFile = (tema.views.manual && tema.views.manual.exists) ? tema.views.manual.file : '';
   return `<div id="view-${viewKey}" class="view sub-view" hidden>
   <button class="back-btn" data-back="hub">← Volver</button>
-  <div class="im-badge">Prueba · versión interactiva</div>
-  <h2>${esc(label)} · ${esc(tema.titleShort)}</h2>
-  <p class="section-note">Mismo contenido que el manual en PDF, en formato navegable por paneles. Pulsa un capítulo para explorarlo.</p>
-  <div id="im-root-${viewKey}" class="im-root"></div>
+  <div id="im-root-${viewKey}" class="im-root" data-pdf="${esc(pdfFile)}"></div>
 </div>`;
 }
 
@@ -567,6 +585,11 @@ function buildTopicHtml(tema) {
   }
 
   // ---- Interactive manual engine (self-contained mini-app rendered lazily into #im-root-<key>) ----
+  var IM_ICONS = {
+    "Contexto profesional": "💼", "Qué vas a aprender": "🎯", "Mapa conceptual": "🗺️",
+    "Marco teórico": "📚", "Python para PLN": "🐍", "Errores frecuentes": "⚠️",
+    "Síntesis": "✅", "Cierre narrativo": "🎬"
+  };
   function imEsc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
@@ -586,7 +609,7 @@ function buildTopicHtml(tema) {
     out += imFormatBackticks(raw.slice(last));
     return out;
   }
-  function imBibText(text) {
+  function imLinkify(text) {
     var re = /(https?:\\/\\/[^\\s]+)/g;
     var out = "", last = 0, m;
     while ((m = re.exec(text))) {
@@ -598,21 +621,48 @@ function buildTopicHtml(tema) {
     out += imEsc(text.slice(last));
     return out;
   }
+  function imBibText(text) {
+    // *word* marks an APA-italicized container title (book/journal name+volume/etc.)
+    return text.split(/(\\*[^*]+\\*)/g).map(function(part) {
+      if (part.charAt(0) === "*" && part.charAt(part.length - 1) === "*" && part.length > 1) {
+        return "<em>" + imLinkify(part.slice(1, -1)) + "</em>";
+      }
+      return imLinkify(part);
+    }).join("");
+  }
   function imRefLookup(data) {
     var m = {};
     data.references.forEach(function(r) { m[r.key] = r.text; });
     return m;
   }
-  function imRenderTable(rows, key) {
-    var head = rows[0], body = rows.slice(1);
-    var t = "<table><thead><tr>" + head.map(function(h) { return "<th>" + imEsc(h) + "</th>"; }).join("") + "</tr></thead><tbody>";
-    body.forEach(function(r) { t += "<tr>" + r.map(function(c) { return "<td>" + imEsc(c) + "</td>"; }).join("") + "</tr>"; });
-    t += "</tbody></table>";
-    return '<button class="im-table-toggle" data-im-table="' + key + '">▤ Ver tabla (' + body.length + ' filas)</button>' +
-      '<div class="im-table-wrap" id="im-table-' + key + '">' + t + "</div>";
+  function imOpenModal(title, bodyHtml) {
+    var overlay = document.createElement("div");
+    overlay.className = "im-modal-overlay";
+    overlay.innerHTML = '<div class="im-modal"><div class="im-modal-head"><h4>' + imEsc(title) +
+      '</h4><button class="im-modal-close" aria-label="Cerrar">✕</button></div><div class="im-modal-body">' + bodyHtml + "</div></div>";
+    document.body.appendChild(overlay);
+    function close() { overlay.remove(); document.removeEventListener("keydown", onKey); }
+    overlay.addEventListener("click", function(e) { if (e.target === overlay) close(); });
+    overlay.querySelector(".im-modal-close").addEventListener("click", close);
+    function onKey(e) { if (e.key === "Escape") close(); }
+    document.addEventListener("keydown", onKey);
+  }
+  function imTableHtml(b) {
+    var head = b.rows[0], body = b.rows.slice(1);
+    return "<table><thead><tr>" + head.map(function(h) { return "<th>" + imEsc(h) + "</th>"; }).join("") + "</tr></thead><tbody>" +
+      body.map(function(r) { return "<tr>" + r.map(function(c) { return "<td>" + imEsc(c) + "</td>"; }).join("") + "</tr>"; }).join("") +
+      "</tbody></table>";
+  }
+  function imRenderTable(b, key, bare) {
+    var t = imTableHtml(b);
+    if (bare) return '<div class="im-table-bare">' + t + "</div>";
+    var title = b.title || "Tabla";
+    return '<button class="im-table-toggle" data-im-table="' + key + '" data-im-table-title="' + imEsc(title) + '">▤ Ver tabla: ' + imEsc(title) + "</button>" +
+      '<template data-im-table-src="' + key + '">' + t + "</template>";
   }
   function imRenderBlocks(blocks, keyPrefix) {
     var html = "";
+    var bareTable = blocks.length === 1 && blocks[0].type === "table";
     blocks.forEach(function(b, i) {
       var key = keyPrefix + "-" + i;
       if (b.type === "p") html += '<p class="im-block-p">' + imFormatInline(b.text) + "</p>";
@@ -620,7 +670,7 @@ function buildTopicHtml(tema) {
       else if (b.type === "ol") html += '<ol class="im-block-ol">' + b.items.map(function(t) { return "<li>" + imFormatInline(t) + "</li>"; }).join("") + "</ol>";
       else if (b.type === "code") html += '<button class="im-code-toggle" data-im-code="' + key + '">🔎 Descubre el código</button>' +
         '<div class="im-code-box" id="im-code-' + key + '"><pre>' + imEsc(b.code) + "</pre></div>";
-      else if (b.type === "table") html += imRenderTable(b.rows, key);
+      else if (b.type === "table") html += imRenderTable(b, key, bareTable);
       else if (b.type === "errorlist") html += '<ul class="im-errorlist">' + b.items.map(function(it) {
         return '<li><span class="im-error-term">' + imFormatInline(it.term) + '</span><span class="im-error-desc">' + imFormatInline(it.desc) + "</span></li>";
       }).join("") + "</ul>";
@@ -637,7 +687,8 @@ function buildTopicHtml(tema) {
     });
     root.querySelectorAll("[data-im-table]").forEach(function(btn) {
       btn.addEventListener("click", function() {
-        document.getElementById("im-table-" + btn.dataset.imTable).classList.toggle("open");
+        var tpl = root.querySelector('[data-im-table-src="' + btn.dataset.imTable + '"]');
+        if (tpl) imOpenModal(btn.dataset.imTableTitle, tpl.innerHTML);
       });
     });
     root.querySelectorAll(".im-cite").forEach(function(span) {
@@ -661,16 +712,36 @@ function buildTopicHtml(tema) {
       });
     });
   }
+  function imRailHtml(data, activeIdx) {
+    var items = '<button class="im-rail-btn" data-im-rail-home="1"><span class="im-rail-icon">🏠</span><span class="im-rail-label">Índice</span></button>';
+    items += data.sections.map(function(sec, i) {
+      var icon = IM_ICONS[sec.navTitle] || "📖";
+      return '<button class="im-rail-btn' + (activeIdx === i ? " active" : "") + '" data-im-rail-chapter="' + i + '">' +
+        '<span class="im-rail-icon">' + icon + '</span><span class="im-rail-label">' + imEsc(sec.navTitle) + "</span></button>";
+    }).join("");
+    items += '<button class="im-rail-btn' + (activeIdx === "bib" ? " active" : "") + '" data-im-rail-bib="1">' +
+      '<span class="im-rail-icon">📖</span><span class="im-rail-label">Bibliografía</span></button>';
+    return '<div class="im-rail">' + items + "</div>";
+  }
+  function imWireRail(root, data) {
+    var homeBtn = root.querySelector("[data-im-rail-home]");
+    if (homeBtn) homeBtn.addEventListener("click", function() { imShowIndex(root, data); });
+    root.querySelectorAll("[data-im-rail-chapter]").forEach(function(btn) {
+      btn.addEventListener("click", function() { imShowChapter(root, data, parseInt(btn.dataset.imRailChapter, 10)); });
+    });
+    var railBib = root.querySelector("[data-im-rail-bib]");
+    if (railBib) railBib.addEventListener("click", function() { imShowBib(root, data, null); });
+  }
   function imShowBib(root, data, highlightKey) {
-    var html = '<button class="im-crumb" data-im-back="1">← Índice del manual</button>';
-    html += '<h3 class="im-chapter-title">Bibliografía</h3>';
+    var html = imRailHtml(data, "bib");
+    html += '<div class="im-chapter"><h3 class="im-chapter-title">📖 Bibliografía</h3>';
     html += '<h4 class="ref-intro">Referencias en formato APA (7ª edición)</h4>';
     html += '<div class="im-bib-list">' + data.references.map(function(r) {
       var cls = "ref-item im-bib-item" + (r.key === highlightKey ? " im-bib-highlight" : "");
       return '<p class="' + cls + '" id="im-bib-' + r.key + '">' + imBibText(r.text) + "</p>";
-    }).join("") + "</div>";
+    }).join("") + "</div></div>";
     root.innerHTML = html;
-    root.querySelector("[data-im-back]").addEventListener("click", function() { imShowIndex(root, data); });
+    imWireRail(root, data);
     if (highlightKey) {
       var el = document.getElementById("im-bib-" + highlightKey);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -678,35 +749,47 @@ function buildTopicHtml(tema) {
   }
   function imShowChapter(root, data, idx) {
     var sec = data.sections[idx];
-    var html = '<button class="im-crumb" data-im-back="1">← Índice del manual</button>';
-    html += '<h3 class="im-chapter-title">' + imEsc(sec.title) + "</h3>";
+    var icon = IM_ICONS[sec.navTitle] || "📖";
+    var html = imRailHtml(data, idx);
+    html += '<div class="im-chapter"><h3 class="im-chapter-title">' + icon + " " + imEsc(sec.title) + "</h3>";
     html += imRenderBlocks(sec.blocks, idx + "-i");
     sec.subsections.forEach(function(sub, j) {
       html += '<div class="im-sub" data-im-sub="' + j + '">' +
         '<button class="im-sub-head"><span class="im-sub-title">' + imEsc(sub.title) + '</span><span class="im-sub-arrow">▶</span></button>' +
         '<div class="im-sub-body">' + imRenderBlocks(sub.blocks, idx + "-" + j) + "</div></div>";
     });
+    html += "</div>";
     root.innerHTML = html;
     imWireCommon(root, data);
-    root.querySelector("[data-im-back]").addEventListener("click", function() { imShowIndex(root, data); });
+    imWireRail(root, data);
     root.querySelectorAll(".im-sub-head").forEach(function(head) {
-      head.addEventListener("click", function() { head.parentElement.classList.toggle("open"); });
+      head.addEventListener("click", function() {
+        var thisSub = head.parentElement;
+        var wasOpen = thisSub.classList.contains("open");
+        root.querySelectorAll(".im-sub.open").forEach(function(s) { s.classList.remove("open"); });
+        if (!wasOpen) thisSub.classList.add("open");
+      });
     });
   }
   function imShowIndex(root, data) {
+    var pdf = root.dataset.pdf;
     var cards = data.sections.map(function(sec, i) {
-      return '<button class="im-card" data-im-chapter="' + i + '">' +
-        '<span class="im-card-icon">📖</span>' +
-        '<span class="im-card-num">Capítulo ' + (i + 1) + "</span>" +
-        '<span class="im-card-title">' + imEsc(sec.title) + "</span>" +
+      var icon = IM_ICONS[sec.navTitle] || "📖";
+      return '<button class="im-card" data-im-chapter="' + i + '" style="animation-delay:' + (i * 0.04) + 's">' +
+        '<span class="im-card-icon">' + icon + '</span>' +
+        '<span class="im-card-title">' + imEsc(sec.navTitle) + "</span>" +
         (sec.subsections.length ? '<span class="im-card-meta">' + sec.subsections.length + " apartados</span>" : "") +
         "</button>";
     }).join("");
-    var bibCard = '<button class="im-card im-card-bib" data-im-bib="1">' +
-      '<span class="im-card-icon">📚</span><span class="im-card-num">Referencias</span>' +
-      '<span class="im-card-title">Bibliografía</span>' +
+    var bibCard = '<button class="im-card im-card-bib" data-im-bib="1" style="animation-delay:' + (data.sections.length * 0.04) + 's">' +
+      '<span class="im-card-icon">📖</span><span class="im-card-title">Bibliografía</span>' +
       '<span class="im-card-meta">' + data.references.length + ' referencias en APA 7ª ed.</span></button>';
-    root.innerHTML = '<div class="im-grid">' + cards + bibCard + "</div>";
+    var hero = '<div class="im-hero">' +
+      (pdf ? '<a class="im-hero-dl" href="' + imEsc(pdf) + '" download>⬇ Descargar manual en PDF</a>' : "") +
+      '<div class="im-hero-pill">Versión interactiva · prueba</div>' +
+      '<div class="im-hero-kicker">' + imEsc(data.header.kicker) + " · " + imEsc(data.header.title) + "</div>" +
+      '<h1 class="im-hero-title">' + imEsc(data.header.subtitle) + "</h1></div>";
+    root.innerHTML = hero + '<div class="im-grid">' + cards + bibCard + "</div>";
     root.querySelectorAll("[data-im-chapter]").forEach(function(btn) {
       btn.addEventListener("click", function() { imShowChapter(root, data, parseInt(btn.dataset.imChapter, 10)); });
     });

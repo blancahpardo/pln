@@ -7,17 +7,6 @@
   },
   "sections": [
     {
-      "id": "titulo-narrativo",
-      "title": "Título narrativo",
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Primer prototipo en LinguaAdapt: medir la legibilidad de un texto con Python"
-        }
-      ],
-      "subsections": []
-    },
-    {
       "id": "contexto-profesional",
       "title": "Contexto profesional",
       "blocks": [
@@ -65,7 +54,8 @@
             }
           ]
         }
-      ]
+      ],
+      "navTitle": "Contexto profesional"
     },
     {
       "id": "que-vas-a-aprender-en-esta-unidad",
@@ -91,7 +81,8 @@
           ]
         }
       ],
-      "subsections": []
+      "subsections": [],
+      "navTitle": "Qué vas a aprender"
     },
     {
       "id": "mapa-conceptual-de-la-unidad",
@@ -150,10 +141,12 @@
               "Combina operaciones numéricas",
               "Resume de forma orientativa la complejidad"
             ]
-          ]
+          ],
+          "title": "Tabla"
         }
       ],
-      "subsections": []
+      "subsections": [],
+      "navTitle": "Mapa conceptual"
     },
     {
       "id": "1-marco-teorico",
@@ -223,7 +216,8 @@
                   "Permite repetir el análisis",
                   "Olvidar que una variable puede proceder de una celda anterior"
                 ]
-              ]
+              ],
+              "title": "Piezas de un notebook"
             }
           ]
         },
@@ -309,7 +303,8 @@
                   "Combinar promedios de longitud",
                   "No mide familiaridad léxica, coherencia ni conocimiento previo"
                 ]
-              ]
+              ],
+              "title": "Qué cuenta cada unidad lingüística"
             }
           ]
         },
@@ -429,7 +424,8 @@
             }
           ]
         }
-      ]
+      ],
+      "navTitle": "Marco teórico"
     },
     {
       "id": "2-python-para-pln-del-texto-como-dato-al-primer-prototipo-de",
@@ -619,7 +615,8 @@
                   "Número de palabras",
                   "25"
                 ]
-              ]
+              ],
+              "title": "Número de palabras"
             },
             {
               "type": "p",
@@ -736,7 +733,8 @@
                   "Número de signos de puntuación",
                   "2"
                 ]
-              ]
+              ],
+              "title": "Signos de puntuación encontrados"
             },
             {
               "type": "p",
@@ -889,7 +887,8 @@
                   "re.IGNORECASE",
                   "Ignora mayúsculas y minúsculas"
                 ]
-              ]
+              ],
+              "title": "Partes del patrón regex"
             },
             {
               "type": "p",
@@ -918,7 +917,8 @@
                   "Número aproximado de sílabas",
                   "69"
                 ]
-              ]
+              ],
+              "title": "Número de sílabas"
             }
           ]
         },
@@ -956,7 +956,8 @@
                   "Promedio de palabras por oración",
                   "Aproximación a complejidad sintáctica"
                 ]
-              ]
+              ],
+              "title": "Fórmula del índice de legibilidad"
             },
             {
               "type": "p",
@@ -993,7 +994,8 @@
                   "Índice aproximado",
                   "15.26"
                 ]
-              ]
+              ],
+              "title": "Resultado del índice de legibilidad"
             },
             {
               "type": "p",
@@ -1069,7 +1071,8 @@
             }
           ]
         }
-      ]
+      ],
+      "navTitle": "Python para PLN"
     },
     {
       "id": "errores-frecuentes-de-aprendizaje",
@@ -1101,7 +1104,8 @@
           ]
         }
       ],
-      "subsections": []
+      "subsections": [],
+      "navTitle": "Errores frecuentes"
     },
     {
       "id": "sintesis-final",
@@ -1120,7 +1124,8 @@
           "text": "El prototipo de legibilidad no pretende sustituir una evaluación experta de accesibilidad. Sirve para comprender cómo se construye una métrica, por qué hay que documentar sus supuestos y cómo Python puede ayudar a comparar textos de forma inicial y reproducible."
         }
       ],
-      "subsections": []
+      "subsections": [],
+      "navTitle": "Síntesis"
     },
     {
       "id": "cierre-narrativo",
@@ -1139,65 +1144,66 @@
           "text": "Python no lee como una lingüista. Pero una lingüista que sabe Python puede enseñarle a observar patrones, medirlos y convertirlos en preguntas mejores."
         }
       ],
-      "subsections": []
+      "subsections": [],
+      "navTitle": "Cierre narrativo"
     }
   ],
   "references": [
     {
       "key": "biber1998",
-      "text": "Biber, D., Conrad, S. y Reppen, R. (1998). Corpus linguistics: Investigating language structure and use. Cambridge University Press."
+      "text": "Biber, D., Conrad, S. y Reppen, R. (1998). *Corpus linguistics: Investigating language structure and use*. Cambridge University Press."
     },
     {
       "key": "bird2009",
-      "text": "Bird, S., Klein, E. y Loper, E. (2009). Natural language processing with Python. O'Reilly Media. https://www.nltk.org/book/"
+      "text": "Bird, S., Klein, E. y Loper, E. (2009). *Natural language processing with Python*. O'Reilly Media. https://www.nltk.org/book/"
     },
     {
       "key": "fernandezhuerta1959",
-      "text": "Fernández Huerta, J. (1959). Medidas sencillas de lecturabilidad. Consigna, 214, 29-32."
+      "text": "Fernández Huerta, J. (1959). Medidas sencillas de lecturabilidad. *Consigna, 214*, 29-32."
     },
     {
       "key": "flesch1948",
-      "text": "Flesch, R. (1948). A new readability yardstick. Journal of Applied Psychology, 32(3), 221-233. https://doi.org/10.1037/h0057532"
+      "text": "Flesch, R. (1948). A new readability yardstick. *Journal of Applied Psychology, 32*(3), 221-233. https://doi.org/10.1037/h0057532"
     },
     {
       "key": "google2026",
-      "text": "Google. (2026). Colaboratory: Frequently asked questions. https://research.google.com/colaboratory/faq.html"
+      "text": "Google. (2026). *Colaboratory: Frequently asked questions*. https://research.google.com/colaboratory/faq.html"
     },
     {
       "key": "gries2009",
-      "text": "Gries, S. T. (2009). Quantitative corpus linguistics with R: A practical introduction. Routledge."
+      "text": "Gries, S. T. (2009). *Quantitative corpus linguistics with R: A practical introduction*. Routledge."
     },
     {
       "key": "jupyter2026",
-      "text": "Jupyter Notebook Team. (2026). Jupyter Notebook documentation. https://jupyter-notebook.readthedocs.io/"
+      "text": "Jupyter Notebook Team. (2026). *Jupyter Notebook documentation*. https://jupyter-notebook.readthedocs.io/"
     },
     {
       "key": "jurafsky2026",
-      "text": "Jurafsky, D. y Martin, J. H. (2026). Speech and language processing (3rd ed. draft). Stanford University. https://web.stanford.edu/~jurafsky/slp3/"
+      "text": "Jurafsky, D. y Martin, J. H. (2026). *Speech and language processing* (3rd ed. draft). Stanford University. https://web.stanford.edu/~jurafsky/slp3/"
     },
     {
       "key": "kluyver2016",
-      "text": "Kluyver, T., Ragan-Kelley, B., Pérez, F., Granger, B., Bussonnier, M., Frederic, J., Kelley, K., Hamrick, J., Grout, J., Corlay, S., Ivanov, P., Avila, D., Abdalla, S., Willing, C. y Jupyter Development Team. (2016). Jupyter Notebooks: A publishing format for reproducible computational workflows. En F. Loizides y B. Schmidt (Eds.), Positioning and power in academic publishing: Players, agents and agendas (pp. 87-90). IOS Press. https://doi.org/10.3233/978-1-61499-649-1-87"
+      "text": "Kluyver, T., Ragan-Kelley, B., Pérez, F., Granger, B., Bussonnier, M., Frederic, J., Kelley, K., Hamrick, J., Grout, J., Corlay, S., Ivanov, P., Avila, D., Abdalla, S., Willing, C. y Jupyter Development Team. (2016). Jupyter Notebooks: A publishing format for reproducible computational workflows. En F. Loizides y B. Schmidt (Eds.), *Positioning and power in academic publishing: Players, agents and agendas* (pp. 87-90). IOS Press. https://doi.org/10.3233/978-1-61499-649-1-87"
     },
     {
       "key": "psf2026a",
-      "text": "Python Software Foundation. (2026a). Built-in functions. Python 3.14 documentation. https://docs.python.org/3/library/functions.html"
+      "text": "Python Software Foundation. (2026a). Built-in functions. *Python 3.14 documentation*. https://docs.python.org/3/library/functions.html"
     },
     {
       "key": "psf2026b",
-      "text": "Python Software Foundation. (2026b). Built-in types: Text sequence type str. Python 3.14 documentation. https://docs.python.org/3/library/stdtypes.html"
+      "text": "Python Software Foundation. (2026b). Built-in types: Text sequence type str. *Python 3.14 documentation*. https://docs.python.org/3/library/stdtypes.html"
     },
     {
       "key": "psf2026c",
-      "text": "Python Software Foundation. (2026c). string: Common string operations. Python 3.14 documentation. https://docs.python.org/3/library/string.html"
+      "text": "Python Software Foundation. (2026c). string: Common string operations. *Python 3.14 documentation*. https://docs.python.org/3/library/string.html"
     },
     {
       "key": "psf2026d",
-      "text": "Python Software Foundation. (2026d). re: Regular expression operations. Python 3.14 documentation. https://docs.python.org/3/library/re.html"
+      "text": "Python Software Foundation. (2026d). re: Regular expression operations. *Python 3.14 documentation*. https://docs.python.org/3/library/re.html"
     },
     {
       "key": "szigriszt1993",
-      "text": "Szigriszt Pazos, F. (1993). Sistemas predictivos de legibilidad del mensaje escrito: Fórmula de perspicuidad [Tesis doctoral, Universidad Complutense de Madrid]. https://produccioncientifica.ucm.es/documentos/5d1df5fb29995204f765de7f"
+      "text": "Szigriszt Pazos, F. (1993). *Sistemas predictivos de legibilidad del mensaje escrito: Fórmula de perspicuidad* [Tesis doctoral, Universidad Complutense de Madrid]. https://produccioncientifica.ucm.es/documentos/5d1df5fb29995204f765de7f"
     }
   ]
 }
