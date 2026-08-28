@@ -174,7 +174,7 @@ function viewDesc(v, tema) { return tema.views[v].desc || DESCS[v] || ''; }
 
 function buildHub(tema) {
   const buttons = existingViews(tema).map(v => {
-    return `<button class="hub-btn" data-view="${v}" data-type="${v}">
+    return `<button class="hub-btn" data-view="${v}" data-type="${v}" style="display:none">
       <span class="teacher-hint" data-hint="${v}"></span>
       <span class="hub-icon">${viewIcon(v, tema)}</span>
       <span class="hub-label">${esc(viewLabel(v, tema))}</span>
@@ -658,7 +658,7 @@ function buildTopicHtml(tema) {
 }
 
 function buildIndexHtml(temas) {
-  const buttons = temas.map(t => `<a class="tema-btn" data-tema="${t.dir}" href="${t.dir}/index.html">
+  const buttons = temas.map(t => `<a class="tema-btn" data-tema="${t.dir}" href="${t.dir}/index.html" style="display:none">
     <span class="teacher-hint" data-hint="${t.dir}"></span>
     <span class="tema-num">${esc(t.numLabel)}</span>
     <span class="tema-title">${esc(t.titleShort)}</span>
