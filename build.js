@@ -4,7 +4,7 @@ const crypto = require('crypto');
 
 const ROOT = __dirname;
 const REPO = 'blancahpardo/pln';
-const TEACHER_PASSWORD = 'profe_llavemaestra27';
+const TEACHER_PASSWORD = 'profe_27';
 const STUDENT_PASSWORD = 'caracola';
 
 function sha256(text) {
