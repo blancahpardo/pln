@@ -1,7 +1,7 @@
 {
   "inicio": true,
   "t0a": true,
-  "t0b": true,
+  "t0b": false,
   "t1": true,
   "t2": true,
   "t3": false,
