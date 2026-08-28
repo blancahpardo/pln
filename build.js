@@ -37,6 +37,17 @@ a { color: inherit; }
 const CSS_INDEX = `
 ${CSS_BASE}
 body { background: var(--azul); min-height:100vh; display:flex; flex-direction:column; }
+#gate { position:fixed; inset:0; background:var(--azul); display:flex; align-items:center; justify-content:center; padding:24px; z-index:999; }
+#gate .box { max-width:380px; width:100%; text-align:center; }
+#gate .kicker { color:var(--amar); font-size:12px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:10px; }
+#gate h1 { color:#fff; font-size:26px; margin:0 0 10px; }
+#gate p { color:var(--humo); font-size:14px; margin:0 0 26px; }
+#gate input { width:100%; padding:13px 16px; border-radius:8px; border:none; font-size:15px; font-family:Arial,Helvetica,sans-serif; margin-bottom:14px; outline:2px solid transparent; }
+#gate input:focus { outline:2px solid var(--amar); }
+#gate button.submit { width:100%; padding:13px 16px; border-radius:8px; border:none; background:var(--amar); color:var(--azul-d); font-size:15px; font-weight:bold; font-family:Arial,Helvetica,sans-serif; cursor:pointer; }
+#gate button.submit:hover { filter:brightness(1.06); }
+#gate .error { color:#FFB3B3; font-size:13px; margin-top:12px; min-height:18px; }
+#page { display:none; min-height:100vh; flex:1; flex-direction:column; }
 header { padding: 60px 6vw 20px; text-align:center; }
 header .kicker { color: var(--amar); font-size:12px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:10px; }
 header h1 { color:#fff; font-size:clamp(26px,4.2vw,40px); margin:0 0 6px; }
@@ -375,7 +386,7 @@ function buildTopicHtml(tema) {
   var PAYLOAD = "${payloadB64}";
   var QUIZ_MANUAL = ${quizManual};
   var QUIZ_CUADERNO = ${quizCuaderno};
-  var SESSION_KEY = "${tema.dir}_unlocked";
+  var SESSION_KEY = "pln_unlocked";
   var REPO = "${REPO}";
   var LOCAL_CONFIG = "config.json";
   var GH_CONFIG_PATH = "${tema.dir}/config.json";
@@ -656,6 +667,7 @@ function buildIndexHtml(temas) {
   const toggles = temas.map(t =>
     `<li><input type="checkbox" id="chk-tema-${t.dir}" data-tema="${t.dir}"><label for="chk-tema-${t.dir}">${esc(t.numLabel)} · ${esc(t.titleShort)}</label></li>`
   ).join('\n      ');
+  const studentHash = sha256(STUDENT_PASSWORD);
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -665,6 +677,19 @@ function buildIndexHtml(temas) {
 <style>${CSS_INDEX}</style>
 </head>
 <body>
+
+<div id="gate">
+  <div class="box">
+    <div class="kicker">Programación orientada a PLN</div>
+    <h1>PLN</h1>
+    <p>Contenido protegido. Introduce la contraseña facilitada en clase.</p>
+    <input type="password" id="pw" placeholder="Contraseña" autofocus>
+    <button class="submit" id="enter">Acceder</button>
+    <div class="error" id="err"></div>
+  </div>
+</div>
+
+<div id="page">
 <header>
   <div class="kicker">Programación orientada a PLN</div>
   <h1>Materiales de la asignatura</h1>
@@ -692,9 +717,13 @@ function buildIndexHtml(temas) {
 <footer>
   ${copyrightFooter()}
 </footer>
+</div>
+
 <script>
 (function() {
+  var HASH = "${studentHash}";
   var TEACHER_HASH = "${teacherHash}";
+  var SESSION_KEY = "pln_unlocked";
   var REPO = "${REPO}";
   var LOCAL_CONFIG = "config.json";
   var GH_CONFIG_PATH = "config.json";
@@ -825,16 +854,44 @@ function buildIndexHtml(temas) {
     }
   }
 
+  function reveal(teacherMode) {
+    isTeacher = teacherMode;
+    document.getElementById("gate").style.display = "none";
+    document.getElementById("page").style.display = "flex";
+    if (teacherMode) {
+      initTeacherPanel();
+    } else {
+      fetchConfig().then(applyVisibility).catch(function() {});
+    }
+    try { sessionStorage.setItem(SESSION_KEY, teacherMode ? "teacher" : "1"); } catch (e) {}
+  }
+
+  function tryUnlock() {
+    var val = document.getElementById("pw").value;
+    sha256Hex(val).then(function(hex) {
+      if (hex === TEACHER_HASH) { reveal(true); return; }
+      if (hex === HASH) { reveal(false); return; }
+      document.getElementById("err").textContent = "Contraseña incorrecta.";
+    });
+  }
+
+  document.getElementById("enter").addEventListener("click", tryUnlock);
+  document.getElementById("pw").addEventListener("keydown", function(e) { if (e.key === "Enter") tryUnlock(); });
+
   document.getElementById("teacher-toggle-link").addEventListener("click", function() {
     var val = prompt("Contraseña de profesora:");
     if (val === null) return;
     sha256Hex(val).then(function(hex) {
-      if (hex === TEACHER_HASH) { isTeacher = true; initTeacherPanel(); }
+      if (hex === TEACHER_HASH) reveal(true);
       else alert("Contraseña incorrecta.");
     });
   });
 
-  fetchConfig().then(applyVisibility).catch(function() {});
+  try {
+    var saved = sessionStorage.getItem(SESSION_KEY);
+    if (saved === "teacher") reveal(true);
+    else if (saved === "1") reveal(false);
+  } catch (e) {}
 })();
 </script>
 </body>
