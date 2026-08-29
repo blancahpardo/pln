@@ -90,9 +90,9 @@
       "blocks": [
         {
           "type": "image",
+          "caption": "Infografía generada con NotebookLM a partir del manual teórico elaborado por la Dr.ª Blanca Hernández Pardo.",
           "src": "img/infografia_mapa_conceptual.jpg",
-          "alt": "Infografía: flujo de trabajo del prototipo de legibilidad, de Google Colab al índice de legibilidad",
-          "caption": "Infografía generada con NotebookLM a partir de este mismo documento."
+          "alt": "Infografía: flujo de trabajo del prototipo de legibilidad, de Google Colab al índice de legibilidad"
         },
         {
           "type": "table",

@@ -127,14 +127,19 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .im-table-bare tr:nth-child(even) td, .im-modal tr:nth-child(even) td { background:var(--claro); }
 .im-modal-overlay { position:fixed; inset:0; background:rgba(10,20,26,.55); display:flex; align-items:center; justify-content:center; padding:5vh 4vw; z-index:500; animation:imFadeIn .15s ease; }
 .im-modal { background:#fff; border-radius:14px; max-width:760px; width:100%; max-height:88vh; display:flex; flex-direction:column; box-shadow:0 12px 40px rgba(0,0,0,.3); }
+.im-modal.im-modal-wide { max-width:min(1500px, 96vw); }
+.im-modal-body img { display:block; width:100%; border-radius:8px; }
 .im-modal-head { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid #E3E7E9; flex:none; }
 .im-modal-head h4 { margin:0; color:var(--azul); font-size:15.5px; }
 .im-modal-close { background:var(--claro); border:none; width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:14px; color:var(--gris); flex:none; }
 .im-modal-close:hover { background:#E3E7E9; }
 .im-modal-body { overflow:auto; padding:16px 20px 20px; }
 .im-figure { margin:6px 0 20px; }
-.im-figure-img { display:block; width:100%; border-radius:10px; box-shadow:0 4px 16px rgba(159,177,186,.35); }
+.im-figure-img { display:block; width:100%; border-radius:10px; box-shadow:0 4px 16px rgba(159,177,186,.35); cursor:zoom-in; }
 .im-figure-caption { font-size:12px; color:var(--humo); text-align:center; margin-top:8px; font-style:italic; }
+@media (min-width:860px) {
+  .im-figure { width:min(1300px, 92vw); margin-left:calc(50% - min(650px, 46vw)); margin-right:calc(50% - min(650px, 46vw)); }
+}
 .im-errorlist { list-style:none; padding:0; margin:0 0 6px; }
 .im-errorlist li { background:var(--claro); border-left:3px solid var(--rojo); border-radius:0 8px 8px 0; padding:12px 16px; margin-bottom:10px; }
 .im-errorlist .im-error-term { display:block; font-weight:bold; color:var(--azul); font-size:14px; margin-bottom:4px; }
@@ -345,10 +350,10 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
     data.references.forEach(function(r) { m[r.key] = r.text; });
     return m;
   }
-  function imOpenModal(title, bodyHtml) {
+  function imOpenModal(title, bodyHtml, wide) {
     var overlay = document.createElement("div");
     overlay.className = "im-modal-overlay";
-    overlay.innerHTML = '<div class="im-modal"><div class="im-modal-head"><h4>' + imEsc(title) +
+    overlay.innerHTML = '<div class="im-modal' + (wide ? " im-modal-wide" : "") + '"><div class="im-modal-head"><h4>' + imEsc(title) +
       '</h4><button class="im-modal-close" aria-label="Cerrar">✕</button></div><div class="im-modal-body">' + bodyHtml + "</div></div>";
     document.body.appendChild(overlay);
     function close() { overlay.remove(); document.removeEventListener("keydown", onKey); }
@@ -390,6 +395,11 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
     return html;
   }
   function imWireCommon(root, data) {
+    root.querySelectorAll(".im-figure-img").forEach(function(img) {
+      img.addEventListener("click", function() {
+        imOpenModal(img.alt || "Infografía", '<img src="' + img.src + '" alt="' + img.alt.replace(/"/g, "&quot;") + '">', true);
+      });
+    });
     root.querySelectorAll("[data-im-code]").forEach(function(btn) {
       btn.addEventListener("click", function() {
         var box = document.getElementById("im-code-" + btn.dataset.imCode);

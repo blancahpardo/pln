@@ -288,21 +288,26 @@ for sec in sections:
 
 # Infographics generated with NotebookLM from this same source (scoped to
 # Teoría_PLN1.docx only, verified against the document's real figures before
-# accepting) -> inserted as 'image' blocks at the front of the section they
-# illustrate, image files live in t1/img/. Add new ones here as they're
-# generated; keep the underlying table/content block too so no information
-# from the manual is lost, only made more visual.
+# accepting) -> inserted as 'image' blocks at the front of the section/
+# subsection they illustrate, image files live in t1/img/. Add new ones here
+# as they're generated; keep the underlying table/content block too so no
+# information from the manual is lost, only made more visual.
+IMAGE_CAPTION = 'Infografía generada con NotebookLM a partir del manual teórico elaborado por la Dr.ª Blanca Hernández Pardo.'
+
+# key: section title, or (section title, subsection title) for a subsection
 IMAGE_BLOCKS = {
-    'Mapa conceptual de la unidad': {
-        'type': 'image', 'src': 'img/infografia_mapa_conceptual.jpg',
+    'Mapa conceptual de la unidad': [{
+        'src': 'img/infografia_mapa_conceptual.jpg',
         'alt': 'Infografía: flujo de trabajo del prototipo de legibilidad, de Google Colab al índice de legibilidad',
-        'caption': 'Infografía generada con NotebookLM a partir de este mismo documento.'
-    },
+    }],
 }
+
 for sec in sections:
-    img = IMAGE_BLOCKS.get(sec['title'])
-    if img:
-        sec['blocks'].insert(0, dict(img))
+    for img in IMAGE_BLOCKS.get(sec['title'], []):
+        sec['blocks'].insert(0, {'type': 'image', 'caption': IMAGE_CAPTION, **img})
+    for sub in sec['subsections']:
+        for img in IMAGE_BLOCKS.get((sec['title'], sub['title']), []):
+            sub['blocks'].insert(0, {'type': 'image', 'caption': IMAGE_CAPTION, **img})
 
 data = {'header': header, 'sections': sections, 'references': refs_out}
 with open(OUT, 'w', encoding='utf-8') as f:
