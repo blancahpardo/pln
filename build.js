@@ -186,14 +186,14 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .im-table-bare td, .im-modal td { padding:9px 12px; border-bottom:1px solid #E3E7E9; color:var(--gris); }
 .im-table-bare tr:nth-child(even) td, .im-modal tr:nth-child(even) td { background:var(--claro); }
 .im-modal-overlay { position:fixed; inset:0; background:rgba(10,20,26,.55); display:flex; align-items:center; justify-content:center; padding:5vh 4vw; z-index:500; animation:imFadeIn .15s ease; }
-.im-modal { background:#fff; border-radius:14px; max-width:760px; width:100%; max-height:88vh; display:flex; flex-direction:column; box-shadow:0 12px 40px rgba(0,0,0,.3); }
+.im-modal { background:#fff; border-radius:14px; max-width:760px; width:100%; max-height:90vh; display:flex; flex-direction:column; box-shadow:0 12px 40px rgba(0,0,0,.3); }
 .im-modal.im-modal-wide { max-width:min(1500px, 96vw); }
-.im-modal-body img { display:block; width:100%; border-radius:8px; }
+.im-modal-body img { display:block; max-width:100%; max-height:72vh; width:auto; height:auto; margin:0 auto; border-radius:8px; object-fit:contain; }
 .im-modal-head { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid #E3E7E9; flex:none; }
 .im-modal-head h4 { margin:0; color:var(--azul); font-size:15.5px; }
 .im-modal-close { background:var(--claro); border:none; width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:14px; color:var(--gris); flex:none; }
 .im-modal-close:hover { background:#E3E7E9; }
-.im-modal-body { overflow:auto; padding:16px 20px 20px; }
+.im-modal-body { flex:1; min-height:0; overflow:auto; padding:16px 20px 20px; text-align:center; }
 .im-figure { margin:6px 0 20px; }
 .im-figure-img { display:block; width:100%; border-radius:10px; box-shadow:0 4px 16px rgba(159,177,186,.35); cursor:zoom-in; }
 .im-figure-caption { font-size:12px; color:var(--humo); text-align:center; margin-top:8px; font-style:italic; }
@@ -669,8 +669,8 @@ function buildTopicHtml(tema) {
   }
   function imTableHtml(b) {
     var head = b.rows[0], body = b.rows.slice(1);
-    return "<table><thead><tr>" + head.map(function(h) { return "<th>" + imEsc(h) + "</th>"; }).join("") + "</tr></thead><tbody>" +
-      body.map(function(r) { return "<tr>" + r.map(function(c) { return "<td>" + imEsc(c) + "</td>"; }).join("") + "</tr>"; }).join("") +
+    return "<table><thead><tr>" + head.map(function(h) { return "<th>" + imFormatInline(h) + "</th>"; }).join("") + "</tr></thead><tbody>" +
+      body.map(function(r) { return "<tr>" + r.map(function(c) { return "<td>" + imFormatInline(c) + "</td>"; }).join("") + "</tr>"; }).join("") +
       "</tbody></table>";
   }
   function imRenderTable(b, key, bare) {
@@ -798,11 +798,11 @@ function buildTopicHtml(tema) {
     var sec = data.sections[idx];
     var icon = IM_ICONS[sec.navTitle] || "📖";
     var html = imRailHtml(data, idx);
-    html += '<div class="im-chapter"><h3 class="im-chapter-title">' + icon + " " + imEsc(sec.title) + "</h3>";
+    html += '<div class="im-chapter"><h3 class="im-chapter-title">' + icon + " " + imFormatInline(sec.title) + "</h3>";
     html += imRenderBlocks(sec.blocks, idx + "-i");
     sec.subsections.forEach(function(sub, j) {
       html += '<div class="im-sub" data-im-sub="' + j + '">' +
-        '<button class="im-sub-head"><span class="im-sub-title">' + imEsc(sub.title) + '</span><span class="im-sub-arrow">▶</span></button>' +
+        '<button class="im-sub-head"><span class="im-sub-title">' + imFormatInline(sub.title) + '</span><span class="im-sub-arrow">▶</span></button>' +
         '<div class="im-sub-body">' + imRenderBlocks(sub.blocks, idx + "-" + j) + "</div></div>";
     });
     html += "</div>";

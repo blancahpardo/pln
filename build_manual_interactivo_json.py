@@ -17,6 +17,26 @@ def iter_block_items(parent):
         elif child.tag == qn('w:tbl'):
             yield Table(child, parent)
 
+def runs_to_markup(paragraph):
+    """Rebuild paragraph text from its runs, wrapping any run set in Courier
+    New (the docx's own inline-code styling, e.g. `len()` mentioned in prose)
+    in backticks so the client renders it as monospace code."""
+    parts, buf, buf_code = [], '', None
+    for r in paragraph.runs:
+        is_code = (r.font.name == 'Courier New')
+        if buf_code is None:
+            buf_code = is_code
+        if is_code != buf_code:
+            parts.append((buf_code, buf))
+            buf, buf_code = '', is_code
+        buf += r.text
+    if buf:
+        parts.append((buf_code, buf))
+    return ''.join(('`' + t + '`') if code else t for code, t in parts)
+
+def cell_markup(cell):
+    return '\n'.join(runs_to_markup(p) for p in cell.paragraphs)
+
 def slug(s):
     s = s.lower()
     s = re.sub(r'[áàä]', 'a', s); s = re.sub(r'[éèë]', 'e', s)
@@ -34,7 +54,7 @@ for it in items:
         style = it.style.name
         if style.startswith('toc'):
             continue
-        stream.append(('p', style, it.text))
+        stream.append(('p', style, runs_to_markup(it)))
     else:
         cell = it.rows[0].cells[0]
         tcPr = cell._tc.find(qn('w:tcPr'))
@@ -43,7 +63,7 @@ for it in items:
         if fill == 'F2F4F5':
             stream.append(('code', None, cell.text))
         else:
-            rows = [[c.text for c in r.cells] for r in it.rows]
+            rows = [[cell_markup(c) for c in r.cells] for r in it.rows]
             stream.append(('table', None, rows))
 
 # document header block: first few normal paragraphs before "Comillas TOC Title"
