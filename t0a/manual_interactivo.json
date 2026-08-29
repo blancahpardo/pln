@@ -1,0 +1,1262 @@
+{
+  "header": {
+    "kicker": "Tema 0.",
+    "title": "Repaso de Python para lingüistas",
+    "subtitle": "Primer encargo en LexiData: preparar textos reales para análisis lingüístico computacional",
+    "meta": "Material teórico | Programación para PLN | Universidad Pontificia Comillas"
+  },
+  "sections": [
+    {
+      "id": "contexto-profesional",
+      "title": "Contexto profesional",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Imagina que acabas de incorporarte como estudiante en prácticas a LexiData, una pequeña consultora de lingüística computacional. El equipo trabaja con universidades, editoriales, medios de comunicación y departamentos de comunicación corporativa. Su labor consiste en transformar textos humanos en datos que puedan analizarse: contar palabras, detectar patrones, limpiar errores, comparar versiones, preparar corpus y construir pequeños prototipos de PLN."
+        },
+        {
+          "type": "p",
+          "text": "Tu primer encargo no es crear una inteligencia artificial compleja. Es algo más importante: aprender a manejar Python como herramienta de trabajo lingüístico. Antes de analizar millones de palabras, hay que saber representar un texto, guardarlo en variables, dividirlo en tokens, recorrer colecciones, tomar decisiones con condiciónales y escribir pequeñas funciones reutilizables."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Contexto profesional"
+    },
+    {
+      "id": "1-que-es-python-y-por-que-le-interesa-a-una-linguista",
+      "title": "1. Qué es Python y por qué le interesa a una lingüista",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Python es un lenguaje de programación. Un lenguaje de programación permite dar instrucciones a un ordenador de forma precisa. En lingüística computacional usamos Python porque:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "es legible y relativamente cercano al lenguaje humano;",
+            "funciona en distintos sistemas operativos;",
+            "tiene muchas bibliotecas para trabajar con texto;",
+            "se usa mucho en PLN, ciencia de datos, investigación y docencia;",
+            "permite pasar de tareas pequeñas, como contar palabras, a proyectos más grandes, como clasificar documentos."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Para una lingüista, Python no sustituye el análisis lingüístico. Lo amplía. Permite comprobar hipótesis sobre textos, automatizar tareas repetitivas y trabajar con corpus que serían imposibles de revisar manualmente."
+        },
+        {
+          "type": "p",
+          "text": "Ejemplo profesional:"
+        },
+        {
+          "type": "code",
+          "code": "texto = \"La lengua cambia cuando cambia la comunidad que la usa.\"\nprint(texto)"
+        },
+        {
+          "type": "p",
+          "text": "Aquí Python guarda una frase y la muestra en pantalla. Parece sencillo, pero es el primer paso para cualquier tarea de PLN."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Qué es Python"
+    },
+    {
+      "id": "2-scripts-y-notebooks",
+      "title": "2. Scripts y notebooks",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "En Python podemos trabajar principalmente de dos formas."
+        }
+      ],
+      "subsections": [
+        {
+          "id": "2-1-scripts",
+          "title": "2.1. Scripts",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Un script o guion es un archivo de texto con extensión `.py`. Contiene instrucciones Python que se ejecutan normalmente de principio a fin."
+            },
+            {
+              "type": "p",
+              "text": "Ejemplo:"
+            },
+            {
+              "type": "code",
+              "code": "print(\"Análisis de corpus iniciado\")"
+            },
+            {
+              "type": "p",
+              "text": "En un entorno profesional, los scripts se usan cuando queremos automatizar una tarea que se repetirá muchas veces: limpiar cien archivos, contar frecuencias en un corpus o generar informes."
+            }
+          ]
+        },
+        {
+          "id": "2-2-notebooks",
+          "title": "2.2. Notebooks",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Un notebook permite combinar celdas de código y celdas de texto. Es muy útil para aprender, experimentar y explicar un proceso paso a paso."
+            },
+            {
+              "type": "p",
+              "text": "En un notebook podemos escribir una instrucción:"
+            },
+            {
+              "type": "code",
+              "code": "1 + 1"
+            },
+            {
+              "type": "p",
+              "text": "Y ver inmediatamente el resultado."
+            },
+            {
+              "type": "p",
+              "text": "También podemos mezclar código con explicaciones teóricas. Por eso los notebooks son frecuentes en docencia, investigación exploratoria y prototipado."
+            },
+            {
+              "type": "p",
+              "text": "Atajos habituales:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "`Shift + Enter`: ejecuta la celda y pasa a la siguiente.",
+                "`Ctrl + Enter`: ejecuta la celda sin moverse.",
+                "`Alt + Enter`: ejecuta la celda y crea una nueva debajo."
+              ]
+            }
+          ]
+        }
+      ],
+      "navTitle": "Scripts y notebooks"
+    },
+    {
+      "id": "3-expresiones-comentarios-y-salida-por-pantalla",
+      "title": "3. Expresiones, comentarios y salida por pantalla",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Una expresión es una instrucción que Python puede evaluar para obtener un resultado."
+        },
+        {
+          "type": "code",
+          "code": "1"
+        },
+        {
+          "type": "code",
+          "code": "1 + 1"
+        },
+        {
+          "type": "p",
+          "text": "Los comentarios empiezan con `#`. Python los ignora, pero ayudan a que una persona entienda el código."
+        },
+        {
+          "type": "code",
+          "code": "# Esto es un comentario\n# Sirve para explicar que hace el código\nprint(3 - 2)"
+        },
+        {
+          "type": "p",
+          "text": "La función `print()` muestra información en pantalla:"
+        },
+        {
+          "type": "code",
+          "code": "print(\"Hola, equipo de LexiData\")"
+        },
+        {
+          "type": "p",
+          "text": "En notebooks hay una diferencia importante:"
+        },
+        {
+          "type": "code",
+          "code": "\"Hola\""
+        },
+        {
+          "type": "p",
+          "text": "devuelve la representación del objeto, mientras que:"
+        },
+        {
+          "type": "code",
+          "code": "print(\"Hola\")"
+        },
+        {
+          "type": "p",
+          "text": "muestra el texto como queremos leerlo."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Expresiones y comentarios"
+    },
+    {
+      "id": "4-operadores-basicos",
+      "title": "4. Operadores básicos",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Python puede funcionar como una calculadora. Los operadores más básicos son:"
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "Operador",
+              "Significado",
+              "Ejemplo",
+              "Resultado"
+            ],
+            [
+              "+",
+              "suma",
+              "2 + 3",
+              "5"
+            ],
+            [
+              "-",
+              "resta",
+              "5 - 2",
+              "3"
+            ],
+            [
+              "*",
+              "multiplicación",
+              "2 * 3",
+              "6"
+            ],
+            [
+              "/",
+              "división decimal",
+              "4 / 3",
+              "1.333..."
+            ],
+            [
+              "//",
+              "división entera",
+              "4 // 3",
+              "1"
+            ],
+            [
+              "%",
+              "resto o módulo",
+              "16 % 12",
+              "4"
+            ],
+            [
+              "**",
+              "potencia",
+              "2 ** 3",
+              "8"
+            ]
+          ],
+          "title": "Tabla de operadores básicos"
+        },
+        {
+          "type": "p",
+          "text": "El operador `%` es muy útil para saber si un número es par:"
+        },
+        {
+          "type": "code",
+          "code": "n = 8\nn % 2 == 0"
+        },
+        {
+          "type": "p",
+          "text": "Si el resto de dividir entre 2 es 0, el número es par."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Operadores básicos"
+    },
+    {
+      "id": "5-strings-representar-texto-en-python",
+      "title": "5. Strings: representar texto en Python",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "En PLN casi todo empieza con texto. En Python, el texto se representa mediante strings o cadenas de caracteres."
+        },
+        {
+          "type": "code",
+          "code": "\"Hola mundo\""
+        },
+        {
+          "type": "code",
+          "code": "'Hola mundo'"
+        },
+        {
+          "type": "p",
+          "text": "Podemos usar comillas dobles o simples. Lo importante es abrir y cerrar con el mismo tipo."
+        }
+      ],
+      "subsections": [
+        {
+          "id": "5-1-comillas-dentro-de-strings",
+          "title": "5.1. Comillas dentro de strings",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Si queremos incluir comillas dentro de un texto, podemos escapar las comillas internas con `\\`."
+            },
+            {
+              "type": "code",
+              "code": "frase = \"El titular decía que \\\"la lengua también innova\\\".\"\nprint(frase)"
+            },
+            {
+              "type": "p",
+              "text": "Escapar un carácter significa quitarle su función especial para que Python lo interprete como parte del texto."
+            }
+          ]
+        },
+        {
+          "id": "5-2-saltos-de-linea-y-tabulaciones",
+          "title": "5.2. Saltos de línea y tabulaciones",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Algunos caracteres no se escriben directamente dentro de una línea. Se representan con secuencias de escape:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "`\\n`: salto de línea.",
+                "`\\t`: tabulacion."
+              ]
+            },
+            {
+              "type": "code",
+              "code": "print(\"palabra\\tcategoría\\ncasa\\tsustantivo\\ncorrer\\tverbo\")"
+            },
+            {
+              "type": "p",
+              "text": "Esto produce una salida parecida a una pequeña tabla."
+            }
+          ]
+        },
+        {
+          "id": "5-3-comillas-triples",
+          "title": "5.3. Comillas triples",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Cuando queremos escribir textos largos con varios renglones, usamos comillas triples:"
+            },
+            {
+              "type": "code",
+              "code": "texto = \"\"\"Este es el primer párrafo.\nEste es el segundo.\nEste es el tercero.\"\"\"\n\nprint(texto)"
+            },
+            {
+              "type": "p",
+              "text": "Este recurso es muy útil para guardar fragmentos de corpus, enunciados, transcripciones o ejemplos largos."
+            }
+          ]
+        }
+      ],
+      "navTitle": "Strings"
+    },
+    {
+      "id": "6-variables-y-objetos",
+      "title": "6. Variables y objetos",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Una variable es un nombre que usamos para guardar un objeto."
+        },
+        {
+          "type": "code",
+          "code": "texto = \"Barriga llena, corazón contento\""
+        },
+        {
+          "type": "p",
+          "text": "Ahora no tenemos que repetir la frase completa. Podemos usar el nombre `texto`."
+        },
+        {
+          "type": "code",
+          "code": "print(texto)"
+        },
+        {
+          "type": "p",
+          "text": "En Python, casi todo es un objeto: números, strings, funciones, listas, diccionarios. Un objeto es una entidad que Python puede manipular."
+        }
+      ],
+      "subsections": [
+        {
+          "id": "6-1-nombres-de-variables",
+          "title": "6.1. Nombres de variables",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Buenas prácticas:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "usar nombres claros;",
+                "evitar espacios;",
+                "usar guiones bajos si hace falta;",
+                "evitar tildes y caracteres problematicos;",
+                "elegir nombres relacionados con el contenido."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Mejor:"
+            },
+            {
+              "type": "code",
+              "code": "frase_original = \"La lengua cambia.\""
+            },
+            {
+              "type": "p",
+              "text": "Peor:"
+            },
+            {
+              "type": "code",
+              "code": "x = \"La lengua cambia.\""
+            },
+            {
+              "type": "p",
+              "text": "`x` funciona, pero no explica nada. En proyectos lingüísticos, la claridad importa."
+            }
+          ]
+        },
+        {
+          "id": "6-2-identidad-y-valor-is-frente-a",
+          "title": "6.2. Identidad y valor: `is` frente a `==`",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Dos variables pueden apuntar al mismo objeto:"
+            },
+            {
+              "type": "code",
+              "code": "cadena = \"manzana\\tpera\\nnaranja\\tplatano\"\notro_nombre = cadena\ncadena is otro_nombre"
+            },
+            {
+              "type": "p",
+              "text": "`is` pregunta si dos variables se refieren exactamente al mismo objeto."
+            },
+            {
+              "type": "p",
+              "text": "En cambio, `==` pregunta si dos objetos tienen el mismo valor:"
+            },
+            {
+              "type": "code",
+              "code": "cadena2 = \"manzana\\tpera\\nnaranja\\tplatano\"\ncadena == cadena2"
+            },
+            {
+              "type": "p",
+              "text": "Para comparar contenido textual normalmente usamos `==`, no `is`."
+            }
+          ]
+        }
+      ],
+      "navTitle": "Variables y objetos"
+    },
+    {
+      "id": "7-atributos-y-metodos",
+      "title": "7. Atributos y métodos",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Muchos objetos tienen información asociada y acciones disponibles."
+        },
+        {
+          "type": "p",
+          "text": "Un atributo es información asociada a un objeto."
+        },
+        {
+          "type": "code",
+          "code": "c = 1 + 2j\nc.real\nc.imag"
+        },
+        {
+          "type": "p",
+          "text": "Un método es una función asociada a un objeto. Se llama con paréntesis."
+        },
+        {
+          "type": "code",
+          "code": "c.conjugate()"
+        },
+        {
+          "type": "p",
+          "text": "En strings, los métodos son especialmente importantes:"
+        },
+        {
+          "type": "code",
+          "code": "\"gato\".islower()\n\"PERRO\".isupper()\n\"Maria\".istitle()\n\"5543\".isnumeric()"
+        },
+        {
+          "type": "p",
+          "text": "Estos métodos devuelven `True` o `False`."
+        }
+      ],
+      "subsections": [
+        {
+          "id": "7-1-reemplazar-texto",
+          "title": "7.1. Reemplazar texto",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "El método `.replace()` sustituye una parte del string por otra:"
+            },
+            {
+              "type": "code",
+              "code": "frase = \"Me gusta analizar poesia y teatro.\"\nfrase.replace(\"poesia\", \"narrativa\")"
+            },
+            {
+              "type": "p",
+              "text": "Importante: los strings son inmutables. Esto significa que no se modifican en el sitio. El método crea un string nuevo."
+            },
+            {
+              "type": "code",
+              "code": "animal = \"ornitorrinco\"\nanimal.upper()\nanimal"
+            },
+            {
+              "type": "p",
+              "text": "`animal` sigue teniendo el valor original. Si queremos guardar el cambio:"
+            },
+            {
+              "type": "code",
+              "code": "animal = animal.upper()"
+            },
+            {
+              "type": "p",
+              "text": "Esta idea es clave en limpieza de texto: cada transformación suele producir una nueva versión del texto."
+            }
+          ]
+        }
+      ],
+      "navTitle": "Atributos y métodos"
+    },
+    {
+      "id": "8-colecciones-agrupar-datos-linguisticos",
+      "title": "8. Colecciones: agrupar datos lingüísticos",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Una colección permite guardar varios elementos juntos. En lingüística computacional se usan para representar tokens, vocabularios, pares de traducción, frecuencias, etiquetas gramaticales y muchos otros datos."
+        }
+      ],
+      "subsections": [
+        {
+          "id": "8-1-listas",
+          "title": "8.1. Listas",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Una lista se escribe entre corchetes."
+            },
+            {
+              "type": "code",
+              "code": "tokens = [\"Barriga\", \"llena\", \",\", \"corazon\", \"contento\"]"
+            },
+            {
+              "type": "p",
+              "text": "Las listas tienen orden y pueden modificarse."
+            },
+            {
+              "type": "code",
+              "code": "tokens[0]"
+            },
+            {
+              "type": "p",
+              "text": "devuelve el primer elemento, porque en Python se empieza a contar desde 0."
+            }
+          ]
+        },
+        {
+          "id": "8-2-tuplas",
+          "title": "8.2. Tuplas",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Una tupla se escribe entre paréntesis."
+            },
+            {
+              "type": "code",
+              "code": "etiqueta = (\"casa\", \"sustantivo\")"
+            },
+            {
+              "type": "p",
+              "text": "Se parece a una lista, pero no se puede modificar después de crearla. Es útil cuando queremos representar un par estable, por ejemplo palabra y categoría."
+            }
+          ]
+        },
+        {
+          "id": "8-3-diccionarios",
+          "title": "8.3. Diccionarios",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Un diccionario guarda pares clave-valor."
+            },
+            {
+              "type": "code",
+              "code": "traducciones = {\"blue\": \"azul\", \"red\": \"rojo\"}"
+            },
+            {
+              "type": "p",
+              "text": "Para acceder a un valor:"
+            },
+            {
+              "type": "code",
+              "code": "traducciones[\"blue\"]"
+            },
+            {
+              "type": "p",
+              "text": "En PLN, los diccionarios son esenciales para frecuencias:"
+            },
+            {
+              "type": "code",
+              "code": "frecuencias = {\"lengua\": 3, \"texto\": 5}"
+            },
+            {
+              "type": "p",
+              "text": "La clave es la palabra. El valor es el número de apariciones."
+            },
+            {
+              "type": "p",
+              "text": "Las claves deben ser únicas. Si repetimos una clave, Python conserva la última versión."
+            },
+            {
+              "type": "code",
+              "code": "{\"impar\": 1, \"par\": 2, \"impar\": 3}"
+            }
+          ]
+        },
+        {
+          "id": "8-4-conjuntos",
+          "title": "8.4. Conjuntos",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Un conjunto almacena valores únicos."
+            },
+            {
+              "type": "code",
+              "code": "vocabulario = {\"los\", \"trapecistas\", \"son\", \"los\", \"mejores\"}"
+            },
+            {
+              "type": "p",
+              "text": "El repetido desaparece. Por eso los conjuntos son muy útiles para obtener vocabulario único de un texto."
+            },
+            {
+              "type": "p",
+              "text": "El conjunto vacío se crea con:"
+            },
+            {
+              "type": "code",
+              "code": "set()"
+            },
+            {
+              "type": "p",
+              "text": "No con `{}`, porque `{}` crea un diccionario vacío."
+            }
+          ]
+        }
+      ],
+      "navTitle": "Colecciones"
+    },
+    {
+      "id": "9-funciones-comunes-para-colecciones",
+      "title": "9. Funciones comunes para colecciones",
+      "blocks": [],
+      "subsections": [
+        {
+          "id": "9-1-len",
+          "title": "9.1. `len()`",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "`len()` devuelve la longitud de una colección."
+            },
+            {
+              "type": "code",
+              "code": "len([\"pera\", \"manzana\", \"naranja\"])"
+            },
+            {
+              "type": "p",
+              "text": "En una lista cuenta elementos. En un string cuenta caracteres."
+            },
+            {
+              "type": "code",
+              "code": "len(\"Reino de Espana\")"
+            },
+            {
+              "type": "p",
+              "text": "En un diccionario cuenta entradas."
+            },
+            {
+              "type": "code",
+              "code": "len({\"naranja\": \"orange\", \"manzana\": \"apple\"})"
+            }
+          ]
+        },
+        {
+          "id": "9-2-in",
+          "title": "9.2. `in`",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "`in` pregunta si un elemento pertenece a una colección."
+            },
+            {
+              "type": "code",
+              "code": "\"azul\" in [\"rojo\", \"amarillo\", \"verde\", \"azul\"]"
+            },
+            {
+              "type": "p",
+              "text": "En diccionarios, `in` busca en las claves, no en los valores:"
+            },
+            {
+              "type": "code",
+              "code": "\"manzana\" in {\"manzana\": \"apple\", \"naranja\": \"orange\"}"
+            },
+            {
+              "type": "code",
+              "code": "\"apple\" in {\"manzana\": \"apple\", \"naranja\": \"orange\"}"
+            },
+            {
+              "type": "p",
+              "text": "La segunda expresión devuelve `False` porque `\"apple\"` es valor, no clave."
+            }
+          ]
+        }
+      ],
+      "navTitle": "Funciones para colecciones"
+    },
+    {
+      "id": "10-indices-y-slicing",
+      "title": "10. Índices y slicing",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Los strings, listas y tuplas tienen orden. Podemos acceder a sus elementos por posición."
+        },
+        {
+          "type": "code",
+          "code": "palabra = \"comadreja\"\npalabra[0]"
+        },
+        {
+          "type": "p",
+          "text": "devuelve `\"c\"`."
+        },
+        {
+          "type": "p",
+          "text": "Python cuenta desde 0:"
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "Indice",
+              "Caracter"
+            ],
+            [
+              "0",
+              "c"
+            ],
+            [
+              "1",
+              "o"
+            ],
+            [
+              "2",
+              "m"
+            ],
+            [
+              "3",
+              "a"
+            ],
+            [
+              "4",
+              "d"
+            ]
+          ],
+          "title": "Ejemplo de indexación de caracteres"
+        }
+      ],
+      "subsections": [
+        {
+          "id": "10-1-slicing",
+          "title": "10.1. Slicing",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "El slicing permite extraer una parte:"
+            },
+            {
+              "type": "code",
+              "code": "palabra[1:4]"
+            },
+            {
+              "type": "p",
+              "text": "devuelve desde la posición 1 hasta la anterior a la 4."
+            },
+            {
+              "type": "code",
+              "code": "palabra[1:]"
+            },
+            {
+              "type": "p",
+              "text": "desde la posición 1 hasta el final."
+            },
+            {
+              "type": "code",
+              "code": "palabra[:4]"
+            },
+            {
+              "type": "p",
+              "text": "desde el inicio hasta la posición anterior a 4."
+            },
+            {
+              "type": "code",
+              "code": "palabra[-3:]"
+            },
+            {
+              "type": "p",
+              "text": "los tres últimos caracteres."
+            },
+            {
+              "type": "p",
+              "text": "Esto es útil para estudiar terminaciones, prefijos, sufijos o fragmentos de palabras."
+            },
+            {
+              "type": "p",
+              "text": "No podemos usar índices directamente en diccionarios ni conjuntos:"
+            },
+            {
+              "type": "code",
+              "code": "dic = {\"naranja\": \"orange\", \"manzana\": \"apple\"}\n# dic[0] no funciona"
+            },
+            {
+              "type": "p",
+              "text": "Un diccionario se consulta por clave, no por posición."
+            }
+          ]
+        }
+      ],
+      "navTitle": "Índices y slicing"
+    },
+    {
+      "id": "11-eliminar-elementos",
+      "title": "11. Eliminar elementos",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "`del` elimina elementos en colecciones mutables, como listas y diccionarios."
+        },
+        {
+          "type": "code",
+          "code": "lista = [\"gato\", \"perro\", \"pato\"]\ndel lista[0]\nlista"
+        },
+        {
+          "type": "p",
+          "text": "En diccionarios eliminamos por clave:"
+        },
+        {
+          "type": "code",
+          "code": "dic = {\"casa\": \"house\", \"ventana\": \"window\"}\ndel dic[\"casa\"]\ndic"
+        },
+        {
+          "type": "p",
+          "text": "No podemos eliminar una entrada de diccionario indicando el valor:"
+        },
+        {
+          "type": "code",
+          "code": "# del dic[\"house\"] no funciona si \"house\" no es clave"
+        },
+        {
+          "type": "p",
+          "text": "Las tuplas no permiten eliminar elementos por posición porque son inmutables."
+        },
+        {
+          "type": "p",
+          "text": "Los conjuntos no se consultan por índice porque no tienen orden posicional."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Eliminar elementos"
+    },
+    {
+      "id": "12-control-de-flujo-tomar-decisiones",
+      "title": "12. Control de flujo: tomar decisiones",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Hasta ahora el código se ejecutaba de arriba abajo. Pero muchas tareas requieren decisiones."
+        }
+      ],
+      "subsections": [
+        {
+          "id": "12-1-condicionales-if-y-else",
+          "title": "12.1. Condicionales `if` y `else`",
+          "blocks": [
+            {
+              "type": "code",
+              "code": "n = 5\n\nif n % 2 == 0:\n    print(\"par\")\nelse:\n    print(\"impar\")"
+            },
+            {
+              "type": "p",
+              "text": "La estructura significa:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "si la condición es verdadera, ejecuta el bloque del `if`;",
+                "si no, ejecuta el bloque del `else`."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "La indentación es obligatoria. Python usa los espacios para saber que instrucciones pertenecen a cada bloque."
+            },
+            {
+              "type": "p",
+              "text": "Aplicación lingüística:"
+            },
+            {
+              "type": "code",
+              "code": "palabra = \"casa\"\n\nif len(palabra) > 5:\n    print(\"palabra larga\")\nelse:\n    print(\"palabra corta\")"
+            }
+          ]
+        },
+        {
+          "id": "12-2-if-sin-else",
+          "title": "12.2. `if` sin `else`",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "No siempre necesitamos alternativa."
+            },
+            {
+              "type": "code",
+              "code": "palabra = \"comunicación\"\n\nif len(palabra) > 10:\n    print(\"Posible palabra larga para revisar\")\n\nprint(\"Análisis terminado\")"
+            }
+          ]
+        }
+      ],
+      "navTitle": "Control de flujo"
+    },
+    {
+      "id": "13-bucles-repetir-una-tarea",
+      "title": "13. Bucles: repetir una tarea",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Un bucle `for` permite recorrer una colección elemento por elemento."
+        },
+        {
+          "type": "code",
+          "code": "palabras = [\"Barriga\", \"llena\", \"corazon\", \"contento\"]\n\nfor palabra in palabras:\n    print(palabra)"
+        },
+        {
+          "type": "p",
+          "text": "En PLN esto es fundamental. Normalmente no analizamos una sola palabra, sino muchas."
+        },
+        {
+          "type": "p",
+          "text": "Ejemplo: calcular la longitud media de las palabras de una frase."
+        },
+        {
+          "type": "code",
+          "code": "frase = \"Barriga llena corazon contento\"\npalabras = frase.split(\" \")\n\nsuma_longitudes = 0\n\nfor palabra in palabras:\n    suma_longitudes = suma_longitudes + len(palabra)\n\nmedia = suma_longitudes / len(palabras)\nprint(media)"
+        },
+        {
+          "type": "p",
+          "text": "`.split(\" \")` divide el string usando el espacio como separador. Es una forma básica de tokenización."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Bucles"
+    },
+    {
+      "id": "14-funciones-crear-herramientas-reutilizables",
+      "title": "14. Funciones: crear herramientas reutilizables",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Una función es un bloque de código que recibe datos, realiza una tarea y puede devolver un resultado."
+        },
+        {
+          "type": "code",
+          "code": "def nombre_funcion(entrada):\n    # instrucciones\n    return resultado"
+        },
+        {
+          "type": "p",
+          "text": "Ejemplo profesional: contar frecuencias de palabras."
+        },
+        {
+          "type": "code",
+          "code": "def frecuencia_texto(texto):\n    frecuencias = {}\n\n    for palabra in texto.split(\" \"):\n        if palabra not in frecuencias:\n            frecuencias[palabra] = 1\n        else:\n            frecuencias[palabra] = frecuencias[palabra] + 1\n\n    return frecuencias"
+        },
+        {
+          "type": "p",
+          "text": "Uso:"
+        },
+        {
+          "type": "code",
+          "code": "frecuencia_texto(\"Barriga llena corazon contento\")"
+        },
+        {
+          "type": "p",
+          "text": "Esta función:"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "crea un diccionario vacío;",
+            "divide el texto en palabras;",
+            "recorre cada palabra;",
+            "si la palabra no estaba, la añade con frecuencia 1;",
+            "si ya estaba, suma 1;",
+            "devuelve el diccionario final."
+          ]
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Funciones"
+    },
+    {
+      "id": "15-limpieza-basica-de-texto",
+      "title": "15. Limpieza básica de texto",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "En textos reales aparecen mayúsculas, signos de puntuación y variantes que pueden dificultar el conteo."
+        },
+        {
+          "type": "p",
+          "text": "Si contamos directamente:"
+        },
+        {
+          "type": "code",
+          "code": "\"Barriga\" != \"barriga\"\n\"contento\" != \"contento.\""
+        },
+        {
+          "type": "p",
+          "text": "Para Python son strings distintos. Por eso limpiamos el texto."
+        }
+      ],
+      "subsections": [
+        {
+          "id": "15-1-limpieza-manual",
+          "title": "15.1. Limpieza manual",
+          "blocks": [
+            {
+              "type": "code",
+              "code": "def frecuencia_texto_limpia(texto):\n    signos = [\".\", \",\", \";\", \"...\", \"¿\", \"?\", \"¡\", \"!\"]\n\n    texto = texto.lower()\n\n    for signo in signos:\n        texto = texto.replace(signo, \"\")\n\n    frecuencias = {}\n\n    for palabra in texto.split():\n        if palabra not in frecuencias:\n            frecuencias[palabra] = 1\n        else:\n            frecuencias[palabra] += 1\n\n    return frecuencias"
+            },
+            {
+              "type": "p",
+              "text": "`lower()` pasa el texto a minúsculas."
+            },
+            {
+              "type": "p",
+              "text": "`replace()` elimina signos."
+            },
+            {
+              "type": "p",
+              "text": "`split()` divide por espacios en blanco."
+            }
+          ]
+        },
+        {
+          "id": "15-2-limpieza-con-string",
+          "title": "15.2. Limpieza con `string`",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Python tiene módulos que amplían sus capacidades. El módulo `string` incluye una lista de signos de puntuación frecuentes."
+            },
+            {
+              "type": "code",
+              "code": "import string\n\ndef frecuencia_texto_limpia(texto):\n    texto = texto.lower()\n    texto = texto.translate(str.maketrans(\"\", \"\", string.punctuation))\n\n    frecuencias = {}\n\n    for palabra in texto.split():\n        if palabra not in frecuencias:\n            frecuencias[palabra] = 1\n        else:\n            frecuencias[palabra] += 1\n\n    return frecuencias"
+            },
+            {
+              "type": "p",
+              "text": "Esta versión es más compacta, aunque conviene recordar que `string.punctuation` está pensado sobre todo para puntuación ASCII. En textos españoles puede que algunos signos o caracteres requieran tratamiento adicional."
+            }
+          ]
+        }
+      ],
+      "navTitle": "Limpieza de texto"
+    },
+    {
+      "id": "16-importar-librerias-nltk-y-tokenizacion",
+      "title": "16. Importar librerías: NLTK y tokenización",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Una librería es un conjunto de código ya preparado que podemos reutilizar."
+        },
+        {
+          "type": "p",
+          "text": "`nltk` significa Natural Language Toolkit. Es una biblioteca clásica de PLN en Python. Permite trabajar con tokenización, corpus, etiquetado, clasificación y otras tareas."
+        },
+        {
+          "type": "p",
+          "text": "Para usar una librería:"
+        },
+        {
+          "type": "code",
+          "code": "import nltk"
+        },
+        {
+          "type": "p",
+          "text": "Para importar una herramienta concreta:"
+        },
+        {
+          "type": "code",
+          "code": "from nltk.tokenize import TreebankWordTokenizer"
+        },
+        {
+          "type": "p",
+          "text": "Después creamos un tokenizador:"
+        },
+        {
+          "type": "code",
+          "code": "tokenizer = TreebankWordTokenizer()"
+        },
+        {
+          "type": "p",
+          "text": "Y lo aplicamos:"
+        },
+        {
+          "type": "code",
+          "code": "frase = \"Barriga llena, corazon contento.\"\ntokens = tokenizer.tokenize(frase)\nprint(tokens)"
+        },
+        {
+          "type": "p",
+          "text": "La tokenización divide un texto en unidades llamadas tokens. Un token puede ser una palabra, un signo de puntuación o un número."
+        },
+        {
+          "type": "p",
+          "text": "Comparación:"
+        },
+        {
+          "type": "code",
+          "code": "frase.split(\" \")"
+        },
+        {
+          "type": "p",
+          "text": "divide solo por espacios."
+        },
+        {
+          "type": "code",
+          "code": "tokenizer.tokenize(frase)"
+        },
+        {
+          "type": "p",
+          "text": "aplica reglas más sofisticadas y puede separar signos de puntuación."
+        },
+        {
+          "type": "p",
+          "text": "Para una lingüista computacional, tokenizar es uno de los primeros pasos antes de contar, clasificar, etiquetar o modelar un texto."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "NLTK y tokenización"
+    },
+    {
+      "id": "17-errores-habituales-y-como-interpretarlos",
+      "title": "17. Errores habituales y como interpretarlos",
+      "blocks": [],
+      "subsections": [
+        {
+          "id": "17-1-syntaxerror",
+          "title": "17.1. `SyntaxError`",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ocurre cuando Python no entiende la estructura del código."
+            },
+            {
+              "type": "p",
+              "text": "Ejemplo:"
+            },
+            {
+              "type": "code",
+              "code": "\"El informe dice que \"el corpus está limpio\"\""
+            },
+            {
+              "type": "p",
+              "text": "Python cree que el string termina antes de tiempo. Solución:"
+            },
+            {
+              "type": "code",
+              "code": "\"El informe dice que \\\"el corpus está limpio\\\"\""
+            }
+          ]
+        },
+        {
+          "id": "17-2-error-por-indice",
+          "title": "17.2. Error por índice",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Si pedimos una posición que no existe:"
+            },
+            {
+              "type": "code",
+              "code": "palabra = \"casa\"\npalabra[10]"
+            },
+            {
+              "type": "p",
+              "text": "Python no puede devolver el carácter 10 porque la palabra solo tiene cuatro caracteres."
+            }
+          ]
+        },
+        {
+          "id": "17-3-error-por-clave",
+          "title": "17.3. Error por clave",
+          "blocks": [
+            {
+              "type": "code",
+              "code": "dic = {\"casa\": \"house\"}\ndic[\"house\"]"
+            },
+            {
+              "type": "p",
+              "text": "No funciona porque `\"house\"` es valor, no clave."
+            }
+          ]
+        },
+        {
+          "id": "17-4-error-por-olvidar-parentesis-en-metodos",
+          "title": "17.4. Error por olvidar paréntesis en métodos",
+          "blocks": [
+            {
+              "type": "code",
+              "code": "texto = \"hola\"\ntexto.upper"
+            },
+            {
+              "type": "p",
+              "text": "Esto muestra el método, pero no lo ejecuta. Para ejecutarlo:"
+            },
+            {
+              "type": "code",
+              "code": "texto.upper()"
+            }
+          ]
+        }
+      ],
+      "navTitle": "Errores habituales"
+    },
+    {
+      "id": "18-cierre-narrativo",
+      "title": "18. Cierre narrativo",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Al terminar estos ejercicios, no solo habrás aprendido una lista de comandos. Habrás construido el primer prototipo de una tarea real de lingüística computacional: transformar comentarios escritos en datos analizables."
+        },
+        {
+          "type": "p",
+          "text": "Ese es el cambio central del curso: pasar de leer textos uno a uno a diseñar procedimientos que permitan explorarlos de forma sistemática. Python no piensa por la lingüista, pero le permite observar patrones que antes quedaban ocultos por el volumen de datos."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Cierre narrativo"
+    }
+  ],
+  "references": []
+}

@@ -473,8 +473,10 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
       return '<button class="im-rail-btn' + (activeIdx === i ? " active" : "") + '" data-im-rail-chapter="' + i + '">' +
         '<span class="im-rail-icon">' + icon + '</span><span class="im-rail-label">' + imEsc(sec.navTitle) + "</span></button>";
     }).join("");
-    items += '<button class="im-rail-btn' + (activeIdx === "bib" ? " active" : "") + '" data-im-rail-bib="1">' +
-      '<span class="im-rail-icon">📖</span><span class="im-rail-label">Bibliografía</span></button>';
+    if (data.references && data.references.length) {
+      items += '<button class="im-rail-btn' + (activeIdx === "bib" ? " active" : "") + '" data-im-rail-bib="1">' +
+        '<span class="im-rail-icon">📖</span><span class="im-rail-label">Bibliografía</span></button>';
+    }
     return '<div class="im-rail">' + items + "</div>";
   }
   function imWireRail(root, data) {
@@ -535,9 +537,11 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
         (sec.subsections.length ? '<span class="im-card-meta">' + sec.subsections.length + " apartados</span>" : "") +
         "</button>";
     }).join("");
-    var bibCard = '<button class="im-card im-card-bib" data-im-bib="1" style="animation-delay:' + (data.sections.length * 0.04) + 's">' +
-      '<span class="im-card-icon">📖</span><span class="im-card-title">Bibliografía</span>' +
-      '<span class="im-card-meta">' + data.references.length + ' referencias en APA 7ª ed.</span></button>';
+    var bibCard = (data.references && data.references.length)
+      ? '<button class="im-card im-card-bib" data-im-bib="1" style="animation-delay:' + (data.sections.length * 0.04) + 's">' +
+        '<span class="im-card-icon">📖</span><span class="im-card-title">Bibliografía</span>' +
+        '<span class="im-card-meta">' + data.references.length + ' referencias en APA 7ª ed.</span></button>'
+      : "";
     var hero = '<div class="im-hero">' +
       (pdf ? '<a class="im-hero-dl" href="' + imEsc(pdf) + '" download>⬇ Descargar manual en PDF</a>' : "") +
       '<div class="im-hero-kicker">' + imEsc(data.header.kicker) + " · " + imEsc(data.header.title) + "</div>" +

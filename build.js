@@ -766,8 +766,10 @@ function buildTopicHtml(tema) {
       return '<button class="im-rail-btn' + (activeIdx === i ? " active" : "") + '" data-im-rail-chapter="' + i + '">' +
         '<span class="im-rail-icon">' + icon + '</span><span class="im-rail-label">' + imEsc(sec.navTitle) + "</span></button>";
     }).join("");
-    items += '<button class="im-rail-btn' + (activeIdx === "bib" ? " active" : "") + '" data-im-rail-bib="1">' +
-      '<span class="im-rail-icon">📖</span><span class="im-rail-label">Bibliografía</span></button>';
+    if (data.references && data.references.length) {
+      items += '<button class="im-rail-btn' + (activeIdx === "bib" ? " active" : "") + '" data-im-rail-bib="1">' +
+        '<span class="im-rail-icon">📖</span><span class="im-rail-label">Bibliografía</span></button>';
+    }
     return '<div class="im-rail">' + items + "</div>";
   }
   function imWireRail(root, data) {
@@ -828,9 +830,11 @@ function buildTopicHtml(tema) {
         (sec.subsections.length ? '<span class="im-card-meta">' + sec.subsections.length + " apartados</span>" : "") +
         "</button>";
     }).join("");
-    var bibCard = '<button class="im-card im-card-bib" data-im-bib="1" style="animation-delay:' + (data.sections.length * 0.04) + 's">' +
-      '<span class="im-card-icon">📖</span><span class="im-card-title">Bibliografía</span>' +
-      '<span class="im-card-meta">' + data.references.length + ' referencias en APA 7ª ed.</span></button>';
+    var bibCard = (data.references && data.references.length)
+      ? '<button class="im-card im-card-bib" data-im-bib="1" style="animation-delay:' + (data.sections.length * 0.04) + 's">' +
+        '<span class="im-card-icon">📖</span><span class="im-card-title">Bibliografía</span>' +
+        '<span class="im-card-meta">' + data.references.length + ' referencias en APA 7ª ed.</span></button>'
+      : "";
     var hero = '<div class="im-hero">' +
       (pdf ? '<a class="im-hero-dl" href="' + imEsc(pdf) + '" download>⬇ Descargar manual en PDF</a>' : "") +
       '<div class="im-hero-kicker">' + imEsc(data.header.kicker) + " · " + imEsc(data.header.title) + "</div>" +
@@ -1288,9 +1292,11 @@ const TEMAS = [
         ] },
     } },
   { dir: 't0a', numLabel: 'TEMA 0', titleShort: 'Recordatorio', titleFull: 'Tema 0 · Recordatorio de Python', kicker: 'Tema 0 · Recordatorio',
-    viewOrder: ['manual','adicionales','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual_interactivo','adicionales','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico', icon: '✨',
+        desc: 'Manual interactivo, navegable por paneles', dataFile: 'manual_interactivo.json' },
       adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
         desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
           { author: 'linguAIstica', date: '2026, 24 de julio', title: 'Python para análisis de texto: tus primeras 6 armas', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DbLh6IEDZFS/' },
@@ -1339,9 +1345,11 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't2', numLabel: 'TEMA 2', titleShort: 'Tema 2', titleFull: 'Tema 2', kicker: 'Tema 2',
-    viewOrder: ['manual','adicionales','infografia','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual_interactivo','adicionales','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico', icon: '✨',
+        desc: 'Manual interactivo, navegable por paneles', dataFile: 'manual_interactivo.json' },
       adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
         desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
           { author: 'linguAIstica', date: '2026, 19 de junio', title: 'NLP antes del machine learning: la era de las reglas y la estadística', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DZxocbUDXtV/' },
