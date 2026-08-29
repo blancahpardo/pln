@@ -294,20 +294,51 @@ for sec in sections:
 # information from the manual is lost, only made more visual.
 IMAGE_CAPTION = 'Infografía generada con NotebookLM a partir del manual teórico elaborado por la Dr.ª Blanca Hernández Pardo.'
 
-# key: section title, or (section title, subsection title) for a subsection
+# key: section title, or (section title, subsection title) for a subsection.
+# 'type' picks the presentation: 'image' = embedded full-width with caption,
+# 'image_modal' = a small button with a thumbnail that opens the image in a
+# popup (label/sub customize the button text), 'image_reveal' = a
+# code-toggle-style button that expands the image inline (labelClosed
+# customizes the button text). Alternate these across placements.
+# 'position': 'start' (default) inserts before the section's other content;
+# 'end' appends after it -> use 'end' when a table/button should read first
+# and the image serves as a visual summary afterwards.
 IMAGE_BLOCKS = {
     'Mapa conceptual de la unidad': [{
+        'type': 'image',
+        'position': 'end',
         'src': 'img/infografia_mapa_conceptual.jpg',
         'alt': 'Infografía: flujo de trabajo del prototipo de legibilidad, de Google Colab al índice de legibilidad',
     }],
+    ('2. Python para PLN: del texto como dato al primer prototipo de legibilidad', '2.9. Construir un índice de legibilidad aproximado'): [{
+        'type': 'image_modal',
+        'src': 'img/infografia_formula_indice.jpg',
+        'alt': 'Infografía: las dos partes de la fórmula del índice de legibilidad aproximado y cómo se combinan',
+        'label': 'Ver la fórmula en infografía',
+        'sub': 'Cómo se combinan sus dos partes',
+    }],
+    # ('1. Marco teórico', '1.6. Tokenización básica: dividir por espacios no es comprender la lengua'): [{
+    #     'type': 'image',
+    #     'src': 'img/infografia_tokenizacion.jpg',
+    #     'alt': 'Infografía: tokenización básica frente a las unidades lingüísticas reales (palabra, oración, sílaba, legibilidad)',
+    # }],  # TEMP: re-enable once infografia_tokenizacion.jpg is saved to t1/img/
 }
+
+def _place_image(blocks, img):
+    t = img.pop('type', 'image')
+    pos = img.pop('position', 'start')
+    block = {'type': t, 'caption': IMAGE_CAPTION, **img}
+    if pos == 'end':
+        blocks.append(block)
+    else:
+        blocks.insert(0, block)
 
 for sec in sections:
     for img in IMAGE_BLOCKS.get(sec['title'], []):
-        sec['blocks'].insert(0, {'type': 'image', 'caption': IMAGE_CAPTION, **img})
+        _place_image(sec['blocks'], img)
     for sub in sec['subsections']:
         for img in IMAGE_BLOCKS.get((sec['title'], sub['title']), []):
-            sub['blocks'].insert(0, {'type': 'image', 'caption': IMAGE_CAPTION, **img})
+            _place_image(sub['blocks'], img)
 
 data = {'header': header, 'sections': sections, 'references': refs_out}
 with open(OUT, 'w', encoding='utf-8') as f:

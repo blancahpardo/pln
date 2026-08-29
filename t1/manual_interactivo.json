@@ -89,12 +89,6 @@
       "title": "Mapa conceptual de la unidad",
       "blocks": [
         {
-          "type": "image",
-          "caption": "Infografía generada con NotebookLM a partir del manual teórico elaborado por la Dr.ª Blanca Hernández Pardo.",
-          "src": "img/infografia_mapa_conceptual.jpg",
-          "alt": "Infografía: flujo de trabajo del prototipo de legibilidad, de Google Colab al índice de legibilidad"
-        },
-        {
           "type": "table",
           "rows": [
             [
@@ -149,6 +143,12 @@
             ]
           ],
           "title": "Datos completos del mapa conceptual"
+        },
+        {
+          "type": "image",
+          "caption": "Infografía generada con NotebookLM a partir del manual teórico elaborado por la Dr.ª Blanca Hernández Pardo.",
+          "src": "img/infografia_mapa_conceptual.jpg",
+          "alt": "Infografía: flujo de trabajo del prototipo de legibilidad, de Google Colab al índice de legibilidad"
         }
       ],
       "subsections": [],
@@ -932,6 +932,14 @@
           "id": "2-9-construir-un-indice-de-legibilidad-aproximado",
           "title": "2.9. Construir un índice de legibilidad aproximado",
           "blocks": [
+            {
+              "type": "image_modal",
+              "caption": "Infografía generada con NotebookLM a partir del manual teórico elaborado por la Dr.ª Blanca Hernández Pardo.",
+              "src": "img/infografia_formula_indice.jpg",
+              "alt": "Infografía: las dos partes de la fórmula del índice de legibilidad aproximado y cómo se combinan",
+              "label": "Ver la fórmula en infografía",
+              "sub": "Cómo se combinan sus dos partes"
+            },
             {
               "type": "p",
               "text": "Una vez calculadas palabras, oraciones y sílabas, combinamos las medidas:"

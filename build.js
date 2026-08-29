@@ -200,6 +200,18 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 @media (min-width:860px) {
   .im-figure { width:min(1300px, 92vw); margin-left:calc(50% - min(650px, 46vw)); margin-right:calc(50% - min(650px, 46vw)); }
 }
+.im-img-btn { display:flex; align-items:center; gap:14px; width:100%; max-width:420px; background:var(--claro); border:none; border-radius:14px; padding:10px; margin:4px 0 20px; cursor:pointer; text-align:left; font-family:Arial,Helvetica,sans-serif; box-shadow:0 2px 10px rgba(159,177,186,.28); transition:transform .12s ease, background .12s ease; }
+.im-img-btn:hover { background:#E9ECEE; transform:translateY(-2px); }
+.im-img-btn-thumb { flex:none; width:64px; height:64px; border-radius:10px; background-size:cover; background-position:center; position:relative; box-shadow:inset 0 0 0 1px rgba(0,0,0,.06); }
+.im-img-btn-thumb::after { content:"🔍"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:18px; background:rgba(11,44,66,.35); border-radius:10px; }
+.im-img-btn-text { display:flex; flex-direction:column; gap:2px; }
+.im-img-btn-label { font-size:13.5px; font-weight:bold; color:var(--azul); }
+.im-img-btn-sub { font-size:11.5px; color:var(--humo); }
+.im-reveal-toggle { display:inline-flex; align-items:center; gap:6px; background:#fff; border:1.5px dashed var(--humo); color:var(--azul); font-size:12.5px; font-weight:bold; border-radius:20px; padding:7px 14px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; margin:2px 0 14px; }
+.im-reveal-toggle:hover { border-color:var(--azul); }
+.im-reveal-box { display:none; margin:0 0 16px; }
+.im-reveal-box.open { display:block; animation:imFadeIn .25s ease; }
+.im-reveal-box img { display:block; width:100%; border-radius:10px; box-shadow:0 4px 16px rgba(159,177,186,.35); }
 .im-errorlist { list-style:none; padding:0; margin:0 0 6px; }
 .im-errorlist li { background:var(--claro); border-left:3px solid var(--rojo); border-radius:0 8px 8px 0; padding:12px 16px; margin-bottom:10px; }
 .im-errorlist .im-error-term { display:block; font-weight:bold; color:var(--azul); font-size:14px; margin-bottom:4px; }
@@ -681,6 +693,14 @@ function buildTopicHtml(tema) {
       else if (b.type === "table") html += imRenderTable(b, key, bareTable);
       else if (b.type === "image") html += '<figure class="im-figure"><img class="im-figure-img" src="' + imEsc(b.src) + '" alt="' + imEsc(b.alt || "") + '">' +
         (b.caption ? '<figcaption class="im-figure-caption">' + imFormatInline(b.caption) + "</figcaption>" : "") + "</figure>";
+      else if (b.type === "image_modal") html += '<button class="im-img-btn" data-im-img-modal="' + key + '" data-im-img-title="' + imEsc(b.alt || "") + '">' +
+        '<span class="im-img-btn-thumb" style="background-image:url(' + imEsc(b.src) + ')"></span>' +
+        '<span class="im-img-btn-text"><span class="im-img-btn-label">' + imEsc(b.label || "Ver infografía") + '</span>' +
+        (b.sub ? '<span class="im-img-btn-sub">' + imEsc(b.sub) + "</span>" : "") + "</span></button>" +
+        '<template data-im-img-src="' + key + '"><img src="' + imEsc(b.src) + '" alt="' + imEsc(b.alt || "") + '"></template>';
+      else if (b.type === "image_reveal") html += '<button class="im-reveal-toggle" data-im-reveal="' + key + '">' + (b.labelClosed || "🔎 Descubre la infografía") + "</button>" +
+        '<div class="im-reveal-box" id="im-reveal-' + key + '"><img src="' + imEsc(b.src) + '" alt="' + imEsc(b.alt || "") + '">' +
+        (b.caption ? '<figcaption class="im-figure-caption">' + imFormatInline(b.caption) + "</figcaption>" : "") + "</div>";
       else if (b.type === "errorlist") html += '<ul class="im-errorlist">' + b.items.map(function(it) {
         return '<li><span class="im-error-term">' + imFormatInline(it.term) + '</span><span class="im-error-desc">' + imFormatInline(it.desc) + "</span></li>";
       }).join("") + "</ul>";
@@ -691,6 +711,18 @@ function buildTopicHtml(tema) {
     root.querySelectorAll(".im-figure-img").forEach(function(img) {
       img.addEventListener("click", function() {
         imOpenModal(img.alt || "Infografía", '<img src="' + img.src + '" alt="' + img.alt.replace(/"/g, "&quot;") + '">', true);
+      });
+    });
+    root.querySelectorAll("[data-im-img-modal]").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        var tpl = root.querySelector('[data-im-img-src="' + btn.dataset.imImgModal + '"]');
+        if (tpl) imOpenModal(btn.dataset.imImgTitle || "Infografía", tpl.innerHTML, true);
+      });
+    });
+    root.querySelectorAll("[data-im-reveal]").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        var box = document.getElementById("im-reveal-" + btn.dataset.imReveal);
+        box.classList.toggle("open");
       });
     });
     root.querySelectorAll("[data-im-code]").forEach(function(btn) {
