@@ -404,7 +404,8 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
         '<span class="im-img-btn-thumb" style="background-image:url(' + imEsc(b.src) + ')"></span>' +
         '<span class="im-img-btn-text"><span class="im-img-btn-label">' + imEsc(b.label || "Ver infografía") + '</span>' +
         (b.sub ? '<span class="im-img-btn-sub">' + imEsc(b.sub) + "</span>" : "") + "</span></button>" +
-        '<template data-im-img-src="' + key + '"><img src="' + imEsc(b.src) + '" alt="' + imEsc(b.alt || "") + '"></template>';
+        '<template data-im-img-src="' + key + '"><img src="' + imEsc(b.src) + '" alt="' + imEsc(b.alt || "") + '">' +
+        (b.caption ? '<figcaption class="im-figure-caption">' + imFormatInline(b.caption) + "</figcaption>" : "") + "</template>";
       else if (b.type === "image_reveal") html += '<button class="im-reveal-toggle" data-im-reveal="' + key + '">' + (b.labelClosed || "🔎 Descubre la infografía") + "</button>" +
         '<div class="im-reveal-box" id="im-reveal-' + key + '"><img src="' + imEsc(b.src) + '" alt="' + imEsc(b.alt || "") + '">' +
         (b.caption ? '<figcaption class="im-figure-caption">' + imFormatInline(b.caption) + "</figcaption>" : "") + "</div>";

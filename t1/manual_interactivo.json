@@ -12,7 +12,7 @@
       "blocks": [
         {
           "type": "p",
-          "text": "Imagina que te incorporas como estudiante en prácticas a LinguaAdapt, una agencia de localización que trabaja con organismos públicos, editoriales `y` equipos de comunicación institucional. Su especialidad es adaptar textos para que puedan ser comprendidos por públicos diversos: personas con dificultades lectoras, estudiantes que se enfrentan a documentos especializados, ciudadanía que necesita entender información administrativa o equipos que quieren revisar la claridad de sus mensajes."
+          "text": "Imagina que te incorporas como estudiante en prácticas a LinguaAdapt, una agencia de localización que trabaja con organismos públicos, editoriales y equipos de comunicación institucional. Su especialidad es adaptar textos para que puedan ser comprendidos por públicos diversos: personas con dificultades lectoras, estudiantes que se enfrentan a documentos especializados, ciudadanía que necesita entender información administrativa o equipos que quieren revisar la claridad de sus mensajes."
         }
       ],
       "subsections": [
@@ -22,7 +22,7 @@
           "blocks": [
             {
               "type": "p",
-              "text": "El equipo no te pide todavía que construyas un sistema avanzado de inteligencia artificial. Tu primer encargo es más concreto `y`, precisamente por eso, muy formativo: crear un cuaderno en Google Colab que reciba un texto `y` calcule algunas medidas iniciales de legibilidad."
+              "text": "El equipo no te pide todavía que construyas un sistema avanzado de inteligencia artificial. Tu primer encargo es más concreto y, precisamente por eso, muy formativo: crear un cuaderno en Google Colab que reciba un texto y calcule algunas medidas iniciales de legibilidad."
             }
           ]
         },
@@ -63,16 +63,16 @@
       "blocks": [
         {
           "type": "p",
-          "text": "Al terminar esta guía, deberías poder explicar `y` aplicar los siguientes conocimientos:"
+          "text": "Al terminar esta guía, deberías poder explicar y aplicar los siguientes conocimientos:"
         },
         {
           "type": "ol",
           "items": [
-            "Qué es un notebook de Google Colab `y` por qué resulta útil para aprender PLN.",
+            "Qué es un notebook de Google Colab y por qué resulta útil para aprender PLN.",
             "Cómo guardar un texto en una variable de Python.",
             "Cómo convertir una cadena de texto en una lista de `palabras` con `.split()`.",
             "Cómo contar elementos con `len()`.",
-            "Cómo importar módulos de la biblioteca estándar, como `string` `y` `re`.",
+            "Cómo importar módulos de la biblioteca estándar, como `string` y `re`.",
             "Cómo detectar `signos` de puntuación recorriendo carácter por carácter.",
             "Cómo estimar `oraciones` a partir de `signos` de puntuación.",
             "Cómo usar una expresión regular sencilla para aproximar el número de sílabas.",
@@ -134,7 +134,7 @@
             [
               "`re.findall()`",
               "Busca patrones mediante expresiones regulares",
-              "Aproxima grupos vocálicos `y` sílabas"
+              "Aproxima grupos vocálicos y sílabas"
             ],
             [
               "Índice de legibilidad",
@@ -160,11 +160,11 @@
       "blocks": [
         {
           "type": "p",
-          "text": "Esta unidad introduce el primer gesto intelectual del procesamiento del lenguaje natural: pasar de leer un texto únicamente como discurso a representarlo también como dato manipulable. Para una lingüista, este cambio no significa abandonar la interpretación, sino hacer explícitas algunas decisiones que normalmente se toman de forma intuitiva: qué cuenta como palabra, qué se considera una oración, qué rasgos permiten aproximar la dificultad de lectura `y` qué límites tiene cualquier medición automática."
+          "text": "Esta unidad introduce el primer gesto intelectual del procesamiento del lenguaje natural: pasar de leer un texto únicamente como discurso a representarlo también como dato manipulable. Para una lingüista, este cambio no significa abandonar la interpretación, sino hacer explícitas algunas decisiones que normalmente se toman de forma intuitiva: qué cuenta como palabra, qué se considera una oración, qué rasgos permiten aproximar la dificultad de lectura y qué límites tiene cualquier medición automática."
         },
         {
           "type": "p",
-          "text": "El objetivo del marco teórico es preparar la lectura del resto del manual `y` del cuaderno de trabajo. Antes de ejecutar código, conviene entender por qué Python, los notebooks, las cadenas de texto, las listas, las funciones de conteo `y` las expresiones regulares forman una primera caja de herramientas para observar fenómenos lingüísticos sencillos de forma reproducible."
+          "text": "El objetivo del marco teórico es preparar la lectura del resto del manual y del cuaderno de trabajo. Antes de ejecutar código, conviene entender por qué Python, los notebooks, las cadenas de texto, las listas, las funciones de conteo y las expresiones regulares forman una primera caja de herramientas para observar fenómenos lingüísticos sencillos de forma reproducible."
         }
       ],
       "subsections": [
@@ -174,25 +174,25 @@
           "blocks": [
             {
               "type": "p",
-              "text": "Python es un lenguaje de programación de propósito general, pero en PLN se utiliza porque permite escribir procedimientos legibles, combinar bibliotecas especializadas `y` trabajar con datos textuales de forma progresiva. Para el alumnado de lingüística, su valor inicial no está en «automatizarlo todo», sino en aprender a formular una pregunta lingüística como una serie de operaciones controlables."
+              "text": "Python es un lenguaje de programación de propósito general, pero en PLN se utiliza porque permite escribir procedimientos legibles, combinar bibliotecas especializadas y trabajar con datos textuales de forma progresiva. Para el alumnado de lingüística, su valor inicial no está en «automatizarlo todo», sino en aprender a formular una pregunta lingüística como una serie de operaciones controlables."
             },
             {
               "type": "p",
-              "text": "Cuando preguntamos si un texto es largo, claro, denso o accesible, estamos usando categorías interpretativas. Python obliga a traducir parte de esas categorías a operaciones observables: contar `palabras`, estimar `oraciones`, localizar `signos` de puntuación, buscar patrones vocálicos o combinar varias medidas. Esta traducción nunca es neutra. Cada línea de código presupone una definición operativa del fenómeno que se quiere observar (Biber, Conrad `y` Reppen, 1998; Gries, 2009)."
+              "text": "Cuando preguntamos si un texto es largo, claro, denso o accesible, estamos usando categorías interpretativas. Python obliga a traducir parte de esas categorías a operaciones observables: contar `palabras`, estimar `oraciones`, localizar `signos` de puntuación, buscar patrones vocálicos o combinar varias medidas. Esta traducción nunca es neutra. Cada línea de código presupone una definición operativa del fenómeno que se quiere observar {{cite:biber1998,gries2009}}(Biber, Conrad y Reppen, 1998; Gries, 2009){{/cite}}."
             }
           ]
         },
         {
           "id": "1-2-notebooks-google-colab-y-narrativas-computacionales",
-          "title": "1.2. Notebooks, Google Colab `y` narrativas computacionales",
+          "title": "1.2. Notebooks, Google Colab y narrativas computacionales",
           "blocks": [
             {
               "type": "p",
-              "text": "Un notebook combina código ejecutable, texto explicativo, resultados `y` documentación en una misma unidad de trabajo. Esta mezcla es especialmente adecuada para el aprendizaje de PLN porque permite justificar una decisión lingüística justo al lado de la celda que la ejecuta. En lugar de separar teoría, procedimiento `y` resultado en documentos inconexos, el notebook convierte el análisis en una narrativa computacional reproducible {{cite:kluyver2016}}(Kluyver et al., 2016){{/cite}}."
+              "text": "Un notebook combina código ejecutable, texto explicativo, resultados y documentación en una misma unidad de trabajo. Esta mezcla es especialmente adecuada para el aprendizaje de PLN porque permite justificar una decisión lingüística justo al lado de la celda que la ejecuta. En lugar de separar teoría, procedimiento y resultado en documentos inconexos, el notebook convierte el análisis en una narrativa computacional reproducible {{cite:kluyver2016}}(Kluyver et al., 2016){{/cite}}."
             },
             {
               "type": "p",
-              "text": "Google Colab es un servicio alojado que permite trabajar con notebooks sin instalar un entorno local. Para una primera unidad de programación, esto reduce la barrera técnica: el alumnado puede centrarse en entender variables, cadenas, listas `y` salidas antes de preocuparse por instalaciones, rutas o versiones. La ventaja didáctica es clara, pero también hay que recordar que un notebook depende del orden real de ejecución de sus celdas, no solo del orden visual en el que aparecen."
+              "text": "Google Colab es un servicio alojado que permite trabajar con notebooks sin instalar un entorno local. Para una primera unidad de programación, esto reduce la barrera técnica: el alumnado puede centrarse en entender variables, cadenas, listas y salidas antes de preocuparse por instalaciones, rutas o versiones. La ventaja didáctica es clara, pero también hay que recordar que un notebook depende del orden real de ejecución de sus celdas, no solo del orden visual en el que aparecen."
             },
             {
               "type": "table",
@@ -205,11 +205,11 @@
                 [
                   "Celda de código",
                   "Ejecuta instrucciones Python paso a paso",
-                  "Ejecutar celdas desordenadas `y` obtener resultados incoherentes"
+                  "Ejecutar celdas desordenadas y obtener resultados incoherentes"
                 ],
                 [
                   "Celda de texto",
-                  "Documenta decisiones, hipótesis `y` conclusiones",
+                  "Documenta decisiones, hipótesis y conclusiones",
                   "Escribir explicaciones que no correspondan al código ejecutado"
                 ],
                 [
@@ -224,6 +224,13 @@
                 ]
               ],
               "title": "Piezas de un notebook"
+            },
+            {
+              "type": "image_reveal",
+              "caption": "Infografía generada con NotebookLM a partir del manual teórico elaborado por la Dr.ª Blanca Hernández Pardo.",
+              "src": "img/infografia_notebook.jpg",
+              "alt": "Infografía: anatomía del notebook — celda de código, celda de texto, salida e historial de ejecución",
+              "labelClosed": "🔎 Descubre la anatomía del notebook"
             }
           ]
         },
@@ -237,27 +244,27 @@
             },
             {
               "type": "p",
-              "text": "La documentación de Python define el texto como datos de tipo `str`, es decir, cadenas o secuencias textuales. Esto significa que Python puede almacenar un fragmento institucional, recorrer sus caracteres, dividirlo, buscar patrones `y` calcular longitudes. Para PLN, esta representación es el punto de entrada a operaciones más avanzadas: tokenización, normalización, segmentación, análisis morfológico o extracción de rasgos {{cite:psf2026b}}(Python Software Foundation, 2026b){{/cite}}."
+              "text": "La documentación de Python define el texto como datos de tipo `str`, es decir, cadenas o secuencias textuales. Esto significa que Python puede almacenar un fragmento institucional, recorrer sus caracteres, dividirlo, buscar patrones y calcular longitudes. Para PLN, esta representación es el punto de entrada a operaciones más avanzadas: tokenización, normalización, segmentación, análisis morfológico o extracción de rasgos {{cite:psf2026b}}(Python Software Foundation, 2026b){{/cite}}."
             }
           ]
         },
         {
           "id": "1-4-variables-objetos-y-nombres-guardar-informacion-linguist",
-          "title": "1.4. Variables, objetos `y` nombres: guardar información lingüística",
+          "title": "1.4. Variables, objetos y nombres: guardar información lingüística",
           "blocks": [
             {
               "type": "p",
-              "text": "Una variable es un nombre que apunta a un objeto. En la unidad, `texto1` es el nombre que se usa para guardar un texto institucional. La variable no es el texto en sentido lingüístico; es una etiqueta de programación que permite recuperar `y` manipular un objeto de tipo texto. Esta diferencia es fundamental para evitar errores: Python no interpreta `texto1` como una palabra española, sino como un identificador."
+              "text": "Una variable es un nombre que apunta a un objeto. En la unidad, `texto1` es el nombre que se usa para guardar un texto institucional. La variable no es el texto en sentido lingüístico; es una etiqueta de programación que permite recuperar y manipular un objeto de tipo texto. Esta diferencia es fundamental para evitar errores: Python no interpreta `texto1` como una palabra española, sino como un identificador."
             },
             {
               "type": "p",
-              "text": "Nombrar bien las variables forma parte del trabajo profesional. En lingüística computacional, nombres como `texto_original`, `texto_adaptado` o `texto_traducido` ayudan a conservar trazabilidad. La trazabilidad permite saber qué versión del texto se está midiendo, qué transformación se ha aplicado `y` qué resultado corresponde a cada paso. El código legible no es un lujo estético; es una condición para que otra persona pueda revisar el análisis."
+              "text": "Nombrar bien las variables forma parte del trabajo profesional. En lingüística computacional, nombres como `texto_original`, `texto_adaptado` o `texto_traducido` ayudan a conservar trazabilidad. La trazabilidad permite saber qué versión del texto se está midiendo, qué transformación se ha aplicado y qué resultado corresponde a cada paso. El código legible no es un lujo estético; es una condición para que otra persona pueda revisar el análisis."
             }
           ]
         },
         {
           "id": "1-5-strings-y-secuencias-como-ve-python-una-cadena-de-texto",
-          "title": "1.5. `Strings` `y` secuencias: cómo ve Python una cadena de texto",
+          "title": "1.5. `Strings` y secuencias: cómo ve Python una cadena de texto",
           "blocks": [
             {
               "type": "p",
@@ -275,11 +282,11 @@
           "blocks": [
             {
               "type": "p",
-              "text": "La tokenización es el proceso de dividir un texto en unidades de análisis llamadas tokens. En PLN profesional, un tokenizador puede separar `palabras`, `signos`, abreviaturas, números, contracciones o marcas especiales según reglas lingüísticas `y` estadísticas. En esta unidad se usa una tokenización inicial muy simple: aplicar el método `.split()`, que separa por espacios en blanco."
+              "text": "La tokenización es el proceso de dividir un texto en unidades de análisis llamadas tokens. En PLN profesional, un tokenizador puede separar `palabras`, `signos`, abreviaturas, números, contracciones o marcas especiales según reglas lingüísticas y estadísticas. En esta unidad se usa una tokenización inicial muy simple: aplicar el método `.split()`, que separa por espacios en blanco."
             },
             {
               "type": "p",
-              "text": "Esta estrategia es útil para aprender, pero tiene límites. Si el texto contiene informativa; o ciudadanos., `.split()` conserva la puntuación pegada a la palabra. Por tanto, el resultado no es una segmentación lingüística perfecta, sino una lista razonable para un primer conteo. Esta distinción prepara al alumnado para entender por qué las herramientas de PLN posteriores incorporan tokenizadores más sofisticados (Bird, Klein `y` Loper, 2009; Jurafsky `y` Martin, 2026)."
+              "text": "Esta estrategia es útil para aprender, pero tiene límites. Si el texto contiene informativa; o ciudadanos., `.split()` conserva la puntuación pegada a la palabra. Por tanto, el resultado no es una segmentación lingüística perfecta, sino una lista razonable para un primer conteo. Esta distinción prepara al alumnado para entender por qué las herramientas de PLN posteriores incorporan tokenizadores más sofisticados {{cite:bird2009,jurafsky2026}}(Bird, Klein y Loper, 2009; Jurafsky y Martin, 2026){{/cite}}."
             },
             {
               "type": "table",
@@ -296,7 +303,7 @@
                 ],
                 [
                   "Oración",
-                  "Dividir por puntos `y` algunos `signos` sustituidos",
+                  "Dividir por puntos y algunos `signos` sustituidos",
                   "No distingue todos los usos discursivos de la puntuación"
                 ],
                 [
@@ -311,6 +318,12 @@
                 ]
               ],
               "title": "Qué cuenta cada unidad lingüística"
+            },
+            {
+              "type": "image",
+              "caption": "Infografía generada con NotebookLM a partir del manual teórico elaborado por la Dr.ª Blanca Hernández Pardo.",
+              "src": "img/infografia_tokenizacion.jpg",
+              "alt": "Infografía: tokenización básica frente a las unidades lingüísticas reales (palabra, oración, sílaba, legibilidad)"
             }
           ]
         },
@@ -320,7 +333,7 @@
           "blocks": [
             {
               "type": "p",
-              "text": "Contar `palabras`, `signos` u `oraciones` parece una operación elemental, pero en lingüística cuantitativa tiene consecuencias interpretativas. Un conteo convierte una propiedad textual en una variable comparable. Si un texto tiene 25 `palabras` `y` otro tiene 80, la diferencia de longitud deja de ser solo una impresión. Si un texto tiene muchas `palabras` por oración, podemos formular una hipótesis sobre su complejidad sintáctica."
+              "text": "Contar `palabras`, `signos` u `oraciones` parece una operación elemental, pero en lingüística cuantitativa tiene consecuencias interpretativas. Un conteo convierte una propiedad textual en una variable comparable. Si un texto tiene 25 `palabras` y otro tiene 80, la diferencia de longitud deja de ser solo una impresión. Si un texto tiene muchas `palabras` por oración, podemos formular una hipótesis sobre su complejidad sintáctica."
             },
             {
               "type": "p",
@@ -330,29 +343,29 @@
         },
         {
           "id": "1-8-puntuacion-y-segmentacion-contar-oraciones-exige-una-dec",
-          "title": "1.8. Puntuación `y` segmentación: contar `oraciones` exige una decisión",
+          "title": "1.8. Puntuación y segmentación: contar `oraciones` exige una decisión",
           "blocks": [
             {
               "type": "p",
-              "text": "La segmentación de `oraciones` no es una operación puramente mecánica. En un texto escrito, el punto suele marcar frontera oracional, pero también aparece en abreviaturas, cifras, direcciones electrónicas o usos tipográficos. El punto `y` coma, los dos puntos o los `signos` de interrogación `y` exclamación pueden separar unidades discursivas relevantes, pero no siempre equivalen a una oración independiente."
+              "text": "La segmentación de `oraciones` no es una operación puramente mecánica. En un texto escrito, el punto suele marcar frontera oracional, pero también aparece en abreviaturas, cifras, direcciones electrónicas o usos tipográficos. El punto y coma, los dos puntos o los `signos` de interrogación y exclamación pueden separar unidades discursivas relevantes, pero no siempre equivalen a una oración independiente."
             },
             {
               "type": "p",
-              "text": "Por eso, cuando el cuaderno reemplaza un punto `y` coma por un punto antes de dividir el texto, no está haciendo una trampa técnica: está explicitando una decisión lingüística. En este caso, se decide que el punto `y` coma del ejemplo separa dos segmentos que interesa contar. La regla puede ser razonable para ese texto `y` demasiado simple para otros. Esta es una idea clave: en PLN, una regla siempre debe evaluarse frente al fenómeno lingüístico concreto."
+              "text": "Por eso, cuando el cuaderno reemplaza un punto y coma por un punto antes de dividir el texto, no está haciendo una trampa técnica: está explicitando una decisión lingüística. En este caso, se decide que el punto y coma del ejemplo separa dos segmentos que interesa contar. La regla puede ser razonable para ese texto y demasiado simple para otros. Esta es una idea clave: en PLN, una regla siempre debe evaluarse frente al fenómeno lingüístico concreto."
             }
           ]
         },
         {
           "id": "1-9-listas-pertenencia-y-filtrado",
-          "title": "1.9. Listas, pertenencia `y` filtrado",
+          "title": "1.9. Listas, pertenencia y filtrado",
           "blocks": [
             {
               "type": "p",
-              "text": "Una lista permite almacenar varios elementos en orden. En la unidad se crea una lista de `palabras` `y` una lista de `signos` de puntuación. Esta forma de representación prepara el terreno para operaciones frecuentes en PLN: filtrar, contar, recorrer `y` comparar unidades. Cuando se escribe una lista por comprensión, Python crea una nueva lista a partir de una condición."
+              "text": "Una lista permite almacenar varios elementos en orden. En la unidad se crea una lista de `palabras` y una lista de `signos` de puntuación. Esta forma de representación prepara el terreno para operaciones frecuentes en PLN: filtrar, contar, recorrer y comparar unidades. Cuando se escribe una lista por comprensión, Python crea una nueva lista a partir de una condición."
             },
             {
               "type": "p",
-              "text": "El operador `in` permite comprobar pertenencia. En el conteo de puntuación, la pregunta es si un carácter del texto pertenece al conjunto de `signos` definido por `string.punctuation`. Esta operación tiene una lectura lingüística sencilla: quedarse solo con los caracteres que se consideran puntuación. La limitación es que `string.punctuation` se basa en un conjunto ASCII de `signos`; en español `y` en textos reales pueden aparecer `signos` tipográficos que exijan una ampliación o normalización específica {{cite:psf2026c}}(Python Software Foundation, 2026c){{/cite}}."
+              "text": "El operador `in` permite comprobar pertenencia. En el conteo de puntuación, la pregunta es si un carácter del texto pertenece al conjunto de `signos` definido por `string.punctuation`. Esta operación tiene una lectura lingüística sencilla: quedarse solo con los caracteres que se consideran puntuación. La limitación es que `string.punctuation` se basa en un conjunto ASCII de `signos`; en español y en textos reales pueden aparecer `signos` tipográficos que exijan una ampliación o normalización específica {{cite:psf2026c}}(Python Software Foundation, 2026c){{/cite}}."
             }
           ]
         },
@@ -362,43 +375,43 @@
           "blocks": [
             {
               "type": "p",
-              "text": "Las expresiones regulares son patrones formales para localizar secuencias de caracteres. En la unidad se introducen para estimar sílabas mediante grupos vocálicos. El patrón `r'[aeiouáéíóúü]+'` busca uno o más caracteres vocálicos consecutivos, incluyendo vocales acentuadas `y` u con diéresis. `re.findall()` devuelve todas las coincidencias `y` permite contarlas {{cite:psf2026d}}(Python Software Foundation, 2026d){{/cite}}."
+              "text": "Las expresiones regulares son patrones formales para localizar secuencias de caracteres. En la unidad se introducen para estimar sílabas mediante grupos vocálicos. El patrón `r'[aeiouáéíóúü]+'` busca uno o más caracteres vocálicos consecutivos, incluyendo vocales acentuadas y u con diéresis. `re.findall()` devuelve todas las coincidencias y permite contarlas {{cite:psf2026d}}(Python Software Foundation, 2026d){{/cite}}."
             },
             {
               "type": "p",
-              "text": "La utilidad lingüística del patrón es clara: muchas sílabas tienen un núcleo vocálico, de modo que contar grupos de vocales puede aproximar el número de sílabas. Pero la aproximación no equivale a silabificación. En español hay diptongos, hiatos, triptongos, sinalefas `y` fenómenos prosódicos que un patrón tan simple no resuelve. El ejercicio, por tanto, no enseña a silabificar perfectamente; enseña a convertir una hipótesis lingüística en una regla computacional inicial."
+              "text": "La utilidad lingüística del patrón es clara: muchas sílabas tienen un núcleo vocálico, de modo que contar grupos de vocales puede aproximar el número de sílabas. Pero la aproximación no equivale a silabificación. En español hay diptongos, hiatos, triptongos, sinalefas y fenómenos prosódicos que un patrón tan simple no resuelve. El ejercicio, por tanto, no enseña a silabificar perfectamente; enseña a convertir una hipótesis lingüística en una regla computacional inicial."
             }
           ]
         },
         {
           "id": "1-11-legibilidad-que-puede-medir-una-formula-y-que-no-puede-",
-          "title": "1.11. Legibilidad: qué puede medir una fórmula `y` qué no puede medir",
+          "title": "1.11. Legibilidad: qué puede medir una fórmula y qué no puede medir",
           "blocks": [
             {
               "type": "p",
-              "text": "La legibilidad lingüística intenta estimar la facilidad de lectura a partir de rasgos observables del texto. Las fórmulas clásicas suelen combinar longitud media de palabra, número de sílabas `y` longitud media de oración. La tradición parte de trabajos como el de {{cite:flesch1948}}Flesch (1948){{/cite}} `y`, para español, de adaptaciones como {{cite:fernandezhuerta1959}}Fernández Huerta (1959){{/cite}} `y` {{cite:szigriszt1993}}Szigriszt Pazos (1993){{/cite}}."
+              "text": "La legibilidad lingüística intenta estimar la facilidad de lectura a partir de rasgos observables del texto. Las fórmulas clásicas suelen combinar longitud media de palabra, número de sílabas y longitud media de oración. La tradición parte de trabajos como el de {{cite:flesch1948}}Flesch (1948){{/cite}} y, para español, de adaptaciones como {{cite:fernandezhuerta1959}}Fernández Huerta (1959){{/cite}} y {{cite:szigriszt1993}}Szigriszt Pazos (1993){{/cite}}."
             },
             {
               "type": "p",
-              "text": "La unidad no aplica una fórmula oficial validada, sino un índice aproximado construido con fines didácticos. Esto es importante: una fórmula de legibilidad validada necesita investigación empírica, corpus de referencia `y` escalas interpretativas. El índice de la unidad sirve para entender cómo se construye una métrica: primero se cuentan rasgos, después se combinan `y` finalmente se interpreta el resultado con cautela."
+              "text": "La unidad no aplica una fórmula oficial validada, sino un índice aproximado construido con fines didácticos. Esto es importante: una fórmula de legibilidad validada necesita investigación empírica, corpus de referencia y escalas interpretativas. El índice de la unidad sirve para entender cómo se construye una métrica: primero se cuentan rasgos, después se combinan y finalmente se interpreta el resultado con cautela."
             },
             {
               "type": "p",
-              "text": "Un índice basado en sílabas por palabra `y` `palabras` por oración puede orientar, pero no captura toda la dificultad de un texto. No mide conocimiento previo del lector, familiaridad terminológica, cohesión, estructura informativa, ambigüedad, diseño visual ni carga conceptual. Por eso, en comunicación clara `y` accesibilidad, la medición automática debe acompañarse siempre de lectura experta `y` revisión con usuarios cuando sea posible."
+              "text": "Un índice basado en sílabas por palabra y `palabras` por oración puede orientar, pero no captura toda la dificultad de un texto. No mide conocimiento previo del lector, familiaridad terminológica, cohesión, estructura informativa, ambigüedad, diseño visual ni carga conceptual. Por eso, en comunicación clara y accesibilidad, la medición automática debe acompañarse siempre de lectura experta y revisión con usuarios cuando sea posible."
             }
           ]
         },
         {
           "id": "1-12-reproducibilidad-que-otra-persona-pueda-entender-y-repe",
-          "title": "1.12. Reproducibilidad: que otra persona pueda entender `y` repetir el análisis",
+          "title": "1.12. Reproducibilidad: que otra persona pueda entender y repetir el análisis",
           "blocks": [
             {
               "type": "p",
-              "text": "Un análisis reproducible no se limita a obtener un resultado correcto una vez. Debe permitir que otra persona ejecute el mismo procedimiento, revise el orden de las celdas, entienda el significado de las variables `y` compruebe cómo se obtuvo cada número. En notebooks, la reproducibilidad exige cuidar la secuencia de ejecución, documentar decisiones `y` evitar depender de variables invisibles o celdas ejecutadas fuera de orden."
+              "text": "Un análisis reproducible no se limita a obtener un resultado correcto una vez. Debe permitir que otra persona ejecute el mismo procedimiento, revise el orden de las celdas, entienda el significado de las variables y compruebe cómo se obtuvo cada número. En notebooks, la reproducibilidad exige cuidar la secuencia de ejecución, documentar decisiones y evitar depender de variables invisibles o celdas ejecutadas fuera de orden."
             },
             {
               "type": "p",
-              "text": "La función `print()` tiene aquí un papel más importante de lo que parece: no solo muestra resultados, sino que ayuda a comunicar qué se está calculando. Etiquetar salidas, redondear valores con `round()` `y` explicar la interpretación de cada medida forma parte del trabajo profesional de una lingüista computacional."
+              "text": "La función `print()` tiene aquí un papel más importante de lo que parece: no solo muestra resultados, sino que ayuda a comunicar qué se está calculando. Etiquetar salidas, redondear valores con `round()` y explicar la interpretación de cada medida forma parte del trabajo profesional de una lingüista computacional."
             }
           ]
         },
@@ -408,11 +421,11 @@
           "blocks": [
             {
               "type": "p",
-              "text": "Un prototipo es una primera versión operativa de una idea. En esta unidad, el prototipo calcula medidas de un texto concreto. Cuando el mismo procedimiento se quiere aplicar a muchos textos, surge la necesidad de convertirlo en una función. Una función encapsula una serie de pasos, recibe una entrada `y` devuelve una salida."
+              "text": "Un prototipo es una primera versión operativa de una idea. En esta unidad, el prototipo calcula medidas de un texto concreto. Cuando el mismo procedimiento se quiere aplicar a muchos textos, surge la necesidad de convertirlo en una función. Una función encapsula una serie de pasos, recibe una entrada y devuelve una salida."
             },
             {
               "type": "p",
-              "text": "Aunque las funciones se trabajen más adelante con mayor profundidad, conviene anticipar su sentido: reducen repetición, disminuyen errores `y` permiten comparar textos de forma sistemática. En términos profesionales, pasar de un conjunto de celdas sueltas a una función es pasar de una demostración a una herramienta reutilizable."
+              "text": "Aunque las funciones se trabajen más adelante con mayor profundidad, conviene anticipar su sentido: reducen repetición, disminuyen errores y permiten comparar textos de forma sistemática. En términos profesionales, pasar de un conjunto de celdas sueltas a una función es pasar de una demostración a una herramienta reutilizable."
             }
           ]
         },
@@ -422,11 +435,11 @@
           "blocks": [
             {
               "type": "p",
-              "text": "El resultado numérico de una métrica debe leerse como una pista, no como una sentencia. Si un texto obtiene un índice alto de dificultad, puede deberse a `oraciones` largas, `palabras` polisilábicas o decisiones de segmentación. Pero también puede tratarse de un texto especializado bien escrito para un público experto. La interpretación depende del destinatario, del género discursivo `y` del propósito comunicativo."
+              "text": "El resultado numérico de una métrica debe leerse como una pista, no como una sentencia. Si un texto obtiene un índice alto de dificultad, puede deberse a `oraciones` largas, `palabras` polisilábicas o decisiones de segmentación. Pero también puede tratarse de un texto especializado bien escrito para un público experto. La interpretación depende del destinatario, del género discursivo y del propósito comunicativo."
             },
             {
               "type": "p",
-              "text": "Esta unidad, por tanto, no enseña solo Python. Enseña una forma de responsabilidad analítica: cada medida debe poder explicarse, cada regla debe poder justificarse `y` cada conclusión debe reconocer sus límites. Esa actitud será necesaria en todas las unidades posteriores de PLN."
+              "text": "Esta unidad, por tanto, no enseña solo Python. Enseña una forma de responsabilidad analítica: cada medida debe poder explicarse, cada regla debe poder justificarse y cada conclusión debe reconocer sus límites. Esa actitud será necesaria en todas las unidades posteriores de PLN."
             }
           ]
         }
@@ -455,7 +468,7 @@
             },
             {
               "type": "p",
-              "text": "Esta combinación es especialmente valiosa en PLN porque el análisis de textos no es solo técnico. Hay que justificar decisiones. Por ejemplo, si decides que un punto `y` coma cuenta como frontera entre `oraciones`, esa decisión no pertenece solo a Python: pertenece también a tu interpretación lingüística de la puntuación."
+              "text": "Esta combinación es especialmente valiosa en PLN porque el análisis de textos no es solo técnico. Hay que justificar decisiones. Por ejemplo, si decides que un punto y coma cuenta como frontera entre `oraciones`, esa decisión no pertenece solo a Python: pertenece también a tu interpretación lingüística de la puntuación."
             },
             {
               "type": "p",
@@ -471,13 +484,13 @@
             },
             {
               "type": "p",
-              "text": "En un contexto profesional, un buen cuaderno no es el que «funciona en secreto», sino el que permite a otra persona del equipo entender qué hace cada celda, por qué se ejecuta en ese orden `y` cómo interpretar la salida."
+              "text": "En un contexto profesional, un buen cuaderno no es el que «funciona en secreto», sino el que permite a otra persona del equipo entender qué hace cada celda, por qué se ejecuta en ese orden y cómo interpretar la salida."
             }
           ]
         },
         {
           "id": "2-2-el-texto-como-dato-variables-y-strings",
-          "title": "2.2. El texto como dato: variables `y` `strings`",
+          "title": "2.2. El texto como dato: variables y `strings`",
           "blocks": [
             {
               "type": "p",
@@ -489,11 +502,11 @@
             },
             {
               "type": "p",
-              "text": "Una variable es un nombre que usamos para guardar un objeto. En este caso, el nombre es `texto1` `y` el objeto guardado es una cadena de texto, es decir, un `string`."
+              "text": "Una variable es un nombre que usamos para guardar un objeto. En este caso, el nombre es `texto1` y el objeto guardado es una cadena de texto, es decir, un `string`."
             },
             {
               "type": "p",
-              "text": "La elección del nombre importa. `texto1` indica que este fragmento será el primer texto de trabajo. En análisis lingüístico computacional, los nombres claros reducen errores. No es lo mismo trabajar con `x`, `y` `y` `z` que con `texto_original`, `texto_adaptado` `y` `texto_traducido`."
+              "text": "La elección del nombre importa. `texto1` indica que este fragmento será el primer texto de trabajo. En análisis lingüístico computacional, los nombres claros reducen errores. No es lo mismo trabajar con `x`, y y `z` que con `texto_original`, `texto_adaptado` y `texto_traducido`."
             },
             {
               "type": "p",
@@ -570,7 +583,7 @@
             },
             {
               "type": "p",
-              "text": "El resultado conservaría informativa; como una unidad con punto `y` coma incluido. Para muchas tareas iniciales basta, pero para análisis más finos necesitaremos tokenizadores más sofisticados."
+              "text": "El resultado conservaría informativa; como una unidad con punto y coma incluido. Para muchas tareas iniciales basta, pero para análisis más finos necesitaremos tokenizadores más sofisticados."
             },
             {
               "type": "p",
@@ -656,11 +669,11 @@
             },
             {
               "type": "p",
-              "text": "Esta constante contiene `signos` de puntuación comunes, como punto, coma, punto `y` coma, dos puntos, interrogación inglesa, paréntesis, comillas `y` otros símbolos."
+              "text": "Esta constante contiene `signos` de puntuación comunes, como punto, coma, punto y coma, dos puntos, interrogación inglesa, paréntesis, comillas y otros símbolos."
             },
             {
               "type": "p",
-              "text": "La idea de fondo es profesional: no hace falta escribir siempre todo desde cero. Parte de programar consiste en saber qué herramientas existen, importarlas `y` usarlas de forma consciente."
+              "text": "La idea de fondo es profesional: no hace falta escribir siempre todo desde cero. Parte de programar consiste en saber qué herramientas existen, importarlas y usarlas de forma consciente."
             },
             {
               "type": "p",
@@ -670,7 +683,7 @@
         },
         {
           "id": "2-6-recorrer-caracteres-y-detectar-puntuacion",
-          "title": "2.6. Recorrer caracteres `y` detectar puntuación",
+          "title": "2.6. Recorrer caracteres y detectar puntuación",
           "blocks": [
             {
               "type": "p",
@@ -786,11 +799,11 @@
             },
             {
               "type": "p",
-              "text": "El método `.strip()` elimina espacios al principio `y` al final de un `string`. Si un fragmento queda vacío, no se cuenta. Esto evita sumar falsas `oraciones` cuando el texto termina en punto o contiene espacios sobrantes."
+              "text": "El método `.strip()` elimina espacios al principio y al final de un `string`. Si un fragmento queda vacío, no se cuenta. Esto evita sumar falsas `oraciones` cuando el texto termina en punto o contiene espacios sobrantes."
             },
             {
               "type": "p",
-              "text": "Hasta aquí, Python aplica una regla formal: «divide por puntos». El problema es que la lengua real usa más `signos` para organizar el discurso. En el `texto1` aparece un punto `y` coma:"
+              "text": "Hasta aquí, Python aplica una regla formal: «divide por puntos». El problema es que la lengua real usa más `signos` para organizar el discurso. En el `texto1` aparece un punto y coma:"
             },
             {
               "type": "code",
@@ -798,7 +811,7 @@
             },
             {
               "type": "p",
-              "text": "Desde una lectura lingüística, ese punto `y` coma separa dos segmentos oracionales relevantes. Python no lo sabe. Por eso el cuaderno corrige el procedimiento:"
+              "text": "Desde una lectura lingüística, ese punto y coma separa dos segmentos oracionales relevantes. Python no lo sabe. Por eso el cuaderno corrige el procedimiento:"
             },
             {
               "type": "code",
@@ -806,7 +819,7 @@
             },
             {
               "type": "p",
-              "text": "Primero se reemplaza el punto `y` coma por un punto. Después se divide por puntos."
+              "text": "Primero se reemplaza el punto y coma por un punto. Después se divide por puntos."
             },
             {
               "type": "p",
@@ -864,7 +877,7 @@
             },
             {
               "type": "p",
-              "text": "`re.findall()` busca todas las coincidencias de un patrón dentro de un texto `y` devuelve una lista."
+              "text": "`re.findall()` busca todas las coincidencias de un patrón dentro de un texto y devuelve una lista."
             },
             {
               "type": "p",
@@ -891,7 +904,7 @@
                 ],
                 [
                   "`re.IGNORECASE`",
-                  "Ignora mayúsculas `y` minúsculas"
+                  "Ignora mayúsculas y minúsculas"
                 ]
               ],
               "title": "Partes del patrón regex"
@@ -906,7 +919,7 @@
             },
             {
               "type": "p",
-              "text": "Esta guía debe insistir en la palabra aproximada. El español tiene diptongos, hiatos, sinalefas, casos dialectales `y` fenómenos fonéticos que este patrón no resuelve. Aun así, el ejercicio es muy valioso porque enseña cómo pasar de una observación lingüística, «las sílabas dependen de vocales», a una regla computacional operativa."
+              "text": "Esta guía debe insistir en la palabra aproximada. El español tiene diptongos, hiatos, sinalefas, casos dialectales y fenómenos fonéticos que este patrón no resuelve. Aun así, el ejercicio es muy valioso porque enseña cómo pasar de una observación lingüística, «las sílabas dependen de vocales», a una regla computacional operativa."
             },
             {
               "type": "p",
@@ -925,6 +938,14 @@
                 ]
               ],
               "title": "Número de sílabas"
+            },
+            {
+              "type": "image_modal",
+              "caption": "Infografía generada con NotebookLM a partir del manual teórico elaborado por la Dr.ª Blanca Hernández Pardo.",
+              "src": "img/infografia_regex.jpg",
+              "alt": "Infografía: anatomía de un patrón regex — cadena raw, clase de caracteres, cuantificador y re.IGNORECASE",
+              "label": "Ver la anatomía del patrón en infografía",
+              "sub": "Los 4 fragmentos explicados"
             }
           ]
         },
@@ -942,7 +963,7 @@
             },
             {
               "type": "p",
-              "text": "Una vez calculadas `palabras`, `oraciones` `y` sílabas, combinamos las medidas:"
+              "text": "Una vez calculadas `palabras`, `oraciones` y sílabas, combinamos las medidas:"
             },
             {
               "type": "code",
@@ -979,7 +1000,7 @@
             },
             {
               "type": "p",
-              "text": "El segundo término se relaciona con la longitud media de las `oraciones`. Las `oraciones` muy largas suelen exigir más memoria de trabajo `y` pueden dificultar la comprensión."
+              "text": "El segundo término se relaciona con la longitud media de las `oraciones`. Las `oraciones` muy largas suelen exigir más memoria de trabajo y pueden dificultar la comprensión."
             },
             {
               "type": "p",
@@ -1013,7 +1034,7 @@
             },
             {
               "type": "p",
-              "text": "Este índice no es una fórmula oficial de legibilidad. Es un prototipo didáctico. Sirve para aprender a construir una métrica, no para certificar profesionalmente que un texto es accesible. Esta distinción es clave en segundo curso. Una métrica computacional puede orientar, comparar `y` detectar casos llamativos, pero no sustituye el juicio lingüístico. Un texto puede tener un índice alto `y` ser claro si usa vocabulario familiar. Otro puede tener frases cortas `y` ser difícil si contiene términos técnicos, ambigüedad o conceptos abstractos."
+              "text": "Este índice no es una fórmula oficial de legibilidad. Es un prototipo didáctico. Sirve para aprender a construir una métrica, no para certificar profesionalmente que un texto es accesible. Esta distinción es clave en segundo curso. Una métrica computacional puede orientar, comparar y detectar casos llamativos, pero no sustituye el juicio lingüístico. Un texto puede tener un índice alto y ser claro si usa vocabulario familiar. Otro puede tener frases cortas y ser difícil si contiene términos técnicos, ambigüedad o conceptos abstractos."
             }
           ]
         },
@@ -1035,7 +1056,7 @@
             },
             {
               "type": "p",
-              "text": "Este detalle conecta con una competencia profesional: presentar resultados de forma comprensible. El análisis no termina cuando Python calcula. Termina cuando una persona puede leer el resultado `y` entender qué significa."
+              "text": "Este detalle conecta con una competencia profesional: presentar resultados de forma comprensible. El análisis no termina cuando Python calcula. Termina cuando una persona puede leer el resultado y entender qué significa."
             }
           ]
         },
@@ -1053,7 +1074,7 @@
             },
             {
               "type": "p",
-              "text": "Una función permite reutilizar el análisis sin copiar `y` pegar tantas líneas. En proyectos reales, esto reduce errores `y` facilita comparar muchos textos."
+              "text": "Una función permite reutilizar el análisis sin copiar y pegar tantas líneas. En proyectos reales, esto reduce errores y facilita comparar muchos textos."
             }
           ]
         },
@@ -1068,10 +1089,10 @@
             {
               "type": "ul",
               "items": [
-                "Usar un tokenizador lingüístico para separar `palabras` `y` `signos` con más precisión.",
+                "Usar un tokenizador lingüístico para separar `palabras` y `signos` con más precisión.",
                 "Aplicar un segmentador de `oraciones` en lugar de reemplazos manuales.",
                 "Incorporar un silabificador más fiable para español.",
-                "Calcular longitud media de palabra `y` longitud media de oración por separado.",
+                "Calcular longitud media de palabra y longitud media de oración por separado.",
                 "Medir diversidad léxica con una relación tipo-token.",
                 "Detectar vocabulario especializado o poco frecuente.",
                 "Identificar estructuras sintácticas complejas, como subordinadas o pasivas.",
@@ -1127,7 +1148,7 @@
       "blocks": [
         {
           "type": "p",
-          "text": "En esta unidad has aprendido la base conceptual de un primer análisis de PLN con Python: representar un texto como cadena de caracteres, guardarlo en una variable, dividirlo en unidades, contar rasgos observables `y` combinar esos rasgos en una medida aproximada."
+          "text": "En esta unidad has aprendido la base conceptual de un primer análisis de PLN con Python: representar un texto como cadena de caracteres, guardarlo en una variable, dividirlo en unidades, contar rasgos observables y combinar esos rasgos en una medida aproximada."
         },
         {
           "type": "p",
@@ -1135,7 +1156,7 @@
         },
         {
           "type": "p",
-          "text": "El prototipo de legibilidad no pretende sustituir una evaluación experta de accesibilidad. Sirve para comprender cómo se construye una métrica, por qué hay que documentar sus supuestos `y` cómo Python puede ayudar a comparar textos de forma inicial `y` reproducible."
+          "text": "El prototipo de legibilidad no pretende sustituir una evaluación experta de accesibilidad. Sirve para comprender cómo se construye una métrica, por qué hay que documentar sus supuestos y cómo Python puede ayudar a comparar textos de forma inicial y reproducible."
         }
       ],
       "subsections": [],
@@ -1147,15 +1168,15 @@
       "blocks": [
         {
           "type": "p",
-          "text": "Al cerrar esta unidad, tu primer encargo en LinguaAdapt ya tiene forma. Has partido de un texto institucional, lo has guardado como dato, lo has dividido en unidades, has contado rasgos observables `y` has construido una métrica sencilla para orientar una decisión de accesibilidad."
+          "text": "Al cerrar esta unidad, tu primer encargo en LinguaAdapt ya tiene forma. Has partido de un texto institucional, lo has guardado como dato, lo has dividido en unidades, has contado rasgos observables y has construido una métrica sencilla para orientar una decisión de accesibilidad."
         },
         {
           "type": "p",
-          "text": "Lo más importante no es el número final. Lo importante es haber entendido el proceso: cada resultado computacional nace de una decisión previa. Decidir qué cuenta como palabra, qué cuenta como oración o qué patrón aproxima una sílaba son elecciones que conectan conocimiento lingüístico `y` programación. Ese es el punto de entrada al PLN: usar Python para hacer explícitas nuestras hipótesis sobre el lenguaje, probarlas sobre textos reales `y` revisar críticamente lo que la máquina devuelve."
+          "text": "Lo más importante no es el número final. Lo importante es haber entendido el proceso: cada resultado computacional nace de una decisión previa. Decidir qué cuenta como palabra, qué cuenta como oración o qué patrón aproxima una sílaba son elecciones que conectan conocimiento lingüístico y programación. Ese es el punto de entrada al PLN: usar Python para hacer explícitas nuestras hipótesis sobre el lenguaje, probarlas sobre textos reales y revisar críticamente lo que la máquina devuelve."
         },
         {
           "type": "p",
-          "text": "Python no lee como una lingüista. Pero una lingüista que sabe Python puede enseñarle a observar patrones, medirlos `y` convertirlos en preguntas mejores."
+          "text": "Python no lee como una lingüista. Pero una lingüista que sabe Python puede enseñarle a observar patrones, medirlos y convertirlos en preguntas mejores."
         }
       ],
       "subsections": [],

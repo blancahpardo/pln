@@ -17,13 +17,19 @@ def iter_block_items(parent):
         elif child.tag == qn('w:tbl'):
             yield Table(child, parent)
 
+# The word "y" is in Courier New on literally every occurrence throughout
+# the whole document (confirmed by scanning all paragraphs and table cells) -
+# a document-wide formatting artifact, not intentional code styling. Treating
+# a Courier New run as real code requires it not be just this stray "y".
+_FALSE_POSITIVE_CODE_RUNS = {'y'}
+
 def runs_to_markup(paragraph):
     """Rebuild paragraph text from its runs, wrapping any run set in Courier
     New (the docx's own inline-code styling, e.g. `len()` mentioned in prose)
     in backticks so the client renders it as monospace code."""
     parts, buf, buf_code = [], '', None
     for r in paragraph.runs:
-        is_code = (r.font.name == 'Courier New')
+        is_code = (r.font.name == 'Courier New' and r.text.strip().lower() not in _FALSE_POSITIVE_CODE_RUNS)
         if buf_code is None:
             buf_code = is_code
         if is_code != buf_code:
@@ -337,11 +343,27 @@ IMAGE_BLOCKS = {
         'label': 'Ver la fórmula en infografía',
         'sub': 'Cómo se combinan sus dos partes',
     }],
-    # ('1. Marco teórico', '1.6. Tokenización básica: dividir por espacios no es comprender la lengua'): [{
-    #     'type': 'image',
-    #     'src': 'img/infografia_tokenizacion.jpg',
-    #     'alt': 'Infografía: tokenización básica frente a las unidades lingüísticas reales (palabra, oración, sílaba, legibilidad)',
-    # }],  # TEMP: re-enable once infografia_tokenizacion.jpg is saved to t1/img/
+    ('1. Marco teórico', '1.6. Tokenización básica: dividir por espacios no es comprender la lengua'): [{
+        'type': 'image',
+        'position': 'end',
+        'src': 'img/infografia_tokenizacion.jpg',
+        'alt': 'Infografía: tokenización básica frente a las unidades lingüísticas reales (palabra, oración, sílaba, legibilidad)',
+    }],
+    ('1. Marco teórico', '1.2. Notebooks, Google Colab y narrativas computacionales'): [{
+        'type': 'image_reveal',
+        'position': 'end',
+        'src': 'img/infografia_notebook.jpg',
+        'alt': 'Infografía: anatomía del notebook — celda de código, celda de texto, salida e historial de ejecución',
+        'labelClosed': '🔎 Descubre la anatomía del notebook',
+    }],
+    ('2. Python para PLN: del texto como dato al primer prototipo de legibilidad', '2.8. Expresiones regulares: buscar patrones de vocales'): [{
+        'type': 'image_modal',
+        'position': 'end',
+        'src': 'img/infografia_regex.jpg',
+        'alt': 'Infografía: anatomía de un patrón regex — cadena raw, clase de caracteres, cuantificador y re.IGNORECASE',
+        'label': 'Ver la anatomía del patrón en infografía',
+        'sub': 'Los 4 fragmentos explicados',
+    }],
 }
 
 def _place_image(blocks, img):
