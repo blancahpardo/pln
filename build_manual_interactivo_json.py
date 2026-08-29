@@ -173,6 +173,7 @@ for sec in sections:
 # table's real content (not invented) -> keyed by (section title, row-1 header
 # tuple) since a couple of tables share the generic "Medida / Resultado" header.
 TABLE_TITLES = {
+    ('Mapa conceptual de la unidad', ('Pieza del cuaderno', 'Qué aporta a Python', 'Qué aporta al PLN')): 'Datos completos del mapa conceptual',
     ('1. Marco teórico', ('Elemento', 'Función didáctica', 'Riesgo que conviene controlar')): 'Piezas de un notebook',
     ('1. Marco teórico', ('Decisión', 'Regla simple de la unidad', 'Limitación lingüística')): 'Qué cuenta cada unidad lingüística',
     ('2. Python para PLN: del texto como dato al primer prototipo de legibilidad', ('Medida', 'Resultado')): None,  # resolved below by content
@@ -284,6 +285,24 @@ for sec in sections:
     walk_and_wrap(sec['blocks'])
     for sub in sec['subsections']:
         walk_and_wrap(sub['blocks'])
+
+# Infographics generated with NotebookLM from this same source (scoped to
+# Teoría_PLN1.docx only, verified against the document's real figures before
+# accepting) -> inserted as 'image' blocks at the front of the section they
+# illustrate, image files live in t1/img/. Add new ones here as they're
+# generated; keep the underlying table/content block too so no information
+# from the manual is lost, only made more visual.
+IMAGE_BLOCKS = {
+    'Mapa conceptual de la unidad': {
+        'type': 'image', 'src': 'img/infografia_mapa_conceptual.jpg',
+        'alt': 'Infografía: flujo de trabajo del prototipo de legibilidad, de Google Colab al índice de legibilidad',
+        'caption': 'Infografía generada con NotebookLM a partir de este mismo documento.'
+    },
+}
+for sec in sections:
+    img = IMAGE_BLOCKS.get(sec['title'])
+    if img:
+        sec['blocks'].insert(0, dict(img))
 
 data = {'header': header, 'sections': sections, 'references': refs_out}
 with open(OUT, 'w', encoding='utf-8') as f:

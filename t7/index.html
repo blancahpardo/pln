@@ -132,6 +132,9 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .im-modal-close { background:var(--claro); border:none; width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:14px; color:var(--gris); flex:none; }
 .im-modal-close:hover { background:#E3E7E9; }
 .im-modal-body { overflow:auto; padding:16px 20px 20px; }
+.im-figure { margin:6px 0 20px; }
+.im-figure-img { display:block; width:100%; border-radius:10px; box-shadow:0 4px 16px rgba(159,177,186,.35); }
+.im-figure-caption { font-size:12px; color:var(--humo); text-align:center; margin-top:8px; font-style:italic; }
 .im-errorlist { list-style:none; padding:0; margin:0 0 6px; }
 .im-errorlist li { background:var(--claro); border-left:3px solid var(--rojo); border-radius:0 8px 8px 0; padding:12px 16px; margin-bottom:10px; }
 .im-errorlist .im-error-term { display:block; font-weight:bold; color:var(--azul); font-size:14px; margin-bottom:4px; }
@@ -378,6 +381,8 @@ footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--h
       else if (b.type === "code") html += '<button class="im-code-toggle" data-im-code="' + key + '">🔎 Descubre el código</button>' +
         '<div class="im-code-box" id="im-code-' + key + '"><pre>' + imEsc(b.code) + "</pre></div>";
       else if (b.type === "table") html += imRenderTable(b, key, bareTable);
+      else if (b.type === "image") html += '<figure class="im-figure"><img class="im-figure-img" src="' + imEsc(b.src) + '" alt="' + imEsc(b.alt || "") + '">' +
+        (b.caption ? '<figcaption class="im-figure-caption">' + imFormatInline(b.caption) + "</figcaption>" : "") + "</figure>";
       else if (b.type === "errorlist") html += '<ul class="im-errorlist">' + b.items.map(function(it) {
         return '<li><span class="im-error-term">' + imFormatInline(it.term) + '</span><span class="im-error-desc">' + imFormatInline(it.desc) + "</span></li>";
       }).join("") + "</ul>";

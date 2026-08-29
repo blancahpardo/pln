@@ -89,6 +89,12 @@
       "title": "Mapa conceptual de la unidad",
       "blocks": [
         {
+          "type": "image",
+          "src": "img/infografia_mapa_conceptual.jpg",
+          "alt": "Infografía: flujo de trabajo del prototipo de legibilidad, de Google Colab al índice de legibilidad",
+          "caption": "Infografía generada con NotebookLM a partir de este mismo documento."
+        },
+        {
           "type": "table",
           "rows": [
             [
@@ -142,7 +148,7 @@
               "Resume de forma orientativa la complejidad"
             ]
           ],
-          "title": "Tabla"
+          "title": "Datos completos del mapa conceptual"
         }
       ],
       "subsections": [],
