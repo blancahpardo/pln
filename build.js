@@ -130,14 +130,13 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .quiz-feedback { font-size:13px; color:var(--gris); background:#fff; border-radius:8px; padding:12px 16px; margin-top:4px; margin-bottom:16px; border-left:3px solid var(--azul); }
 .quiz-score { font-size:26px; font-weight:bold; color:var(--azul); margin-bottom:8px; }
 .quiz-result { background:var(--claro); border-radius:12px; padding:30px; text-align:center; }
-/* interactive manual (prueba) */
+/* interactive manual */
 .im-root { margin-top:0; }
 .im-hero { position:relative; background:linear-gradient(135deg, var(--azul) 0%, var(--azul-d) 100%); border-radius:16px; padding:34px 26px 30px; margin-bottom:22px; overflow:hidden; }
 .im-hero::before { content:""; position:absolute; top:-46px; right:-46px; width:190px; height:190px; border-radius:50%; background:rgba(244,197,66,.12); }
 .im-hero::after { content:""; position:absolute; bottom:-60px; left:30%; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,.05); }
 .im-hero-dl { position:absolute; top:16px; right:16px; background:var(--amar); color:var(--azul-d); border:none; border-radius:20px; padding:9px 16px; font-size:12px; font-weight:bold; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-family:Arial,Helvetica,sans-serif; z-index:1; }
 .im-hero-dl:hover { filter:brightness(1.08); }
-.im-hero-pill { display:inline-block; background:rgba(255,255,255,.14); color:#fff; font-size:10.5px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:20px; margin-bottom:14px; position:relative; z-index:1; }
 .im-hero-kicker { color:var(--amar); font-size:12.5px; font-weight:bold; letter-spacing:.4px; margin:0 0 8px; position:relative; z-index:1; }
 .im-hero-title { color:#fff; font-size:clamp(21px,3.2vw,30px); line-height:1.28; margin:0; max-width:620px; position:relative; z-index:1; }
 .im-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
@@ -834,7 +833,6 @@ function buildTopicHtml(tema) {
       '<span class="im-card-meta">' + data.references.length + ' referencias en APA 7ª ed.</span></button>';
     var hero = '<div class="im-hero">' +
       (pdf ? '<a class="im-hero-dl" href="' + imEsc(pdf) + '" download>⬇ Descargar manual en PDF</a>' : "") +
-      '<div class="im-hero-pill">Versión interactiva · prueba</div>' +
       '<div class="im-hero-kicker">' + imEsc(data.header.kicker) + " · " + imEsc(data.header.title) + "</div>" +
       '<h1 class="im-hero-title">' + imEsc(data.header.subtitle) + "</h1></div>";
     root.innerHTML = hero + '<div class="im-grid">' + cards + bibCard + "</div>";
@@ -1319,11 +1317,11 @@ const TEMAS = [
       quiz: { exists: false }
     } },
   { dir: 't1', numLabel: 'TEMA 1', titleShort: 'Tema 1', titleFull: 'Tema 1', kicker: 'Tema 1',
-    viewOrder: ['manual','manual_interactivo','adicionales','infografia','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual_interactivo','adicionales','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
-      manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico interactivo (prueba)', icon: '✨',
-        desc: 'Mismo contenido del manual, navegable por paneles — versión de prueba', dataFile: 'manual_interactivo.json' },
+      manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico', icon: '✨',
+        desc: 'Manual interactivo, navegable por paneles', dataFile: 'manual_interactivo.json' },
       adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
         desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
           { author: 'linguAIstica', date: '2026, 1 de junio', title: 'Tokenización: el arte de cortar texto para que la IA lo entienda', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DZDa4tNjcOn/' },
