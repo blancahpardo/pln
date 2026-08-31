@@ -1,0 +1,969 @@
+{
+  "header": {
+    "kicker": "Tema introductorio",
+    "title": "Trabajar con ficheros .ipynb",
+    "subtitle": "Guía paso a paso para abrir, ejecutar y guardar cuadernos en Google Colab y Visual Studio Code",
+    "meta": "Material complementario | Programación para PLN | Universidad Pontificia Comillas"
+  },
+  "sections": [
+    {
+      "id": "titulo-narrativo",
+      "title": "Título narrativo",
+      "blocks": [],
+      "subsections": [
+        {
+          "id": "del-fichero-recibido-al-cuaderno-listo-para-trabajar",
+          "title": "Del fichero recibido al cuaderno listo para trabajar",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Imagina que recibes por correo o por el campus virtual un fichero llamado practica_tokenizacion.ipynb. El contenido está completo, pero el fichero no se comporta como un documento de texto convencional: al hacer doble clic, el sistema puede no saber con qué programa abrirlo. La tarea consiste en elegir un entorno de trabajo, abrir el cuaderno sin alterar su estructura y dejarlo preparado para leer, editar y ejecutar sus celdas."
+            }
+          ]
+        }
+      ],
+      "navTitle": "Del fichero al cuaderno"
+    },
+    {
+      "id": "contexto-profesional",
+      "title": "Contexto profesional",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Los cuadernos Jupyter se utilizan con frecuencia en programación, análisis de datos y procesamiento del lenguaje natural porque permiten reunir en un mismo archivo explicaciones, código ejecutable, fórmulas, imágenes y resultados. Esta combinación facilita que un procedimiento técnico sea reproducible y que otra persona pueda seguirlo paso a paso."
+        },
+        {
+          "type": "p",
+          "text": "En una asignatura de Programación para PLN, un fichero .ipynb puede contener la explicación de una técnica, ejemplos en Python, ejercicios y resultados parciales. Abrirlo correctamente es el primer requisito para trabajar con él: si se abre como texto sin formato, se verá su representación interna en JSON; si se abre en un entorno de cuadernos, aparecerá organizado en celdas legibles y ejecutables."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Contexto profesional"
+    },
+    {
+      "id": "encargo",
+      "title": "Encargo",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Debes abrir un fichero .ipynb por dos vías distintas:"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "En Google Colab, dentro del navegador y con la ejecución alojada en los servidores de Google.",
+            "En Visual Studio Code, como archivo local y con un entorno de Python instalado o seleccionado en el equipo."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "El objetivo no es solo conseguir que el fichero «se vea». Al terminar, debes saber comprobar que el cuaderno está en el entorno correcto, distinguir entre abrir y ejecutar, seleccionar un núcleo cuando sea necesario y guardar los cambios sin perder el archivo original."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Encargo"
+    },
+    {
+      "id": "caso-de-trabajo-inicial",
+      "title": "Caso de trabajo inicial",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Supongamos que el fichero se llama introduccion_pln.ipynb y está guardado en la carpeta Descargas. Puede proceder del campus virtual, de un mensaje de correo o de una carpeta compartida. Antes de empezar, conviene verificar tres datos:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "El nombre termina realmente en .ipynb.",
+            "El fichero se ha descargado por completo y no tiene un tamaño de 0 KB.",
+            "Se conoce su ubicación, por ejemplo, Descargas, Documentos o una carpeta de la asignatura."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "> Idea clave. Abrir un cuaderno y ejecutar un cuaderno son acciones diferentes. Se puede leer un .ipynb sin ejecutar ninguna celda. La ejecución comienza únicamente cuando se pulsa el botón correspondiente o se utiliza un atajo de teclado."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Caso de trabajo"
+    },
+    {
+      "id": "que-vas-a-aprender-en-esta-unidad",
+      "title": "Qué vas a aprender en esta unidad",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Al finalizar este manual podrás:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Reconocer qué información contiene un fichero .ipynb.",
+            "Decidir cuándo conviene usar Google Colab y cuándo Visual Studio Code.",
+            "Importar un cuaderno local en Google Colab.",
+            "Abrir un cuaderno local con Visual Studio Code.",
+            "Instalar o comprobar las extensiones necesarias en Visual Studio Code.",
+            "Seleccionar un núcleo de Python para ejecutar las celdas.",
+            "Guardar una copia y localizar el fichero modificado.",
+            "Resolver los errores iniciales más frecuentes."
+          ]
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Qué vas a aprender"
+    },
+    {
+      "id": "mapa-conceptual-de-la-unidad",
+      "title": "Mapa conceptual de la unidad",
+      "blocks": [
+        {
+          "type": "table",
+          "rows": [
+            [
+              "Punto de decisión",
+              "Google Colab",
+              "Visual Studio Code"
+            ],
+            [
+              "Lugar de trabajo",
+              "Navegador web",
+              "Aplicación instalada"
+            ],
+            [
+              "Ubicación habitual del fichero",
+              "Se sube a la sesión o se abre desde Drive",
+              "Permanece en una carpeta local"
+            ],
+            [
+              "Python en el equipo",
+              "No es imprescindible para comenzar",
+              "Debe existir un entorno de Python para ejecutar"
+            ],
+            [
+              "Extensiones",
+              "No se instalan",
+              "Se recomiendan Python y Jupyter"
+            ],
+            [
+              "Núcleo",
+              "Colab prepara el entorno de ejecución",
+              "El usuario suele seleccionarlo"
+            ],
+            [
+              "Guardado",
+              "Drive o descarga de una copia",
+              "Guardado directo en el sistema de archivos"
+            ],
+            [
+              "Uso recomendado",
+              "Inicio rápido, equipos compartidos, trabajo en la nube",
+              "Proyectos locales, control de archivos y entornos"
+            ]
+          ],
+          "title": "Mapa de decisión: Colab o VS Code"
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Mapa conceptual"
+    },
+    {
+      "id": "1-marco-teorico-comprender-el-fichero-ipynb",
+      "title": "1. Marco teórico: comprender el fichero `.ipynb`",
+      "blocks": [],
+      "subsections": [
+        {
+          "id": "1-1-que-es-un-cuaderno-jupyter",
+          "title": "1.1. Qué es un cuaderno Jupyter",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Un cuaderno Jupyter es un documento interactivo dividido en celdas. Las más habituales son:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Celdas de texto o Markdown: contienen títulos, explicaciones, enlaces, listas, fórmulas e instrucciones.",
+                "Celdas de código: contienen instrucciones, normalmente escritas en Python en esta asignatura.",
+                "Salidas: muestran texto, tablas, gráficos, advertencias o mensajes de error producidos al ejecutar una celda."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "La extensión .ipynb significa Interactive Python Notebook. Aunque el nombre conserva la referencia a Python, el formato también puede utilizar otros lenguajes si se instala el núcleo correspondiente."
+            }
+          ]
+        },
+        {
+          "id": "1-2-que-ocurre-al-abrirlo-correctamente",
+          "title": "1.2. Qué ocurre al abrirlo correctamente",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Un entorno compatible interpreta la estructura interna del fichero y presenta las celdas en orden. Cada celda puede editarse por separado. Las celdas de código suelen mostrar un botón de ejecución y, tras ejecutarse, un indicador como [1], [2] o una marca equivalente."
+            },
+            {
+              "type": "p",
+              "text": "El número de ejecución no es el número de posición de la celda. Indica el orden en el que se han ejecutado instrucciones durante la sesión. Por ello, un cuaderno puede producir resultados incoherentes si las celdas se ejecutan desordenadamente."
+            }
+          ]
+        },
+        {
+          "id": "1-3-abrir-confiar-ejecutar-y-guardar",
+          "title": "1.3. Abrir, confiar, ejecutar y guardar",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Estas cuatro acciones no deben confundirse:"
+            },
+            {
+              "type": "table",
+              "rows": [
+                [
+                  "Acción",
+                  "Significado"
+                ],
+                [
+                  "Abrir",
+                  "Mostrar la estructura del cuaderno para leerla o editarla"
+                ],
+                [
+                  "Confiar",
+                  "Autorizar la presentación de ciertos resultados guardados; no convierte el código en seguro"
+                ],
+                [
+                  "Ejecutar",
+                  "Enviar el código de una celda al núcleo seleccionado"
+                ],
+                [
+                  "Guardar",
+                  "Escribir los cambios en Drive o en el fichero local"
+                ]
+              ],
+              "title": "Acciones al abrir un cuaderno"
+            },
+            {
+              "type": "p",
+              "text": "Un .ipynb puede contener código capaz de leer, modificar o borrar archivos accesibles para el entorno de ejecución. Antes de ejecutar un cuaderno recibido de otra persona, conviene revisar sus celdas y confirmar que la procedencia es fiable."
+            }
+          ]
+        },
+        {
+          "id": "1-4-como-elegir-el-entorno",
+          "title": "1.4. Cómo elegir el entorno",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Google Colab suele ser la vía más rápida cuando se quiere empezar sin configurar Python en el equipo. También resulta útil en ordenadores compartidos o cuando el cuaderno requiere recursos disponibles en la nube. Sin embargo, el fichero subido desde el equipo puede ser una copia temporal y la sesión puede desconectarse."
+            },
+            {
+              "type": "p",
+              "text": "Visual Studio Code resulta apropiado cuando se trabaja con una carpeta de proyecto, se necesitan otros archivos locales o se desea controlar versiones, paquetes y entornos. La configuración inicial exige más pasos, pero después permite mantener el cuaderno junto con los demás materiales del proyecto."
+            }
+          ]
+        }
+      ],
+      "navTitle": "Marco teórico"
+    },
+    {
+      "id": "2-abrir-un-fichero-ipynb-en-google-colab",
+      "title": "2. Abrir un fichero `.ipynb` en Google Colab",
+      "blocks": [],
+      "subsections": [
+        {
+          "id": "2-1-requisitos-previos",
+          "title": "2.1. Requisitos previos",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Para seguir este procedimiento necesitas:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Un navegador actualizado.",
+                "Conexión a Internet.",
+                "El fichero .ipynb localizado en el equipo.",
+                "Una cuenta de Google para guardar con normalidad en Google Drive."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Es posible acceder a la pantalla de Colab sin instalar ningún programa. Google Colab se ejecuta en el navegador y ofrece un entorno de cuadernos alojado."
+            }
+          ]
+        },
+        {
+          "id": "2-2-procedimiento-principal-subir-el-fichero-desde-el-equipo",
+          "title": "2.2. Procedimiento principal: subir el fichero desde el equipo",
+          "blocks": [
+            {
+              "type": "h4",
+              "text": "Paso 1. Abrir Google Colab"
+            },
+            {
+              "type": "p",
+              "text": "Abre el navegador y escribe https://colab.research.google.com/. Espera a que aparezca la página de Colab. Si Google solicita iniciar sesión, utiliza la cuenta con la que quieras trabajar y guardar el cuaderno."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 2. Mostrar el selector de cuadernos"
+            },
+            {
+              "type": "p",
+              "text": "Al entrar puede aparecer directamente una ventana para abrir un cuaderno. Si ya hay otro cuaderno abierto o no aparece esa ventana, utiliza el menú Archivo y elige Abrir cuaderno. La denominación puede variar ligeramente con cambios de interfaz, pero la acción se mantiene en el menú de archivo."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 3. Elegir la pestaña de subida"
+            },
+            {
+              "type": "p",
+              "text": "En la ventana Abrir cuaderno, selecciona la pestaña Subir. Esta opción indica que el archivo está en tu equipo, no en Google Drive ni en un repositorio de GitHub."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 4. Seleccionar el fichero `.ipynb`"
+            },
+            {
+              "type": "p",
+              "text": "Pulsa Examinar o Seleccionar archivo. Se abrirá el selector de archivos del sistema operativo. Ve a la carpeta donde está introduccion_pln.ipynb, selecciónalo y pulsa Abrir."
+            },
+            {
+              "type": "p",
+              "text": "También puede ser posible arrastrar el fichero desde una ventana del explorador hasta el área de subida de Colab. Para un primer uso, el botón de selección suele ser más claro porque permite confirmar la ubicación y el nombre exacto."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 5. Esperar a que termine la carga"
+            },
+            {
+              "type": "p",
+              "text": "Colab subirá el fichero y abrirá el cuaderno en una nueva pestaña o en la pestaña actual. No cierres la ventana mientras se realiza la carga. Un cuaderno con muchas imágenes o salidas guardadas puede tardar más."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 6. Comprobar que el cuaderno se ha abierto bien"
+            },
+            {
+              "type": "p",
+              "text": "Verifica lo siguiente:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "El título superior coincide con el nombre del fichero.",
+                "El contenido aparece dividido en celdas, no como una larga secuencia de llaves y comillas.",
+                "Las celdas de texto muestran títulos y párrafos con formato.",
+                "Las celdas de código muestran un botón de ejecución a la izquierda."
+              ]
+            },
+            {
+              "type": "h4",
+              "text": "Paso 7. Revisar antes de ejecutar"
+            },
+            {
+              "type": "p",
+              "text": "Desplázate por el cuaderno y lee las primeras celdas. Comprueba qué paquetes importa, qué archivos intenta abrir y si solicita credenciales o claves. No ejecutes código que no comprendas cuando la fuente no sea fiable."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 8. Conectar el entorno de ejecución"
+            },
+            {
+              "type": "p",
+              "text": "Para ejecutar código, pulsa Conectar en la zona superior derecha si Colab todavía no ha asignado un entorno. Cuando la conexión esté lista, el estado cambiará y podrán ejecutarse las celdas."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 9. Ejecutar una primera celda de forma controlada"
+            },
+            {
+              "type": "p",
+              "text": "Selecciona una celda de código sencilla y pulsa el botón triangular situado a su izquierda. También puedes usar Mayús + Intro: se ejecuta la celda y se avanza a la siguiente. Espera a que termine antes de continuar."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 10. Guardar el trabajo"
+            },
+            {
+              "type": "p",
+              "text": "Si el cuaderno se ha subido desde el equipo, comprueba dónde se guardarán los cambios. Una opción segura es utilizar Archivo > Guardar una copia en Drive al comenzar. Se creará una copia en Google Drive que podrás volver a abrir más tarde."
+            },
+            {
+              "type": "p",
+              "text": "Para conservar además un fichero local, utiliza Archivo > Descargar > Descargar .ipynb al terminar. El navegador guardará una nueva copia, normalmente en Descargas."
+            }
+          ]
+        },
+        {
+          "id": "2-3-abrir-un-cuaderno-que-ya-esta-en-google-drive",
+          "title": "2.3. Abrir un cuaderno que ya está en Google Drive",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Si el .ipynb está guardado en Drive, abre el selector mediante Archivo > Abrir cuaderno, entra en la pestaña Google Drive y localiza el documento. También puedes abrir Google Drive, hacer clic con el botón derecho sobre el fichero y elegir Abrir con > Google Colaboratory si esa integración está disponible en la cuenta."
+            },
+            {
+              "type": "p",
+              "text": "Si Google Colaboratory no aparece en Abrir con, puede añadirse desde la opción para conectar más aplicaciones. En cuentas institucionales, esta posibilidad puede estar limitada por la administración."
+            }
+          ]
+        },
+        {
+          "id": "2-4-abrir-un-cuaderno-desde-github",
+          "title": "2.4. Abrir un cuaderno desde GitHub",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "En Archivo > Abrir cuaderno, la pestaña GitHub permite buscar un repositorio o pegar una URL. Este procedimiento abre el contenido del repositorio, pero no concede automáticamente permiso para escribir cambios en él. Para conservar las modificaciones, guarda una copia en Drive, descarga el .ipynb o utiliza un flujo de GitHub configurado expresamente."
+            }
+          ]
+        },
+        {
+          "id": "2-5-que-significa-la-sesion-temporal-de-colab",
+          "title": "2.5. Qué significa la sesión temporal de Colab",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "El cuaderno y el entorno de ejecución no son lo mismo. El documento puede estar guardado en Drive, mientras que la memoria, las variables y algunos archivos cargados pertenecen a una máquina virtual temporal. Si la sesión se reinicia o se desconecta:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Se pierden las variables que estaban en memoria.",
+                "Pueden perderse archivos subidos únicamente a la sesión.",
+                "Deben volver a ejecutarse las celdas de instalación e importación.",
+                "El texto y el código guardados en el cuaderno permanecen si se guardaron correctamente."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "2-6-lista-de-comprobacion-para-colab",
+          "title": "2.6. Lista de comprobación para Colab",
+          "blocks": [
+            {
+              "type": "ul",
+              "items": [
+                "El cuaderno muestra celdas de texto y código.",
+                "El nombre del fichero es el esperado.",
+                "Se ha revisado el código antes de ejecutarlo.",
+                "El entorno indica que está conectado.",
+                "Se ha guardado una copia en Drive o se sabe cómo descargar el .ipynb.",
+                "Los archivos auxiliares necesarios también están disponibles en la sesión o en Drive."
+              ]
+            }
+          ]
+        }
+      ],
+      "navTitle": "Abrir en Google Colab"
+    },
+    {
+      "id": "3-abrir-un-fichero-ipynb-en-visual-studio-code",
+      "title": "3. Abrir un fichero .ipynb en Visual Studio Code",
+      "blocks": [],
+      "subsections": [
+        {
+          "id": "3-1-requisitos-previos",
+          "title": "3.1. Requisitos previos",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Para abrir y ejecutar un cuaderno local con Visual Studio Code se recomienda disponer de:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Visual Studio Code instalado.",
+                "Python instalado en el equipo o accesible mediante un entorno del proyecto.",
+                "La extensión Python, publicada por Microsoft.",
+                "La extensión Jupyter, publicada por Microsoft.",
+                "El fichero .ipynb guardado en una carpeta conocida."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Visual Studio Code puede mostrar el cuaderno gracias a la extensión Jupyter. Para ejecutar sus celdas necesita además un núcleo asociado a un entorno que contenga Python y, normalmente, el paquete ipykernel."
+            }
+          ]
+        },
+        {
+          "id": "3-2-comprobar-o-instalar-las-extensiones",
+          "title": "3.2. Comprobar o instalar las extensiones",
+          "blocks": [
+            {
+              "type": "h4",
+              "text": "Paso 1. Abrir Visual Studio Code"
+            },
+            {
+              "type": "p",
+              "text": "Inicia la aplicación desde el menú del sistema, el Dock o el acceso directo correspondiente."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 2. Abrir la vista de extensiones"
+            },
+            {
+              "type": "p",
+              "text": "Pulsa el icono de Extensiones de la barra lateral izquierda. El atajo habitual es Ctrl + Mayús + X en Windows y Linux, o Cmd + Mayús + X en macOS."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 3. Instalar la extensión Python"
+            },
+            {
+              "type": "p",
+              "text": "Escribe Python en el buscador. Elige la extensión Python cuyo editor es Microsoft y pulsa Instalar. Evita instalar extensiones de nombre parecido sin comprobar el editor."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 4. Instalar la extensión Jupyter"
+            },
+            {
+              "type": "p",
+              "text": "Busca Jupyter, selecciona la extensión Jupyter de Microsoft y pulsa Instalar. Puede instalarse también un paquete de extensiones relacionadas; la pieza esencial para los cuadernos es Jupyter."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 5. Recargar si se solicita"
+            },
+            {
+              "type": "p",
+              "text": "Si Visual Studio Code muestra Reload, Recargar o solicita reiniciar la ventana, acepta. Así se activan correctamente las extensiones."
+            }
+          ]
+        },
+        {
+          "id": "3-3-procedimiento-recomendado-abrir-la-carpeta-y-despues-el-",
+          "title": "3.3. Procedimiento recomendado: abrir la carpeta y después el cuaderno",
+          "blocks": [
+            {
+              "type": "h4",
+              "text": "Paso 1. Preparar una carpeta de trabajo"
+            },
+            {
+              "type": "p",
+              "text": "Mueve el fichero a una carpeta estable, por ejemplo, Documentos/Programacion_PLN/Tema_1. Evita trabajar directamente dentro de un archivo comprimido .zip o desde una ubicación temporal del navegador."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 2. Abrir la carpeta en Visual Studio Code"
+            },
+            {
+              "type": "p",
+              "text": "En Visual Studio Code, selecciona Archivo > Abrir carpeta. Elige la carpeta que contiene el cuaderno y confirma. En macOS, el texto puede aparecer como Open Folder si la aplicación está en inglés."
+            },
+            {
+              "type": "p",
+              "text": "Abrir la carpeta completa es preferible a abrir solo el fichero porque permite que las rutas relativas, los datos y otros módulos del proyecto se resuelvan desde un contexto coherente."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 3. Aceptar o revisar la confianza del espacio de trabajo"
+            },
+            {
+              "type": "p",
+              "text": "Visual Studio Code puede preguntar si confías en los autores de los archivos de la carpeta. La confianza del espacio de trabajo habilita determinadas funciones, pero no garantiza que el código sea inocuo. Si conoces la procedencia, confirma la confianza. Si no, utiliza el modo restringido y revisa los archivos antes de ejecutar."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 4. Localizar el `.ipynb` en el Explorador"
+            },
+            {
+              "type": "p",
+              "text": "En la barra lateral, abre el Explorador y busca introduccion_pln.ipynb. Haz clic una vez sobre él. La extensión Jupyter debería abrirlo en el editor de cuadernos, con las celdas separadas."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 5. Confirmar el modo de visualización"
+            },
+            {
+              "type": "p",
+              "text": "El cuaderno debe mostrar celdas de texto y de código. Si aparece como JSON con claves como cells, metadata y nbformat, el fichero se ha abierto en el editor de texto. Haz clic con el botón derecho en la pestaña del archivo, selecciona Reabrir editor con... y elige Jupyter Notebook."
+            }
+          ]
+        },
+        {
+          "id": "3-4-procedimiento-alternativo-abrir-directamente-el-fichero",
+          "title": "3.4. Procedimiento alternativo: abrir directamente el fichero",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "También puedes elegir Archivo > Abrir archivo, seleccionar el .ipynb y pulsar Abrir. Otra posibilidad es hacer clic con el botón derecho sobre el fichero en el explorador del sistema y elegir Abrir con Visual Studio Code."
+            },
+            {
+              "type": "p",
+              "text": "Este método es válido para una consulta rápida. Si el cuaderno utiliza archivos como datos.csv, carpetas como corpus/ o módulos propios, abre después la carpeta completa para evitar problemas con rutas relativas."
+            }
+          ]
+        },
+        {
+          "id": "3-5-seleccionar-el-nucleo-de-python",
+          "title": "3.5. Seleccionar el núcleo de Python",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Abrir el documento permite leerlo, pero la ejecución requiere un núcleo. Sigue estos pasos:"
+            },
+            {
+              "type": "h4",
+              "text": "Paso 1. Localizar el selector de núcleo"
+            },
+            {
+              "type": "p",
+              "text": "En la parte superior derecha del editor del cuaderno busca Seleccionar núcleo, Select Kernel o el nombre de un entorno ya elegido."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 2. Abrir la lista de núcleos"
+            },
+            {
+              "type": "p",
+              "text": "Pulsa el selector. Visual Studio Code puede ofrecer categorías como Entornos de Python o Jupyter Kernel. Elige la opción de entornos de Python si vas a ejecutar código Python local."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 3. Elegir el entorno adecuado"
+            },
+            {
+              "type": "p",
+              "text": "Selecciona el entorno que corresponde al proyecto. Puede aparecer como una versión global, por ejemplo Python 3.12, o como un entorno virtual, por ejemplo .venv. Si el profesorado ha indicado un entorno concreto, utiliza ese."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 4. Esperar al inicio del núcleo"
+            },
+            {
+              "type": "p",
+              "text": "La primera conexión puede tardar unos segundos. Visual Studio Code puede pedir instalar ipykernel en el entorno seleccionado. Acepta la instalación solo si ese es el entorno en el que quieres trabajar."
+            },
+            {
+              "type": "h4",
+              "text": "Paso 5. Ejecutar una celda de prueba"
+            },
+            {
+              "type": "p",
+              "text": "Pulsa el triángulo de una celda o usa Mayús + Intro. Observa la salida debajo de la celda. Una prueba sencilla es ejecutar una celda que importe una biblioteca utilizada por el cuaderno."
+            }
+          ]
+        },
+        {
+          "id": "3-6-si-no-aparece-ningun-entorno-de-python",
+          "title": "3.6. Si no aparece ningún entorno de Python",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Comprueba en este orden:"
+            },
+            {
+              "type": "ol",
+              "items": [
+                "Abre la paleta de comandos con Ctrl + Mayús + P o Cmd + Mayús + P.",
+                "Escribe Python: Select Interpreter.",
+                "Selecciona un intérprete detectado.",
+                "Si no hay ninguno, instala Python desde una fuente oficial o crea el entorno indicado para la asignatura.",
+                "Vuelve al cuaderno y repite Seleccionar núcleo."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "En proyectos docentes es frecuente utilizar un entorno virtual. Desde una terminal situada en la carpeta del proyecto, un ejemplo habitual es:"
+            },
+            {
+              "type": "code",
+              "code": "python -m venv .venv"
+            },
+            {
+              "type": "p",
+              "text": "Después se activa el entorno según el sistema operativo y se instalan los paquetes necesarios. No ejecutes estos comandos a ciegas si el proyecto ya incluye instrucciones o un entorno preparado."
+            }
+          ]
+        },
+        {
+          "id": "3-7-guardar-el-cuaderno-en-visual-studio-code",
+          "title": "3.7. Guardar el cuaderno en Visual Studio Code",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Utiliza Ctrl + S en Windows y Linux o Cmd + S en macOS. El guardado modifica el fichero local que está abierto. Si quieres preservar una copia original:"
+            },
+            {
+              "type": "ol",
+              "items": [
+                "Antes de editar, duplica el fichero en el explorador del sistema; o",
+                "Utiliza Archivo > Guardar como y añade un nombre, por ejemplo, introduccion_pln_resuelto.ipynb."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Los resultados de las celdas pueden quedar incorporados al .ipynb y aumentar su tamaño. Antes de entregar un cuaderno, sigue las instrucciones de la asignatura sobre si deben conservarse o borrarse las salidas."
+            }
+          ]
+        },
+        {
+          "id": "3-8-reiniciar-y-ejecutar-todo",
+          "title": "3.8. Reiniciar y ejecutar todo",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Cuando las celdas se han ejecutado en un orden irregular, utiliza las opciones del cuaderno para Reiniciar el núcleo y Ejecutar todo. Esta comprobación permite verificar si el cuaderno funciona desde un estado limpio."
+            },
+            {
+              "type": "p",
+              "text": "Reiniciar borra variables y objetos de la memoria, pero no elimina el código ni el texto guardados. Después de reiniciar, las celdas deben ejecutarse desde el principio."
+            }
+          ]
+        },
+        {
+          "id": "3-9-lista-de-comprobacion-para-visual-studio-code",
+          "title": "3.9. Lista de comprobación para Visual Studio Code",
+          "blocks": [
+            {
+              "type": "ul",
+              "items": [
+                "Las extensiones Python y Jupyter están instaladas y habilitadas.",
+                "Se ha abierto la carpeta de trabajo correcta.",
+                "El .ipynb aparece como cuaderno, no como JSON.",
+                "El núcleo seleccionado corresponde al entorno del proyecto.",
+                "Una primera celda se ejecuta sin error.",
+                "El archivo se guarda en la ubicación prevista.",
+                "Los datos y módulos auxiliares están dentro de rutas accesibles."
+              ]
+            }
+          ]
+        }
+      ],
+      "navTitle": "Abrir en VS Code"
+    },
+    {
+      "id": "4-comparacion-del-flujo-completo",
+      "title": "4. Comparación del flujo completo",
+      "blocks": [
+        {
+          "type": "table",
+          "rows": [
+            [
+              "Momento",
+              "Google Colab",
+              "Visual Studio Code"
+            ],
+            [
+              "Inicio",
+              "Abrir una dirección web",
+              "Iniciar una aplicación instalada"
+            ],
+            [
+              "Incorporación del archivo",
+              "Subir, abrir desde Drive o enlazar GitHub",
+              "Abrir archivo o carpeta local"
+            ],
+            [
+              "Preparación para ejecutar",
+              "Conectar a un entorno alojado",
+              "Seleccionar un núcleo local o remoto"
+            ],
+            [
+              "Dependencias",
+              "Pueden instalarse en la sesión",
+              "Se instalan en el entorno del proyecto"
+            ],
+            [
+              "Persistencia de variables",
+              "Se pierde al finalizar o reiniciar la sesión",
+              "Se pierde al reiniciar el núcleo"
+            ],
+            [
+              "Persistencia de archivos auxiliares",
+              "Depende de Drive o de la sesión temporal",
+              "Permanece en el sistema de archivos"
+            ],
+            [
+              "Copia final",
+              "Guardar en Drive o descargar",
+              "Guardar o Guardar como"
+            ]
+          ],
+          "title": "Comparación completa del flujo"
+        }
+      ],
+      "subsections": [
+        {
+          "id": "4-1-decision-rapida",
+          "title": "4.1. Decisión rápida",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Usa Google Colab si necesitas empezar de inmediato, no puedes instalar programas o quieres compartir un enlace. Usa Visual Studio Code si el cuaderno forma parte de un proyecto con varios archivos, quieres controlar el entorno o necesitas trabajar estrechamente con Git y el sistema de archivos local."
+            },
+            {
+              "type": "p",
+              "text": "No existe una opción universalmente mejor. Lo importante es saber dónde está el fichero, dónde se ejecuta el código y dónde se guardan los cambios."
+            }
+          ]
+        }
+      ],
+      "navTitle": "Comparación de flujos"
+    },
+    {
+      "id": "errores-frecuentes-de-aprendizaje",
+      "title": "Errores frecuentes de aprendizaje",
+      "blocks": [
+        {
+          "type": "errorlist",
+          "items": []
+        }
+      ],
+      "subsections": [
+        {
+          "id": "el-fichero-se-abre-como-texto-json",
+          "title": "El fichero se abre como texto JSON",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "El programa no ha utilizado un editor de cuadernos. En Visual Studio Code, usa Reabrir editor con... > Jupyter Notebook y comprueba la extensión Jupyter. En otros programas, abre el fichero desde Colab o desde un entorno compatible."
+            }
+          ]
+        },
+        {
+          "id": "colab-abre-el-cuaderno-pero-despues-desaparecen-los-archivos",
+          "title": "Colab abre el cuaderno, pero después desaparecen los archivos cargados",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Los archivos se subieron a la máquina virtual temporal, no a Drive. Vuelve a cargarlos o monta Google Drive si el ejercicio lo requiere. Guarda siempre el cuaderno y los datos importantes en un almacenamiento persistente."
+            }
+          ]
+        },
+        {
+          "id": "en-visual-studio-code-aparece-seleccionar-nucleo-y-no-se-pue",
+          "title": "En Visual Studio Code aparece «Seleccionar núcleo» y no se puede ejecutar",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Todavía no se ha elegido un entorno. Selecciona un intérprete de Python y, si se solicita, instala ipykernel en ese entorno."
+            }
+          ]
+        },
+        {
+          "id": "una-importacion-produce-modulenotfounderror",
+          "title": "Una importación produce `ModuleNotFoundError`",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "El paquete no está instalado en el núcleo seleccionado o se ha elegido otro entorno. Comprueba el nombre del núcleo antes de instalar nada. Instalar el paquete en un Python distinto no resolverá el error del cuaderno actual."
+            }
+          ]
+        },
+        {
+          "id": "el-cuaderno-funcionaba-pero-ahora-las-variables-no-existen",
+          "title": "El cuaderno funcionaba, pero ahora las variables no existen",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "La sesión o el núcleo se reinició. Ejecuta de nuevo las celdas desde el principio. El código guardado permanece, pero la memoria de ejecución se ha vaciado."
+            }
+          ]
+        },
+        {
+          "id": "las-celdas-producen-resultados-distintos-al-ejecutarlas-en-o",
+          "title": "Las celdas producen resultados distintos al ejecutarlas en orden",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Probablemente existía estado oculto: una variable se creó o modificó en una celda ejecutada anteriormente. Reinicia el núcleo y ejecuta todo desde arriba para comprobar la reproducibilidad."
+            }
+          ]
+        },
+        {
+          "id": "se-ha-sobrescrito-el-fichero-original",
+          "title": "Se ha sobrescrito el fichero original",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "En Visual Studio Code, Guardar modifica el archivo abierto. En Colab, una copia guardada en Drive puede adoptar un nombre similar. Antes de resolver ejercicios, crea una copia con un nombre inequívoco."
+            }
+          ]
+        },
+        {
+          "id": "el-cuaderno-no-encuentra-un-archivo-de-datos",
+          "title": "El cuaderno no encuentra un archivo de datos",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Revisa la ruta utilizada por el código. En Colab, el archivo debe subirse a la sesión o estar accesible desde Drive. En Visual Studio Code, abre la carpeta correcta y conserva la estructura de subcarpetas esperada."
+            }
+          ]
+        },
+        {
+          "id": "se-ejecuta-codigo-sin-revisar-su-procedencia",
+          "title": "Se ejecuta código sin revisar su procedencia",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Un cuaderno no es inocuo por el hecho de tener explicaciones y botones. Lee el código, identifica accesos a archivos, red y credenciales, y ejecuta únicamente materiales de confianza."
+            }
+          ]
+        }
+      ],
+      "navTitle": "Errores frecuentes"
+    },
+    {
+      "id": "sintesis-final",
+      "title": "Síntesis final",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Un fichero .ipynb es un cuaderno interactivo compuesto por celdas de texto, código y resultados. Para abrirlo correctamente se necesita un entorno que interprete el formato Jupyter."
+        },
+        {
+          "type": "p",
+          "text": "En Google Colab, el flujo básico consiste en entrar en Colab, abrir el selector de cuadernos, elegir Subir, seleccionar el fichero y guardar después una copia persistente. La ejecución se realiza en una sesión alojada que puede reiniciarse o desconectarse."
+        },
+        {
+          "type": "p",
+          "text": "En Visual Studio Code, el flujo recomendado consiste en instalar las extensiones Python y Jupyter, abrir la carpeta del proyecto, seleccionar el .ipynb, elegir un núcleo de Python y guardar el fichero local. El entorno seleccionado determina qué versión de Python y qué paquetes utiliza el cuaderno."
+        },
+        {
+          "type": "p",
+          "text": "En ambos casos, abrir no significa ejecutar. Antes de pulsar los controles de ejecución, hay que revisar el código, conocer su procedencia y confirmar dónde se guardarán los cambios y los archivos auxiliares."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Síntesis"
+    },
+    {
+      "id": "cierre-narrativo",
+      "title": "Cierre narrativo",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "El fichero introduccion_pln.ipynb ya no es un documento desconocido. Puedes abrirlo en la nube para comenzar con rapidez o integrarlo en una carpeta de proyecto local para controlar el entorno y sus dependencias. En ambos recorridos, sabes identificar el editor de cuadernos, preparar la ejecución, conservar una copia y recuperar el trabajo cuando se reinicia la sesión."
+        },
+        {
+          "type": "p",
+          "text": "La decisión profesional no consiste solo en elegir una herramienta. Consiste en mantener claras tres ubicaciones: dónde está el cuaderno, dónde se ejecuta el código y dónde permanecen los resultados. Esa distinción permite trabajar con cuadernos Jupyter de forma ordenada, reproducible y segura."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Cierre narrativo"
+    }
+  ],
+  "references": [
+    {
+      "key": "google_colab_faq",
+      "text": "Google. (s. f.). *Google Colaboratory: preguntas frecuentes*. https://research.google.com/colaboratory/faq.html"
+    },
+    {
+      "key": "ms_jupyter_vscode",
+      "text": "Microsoft. (s. f.). Jupyter Notebooks in Visual Studio Code. *Visual Studio Code Documentation*. https://code.visualstudio.com/docs/datascience/jupyter-notebooks"
+    },
+    {
+      "key": "ms_kernels_vscode",
+      "text": "Microsoft. (s. f.). Manage Jupyter Kernels in Visual Studio Code. *Visual Studio Code Documentation*. https://code.visualstudio.com/docs/datascience/jupyter-kernel-management"
+    },
+    {
+      "key": "jupyter_notebook",
+      "text": "Project Jupyter. (s. f.). *The Jupyter Notebook*. https://jupyter-notebook.readthedocs.io/"
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 {
   "manual": false,
+  "manual_interactivo": false,
+  "linguaistica_python": false,
   "principal": false,
   "practica": false,
   "adicionales": false

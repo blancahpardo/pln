@@ -1,0 +1,1671 @@
+{
+  "header": {
+    "kicker": "Tema 0.",
+    "title": "Primer entorno de trabajo con Python y Visual Studio Code",
+    "subtitle": "Manual de iniciación para instalar, configurar y trabajar con proyectos Python",
+    "meta": "Material teórico | Programación para PLN | Universidad Pontificia Comillas"
+  },
+  "sections": [
+    {
+      "id": "1-introduccion",
+      "title": "1. Introducción",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Este manual acompaña los primeros pasos de trabajo con Python en Visual Studio Code. Está pensado para alumnado universitario que empieza a programar o que ha tenido un contacto muy limitado con la programación."
+        },
+        {
+          "type": "p",
+          "text": "Visual Studio Code, que a partir de ahora llamaremos VS Code, es un editor de código. Sirve para escribir archivos de programación, organizar proyectos, abrir una terminal, instalar extensiones y ejecutar programas sin salir del mismo entorno de trabajo."
+        },
+        {
+          "type": "p",
+          "text": "Python es un lenguaje de programación. Sirve para escribir instrucciones que el ordenador puede ejecutar. En asignaturas de análisis lingüístico, procesamiento del lenguaje natural o trabajo con datos, Python permite leer archivos, limpiar textos, crear tablas, calcular resultados, generar gráficos y automatizar tareas repetitivas."
+        },
+        {
+          "type": "p",
+          "text": "Conviene distinguir tres ideas desde el principio:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Instalar Python significa colocar en el ordenador el programa que sabe interpretar y ejecutar código Python.",
+            "Escribir código significa crear archivos de texto, normalmente con extensión .py, que contienen instrucciones.",
+            "Ejecutar un programa significa pedirle a Python que lea ese archivo y realice las acciones que aparecen en él."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Una carpeta de proyecto es una carpeta donde se guarda todo lo relacionado con una práctica o trabajo: archivos .py, datos, resultados, cuadernos, imágenes, documentación y archivo requirements.txt. La carpeta de proyecto es la unidad mínima de trabajo ordenado."
+        },
+        {
+          "type": "p",
+          "text": "No conviene trabajar con archivos sueltos en Descargas o Escritorio porque esas carpetas suelen mezclar documentos distintos, capturas, instaladores y archivos temporales. Cuando se programa, muchos errores aparecen porque Python no encuentra un archivo, una tabla o una carpeta. Si todo está dentro de una carpeta de proyecto, es mucho más fácil saber dónde estamos y qué estamos ejecutando."
+        },
+        {
+          "type": "p",
+          "text": "Advertencia importante: en programación, el orden de carpetas importa. Abrir un archivo suelto no es lo mismo que abrir una carpeta completa de proyecto."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Introducción"
+    },
+    {
+      "id": "2-instalacion-de-visual-studio-code",
+      "title": "2. Instalación de Visual Studio Code",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "VS Code debe descargarse desde la web oficial de Visual Studio Code. No es recomendable descargarlo desde páginas de terceros."
+        }
+      ],
+      "subsections": [
+        {
+          "id": "windows",
+          "title": "Windows",
+          "blocks": [
+            {
+              "type": "ol",
+              "items": [
+                "Entra en la web oficial de Visual Studio Code.",
+                "Descarga el instalador para Windows.",
+                "Abre el instalador descargado.",
+                "Acepta la licencia y avanza por los pasos del asistente.",
+                "Puedes dejar las opciones por defecto."
+              ]
+            },
+            {
+              "type": "ol",
+              "items": [
+                "Si aparece la opción de añadir VS Code al menú contextual, puede ser útil, pero no es imprescindible.",
+                "Finaliza la instalación."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Para abrir VS Code por primera vez:"
+            },
+            {
+              "type": "ol",
+              "items": [
+                "Abre el menú Inicio.",
+                "Escribe Visual Studio Code.",
+                "Pulsa sobre la aplicación."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "macos",
+          "title": "macOS",
+          "blocks": [
+            {
+              "type": "ol",
+              "items": [
+                "Entra en la web oficial de Visual Studio Code.",
+                "Descarga la versión para macOS.",
+                "Abre el archivo descargado.",
+                "Arrastra Visual Studio Code a la carpeta Aplicaciones.",
+                "Abre VS Code desde Aplicaciones."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Advertencia importante: en macOS no basta con abrir VS Code desde Descargas. Hay que moverlo a Aplicaciones para que quede instalado correctamente."
+            }
+          ]
+        },
+        {
+          "id": "abrir-una-carpeta-de-proyecto-desde-vs-code",
+          "title": "Abrir una carpeta de proyecto desde VS Code",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Cuando VS Code esté abierto:"
+            },
+            {
+              "type": "ol",
+              "items": [
+                "Ve al menú File o Archivo.",
+                "Elige Open Folder... o Abrir carpeta....",
+                "Selecciona la carpeta del proyecto.",
+                "Confirma que confías en esa carpeta si VS Code lo pregunta."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "La práctica recomendada es abrir siempre la carpeta completa del proyecto, no solo un archivo .py."
+            }
+          ]
+        }
+      ],
+      "navTitle": "Instalar VS Code"
+    },
+    {
+      "id": "3-instalacion-de-python",
+      "title": "3. Instalación de Python",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Python debe instalarse desde la web oficial de Python. El objetivo es disponer de una versión moderna y estable de Python 3."
+        },
+        {
+          "type": "p",
+          "text": "En julio de 2026, Python 3.14 aparece como versión estable en la página oficial de descargas de Python, y Python 3.13.x sigue disponible como rama estable ampliamente compatible. Para un curso inicial, la recomendación práctica es instalar la versión estable que indique el profesorado o, si no se especifica otra cosa, una versión moderna de Python 3; Python 3.13.x es una opción prudente cuando se busca compatibilidad con materiales docentes ya preparados."
+        },
+        {
+          "type": "p",
+          "text": "No borres versiones de Python que ya vengan con el sistema. En macOS, por ejemplo, puede aparecer una versión antigua como Python 3.9 instalada por el sistema o por herramientas previas. No debe eliminarse."
+        }
+      ],
+      "subsections": [
+        {
+          "id": "windows",
+          "title": "Windows",
+          "blocks": [
+            {
+              "type": "ol",
+              "items": [
+                "Entra en la web oficial de Python.",
+                "Descarga el instalador de Python para Windows.",
+                "Abre el instalador.",
+                "Antes de pulsar Install Now, marca la casilla Add Python to PATH.",
+                "Continúa la instalación.",
+                "Cuando termine, cierra y vuelve a abrir PowerShell o VS Code para que el sistema reconozca Python."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Advertencia importante: en Windows, marcar Add Python to PATH evita muchos errores iniciales. Si no se marca, puede aparecer el mensaje «Python no se reconoce como comando»."
+            },
+            {
+              "type": "p",
+              "text": "Para comprobar la instalación en Windows, abre PowerShell o la Terminal integrada de VS Code y ejecuta:"
+            },
+            {
+              "type": "code",
+              "code": "python --version"
+            },
+            {
+              "type": "p",
+              "text": "También puedes comprobar el lanzador de Python para Windows:"
+            },
+            {
+              "type": "code",
+              "code": "py --version"
+            },
+            {
+              "type": "p",
+              "text": "Si todo está bien, verás una respuesta parecida a:"
+            },
+            {
+              "type": "code",
+              "code": "Python 3.13.14"
+            },
+            {
+              "type": "p",
+              "text": "o una versión moderna equivalente de Python 3."
+            }
+          ]
+        },
+        {
+          "id": "macos",
+          "title": "macOS",
+          "blocks": [
+            {
+              "type": "ol",
+              "items": [
+                "Entra en la web oficial de Python.",
+                "Descarga el instalador para macOS.",
+                "Abre el archivo .pkg.",
+                "Sigue los pasos del asistente.",
+                "Cuando termine, abre Terminal o la Terminal integrada de VS Code."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "En macOS, normalmente se usa el comando python3 para llamar a Python 3:"
+            },
+            {
+              "type": "code",
+              "code": "python3 --version"
+            },
+            {
+              "type": "p",
+              "text": "Si has instalado una versión concreta como Python 3.13, también puede funcionar:"
+            },
+            {
+              "type": "code",
+              "code": "python3.13 --version"
+            },
+            {
+              "type": "p",
+              "text": "Si aparece Python 3.9 al ejecutar algún comando, no significa necesariamente que la instalación nueva esté mal. Puede significar que el sistema está mostrando otra versión. Lo importante es identificar qué comando llama a la versión que vas a usar en el proyecto."
+            }
+          ]
+        }
+      ],
+      "navTitle": "Instalar Python"
+    },
+    {
+      "id": "4-instalacion-de-extensiones-de-vs-code",
+      "title": "4. Instalación de extensiones de VS Code",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Las extensiones son complementos que añaden funciones a VS Code. Para trabajar con Python, las extensiones ayudan a detectar errores, seleccionar el intérprete, ejecutar archivos, depurar código y trabajar con cuadernos."
+        },
+        {
+          "type": "p",
+          "text": "Para instalar extensiones:"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "Abre VS Code.",
+            "Pulsa el icono de extensiones en la barra lateral izquierda.",
+            "Busca el nombre de la extensión.",
+            "Comprueba que el editor sea Microsoft cuando corresponda.",
+            "Pulsa Install."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Instala o comprueba estas extensiones:"
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "Extensión",
+              "Editor",
+              "Para qué sirve"
+            ],
+            [
+              "Python",
+              "Microsoft",
+              "Permite trabajar con archivos .py, seleccionar intérpretes, ejecutar código y depurar programas."
+            ],
+            [
+              "Pylance",
+              "Microsoft",
+              "Mejora la ayuda mientras escribes: autocompletado, avisos y detección de errores."
+            ],
+            [
+              "Jupyter",
+              "Microsoft",
+              "Permite abrir y ejecutar cuadernos .ipynb dentro de VS Code."
+            ]
+          ],
+          "title": "Extensiones recomendadas"
+        },
+        {
+          "type": "p",
+          "text": "La extensión Python suele instalar o sugerir extensiones relacionadas, como Pylance. Si Pylance ya aparece instalada, no hace falta instalarla de nuevo."
+        },
+        {
+          "type": "p",
+          "text": "Jupyter solo es imprescindible si se van a usar cuadernos .ipynb. Si la asignatura trabaja solo con archivos .py, puede instalarse más adelante."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Extensiones de VS Code"
+    },
+    {
+      "id": "5-uso-de-la-terminal-integrada-de-vs-code",
+      "title": "5. Uso de la Terminal integrada de VS Code",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "La Terminal integrada permite escribir comandos sin salir de VS Code. Un comando es una instrucción breve que se escribe en una línea para pedirle algo al sistema: mostrar la carpeta actual, crear un entorno virtual, instalar paquetes o ejecutar un archivo."
+        },
+        {
+          "type": "p",
+          "text": "Para abrir la Terminal integrada:"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "Abre VS Code.",
+            "Ve al menú Terminal.",
+            "Pulsa New Terminal o Nueva terminal."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "En Windows, lo habitual es que aparezca PowerShell. PowerShell es una terminal: una ventana donde se escriben comandos. No necesitas aprender PowerShell en profundidad para empezar; basta con usar algunos comandos básicos."
+        },
+        {
+          "type": "p",
+          "text": "En macOS, lo habitual es que aparezca una terminal con zsh. También es una ventana de comandos. Igual que en Windows, al principio solo necesitas unos pocos comandos."
+        }
+      ],
+      "subsections": [
+        {
+          "id": "comprobar-en-que-carpeta-estamos",
+          "title": "Comprobar en qué carpeta estamos",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "En Windows, puedes usar:"
+            },
+            {
+              "type": "code",
+              "code": "pwd"
+            },
+            {
+              "type": "p",
+              "text": "También puedes usar:"
+            },
+            {
+              "type": "code",
+              "code": "cd"
+            },
+            {
+              "type": "p",
+              "text": "En macOS, usa:"
+            },
+            {
+              "type": "code",
+              "code": "pwd"
+            },
+            {
+              "type": "p",
+              "text": "El resultado muestra la carpeta actual. Esa carpeta es importante porque los comandos se ejecutan desde ahí."
+            }
+          ]
+        },
+        {
+          "id": "cambiar-de-carpeta",
+          "title": "Cambiar de carpeta",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Para entrar en una carpeta, se usa cd, que significa cambiar de directorio."
+            },
+            {
+              "type": "p",
+              "text": "Ejemplo en Windows:"
+            },
+            {
+              "type": "code",
+              "code": "cd Documents\\python-proyectos\\prueba-python"
+            },
+            {
+              "type": "p",
+              "text": "Ejemplo en macOS:"
+            },
+            {
+              "type": "code",
+              "code": "cd Documents/python-proyectos/prueba-python"
+            },
+            {
+              "type": "p",
+              "text": "Si la ruta tiene espacios, conviene escribirla entre comillas."
+            },
+            {
+              "type": "p",
+              "text": "Ejemplo en Windows:"
+            },
+            {
+              "type": "code",
+              "code": "cd \"Documents\\Mis proyectos\\prueba-python\""
+            },
+            {
+              "type": "p",
+              "text": "Ejemplo en macOS:"
+            },
+            {
+              "type": "code",
+              "code": "cd \"Documents/Mis proyectos/prueba-python\""
+            },
+            {
+              "type": "p",
+              "text": "Advertencia importante: muchos errores no se deben al código, sino a estar en la carpeta equivocada. Antes de instalar paquetes o ejecutar un archivo, comprueba la carpeta actual."
+            }
+          ]
+        }
+      ],
+      "navTitle": "La Terminal de VS Code"
+    },
+    {
+      "id": "6-creacion-de-una-carpeta-de-proyecto",
+      "title": "6. Creación de una carpeta de proyecto",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Cada práctica debe tener su propia carpeta. Una estructura ordenada ayuda a no perder archivos y a evitar errores."
+        },
+        {
+          "type": "p",
+          "text": "Ejemplo recomendado en Windows:"
+        },
+        {
+          "type": "code",
+          "code": "C:\\Users\\Nombre\\Documents\\python-proyectos\\prueba-python"
+        },
+        {
+          "type": "p",
+          "text": "Ejemplo recomendado en macOS:"
+        },
+        {
+          "type": "code",
+          "code": "/Users/nombre/Documents/python-proyectos/prueba-python"
+        },
+        {
+          "type": "p",
+          "text": "Puedes crear la carpeta desde el explorador de archivos o desde la terminal."
+        },
+        {
+          "type": "p",
+          "text": "En Windows:"
+        },
+        {
+          "type": "code",
+          "code": "mkdir Documents\\python-proyectos\\prueba-python\ncd Documents\\python-proyectos\\prueba-python"
+        },
+        {
+          "type": "p",
+          "text": "En macOS:"
+        },
+        {
+          "type": "code",
+          "code": "mkdir -p Documents/python-proyectos/prueba-python\ncd Documents/python-proyectos/prueba-python"
+        },
+        {
+          "type": "p",
+          "text": "Después, abre esa carpeta completa en VS Code:"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "File o Archivo.",
+            "Open Folder... o Abrir carpeta....",
+            "Selecciona prueba-python."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "La carpeta completa debe aparecer en la barra lateral izquierda de VS Code."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Carpeta de proyecto"
+    },
+    {
+      "id": "7-primer-archivo-python",
+      "title": "7. Primer archivo Python",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Dentro de la carpeta del proyecto, crea un archivo llamado:"
+        },
+        {
+          "type": "code",
+          "code": "prueba.py"
+        },
+        {
+          "type": "p",
+          "text": "Escribe este código:"
+        },
+        {
+          "type": "code",
+          "code": "print(\"Hola, Python\")"
+        },
+        {
+          "type": "p",
+          "text": "Guarda el archivo."
+        },
+        {
+          "type": "p",
+          "text": "print() es una instrucción de Python que muestra texto en pantalla. En este caso, el texto que debe aparecer es:"
+        },
+        {
+          "type": "code",
+          "code": "Hola, Python"
+        }
+      ],
+      "subsections": [
+        {
+          "id": "ejecutar-desde-vs-code",
+          "title": "Ejecutar desde VS Code",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Con el archivo prueba.py abierto, puedes pulsar el botón de ejecución de Python si aparece en la parte superior derecha. VS Code abrirá una terminal y ejecutará el archivo."
+            }
+          ]
+        },
+        {
+          "id": "ejecutar-desde-la-terminal",
+          "title": "Ejecutar desde la Terminal",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "En Windows:"
+            },
+            {
+              "type": "code",
+              "code": "python prueba.py"
+            },
+            {
+              "type": "p",
+              "text": "Si ese comando no funciona, prueba:"
+            },
+            {
+              "type": "code",
+              "code": "py prueba.py"
+            },
+            {
+              "type": "p",
+              "text": "En macOS:"
+            },
+            {
+              "type": "code",
+              "code": "python3 prueba.py"
+            },
+            {
+              "type": "p",
+              "text": "El resultado esperado es:"
+            },
+            {
+              "type": "code",
+              "code": "Hola, Python"
+            },
+            {
+              "type": "p",
+              "text": "Si aparece un error indicando que no se encuentra el archivo, revisa dos cosas:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Que el archivo se llama exactamente prueba.py.",
+                "Que la Terminal está situada dentro de la carpeta del proyecto."
+              ]
+            }
+          ]
+        }
+      ],
+      "navTitle": "Primer archivo Python"
+    },
+    {
+      "id": "8-entornos-virtuales",
+      "title": "8. Entornos virtuales",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Un entorno virtual es una copia aislada de Python para un proyecto concreto. La metáfora más sencilla es pensar en una mochila de trabajo: cada proyecto tiene su propia mochila, con sus propios paquetes, versiones y herramientas."
+        },
+        {
+          "type": "p",
+          "text": "Si instalas todos los paquetes en el Python global del sistema, con el tiempo unos proyectos pueden interferir con otros. Un proyecto puede necesitar una versión de una librería y otro proyecto puede necesitar otra. El entorno virtual evita esos conflictos."
+        },
+        {
+          "type": "p",
+          "text": "Por eso se recomienda usar un entorno virtual por proyecto."
+        },
+        {
+          "type": "p",
+          "text": "La carpeta habitual del entorno virtual se llama:"
+        },
+        {
+          "type": "code",
+          "code": ".venv"
+        },
+        {
+          "type": "p",
+          "text": "El punto inicial indica que es una carpeta técnica del proyecto. No debes escribir código dentro de .venv, ni mover archivos manualmente dentro de ella. Python y pip la gestionan por ti."
+        },
+        {
+          "type": "p",
+          "text": "Advertencia importante: no instales todos los paquetes en el Python global del sistema. Para las prácticas, activa primero el entorno virtual del proyecto."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Entornos virtuales"
+    },
+    {
+      "id": "9-crear-un-entorno-virtual-en-windows",
+      "title": "9. Crear un entorno virtual en Windows",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Primero, abre la carpeta del proyecto en VS Code. Después abre la Terminal integrada y comprueba que estás dentro de la carpeta correcta:"
+        },
+        {
+          "type": "code",
+          "code": "pwd"
+        },
+        {
+          "type": "p",
+          "text": "Para crear el entorno virtual:"
+        },
+        {
+          "type": "code",
+          "code": "python -m venv .venv"
+        },
+        {
+          "type": "p",
+          "text": "Si python no funciona, usa:"
+        },
+        {
+          "type": "code",
+          "code": "py -m venv .venv"
+        },
+        {
+          "type": "p",
+          "text": "Este comando crea una carpeta .venv dentro del proyecto."
+        },
+        {
+          "type": "p",
+          "text": "Para activar el entorno virtual en Windows:"
+        },
+        {
+          "type": "code",
+          "code": ".venv\\Scripts\\activate"
+        },
+        {
+          "type": "p",
+          "text": "Cuando esté activado, verás (.venv) al inicio de la línea de la terminal:"
+        },
+        {
+          "type": "code",
+          "code": "(.venv) PS C:\\Users\\Nombre\\Documents\\python-proyectos\\prueba-python>"
+        },
+        {
+          "type": "p",
+          "text": "Para comprobar qué Python se está usando:"
+        },
+        {
+          "type": "code",
+          "code": "python --version"
+        },
+        {
+          "type": "p",
+          "text": "Y para ver la ruta del ejecutable de Python:"
+        },
+        {
+          "type": "code",
+          "code": "where python"
+        },
+        {
+          "type": "p",
+          "text": "La ruta debería apuntar a la carpeta .venv del proyecto."
+        },
+        {
+          "type": "p",
+          "text": "Si PowerShell bloquea la activación por política de ejecución, puede aparecer un mensaje sobre scripts deshabilitados. En ese caso, avisa al profesorado o consulta la guía específica de la asignatura antes de cambiar la configuración del sistema."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Entorno virtual (Windows)"
+    },
+    {
+      "id": "10-crear-un-entorno-virtual-en-macos",
+      "title": "10. Crear un entorno virtual en macOS",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Primero, abre la carpeta del proyecto en VS Code. Después abre la Terminal integrada y comprueba que estás dentro de la carpeta correcta:"
+        },
+        {
+          "type": "code",
+          "code": "pwd"
+        },
+        {
+          "type": "p",
+          "text": "Para crear el entorno virtual:"
+        },
+        {
+          "type": "code",
+          "code": "python3 -m venv .venv"
+        },
+        {
+          "type": "p",
+          "text": "Si quieres usar una versión concreta y está instalada, por ejemplo Python 3.13:"
+        },
+        {
+          "type": "code",
+          "code": "python3.13 -m venv .venv"
+        },
+        {
+          "type": "p",
+          "text": "Para activar el entorno virtual en macOS:"
+        },
+        {
+          "type": "code",
+          "code": "source .venv/bin/activate"
+        },
+        {
+          "type": "p",
+          "text": "Cuando esté activado, verás (.venv) al inicio de la línea de la terminal:"
+        },
+        {
+          "type": "code",
+          "code": "(.venv) nombre@MacBook prueba-python %"
+        },
+        {
+          "type": "p",
+          "text": "Para comprobar la versión de Python dentro del entorno:"
+        },
+        {
+          "type": "code",
+          "code": "python --version"
+        },
+        {
+          "type": "p",
+          "text": "Para ver qué ejecutable de Python se está usando:"
+        },
+        {
+          "type": "code",
+          "code": "which python"
+        },
+        {
+          "type": "p",
+          "text": "La ruta debería apuntar a la carpeta .venv del proyecto."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Entorno virtual (macOS)"
+    },
+    {
+      "id": "11-seleccionar-el-interprete-de-python-en-vs-code",
+      "title": "11. Seleccionar el intérprete de Python en VS Code",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "El intérprete de Python es el programa concreto que VS Code usa para ejecutar tu código. Si tienes varios Python instalados, VS Code necesita saber cuál debe usar."
+        },
+        {
+          "type": "p",
+          "text": "Cuando trabajas con un entorno virtual, debes seleccionar el intérprete que está dentro de .venv."
+        },
+        {
+          "type": "p",
+          "text": "En Windows:"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "Pulsa Ctrl + Shift + P.",
+            "Escribe Python: Select Interpreter.",
+            "Elige la opción que contenga .venv."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "En macOS:"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "Pulsa Cmd + Shift + P.",
+            "Escribe Python: Select Interpreter.",
+            "Elige la opción que contenga .venv."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Si VS Code usa otro Python, puede ocurrir esto:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "instalas pandas en .venv;",
+            "ejecutas el archivo desde VS Code;",
+            "VS Code usa el Python global;",
+            "aparece ModuleNotFoundError: No module named 'pandas'."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "El paquete sí está instalado, pero en otro entorno. Por eso seleccionar el intérprete correcto es tan importante."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Seleccionar intérprete"
+    },
+    {
+      "id": "12-instalacion-de-paquetes-con-pip",
+      "title": "12. Instalación de paquetes con pip",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "pip es la herramienta que instala paquetes de Python. Un paquete es código ya preparado por otras personas o equipos para realizar tareas concretas."
+        },
+        {
+          "type": "p",
+          "text": "Antes de instalar paquetes, activa el entorno virtual."
+        },
+        {
+          "type": "p",
+          "text": "En Windows:"
+        },
+        {
+          "type": "code",
+          "code": ".venv\\Scripts\\activate"
+        },
+        {
+          "type": "p",
+          "text": "En macOS:"
+        },
+        {
+          "type": "code",
+          "code": "source .venv/bin/activate"
+        },
+        {
+          "type": "p",
+          "text": "Después, instala paquetes con:"
+        },
+        {
+          "type": "code",
+          "code": "python -m pip install nombre_paquete"
+        },
+        {
+          "type": "p",
+          "text": "Usar python -m pip ayuda a que el paquete se instale en el Python activo, no en otro Python del sistema."
+        },
+        {
+          "type": "p",
+          "text": "Para instalar paquetes básicos de trabajo con datos y cuadernos:"
+        },
+        {
+          "type": "code",
+          "code": "python -m pip install pandas numpy matplotlib jupyter"
+        },
+        {
+          "type": "p",
+          "text": "Para comprobar qué paquetes hay instalados:"
+        },
+        {
+          "type": "code",
+          "code": "python -m pip list"
+        },
+        {
+          "type": "p",
+          "text": "Advertencia importante: no uses sudo pip install para este manual inicial. Si necesitas permisos de administrador para instalar paquetes, probablemente estás instalando en el lugar equivocado."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Instalar paquetes con pip"
+    },
+    {
+      "id": "13-prueba-completa-con-pandas",
+      "title": "13. Prueba completa con pandas",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Vamos a comprobar que el entorno virtual, VS Code y los paquetes funcionan correctamente."
+        },
+        {
+          "type": "p",
+          "text": "Crea un archivo llamado:"
+        },
+        {
+          "type": "code",
+          "code": "test_pandas.py"
+        },
+        {
+          "type": "p",
+          "text": "Escribe este código:"
+        },
+        {
+          "type": "code",
+          "code": "import pandas as pd\n\ndatos = {\n    \"nombre\": [\"Ana\", \"Luis\", \"Marta\"],\n    \"nota\": [8.5, 7.0, 9.25],\n}\n\ntabla = pd.DataFrame(datos)\n\nprint(\"Tabla de notas:\")\nprint(tabla)\n\nmedia = tabla[\"nota\"].mean()\nprint(\"Nota media:\", media)"
+        },
+        {
+          "type": "p",
+          "text": "Este programa hace cuatro cosas:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "importa la librería pandas;",
+            "crea unos datos sencillos con nombres y notas;",
+            "convierte esos datos en una tabla;",
+            "calcula la media de la columna nota."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Antes de ejecutarlo, asegúrate de que el entorno está activado y de que pandas está instalado."
+        },
+        {
+          "type": "p",
+          "text": "En Windows:"
+        },
+        {
+          "type": "code",
+          "code": "python test_pandas.py"
+        },
+        {
+          "type": "p",
+          "text": "Si es necesario:"
+        },
+        {
+          "type": "code",
+          "code": "py test_pandas.py"
+        },
+        {
+          "type": "p",
+          "text": "En macOS:"
+        },
+        {
+          "type": "code",
+          "code": "python test_pandas.py"
+        },
+        {
+          "type": "p",
+          "text": "Si no has activado el entorno y estás usando el Python del sistema, puede que tengas que revisar la activación. Dentro de .venv, el comando python debería funcionar en ambos sistemas."
+        },
+        {
+          "type": "p",
+          "text": "El resultado esperado será parecido a:"
+        },
+        {
+          "type": "code",
+          "code": "Tabla de notas:\n  nombre  nota\n0    Ana  8.50\n1   Luis  7.00\n2  Marta  9.25\nNota media: 8.25"
+        },
+        {
+          "type": "p",
+          "text": "Si aparece ModuleNotFoundError, revisa la sección de errores frecuentes."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Prueba con pandas"
+    },
+    {
+      "id": "14-archivo-requirements-txt",
+      "title": "14. Archivo requirements.txt",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "El archivo requirements.txt sirve para guardar la lista de paquetes que necesita un proyecto. Es una forma sencilla de dejar constancia del entorno usado."
+        },
+        {
+          "type": "p",
+          "text": "Para crear o actualizar requirements.txt, con el entorno virtual activado:"
+        },
+        {
+          "type": "code",
+          "code": "python -m pip freeze > requirements.txt"
+        },
+        {
+          "type": "p",
+          "text": "Este comando escribe en requirements.txt los paquetes instalados y sus versiones."
+        },
+        {
+          "type": "p",
+          "text": "Para reinstalar dependencias en otro ordenador o en otro entorno virtual:"
+        },
+        {
+          "type": "code",
+          "code": "python -m pip install -r requirements.txt"
+        },
+        {
+          "type": "p",
+          "text": "Esto es importante en trabajos académicos, proyectos compartidos y repositorios de GitHub porque permite que otra persona reconstruya el entorno de trabajo."
+        },
+        {
+          "type": "p",
+          "text": "Advertencia importante: requirements.txt no guarda tus archivos de código ni tus datos. Solo guarda la lista de paquetes."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "requirements.txt"
+    },
+    {
+      "id": "15-que-subir-y-que-no-subir-a-github",
+      "title": "15. Qué subir y qué no subir a GitHub",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "GitHub se usa para guardar y compartir proyectos de código. No todo lo que hay dentro de una carpeta de proyecto debe subirse."
+        },
+        {
+          "type": "p",
+          "text": "No conviene subir la carpeta .venv porque puede ocupar mucho espacio, depende del sistema operativo y se puede reconstruir con requirements.txt."
+        },
+        {
+          "type": "p",
+          "text": "Sí conviene subir:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "archivos .py;",
+            "cuadernos .ipynb si forman parte de la entrega;",
+            "archivos de datos permitidos por la práctica;",
+            "README.md;",
+            "requirements.txt;",
+            "documentación necesaria del proyecto."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Un archivo .gitignore indica qué archivos o carpetas no deben subirse a GitHub."
+        },
+        {
+          "type": "p",
+          "text": "Propuesta básica de .gitignore:"
+        },
+        {
+          "type": "code",
+          "code": ".venv/\n__pycache__/\n.DS_Store"
+        },
+        {
+          "type": "p",
+          "text": "Qué significa cada entrada:"
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "Entrada",
+              "Significado"
+            ],
+            [
+              ".venv/",
+              "No subir el entorno virtual del proyecto."
+            ],
+            [
+              "__pycache__/",
+              "No subir archivos internos que Python genera automáticamente."
+            ],
+            [
+              ".DS_Store",
+              "No subir archivos ocultos que macOS crea en carpetas."
+            ]
+          ],
+          "title": "Qué subir y qué no subir"
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Qué subir a GitHub"
+    },
+    {
+      "id": "16-estructura-recomendada-de-un-proyecto",
+      "title": "16. Estructura recomendada de un proyecto",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Una estructura sencilla para empezar puede ser:"
+        },
+        {
+          "type": "code",
+          "code": "mi-proyecto/\n├── .venv/\n├── datos/\n├── notebooks/\n├── src/\n├── resultados/\n├── README.md\n├── requirements.txt\n└── main.py"
+        },
+        {
+          "type": "p",
+          "text": "Qué se guarda en cada lugar:"
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "Elemento",
+              "Uso recomendado"
+            ],
+            [
+              ".venv/",
+              "Entorno virtual del proyecto. No se edita manualmente y no se sube a GitHub."
+            ],
+            [
+              "datos/",
+              "Archivos de entrada: CSV, TXT, JSON u otros datos de trabajo."
+            ],
+            [
+              "notebooks/",
+              "Cuadernos .ipynb, si la práctica usa Jupyter."
+            ],
+            [
+              "src/",
+              "Código fuente organizado en módulos o scripts."
+            ],
+            [
+              "resultados/",
+              "Tablas, gráficos o archivos generados por el programa."
+            ],
+            [
+              "README.md",
+              "Descripción del proyecto, instrucciones de ejecución y notas de entrega."
+            ],
+            [
+              "requirements.txt",
+              "Lista de paquetes necesarios."
+            ],
+            [
+              "main.py",
+              "Archivo principal del proyecto cuando se usa un script único."
+            ]
+          ],
+          "title": "Estructura de carpetas y ficheros"
+        },
+        {
+          "type": "p",
+          "text": "Para una primera práctica, puede bastar con:"
+        },
+        {
+          "type": "code",
+          "code": "prueba-python/\n├── .venv/\n├── prueba.py\n├── test_pandas.py\n└── requirements.txt"
+        },
+        {
+          "type": "p",
+          "text": "La estructura puede crecer cuando el proyecto lo necesite."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Estructura de proyecto"
+    },
+    {
+      "id": "17-errores-frecuentes-y-soluciones",
+      "title": "17. Errores frecuentes y soluciones",
+      "blocks": [],
+      "subsections": [
+        {
+          "id": "python-no-se-reconoce-como-comando-en-windows",
+          "title": "«Python no se reconoce como comando» en Windows",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Este error suele significar que Windows no encuentra Python."
+            },
+            {
+              "type": "p",
+              "text": "Prueba:"
+            },
+            {
+              "type": "code",
+              "code": "py --version"
+            },
+            {
+              "type": "p",
+              "text": "Si py funciona, puedes usar:"
+            },
+            {
+              "type": "code",
+              "code": "py -m venv .venv"
+            },
+            {
+              "type": "p",
+              "text": "Si ni python ni py funcionan, probablemente Python no está bien instalado o no se añadió al PATH. Reinstala Python desde la web oficial y marca Add Python to PATH."
+            }
+          ]
+        },
+        {
+          "id": "en-macos-aparece-python-3-9-aunque-he-instalado-python-3-13",
+          "title": "En macOS aparece Python 3.9 aunque he instalado Python 3.13",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "No borres Python 3.9. Puede pertenecer al sistema o a una herramienta instalada previamente."
+            },
+            {
+              "type": "p",
+              "text": "Comprueba:"
+            },
+            {
+              "type": "code",
+              "code": "python3 --version"
+            },
+            {
+              "type": "p",
+              "text": "Y, si procede:"
+            },
+            {
+              "type": "code",
+              "code": "python3.13 --version"
+            },
+            {
+              "type": "p",
+              "text": "Para crear el entorno con Python 3.13:"
+            },
+            {
+              "type": "code",
+              "code": "python3.13 -m venv .venv"
+            },
+            {
+              "type": "p",
+              "text": "Después de activar .venv, comprueba:"
+            },
+            {
+              "type": "code",
+              "code": "python --version"
+            }
+          ]
+        },
+        {
+          "id": "vs-code-no-encuentra-pandas",
+          "title": "VS Code no encuentra pandas",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Puede que pandas esté instalado en un entorno, pero VS Code esté usando otro."
+            },
+            {
+              "type": "p",
+              "text": "Comprueba en la Terminal integrada:"
+            },
+            {
+              "type": "code",
+              "code": "python -m pip show pandas"
+            },
+            {
+              "type": "p",
+              "text": "Después selecciona el intérprete correcto:"
+            },
+            {
+              "type": "code",
+              "code": "Python: Select Interpreter"
+            },
+            {
+              "type": "p",
+              "text": "Elige el que contenga .venv."
+            }
+          ]
+        },
+        {
+          "id": "he-instalado-un-paquete-pero-mi-script-dice-modulenotfounder",
+          "title": "He instalado un paquete pero mi script dice ModuleNotFoundError",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Este error significa que Python no encuentra el paquete."
+            },
+            {
+              "type": "p",
+              "text": "Comprueba que el entorno está activado:"
+            },
+            {
+              "type": "code",
+              "code": "python -m pip list"
+            },
+            {
+              "type": "p",
+              "text": "Si el paquete no aparece, instálalo:"
+            },
+            {
+              "type": "code",
+              "code": "python -m pip install pandas"
+            },
+            {
+              "type": "p",
+              "text": "Si aparece en la lista pero el script falla, probablemente VS Code está usando otro intérprete."
+            }
+          ]
+        },
+        {
+          "id": "no-aparece-venv-en-la-terminal",
+          "title": "No aparece (.venv) en la Terminal",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "El entorno virtual no está activado."
+            },
+            {
+              "type": "p",
+              "text": "En Windows:"
+            },
+            {
+              "type": "code",
+              "code": ".venv\\Scripts\\activate"
+            },
+            {
+              "type": "p",
+              "text": "En macOS:"
+            },
+            {
+              "type": "code",
+              "code": "source .venv/bin/activate"
+            },
+            {
+              "type": "p",
+              "text": "Si activas el entorno y aun así no aparece (.venv), cierra la Terminal integrada y abre una nueva."
+            }
+          ]
+        },
+        {
+          "id": "he-creado-venv-en-la-carpeta-equivocada",
+          "title": "He creado .venv en la carpeta equivocada",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Si creas .venv fuera de la carpeta del proyecto, VS Code puede confundirse."
+            },
+            {
+              "type": "p",
+              "text": "Primero comprueba dónde estás:"
+            },
+            {
+              "type": "code",
+              "code": "pwd"
+            },
+            {
+              "type": "p",
+              "text": "Si .venv se creó en otra carpeta y todavía no has instalado nada importante, puedes borrarla desde el explorador de archivos y volver a crearla dentro de la carpeta correcta. No borres carpetas si no tienes claro qué contienen."
+            }
+          ]
+        },
+        {
+          "id": "estoy-ejecutando-el-archivo-desde-una-carpeta-incorrecta",
+          "title": "Estoy ejecutando el archivo desde una carpeta incorrecta",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Si Python dice que no encuentra prueba.py, comprueba:"
+            },
+            {
+              "type": "code",
+              "code": "pwd"
+            },
+            {
+              "type": "p",
+              "text": "Después lista los archivos."
+            },
+            {
+              "type": "p",
+              "text": "En Windows:"
+            },
+            {
+              "type": "code",
+              "code": "dir"
+            },
+            {
+              "type": "p",
+              "text": "En macOS:"
+            },
+            {
+              "type": "code",
+              "code": "ls"
+            },
+            {
+              "type": "p",
+              "text": "El archivo que quieres ejecutar debe aparecer en esa lista."
+            }
+          ]
+        },
+        {
+          "id": "vs-code-ha-seleccionado-otro-interprete",
+          "title": "VS Code ha seleccionado otro intérprete",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Abre la paleta de comandos:"
+            },
+            {
+              "type": "p",
+              "text": "Windows:"
+            },
+            {
+              "type": "code",
+              "code": "Ctrl + Shift + P"
+            },
+            {
+              "type": "p",
+              "text": "macOS:"
+            },
+            {
+              "type": "code",
+              "code": "Cmd + Shift + P"
+            },
+            {
+              "type": "p",
+              "text": "Busca:"
+            },
+            {
+              "type": "code",
+              "code": "Python: Select Interpreter"
+            },
+            {
+              "type": "p",
+              "text": "Selecciona el intérprete que contenga .venv."
+            }
+          ]
+        },
+        {
+          "id": "diferencia-entre-python-python3-python3-13-y-py",
+          "title": "Diferencia entre python, python3, python3.13 y py",
+          "blocks": [
+            {
+              "type": "table",
+              "rows": [
+                [
+                  "Comando",
+                  "Uso habitual"
+                ],
+                [
+                  "python",
+                  "En Windows suele llamar a Python. Dentro de .venv, debe llamar al Python del entorno en ambos sistemas."
+                ],
+                [
+                  "python3",
+                  "En macOS suele llamar a Python 3."
+                ],
+                [
+                  "python3.13",
+                  "Llama a una versión concreta si está instalada."
+                ],
+                [
+                  "py",
+                  "Lanzador de Python en Windows. Sirve para localizar y ejecutar versiones instaladas."
+                ]
+              ],
+              "title": "Comandos python, python3 y py"
+            },
+            {
+              "type": "p",
+              "text": "Regla práctica:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "En Windows, prueba primero python; si falla, usa py.",
+                "En macOS, antes de crear .venv, usa python3 o python3.13.",
+                "Dentro del entorno virtual activado, usa python."
+              ]
+            }
+          ]
+        }
+      ],
+      "navTitle": "Errores frecuentes"
+    },
+    {
+      "id": "18-flujo-de-trabajo-recomendado-para-cada-practica",
+      "title": "18. Flujo de trabajo recomendado para cada práctica",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Cada vez que empieces una práctica, sigue este orden:"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "Abre VS Code.",
+            "Abre la carpeta completa del proyecto.",
+            "Abre la Terminal integrada.",
+            "Activa el entorno virtual.",
+            "Comprueba la versión de Python.",
+            "Ejecuta el archivo principal.",
+            "Instala paquetes si hacen falta.",
+            "Actualiza requirements.txt."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "En Windows:"
+        },
+        {
+          "type": "code",
+          "code": ".venv\\Scripts\\activate\npython --version\npython main.py\npython -m pip install nombre_paquete\npython -m pip freeze > requirements.txt"
+        },
+        {
+          "type": "p",
+          "text": "En macOS:"
+        },
+        {
+          "type": "code",
+          "code": "source .venv/bin/activate\npython --version\npython main.py\npython -m pip install nombre_paquete\npython -m pip freeze > requirements.txt"
+        },
+        {
+          "type": "p",
+          "text": "Si el proyecto todavía no tiene entorno virtual, créalo antes."
+        },
+        {
+          "type": "p",
+          "text": "Windows:"
+        },
+        {
+          "type": "code",
+          "code": "python -m venv .venv"
+        },
+        {
+          "type": "p",
+          "text": "macOS:"
+        },
+        {
+          "type": "code",
+          "code": "python3 -m venv .venv"
+        },
+        {
+          "type": "p",
+          "text": "Después actívalo y selecciona el intérprete .venv en VS Code."
+        }
+      ],
+      "subsections": [],
+      "navTitle": "Flujo de trabajo"
+    },
+    {
+      "id": "19-resumen-final",
+      "title": "19. Resumen final",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Trabajar con Python de forma ordenada no consiste solo en escribir código. También implica saber dónde está el proyecto, qué Python se está usando, qué paquetes están instalados y cómo puede otra persona reproducir el entorno."
+        },
+        {
+          "type": "p",
+          "text": "La secuencia básica es:"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "Crear una carpeta de proyecto.",
+            "Abrir esa carpeta completa en VS Code.",
+            "Crear un entorno virtual .venv.",
+            "Activar el entorno virtual.",
+            "Seleccionar el intérprete correcto en VS Code.",
+            "Instalar paquetes con python -m pip.",
+            "Ejecutar los archivos .py.",
+            "Guardar dependencias en requirements.txt."
+          ]
+        }
+      ],
+      "subsections": [
+        {
+          "id": "comandos-esenciales-para-windows",
+          "title": "Comandos esenciales para Windows",
+          "blocks": [
+            {
+              "type": "code",
+              "code": "python --version\npy --version\npython -m venv .venv\n.venv\\Scripts\\activate\npython -m pip install pandas numpy matplotlib jupyter\npython prueba.py\npython -m pip freeze > requirements.txt\npython -m pip install -r requirements.txt\nwhere python"
+            }
+          ]
+        },
+        {
+          "id": "comandos-esenciales-para-macos",
+          "title": "Comandos esenciales para macOS",
+          "blocks": [
+            {
+              "type": "code",
+              "code": "python3 --version\npython3.13 --version\npython3 -m venv .venv\nsource .venv/bin/activate\npython -m pip install pandas numpy matplotlib jupyter\npython prueba.py\npython -m pip freeze > requirements.txt\npython -m pip install -r requirements.txt\nwhich python"
+            }
+          ]
+        },
+        {
+          "id": "tabla-comparativa-de-comandos-principales",
+          "title": "Tabla comparativa de comandos principales",
+          "blocks": [
+            {
+              "type": "table",
+              "rows": [
+                [
+                  "Tarea",
+                  "Windows",
+                  "macOS"
+                ],
+                [
+                  "Crear entorno",
+                  "python -m venv .venv o py -m venv .venv",
+                  "python3 -m venv .venv o python3.13 -m venv .venv"
+                ],
+                [
+                  "Activar entorno",
+                  ".venv\\Scripts\\activate",
+                  "source .venv/bin/activate"
+                ],
+                [
+                  "Comprobar Python",
+                  "python --version o py --version",
+                  "python3 --version; dentro de .venv, python --version"
+                ],
+                [
+                  "Instalar paquete",
+                  "python -m pip install nombre_paquete",
+                  "python -m pip install nombre_paquete"
+                ],
+                [
+                  "Ejecutar archivo",
+                  "python prueba.py o py prueba.py",
+                  "python prueba.py dentro de .venv; antes de activarlo, python3 prueba.py"
+                ],
+                [
+                  "Crear requirements.txt",
+                  "python -m pip freeze > requirements.txt",
+                  "python -m pip freeze > requirements.txt"
+                ],
+                [
+                  "Reinstalar dependencias",
+                  "python -m pip install -r requirements.txt",
+                  "python -m pip install -r requirements.txt"
+                ],
+                [
+                  "Localizar Python activo",
+                  "where python",
+                  "which python"
+                ]
+              ],
+              "title": "Comandos: Windows frente a macOS"
+            },
+            {
+              "type": "p",
+              "text": "Nota final: existen herramientas más avanzadas para gestionar entornos y proyectos, como Conda, Poetry, uv o Docker. No se tratan en este manual inicial porque el objetivo es dominar primero el flujo básico con Python, VS Code, venv y pip."
+            }
+          ]
+        }
+      ],
+      "navTitle": "Resumen final"
+    }
+  ],
+  "references": [
+    {
+      "key": "ms_getting_started",
+      "text": "Microsoft. (s. f.). Getting started with Python in VS Code. *Visual Studio Code Documentation*. https://code.visualstudio.com/docs/python/python-tutorial"
+    },
+    {
+      "key": "ms_python_vscode",
+      "text": "Microsoft. (s. f.). Python in Visual Studio Code. *Visual Studio Code Documentation*. https://code.visualstudio.com/docs/languages/python"
+    },
+    {
+      "key": "ms_download_vscode",
+      "text": "Microsoft. (s. f.). *Download Visual Studio Code*. https://code.visualstudio.com/download"
+    },
+    {
+      "key": "psf_download_python",
+      "text": "Python Software Foundation. (s. f.). *Download Python*. https://www.python.org/downloads/"
+    },
+    {
+      "key": "psf_venv",
+      "text": "Python Software Foundation. (s. f.). venv: Creation of virtual environments. *Python Documentation*. https://docs.python.org/3/library/venv.html"
+    }
+  ]
+}
