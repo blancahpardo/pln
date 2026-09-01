@@ -48,12 +48,12 @@ body { background: var(--azul); min-height:100vh; display:flex; flex-direction:c
 #gate button.submit:hover { filter:brightness(1.06); }
 #gate .error { color:#FFB3B3; font-size:13px; margin-top:12px; min-height:18px; }
 #page { display:none; min-height:100vh; flex:1; flex-direction:column; }
-header { padding: 60px 6vw 20px; text-align:center; }
+header { padding: 60px clamp(20px,6vw,48px) 20px; text-align:center; }
 header .kicker { color: var(--amar); font-size:12px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:10px; }
 header h1 { color:#fff; font-size:clamp(26px,4.2vw,40px); margin:0 0 6px; }
 header .author { color: var(--amar); font-size:14px; font-weight:bold; margin:0 0 12px; }
 header p { color: var(--humo); font-size:14px; margin:0; }
-main { flex:1; max-width:1000px; width:100%; margin:0 auto; padding:40px 6vw 60px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; align-content:start; }
+main { flex:1; max-width:1000px; width:100%; margin:0 auto; padding:40px clamp(20px,6vw,48px) 60px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; align-content:start; }
 .tema-btn { display:flex; flex-direction:column; align-items:flex-start; gap:8px; background:#fff; border:none; border-radius:14px; padding:28px 24px; text-decoration:none; box-shadow:0 4px 16px rgba(0,0,0,.18); transition:transform .15s ease; }
 .tema-btn:hover { transform:translateY(-3px); }
 .tema-num { font-size:13px; font-weight:bold; color:var(--amar); background:var(--azul); padding:4px 12px; border-radius:20px; letter-spacing:1px; }
@@ -62,10 +62,10 @@ main { flex:1; max-width:1000px; width:100%; margin:0 auto; padding:40px 6vw 60p
 .tema-btn .teacher-hint { position:absolute; top:12px; right:14px; font-size:10px; font-weight:bold; padding:2px 8px; border-radius:10px; }
 .tema-btn .teacher-hint.on { background:#DFF3E0; color:var(--verde); }
 .tema-btn .teacher-hint.off { background:#FBEAEC; color:var(--rojo); }
-footer { text-align:center; padding:20px 6vw 34px; font-size:11px; color:var(--humo); font-style:italic; }
+footer { text-align:center; padding:20px clamp(20px,6vw,48px) 34px; font-size:11px; color:var(--humo); font-style:italic; }
 .teacher-link { display:block; margin:0 auto 18px; background:none; border:none; color:var(--humo); font-size:12px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; text-decoration:underline; }
 .teacher-link:hover { color:#fff; }
-.teacher-wrap { max-width:1000px; width:100%; margin:0 auto; padding:0 6vw; }
+.teacher-wrap { max-width:1000px; width:100%; margin:0 auto; padding:0 clamp(20px,6vw,48px); }
 .teacher-banner { background:var(--azul-d); color:#fff; border-radius:12px; padding:18px 22px; margin:0 0 10px; }
 .teacher-banner strong { color: var(--amar); }
 .teacher-banner p { font-size:13px; margin:6px 0 0; color:var(--humo); }
@@ -91,7 +91,7 @@ ${CSS_BASE}
 #gate button.submit:hover { filter:brightness(1.06); }
 #gate .error { color:#FFB3B3; font-size:13px; margin-top:12px; min-height:18px; }
 #page { display:none; }
-main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
+main { max-width:980px; margin:0 auto; padding:48px clamp(20px,6vw,48px) 60px; }
 .kicker { color:var(--amar); font-size:12px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px; }
 .view > h1 { color:var(--azul); font-size:32px; margin:0 0 34px; }
 .hub-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-bottom:30px; }
@@ -148,7 +148,7 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
      normal flow above them instead, full-width so it's easy to tap. */
   .im-hero-dl { position:static; display:flex; justify-content:center; width:100%; margin:0 0 16px; box-sizing:border-box; }
 }
-.im-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+.im-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
 .im-card { text-align:left; background:var(--claro); border:none; border-radius:12px; padding:20px 20px 18px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; box-shadow:0 2px 10px rgba(159,177,186,.28); transition:transform .12s ease, background .12s ease; opacity:0; transform:translateY(10px); animation:imCardIn .35s ease forwards; }
 .im-card:hover { background:#E9ECEE; transform:translateY(-2px); }
 .im-card.im-card-bib { background:var(--azul); }
@@ -157,14 +157,14 @@ main { max-width:980px; margin:0 auto; padding:48px 6vw 60px; }
 .im-card-title { display:block; font-size:16px; font-weight:bold; color:var(--azul); line-height:1.3; margin-top:10px; }
 .im-card-meta { display:block; font-size:12px; color:var(--humo); margin-top:6px; }
 @keyframes imCardIn { to { opacity:1; transform:translateY(0); } }
-.im-rail { display:flex; gap:6px; overflow-x:auto; padding:2px 2px 16px; margin-bottom:18px; border-bottom:1px solid #E3E7E9; scrollbar-width:thin; scrollbar-color:var(--humo) transparent; }
+.im-rail { display:flex; gap:6px; overflow-x:auto; overflow-y:hidden; padding:12px 2px 16px; margin-bottom:18px; border-bottom:1px solid #E3E7E9; scrollbar-width:thin; scrollbar-color:var(--humo) transparent; }
 .im-rail::-webkit-scrollbar { height:6px; }
 .im-rail::-webkit-scrollbar-thumb { background:var(--humo); border-radius:3px; }
 .im-rail::-webkit-scrollbar-track { background:transparent; }
 .im-rail-btn { flex:none; display:flex; flex-direction:column; align-items:center; gap:4px; background:none; border:none; cursor:pointer; padding:6px 9px; border-radius:10px; font-family:Arial,Helvetica,sans-serif; opacity:.5; transition:opacity .15s ease, background .15s ease; }
 .im-rail-btn:hover { opacity:.85; }
 .im-rail-btn.active { opacity:1; background:var(--claro); }
-.im-rail-icon { font-size:16px; }
+.im-rail-icon { font-size:16px; line-height:1.4; }
 .im-rail-label { font-size:9.5px; font-weight:bold; color:var(--gris); max-width:62px; text-align:center; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .im-rail-btn.active .im-rail-label { color:var(--azul); }
 .im-chapter { animation:imFadeIn .25s ease; }
@@ -257,7 +257,7 @@ code.im-inline { background:#F2F4F5; padding:1px 6px; border-radius:4px; font-fa
 .hub-btn .teacher-hint { position:absolute; top:10px; right:12px; font-size:10px; font-weight:bold; padding:2px 8px; border-radius:10px; }
 .hub-btn .teacher-hint.on { background:#DFF3E0; color:var(--verde); }
 .hub-btn .teacher-hint.off { background:#FBEAEC; color:var(--rojo); }
-footer { text-align:center; padding:26px 6vw 40px; font-size:11px; color:var(--humo); font-style:italic; }
+footer { text-align:center; padding:26px clamp(20px,6vw,48px) 40px; font-size:11px; color:var(--humo); font-style:italic; }
 `;
 
 const ICONS = { manual: '📘', principal: '📓', evaluable: '📝', practica: '🧪', quiz: '❓' };

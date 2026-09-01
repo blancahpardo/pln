@@ -32,12 +32,12 @@ body { background: var(--azul); min-height:100vh; display:flex; flex-direction:c
 #gate button.submit:hover { filter:brightness(1.06); }
 #gate .error { color:#FFB3B3; font-size:13px; margin-top:12px; min-height:18px; }
 #page { display:none; min-height:100vh; flex:1; flex-direction:column; }
-header { padding: 60px 6vw 20px; text-align:center; }
+header { padding: 60px clamp(20px,6vw,48px) 20px; text-align:center; }
 header .kicker { color: var(--amar); font-size:12px; font-weight:bold; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:10px; }
 header h1 { color:#fff; font-size:clamp(26px,4.2vw,40px); margin:0 0 6px; }
 header .author { color: var(--amar); font-size:14px; font-weight:bold; margin:0 0 12px; }
 header p { color: var(--humo); font-size:14px; margin:0; }
-main { flex:1; max-width:1000px; width:100%; margin:0 auto; padding:40px 6vw 60px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; align-content:start; }
+main { flex:1; max-width:1000px; width:100%; margin:0 auto; padding:40px clamp(20px,6vw,48px) 60px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; align-content:start; }
 .tema-btn { display:flex; flex-direction:column; align-items:flex-start; gap:8px; background:#fff; border:none; border-radius:14px; padding:28px 24px; text-decoration:none; box-shadow:0 4px 16px rgba(0,0,0,.18); transition:transform .15s ease; }
 .tema-btn:hover { transform:translateY(-3px); }
 .tema-num { font-size:13px; font-weight:bold; color:var(--amar); background:var(--azul); padding:4px 12px; border-radius:20px; letter-spacing:1px; }
@@ -46,10 +46,10 @@ main { flex:1; max-width:1000px; width:100%; margin:0 auto; padding:40px 6vw 60p
 .tema-btn .teacher-hint { position:absolute; top:12px; right:14px; font-size:10px; font-weight:bold; padding:2px 8px; border-radius:10px; }
 .tema-btn .teacher-hint.on { background:#DFF3E0; color:var(--verde); }
 .tema-btn .teacher-hint.off { background:#FBEAEC; color:var(--rojo); }
-footer { text-align:center; padding:20px 6vw 34px; font-size:11px; color:var(--humo); font-style:italic; }
+footer { text-align:center; padding:20px clamp(20px,6vw,48px) 34px; font-size:11px; color:var(--humo); font-style:italic; }
 .teacher-link { display:block; margin:0 auto 18px; background:none; border:none; color:var(--humo); font-size:12px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; text-decoration:underline; }
 .teacher-link:hover { color:#fff; }
-.teacher-wrap { max-width:1000px; width:100%; margin:0 auto; padding:0 6vw; }
+.teacher-wrap { max-width:1000px; width:100%; margin:0 auto; padding:0 clamp(20px,6vw,48px); }
 .teacher-banner { background:var(--azul-d); color:#fff; border-radius:12px; padding:18px 22px; margin:0 0 10px; }
 .teacher-banner strong { color: var(--amar); }
 .teacher-banner p { font-size:13px; margin:6px 0 0; color:var(--humo); }
