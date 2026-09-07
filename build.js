@@ -1315,6 +1315,7 @@ const TEMAS = [
           { author: 'linguAIstica', date: '2026, 1 de agosto', title: 'Historia de los chatbots: de ELIZA a ChatGPT y más allá', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=uKnjZx3jKeg' },
           { author: 'linguAIstica', date: '2026, 15 de junio', title: 'Historia completa del NLP: de las reglas al deep learning', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=bFyUm1m2_4A' },
           { author: 'linguAIstica', date: '2026, 25 de mayo', title: '¿Qué hace un lingüista computacional?', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=HmM6Z5dfnoc' },
+          { author: 'linguAIstica', date: '2026, 7 de septiembre', title: 'La máquina que intentaba predecir el futuro', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/dGCgAI3A75g' },
         ] },
     } },
   { dir: 't0a', numLabel: 'TEMA 0', titleShort: 'Recordatorio', titleFull: 'Tema 0 · Recordatorio de Python', kicker: 'Tema 0 · Recordatorio',
@@ -1473,6 +1474,8 @@ const TEMAS = [
       adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
         desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
           { author: 'linguAIstica', date: '2026, 29 de julio', title: 'Analizando obras literarias con Python (parte 3: definir qué buscamos)', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/oE19LAsrVbw' },
+          { author: 'linguAIstica', date: '2026, 1 de septiembre', title: 'Representación textual clásica: bag-of-words, n-gramas y TF-IDF', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=OLUbL7H0b1g' },
+          { author: 'linguAIstica', date: '2026, 2 de septiembre', title: 'Bag-of-Words y n-gramas: contando palabras para entender documentos', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/Dcygj7ajZey/' },
         ] },
       infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
@@ -1489,6 +1492,9 @@ const TEMAS = [
         desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
           { author: 'linguAIstica', date: '2026, 12 de julio', title: 'El PDF que cambió el mundo (Attention is all you need)', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/2OJT5H0wnio' },
           { author: 'linguAIstica', date: '2026, 25 de junio', title: 'NLP moderno: deep learning, transformers y la revolución actual', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DaBBKuJDa3v/' },
+          { author: 'linguAIstica', date: '2026, 1 de septiembre', title: 'Representación textual clásica: bag-of-words, n-gramas y TF-IDF', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=OLUbL7H0b1g' },
+          { author: 'linguAIstica', date: '2026, 3 de septiembre', title: '¿Quién mordió a quién? (Tú lo sabes, pero la IA no)', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/voep6S_SwOk' },
+          { author: 'linguAIstica', date: '2026, 2 de septiembre', title: 'Bag-of-Words y n-gramas: contando palabras para entender documentos', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/Dcygj7ajZey/' },
         ] },
       infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
