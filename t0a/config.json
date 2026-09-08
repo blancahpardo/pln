@@ -3,6 +3,6 @@
   "manual_interactivo": true,
   "linguaistica_python": true,
   "principal": true,
-  "practica": false,
+  "practica": true,
   "adicionales": true
 }
