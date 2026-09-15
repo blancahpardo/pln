@@ -445,6 +445,19 @@ function buildInteractiveManualView(viewKey, tema) {
 </div>`;
 }
 
+function buildHtmlEmbedView(viewKey, tema) {
+  const cfg = tema.views[viewKey];
+  if (!cfg || !cfg.exists) return '';
+  const label = viewLabel(viewKey, tema);
+  return `<div id="view-${viewKey}" class="view sub-view" hidden>
+  <button class="back-btn" data-back="hub">← Volver</button>
+  <h2>${esc(label)} · ${esc(tema.titleShort)}</h2>
+  <p class="section-note">${cfg.desc ? esc(cfg.desc) : 'Recurso interactivo de autoestudio, sin descarga.'} Para la mejor experiencia, ábrelo a pantalla completa.</p>
+  <a class="dl-big" href="${cfg.file}" target="_blank" rel="noopener">↗ Abrir a pantalla completa</a>
+  <iframe class="pdf-frame" src="${cfg.file}" title="${esc(label)}"></iframe>
+</div>`;
+}
+
 function buildQuizView(tema) {
   const cfg = tema.views.quiz;
   if (!cfg || !cfg.exists) return '';
@@ -466,6 +479,7 @@ function buildTopicHtml(tema) {
     if (cfg.kind === 'image') return buildImageView(v, tema);
     if (cfg.kind === 'reflist') return buildReflistView(v, tema);
     if (cfg.kind === 'interactive_manual') return buildInteractiveManualView(v, tema);
+    if (cfg.kind === 'html_embed') return buildHtmlEmbedView(v, tema);
     return buildDownloadView(v, tema);
   });
 
@@ -1353,12 +1367,15 @@ const TEMAS = [
       quiz: { exists: false }
     } },
   { dir: 't0b', numLabel: 'TEMA 0', titleShort: 'Regex', titleFull: 'Tema 0 · Regex', kicker: 'Tema 0 · Regex',
-    viewOrder: ['manual','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual','principal','evaluable','practica','regex_scanner','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb', note: 'Este cuaderno reúne teoría y práctica de Regex en un solo fichero.' },
       evaluable: { exists: false },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
+      regex_scanner: { exists: true, kind: 'html_embed', label: 'Sigue practicando: la aduana textual', icon: '🛃',
+        desc: 'Recurso interactivo para reforzar regex tras la sesión (emparejamiento, predicción y diagnóstico de errores).',
+        file: 'aduana_textual_regex.html' },
       quiz: { exists: false }
     } },
   { dir: 't1', numLabel: 'TEMA 1', titleShort: 'Tema 1', titleFull: 'Tema 1', kicker: 'Tema 1',

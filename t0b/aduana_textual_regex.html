@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El escáner de patrones · Aduana lingüística de LinguaAdapt</title>
+<style>
+:root{
+  --bg:#070c0a; --panel:#0d1712; --panel2:#101d17; --line:#1d3428;
+  --ink:#d9ffe6; --ink-dim:#7fae94; --accent:#39ff8a; --accent-ink:#04150c;
+  --accent2:#33c6ff; --alert:#ffb020; --alert-ink:#1a1200; --bad:#ff5d5d;
+  --shadow:0 8px 28px rgba(0,0,0,.55);
+  --mono:"SF Mono","Cascadia Code","Courier New",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,Helvetica,sans-serif;
+  --serif:Georgia,"Times New Roman",serif;
+}
+[data-theme="light"]{
+  --bg:#f2f0e6; --panel:#ffffff; --panel2:#eae6d6; --line:#d7d0ba;
+  --ink:#1c2b22; --ink-dim:#5b6b60; --accent:#0f7a44; --accent-ink:#ffffff;
+  --accent2:#0b6aa8; --alert:#a05a00; --alert-ink:#ffffff; --bad:#a13030;
+  --shadow:0 8px 24px rgba(60,50,20,.14);
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);transition:background .2s,color .2s;}
+.wrap{max-width:900px;margin:0 auto;padding:22px 18px 60px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px;}
+.brand{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;color:var(--ink-dim);}
+.theme-btn{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:16px;padding:6px 12px;font-size:12px;cursor:pointer;font-family:var(--sans);}
+.theme-btn:hover{border-color:var(--accent);}
+
+.scanline{position:relative;height:3px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.55;margin-bottom:22px;overflow:hidden;border-radius:2px;}
+.scanline::after{content:"";position:absolute;top:0;left:-30%;width:30%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);animation:sweep 3.2s linear infinite;}
+@keyframes sweep{0%{left:-30%;}100%{left:130%;}}
+
+.progress{display:flex;gap:6px;margin-bottom:26px;}
+.progress .dot{flex:1;height:5px;border-radius:3px;background:var(--line);}
+.progress .dot.on{background:var(--accent);}
+.progress .dot.done{background:var(--accent2);}
+
+.screen{display:none;}
+.screen.active{display:block;animation:fadein .35s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:1.6px;color:var(--accent2);margin:0 0 10px;text-transform:uppercase;}
+h1{font-size:clamp(26px,4vw,36px);margin:0 0 14px;line-height:1.2;}
+h2.step-title{font-size:20px;margin:0 0 6px;}
+.lede{font-family:var(--serif);font-size:16.5px;line-height:1.6;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:18px 20px;margin:0 0 22px;box-shadow:var(--shadow);}
+.step-note{font-size:14px;color:var(--ink-dim);margin:0 0 20px;line-height:1.55;}
+
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);border:none;border-radius:22px;padding:12px 24px;font-size:14.5px;font-weight:700;cursor:pointer;font-family:var(--sans);box-shadow:var(--shadow);}
+.btn:hover{filter:brightness(1.06);}
+.btn.secondary{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none;}
+.btn.secondary:hover{border-color:var(--accent);}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+
+/* Ronda 1: emparejamiento */
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:640px){.match-cols{grid-template-columns:1fr;}}
+.chip{display:block;width:100%;text-align:left;background:var(--panel);border:1.5px solid var(--line);border-radius:10px;padding:13px 15px;margin-bottom:10px;cursor:pointer;font-family:var(--sans);font-size:14px;color:var(--ink);transition:transform .1s,border-color .12s;}
+.chip:hover{border-color:var(--accent2);}
+.chip.code{font-family:var(--mono);font-size:15px;color:var(--accent2);font-weight:700;}
+.chip.selected{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset;}
+.chip.locked{opacity:.4;cursor:default;border-color:var(--accent);}
+.chip.wrong-flash{animation:shake .35s;border-color:var(--bad);}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
+.col-label{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;color:var(--ink-dim);text-transform:uppercase;margin-bottom:8px;}
+
+/* Ronda 2/3: preguntas */
+.q-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:18px;box-shadow:var(--shadow);}
+.q-num{font-family:var(--mono);font-size:11px;color:var(--accent2);letter-spacing:1px;margin-bottom:6px;}
+.q-code{display:block;background:var(--panel2);border-radius:6px;padding:10px 12px;font-family:var(--mono);font-size:13.5px;color:var(--ink);margin:10px 0 4px;white-space:pre-wrap;border:1px solid var(--line);}
+.q-text{font-size:14.5px;line-height:1.55;margin:8px 0 12px;}
+.opt{display:block;width:100%;text-align:left;background:var(--panel2);border:1.5px solid var(--line);border-radius:8px;padding:10px 13px;margin-bottom:8px;cursor:pointer;font-family:var(--mono);font-size:13px;color:var(--ink);}
+.opt:hover{border-color:var(--accent2);}
+.opt.correct{border-color:var(--accent);background:rgba(57,255,138,.12);}
+.opt.incorrect{border-color:var(--bad);background:rgba(255,93,93,.12);}
+.opt[disabled]{cursor:default;}
+.feedback{font-size:13.5px;line-height:1.55;margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--panel2);border-left:3px solid var(--accent);display:none;}
+.feedback.show{display:block;animation:fadein .25s ease;}
+.feedback.bad{border-left-color:var(--bad);}
+
+.report{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px;margin-bottom:20px;text-align:center;box-shadow:var(--shadow);}
+.report .score{font-family:var(--mono);font-size:44px;color:var(--accent);font-weight:700;margin:6px 0;}
+.report .rank{font-size:15px;font-weight:700;margin-bottom:6px;}
+.report .rank-desc{font-size:13.5px;color:var(--ink-dim);line-height:1.5;}
+.review-item{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--bad);border-radius:8px;padding:12px 14px;margin-bottom:10px;font-size:13.5px;line-height:1.5;}
+.review-item b{color:var(--accent2);}
+
+.closing{font-family:var(--serif);font-size:15px;line-height:1.65;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:22px 0;}
+details.refs{margin:18px 0;font-size:13px;color:var(--ink-dim);}
+details.refs summary{cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.5px;color:var(--accent2);margin-bottom:8px;}
+details.refs p{margin:0 0 8px;line-height:1.5;}
+footer{margin-top:34px;text-align:center;font-size:11px;color:var(--ink-dim);font-style:italic;line-height:1.6;border-top:1px solid var(--line);padding-top:16px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <span class="brand">ADUANA LINGÜÍSTICA · LINGUAADAPT</span>
+    <button class="theme-btn" id="themeBtn" type="button">🌓 Cambiar turno</button>
+  </div>
+  <div class="scanline"></div>
+  <div class="progress" id="progress">
+    <div class="dot" data-p="1"></div>
+    <div class="dot" data-p="2"></div>
+    <div class="dot" data-p="3"></div>
+    <div class="dot" data-p="4"></div>
+  </div>
+
+  <!-- INTRO -->
+  <section class="screen active" id="screen-intro">
+    <p class="kicker">Turno de noche · Control de acceso de corpus</p>
+    <h1>El escáner de patrones</h1>
+    <p class="lede">LinguaAdapt filtra cada corpus antes de dejarlo entrar en producción. En la aduana lingüística, ese filtro es un escáner de formas: no lee el texto, solo reconoce siluetas en la cadena de caracteres — exactamente como una regex, que aplica una regla formal sobre caracteres sin «entender» el idioma. Esta noche te toca operar la máquina sin supervisión. Antes de que el turno anterior se vaya, tienes que demostrar que sabes leer lo que aparece en la pantalla: qué significa cada silueta, qué encontraría el escáner en un texto real, y cuándo la máquina da una alarma por un motivo distinto al que parece.</p>
+    <p class="step-note">Tres controles y un informe final de turno. Puedes repetir cualquier control las veces que quieras: aquí no hay nota, solo entrenamiento.</p>
+    <div class="btn-row">
+      <button class="btn" id="startBtn" type="button">▶ Empezar turno</button>
+    </div>
+  </section>
+
+  <!-- RONDA 1 -->
+  <section class="screen" id="screen-r1">
+    <p class="kicker">Control 1 de 3</p>
+    <h2 class="step-title">Silueta en el escáner</h2>
+    <p class="step-note">Cada patrón es una silueta en la pantalla. Toca un código de la izquierda y, después, la forma que detecta de verdad a la derecha. Si la pareja no coincide, la máquina hace saltar la alarma y puedes volver a intentarlo.</p>
+    <div class="match-cols">
+      <div>
+        <div class="col-label">Silueta (patrón)</div>
+        <div id="r1-left"></div>
+      </div>
+      <div>
+        <div class="col-label">Lo que detecta</div>
+        <div id="r1-right"></div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn" id="r1Next" type="button" disabled>Ir al control 2 →</button>
+      <button class="btn secondary" id="r1Reset" type="button">↺ Reiniciar control</button>
+    </div>
+  </section>
+
+  <!-- RONDA 2 -->
+  <section class="screen" id="screen-r2">
+    <p class="kicker">Control 2 de 3</p>
+    <h2 class="step-title">Predicción de escaneo</h2>
+    <p class="step-note">Antes de que la máquina escanee la maleta, adivina qué va a encontrar. Estos son los mismos textos y patrones del manual de la unidad: pon a prueba si sabes anticiparlos sin ejecutar el código.</p>
+    <div id="r2-items"></div>
+    <div class="btn-row">
+      <button class="btn" id="r2Next" type="button" disabled>Ir al control 3 →</button>
+    </div>
+  </section>
+
+  <!-- RONDA 3 -->
+  <section class="screen" id="screen-r3">
+    <p class="kicker">Control 3 de 3</p>
+    <h2 class="step-title">Alarma del escáner</h2>
+    <p class="step-note">A veces la máquina avisa por un motivo distinto al que parece a primera vista. Diagnostica cada alarma basándote en los errores más frecuentes de esta unidad.</p>
+    <div id="r3-items"></div>
+    <div class="btn-row">
+      <button class="btn" id="r3Next" type="button" disabled>Ver informe de turno →</button>
+    </div>
+  </section>
+
+  <!-- INFORME -->
+  <section class="screen" id="screen-report">
+    <p class="kicker">Fin de turno</p>
+    <h2 class="step-title">Informe de turno</h2>
+    <div class="report">
+      <div class="score" id="scoreVal">0/18</div>
+      <div class="rank" id="rankTitle"></div>
+      <div class="rank-desc" id="rankDesc"></div>
+    </div>
+    <div id="reviewList"></div>
+    <p class="closing">Con este turno superado, ya llevas contigo el primer instrumento de tu <em>kit</em> como futura lingüista computacional: reconocer patrones en un texto sin necesidad de leerlo entero a mano. En el Tema 1 pondrás en práctica esta misma idea en tu primer encargo profesional dentro de LinguaAdapt.</p>
+    <details class="refs">
+      <summary>Referencias (APA 7ª ed.)</summary>
+      <p>Bird, S., Klein, E., y Loper, E. (2009). <em>Natural language processing with Python</em>. O'Reilly Media. https://www.nltk.org/book/</p>
+      <p>Chomsky, N. (1956). Three models for the description of language. <em>IRE Transactions on Information Theory</em>, <em>2</em>(3), 113-124. https://doi.org/10.1109/TIT.1956.1056813</p>
+      <p>Hopcroft, J. E., Motwani, R., y Ullman, J. D. (2006). <em>Introduction to automata theory, languages, and computation</em> (3.ª ed.). Addison-Wesley.</p>
+      <p>Jurafsky, D., y Martin, J. H. (2026). <em>Speech and language processing</em> (3rd ed. draft). Stanford University. https://web.stanford.edu/~jurafsky/slp3/</p>
+      <p>Python Software Foundation. (2026). re: Regular expression operations. <em>Python 3.14 documentation</em>. https://docs.python.org/3/library/re.html</p>
+    </details>
+    <div class="btn-row">
+      <button class="btn secondary" id="restartBtn" type="button">↺ Repetir el turno completo</button>
+    </div>
+  </section>
+
+  <footer>
+    © Dr.ª Blanca Hernández Pardo · Programación para PLN · Tema 0. Regex<br>
+    Queda prohibida la difusión, distribución o reproducción total o parcial de este material sin autorización expresa de la autora.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- tema claro/oscuro ---------- */
+  var root = document.documentElement;
+  var stored = null;
+  try { stored = localStorage.getItem('aduana-theme'); } catch(e){}
+  if (stored) { root.setAttribute('data-theme', stored); }
+  else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    root.setAttribute('data-theme', 'light');
+  }
+  document.getElementById('themeBtn').addEventListener('click', function(){
+    var cur = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    var next = cur === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('aduana-theme', next); } catch(e){}
+  });
+
+  /* ---------- navegación entre pantallas ---------- */
+  var screens = ['intro','r1','r2','r3','report'];
+  function show(name){
+    screens.forEach(function(s){
+      document.getElementById('screen-'+s).classList.toggle('active', s===name);
+    });
+    var idx = { r1:1, r2:2, r3:3, report:4 }[name] || 0;
+    document.querySelectorAll('#progress .dot').forEach(function(d){
+      var p = parseInt(d.getAttribute('data-p'),10);
+      d.classList.toggle('on', p===idx);
+      d.classList.toggle('done', p<idx);
+    });
+    window.scrollTo(0,0);
+  }
+  document.getElementById('startBtn').addEventListener('click', function(){ show('r1'); });
+
+  /* ---------- RONDA 1: emparejamiento ---------- */
+  var pairs = [
+    { code: ".",          meaning: "Cualquier carácter, excepto un salto de línea" },
+    { code: "\\w",        meaning: "Una letra, un dígito o un guion bajo" },
+    { code: "\\s",        meaning: "Un espacio en blanco (incluye tabulaciones y saltos de línea)" },
+    { code: "\\d",        meaning: "Un dígito del 0 al 9" },
+    { code: "+",          meaning: "Una o más repeticiones del elemento anterior" },
+    { code: "*",          meaning: "Cero o más repeticiones del elemento anterior" },
+    { code: "\\b",        meaning: "Un límite de palabra" },
+    { code: "[^\\w\\s]",  meaning: "Cualquier carácter que no sea letra, dígito, guion bajo ni espacio (en la práctica, puntuación)" }
+  ];
+  var r1State = { selectedCode:null, selectedMeaning:null, lockedCount:0 };
+
+  function shuffled(arr){
+    var a = arr.slice();
+    for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+    return a;
+  }
+
+  function buildRound1(){
+    r1State = { selectedCode:null, selectedMeaning:null, lockedCount:0 };
+    var left = document.getElementById('r1-left');
+    var right = document.getElementById('r1-right');
+    left.innerHTML = ''; right.innerHTML = '';
+    var leftOrder = shuffled(pairs);
+    var rightOrder = shuffled(pairs);
+    leftOrder.forEach(function(p){
+      var b = document.createElement('button');
+      b.className = 'chip code'; b.type = 'button';
+      b.textContent = p.code;
+      b.dataset.code = p.code;
+      b.addEventListener('click', function(){ onPickCode(p.code, b); });
+      left.appendChild(b);
+    });
+    rightOrder.forEach(function(p){
+      var b = document.createElement('button');
+      b.className = 'chip'; b.type = 'button';
+      b.textContent = p.meaning;
+      b.dataset.meaning = p.meaning;
+      b.dataset.forCode = p.code;
+      b.addEventListener('click', function(){ onPickMeaning(p.meaning, p.code, b); });
+      right.appendChild(b);
+    });
+    document.getElementById('r1Next').disabled = true;
+  }
+
+  function onPickCode(code, el){
+    if (el.classList.contains('locked')) return;
+    document.querySelectorAll('#r1-left .chip').forEach(function(c){ c.classList.remove('selected'); });
+    el.classList.add('selected');
+    r1State.selectedCode = code;
+    r1State.selectedCodeEl = el;
+    tryMatch();
+  }
+  function onPickMeaning(meaning, forCode, el){
+    if (el.classList.contains('locked')) return;
+    document.querySelectorAll('#r1-right .chip').forEach(function(c){ c.classList.remove('selected'); });
+    el.classList.add('selected');
+    r1State.selectedMeaning = meaning;
+    r1State.selectedMeaningEl = el;
+    r1State.selectedMeaningFor = forCode;
+    tryMatch();
+  }
+  function tryMatch(){
+    if (!r1State.selectedCode || !r1State.selectedMeaning) return;
+    if (r1State.selectedCode === r1State.selectedMeaningFor) {
+      r1State.selectedCodeEl.classList.remove('selected');
+      r1State.selectedMeaningEl.classList.remove('selected');
+      r1State.selectedCodeEl.classList.add('locked');
+      r1State.selectedMeaningEl.classList.add('locked');
+      r1State.lockedCount++;
+      if (r1State.lockedCount === pairs.length) {
+        document.getElementById('r1Next').disabled = false;
+      }
+    } else {
+      [r1State.selectedCodeEl, r1State.selectedMeaningEl].forEach(function(el){
+        el.classList.add('wrong-flash');
+        setTimeout(function(){ el.classList.remove('wrong-flash','selected'); }, 380);
+      });
+    }
+    r1State.selectedCode = null; r1State.selectedMeaning = null;
+  }
+  document.getElementById('r1Reset').addEventListener('click', buildRound1);
+  document.getElementById('r1Next').addEventListener('click', function(){ show('r2'); });
+
+  /* ---------- RONDA 2: predicción de escaneo ---------- */
+  var r2items = [
+    {
+      texto: "texto2 = \"El coche y la casa están cerca del campo.\"",
+      patron: "re.findall(r\"\\bc\\w+\", texto2)",
+      options: [
+        "['coche', 'casa', 'cerca', 'campo']",
+        "['coche', 'casa']",
+        "['c', 'c', 'c', 'c']",
+        "['El coche y la casa están cerca del campo']"
+      ],
+      correct: 0,
+      explicacion: "\\bc\\w+ busca un límite de palabra, seguido de una «c» literal y una o más letras/dígitos/guion bajo. Las cuatro palabras del texto que empiezan por «c» cumplen esa forma."
+    },
+    {
+      texto: "texto = \"Cantar, bailar, comer y vivir son verbos comunes.\"",
+      patron: "re.findall(r\"\\b\\w+ar\\b\", texto)",
+      options: [
+        "['Cantar', 'bailar', 'comer', 'vivir']",
+        "['Cantar', 'bailar']",
+        "['ar', 'ar']",
+        "[] (ninguna coincidencia)"
+      ],
+      correct: 1,
+      explicacion: "El patrón exige que la palabra termine exactamente en «ar» delimitada por \\b a ambos lados. «Comer» y «vivir» son verbos en infinitivo, pero no terminan en esa secuencia concreta: el patrón detecta una forma, no una categoría gramatical."
+    },
+    {
+      texto: "texto = \"Madrid es la capital de España. Juan estudia Lenguas Modernas.\"",
+      patron: "re.findall(r\"\\b[A-Z]\\w+\", texto)",
+      options: [
+        "['Madrid', 'Juan'] (solo los nombres propios reales)",
+        "['Madrid', 'España', 'Juan']",
+        "['Madrid', 'España', 'Juan', 'Lenguas', 'Modernas']",
+        "['M', 'E', 'J', 'L', 'M']"
+      ],
+      correct: 2,
+      explicacion: "El patrón solo mira si la palabra empieza en mayúscula, así que mezcla nombres propios reales con «Lenguas» y «Modernas», que también empiezan en mayúscula. Detectar mayúsculas iniciales es un indicio útil, pero no una prueba concluyente de nombre propio."
+    },
+    {
+      texto: "texto = \"...Mi teléfono es el 679483750 y mi pin 1234.\"",
+      patron: "re.findall(r\"\\d{4}\", texto)",
+      options: [
+        "['6794', '8375', '1234']",
+        "['679483750', '1234']",
+        "['67948375', '01234']",
+        "[] (ninguna coincidencia)"
+      ],
+      correct: 0,
+      explicacion: "Sin límites de palabra, {4} exige grupos de exactamente cuatro dígitos y va cortando la cadena en fragmentos de cuatro en cuatro: el teléfono de nueve cifras se fragmenta y el pin de cuatro cifras coincide completo, por casualidad de longitud."
+    },
+    {
+      texto: "texto = \"...Mi teléfono es el 679483750 y mi pin 1234.\"",
+      patron: "re.findall(r\"\\b\\d{4}\\b\", texto)",
+      options: [
+        "['679483750', '1234']",
+        "['6794', '8375', '1234']",
+        "['1234']",
+        "[] (ninguna coincidencia)"
+      ],
+      correct: 2,
+      explicacion: "Con \\b a ambos lados, el patrón solo coincide con secuencias de exactamente cuatro dígitos delimitadas como unidad independiente. El teléfono, al tener nueve cifras seguidas sin ningún límite de palabra en medio, deja de coincidir; solo se recupera el pin."
+    }
+  ];
+  var r2answered = 0;
+  function buildRound2(){
+    r2answered = 0;
+    var box = document.getElementById('r2-items');
+    box.innerHTML = '';
+    document.getElementById('r2Next').disabled = true;
+    r2items.forEach(function(item, idx){
+      var card = document.createElement('div');
+      card.className = 'q-card';
+      var html = '<div class="q-num">MALETA '+(idx+1)+' DE '+r2items.length+'</div>' +
+        '<code class="q-code">'+esc(item.texto)+'\n'+esc(item.patron)+'</code>' +
+        '<p class="q-text">¿Qué devolverá exactamente este escaneo?</p>';
+      item.options.forEach(function(opt, oi){
+        html += '<button class="opt" type="button" data-idx="'+oi+'">'+esc(opt)+'</button>';
+      });
+      html += '<div class="feedback"></div>';
+      card.innerHTML = html;
+      box.appendChild(card);
+      var buttons = card.querySelectorAll('.opt');
+      buttons.forEach(function(btn){
+        btn.addEventListener('click', function(){
+          if (card.dataset.done) return;
+          card.dataset.done = '1';
+          var chosen = parseInt(btn.getAttribute('data-idx'),10);
+          buttons.forEach(function(b,bi){
+            b.disabled = true;
+            if (bi === item.correct) b.classList.add('correct');
+            else if (bi === chosen) b.classList.add('incorrect');
+          });
+          var fb = card.querySelector('.feedback');
+          fb.classList.add('show');
+          fb.classList.toggle('bad', chosen !== item.correct);
+          fb.textContent = (chosen === item.correct ? '✔ Correcto. ' : '✘ No exactamente. ') + item.explicacion;
+          item._correctPicked = (chosen === item.correct);
+          r2answered++;
+          if (r2answered === r2items.length) document.getElementById('r2Next').disabled = false;
+        });
+      });
+    });
+  }
+  document.getElementById('r2Next').addEventListener('click', function(){ show('r3'); });
+
+  /* ---------- RONDA 3: alarma del escáner ---------- */
+  var r3items = [
+    {
+      code: "resultado = re.search(\"gato\", texto)\nprint(resultado.group())",
+      texto: "Si la palabra «gato» no aparece en el texto, ¿qué ocurre al ejecutar este código?",
+      options: [
+        "Se produce un error, porque resultado.group() se llama sobre None sin comprobarlo antes.",
+        "Imprime la cadena vacía silenciosamente.",
+        "Imprime None sin más problema.",
+        "Python detecta el problema y salta esa línea."
+      ],
+      correct: 0,
+      explicacion: "Cuando re.search() no encuentra el patrón, devuelve None. Llamar a .group() sobre None sin comprobar antes con un if provoca un error: hay que guardar el resultado y comprobar si es None antes de usarlo."
+    },
+    {
+      code: "patrón: \\w+ar   (sin \\b)",
+      texto: "Este patrón se aplica a un texto que contiene una palabra que NO es un verbo en infinitivo, pero termina casualmente en «ar». ¿Qué puede ocurrir?",
+      options: [
+        "El patrón puede coincidir con esa palabra igualmente, porque solo mira cómo termina la secuencia de caracteres, no su categoría gramatical.",
+        "El patrón nunca coincide con palabras que no son verbos, porque re distingue automáticamente la categoría gramatical.",
+        "Python lanza un error de sintaxis.",
+        "El patrón solo se fija en la primera letra de la palabra."
+      ],
+      correct: 0,
+      explicacion: "Sin el límite de palabra \\b, un patrón como \\w+ar puede coincidir con el final de cualquier palabra que termine de forma parecida, sea o no un verbo en infinitivo. La regex no reconoce categorías gramaticales."
+    },
+    {
+      code: "Quieres decir «cuatro o más dígitos».",
+      texto: "¿Cuál de estos patrones lo expresa correctamente?",
+      options: [
+        "\\d{4,}",
+        "\\d{4}",
+        "\\d{4}+",
+        "\\d*4"
+      ],
+      correct: 0,
+      explicacion: "{4} exige exactamente cuatro repeticiones. Para expresar «cuatro o más» hace falta escribir {4,}, con la coma."
+    },
+    {
+      code: "\\w describe letras, dígitos y el guion bajo.",
+      texto: "¿Qué implica esto sobre lo que puede coincidir con \\w+?",
+      options: [
+        "Que puede coincidir con secuencias de caracteres sin ningún sentido lingüístico, porque no reconoce si algo es una palabra real.",
+        "Que \\w+ solo coincide con palabras que existen en el diccionario.",
+        "Que \\w+ distingue automáticamente sustantivos de verbos.",
+        "Que \\w+ nunca coincide con números."
+      ],
+      correct: 0,
+      explicacion: "\\w no distingue palabras reales de secuencias sin sentido lingüístico, ni entiende la morfología de la lengua: solo reconoce letras, dígitos y guion bajo."
+    },
+    {
+      code: "Un patrón regex funciona perfectamente sobre varios ejemplos de prueba.",
+      texto: "¿Es correcto concluir que la regex «entiende» el idioma?",
+      options: [
+        "No: aplica una regla formal sobre caracteres, sin reconocer significado, categoría gramatical ni excepciones que no estén explícitas en el patrón.",
+        "Sí: si funciona en varios ejemplos, es prueba de comprensión lingüística.",
+        "Sí, pero solo para textos cortos.",
+        "No se puede saber sin ejecutar un modelo de lenguaje."
+      ],
+      correct: 0,
+      explicacion: "Una expresión regular aplica una regla puramente formal sobre la superficie de la cadena de caracteres. Que funcione en varios ejemplos no significa que «entienda» el idioma."
+    }
+  ];
+  var r3answered = 0;
+  function buildRound3(){
+    r3answered = 0;
+    var box = document.getElementById('r3-items');
+    box.innerHTML = '';
+    document.getElementById('r3Next').disabled = true;
+    r3items.forEach(function(item, idx){
+      var card = document.createElement('div');
+      card.className = 'q-card';
+      var html = '<div class="q-num">ALARMA '+(idx+1)+' DE '+r3items.length+'</div>' +
+        '<code class="q-code">'+esc(item.code)+'</code>' +
+        '<p class="q-text">'+esc(item.texto)+'</p>';
+      item.options.forEach(function(opt, oi){
+        html += '<button class="opt" type="button" data-idx="'+oi+'">'+esc(opt)+'</button>';
+      });
+      html += '<div class="feedback"></div>';
+      card.innerHTML = html;
+      box.appendChild(card);
+      var buttons = card.querySelectorAll('.opt');
+      buttons.forEach(function(btn){
+        btn.addEventListener('click', function(){
+          if (card.dataset.done) return;
+          card.dataset.done = '1';
+          var chosen = parseInt(btn.getAttribute('data-idx'),10);
+          buttons.forEach(function(b,bi){
+            b.disabled = true;
+            if (bi === item.correct) b.classList.add('correct');
+            else if (bi === chosen) b.classList.add('incorrect');
+          });
+          var fb = card.querySelector('.feedback');
+          fb.classList.add('show');
+          fb.classList.toggle('bad', chosen !== item.correct);
+          fb.textContent = (chosen === item.correct ? '✔ Diagnóstico correcto. ' : '✘ No es eso. ') + item.explicacion;
+          item._correctPicked = (chosen === item.correct);
+          r3answered++;
+          if (r3answered === r3items.length) document.getElementById('r3Next').disabled = false;
+        });
+      });
+    });
+  }
+  document.getElementById('r3Next').addEventListener('click', function(){ buildReport(); show('report'); });
+
+  /* ---------- informe final ---------- */
+  function buildReport(){
+    var total = pairs.length + r2items.length + r3items.length;
+    var score = r1State.lockedCount; // ronda 1 siempre se completa entera para avanzar
+    var fails = [];
+    r2items.forEach(function(it, idx){
+      if (it._correctPicked) score++;
+      else fails.push('<b>Control 2 · Maleta '+(idx+1)+':</b> '+esc(it.explicacion));
+    });
+    r3items.forEach(function(it, idx){
+      if (it._correctPicked) score++;
+      else fails.push('<b>Control 3 · Alarma '+(idx+1)+':</b> '+esc(it.explicacion));
+    });
+    document.getElementById('scoreVal').textContent = score + '/' + total;
+    var rank, desc;
+    if (score >= total - 2) {
+      rank = '🛃 Operador/a certificado/a de la aduana textual';
+      desc = 'Puedes trabajar sola/o el turno de noche: lees las siluetas del escáner con precisión.';
+    } else if (score >= total - 6) {
+      rank = '🧰 Casi listo/a para el turno en solitario';
+      desc = 'Vas bien, pero repasa las siluetas que fallaste antes de tu próximo turno.';
+    } else {
+      rank = '📎 Turno de refuerzo recomendado';
+      desc = 'Todavía no estás preparado/a para operar sola/o. Vuelve al manual de la unidad antes de reintentarlo.';
+    }
+    document.getElementById('rankTitle').textContent = rank;
+    document.getElementById('rankDesc').textContent = desc;
+    var reviewBox = document.getElementById('reviewList');
+    if (fails.length) {
+      reviewBox.innerHTML = '<h3 class="step-title" style="font-size:15px;">Para repasar antes del próximo turno</h3>' +
+        fails.map(function(f){ return '<div class="review-item">'+f+'</div>'; }).join('');
+    } else {
+      reviewBox.innerHTML = '<div class="review-item" style="border-left-color:var(--accent);">Ningún fallo que repasar en los controles 2 y 3. Buen turno.</div>';
+    }
+  }
+
+  document.getElementById('restartBtn').addEventListener('click', function(){
+    r2items.forEach(function(it){ delete it._correctPicked; });
+    r3items.forEach(function(it){ delete it._correctPicked; });
+    buildRound1(); buildRound2(); buildRound3();
+    show('intro');
+  });
+
+  function esc(s){
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  /* ---------- init ---------- */
+  buildRound1();
+  buildRound2();
+  buildRound3();
+})();
+</script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 {
   "manual": true,
   "principal": true,
-  "practica": true
+  "practica": true,
+  "regex_scanner": false
 }
