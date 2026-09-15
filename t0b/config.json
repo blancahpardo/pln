@@ -2,5 +2,5 @@
   "manual": true,
   "principal": true,
   "practica": true,
-  "regex_scanner": false
+  "regex_scanner": true
 }
