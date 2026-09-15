@@ -116,6 +116,9 @@ main { max-width:980px; margin:0 auto; padding:48px clamp(20px,6vw,48px) 60px; }
 .ref-item { font-size:13.5px; color:var(--gris); line-height:1.6; margin:0 0 16px; padding-left:28px; text-indent:-28px; }
 .ref-item a { color:var(--azul); word-break:break-all; }
 .ref-item em { font-style:italic; }
+.ref-img-block { margin:0 0 16px; }
+.ref-img-block .ref-img { display:block; width:100%; height:auto; border-radius:8px; box-shadow:0 2px 10px rgba(159,177,186,.28); margin-bottom:8px; }
+.ref-img-block .ref-item { padding-left:0; text-indent:0; }
 .notice { font-size:12px; color:var(--humo); font-style:italic; margin-top:10px; }
 /* quiz */
 .quiz-start { background:var(--claro); border-radius:12px; padding:26px; }
@@ -361,7 +364,13 @@ function buildReflistView(viewKey, tema) {
   const cfg = tema.views[viewKey];
   if (!cfg || !cfg.exists) return '';
   const label = viewLabel(viewKey, tema);
-  const items = cfg.refs.map(r => `<p class="ref-item">${esc(r.author)} (${esc(r.date)}). ${esc(r.title)} <em>[${esc(r.type)}]</em>. ${esc(r.platform)}. <a href="${r.url}" target="_blank" rel="noopener">${esc(r.url)}</a></p>`).join('\n  ');
+  const items = cfg.refs.map(r => {
+    const citation = `<p class="ref-item">${esc(r.author)} (${esc(r.date)}). ${esc(r.title)} <em>[${esc(r.type)}]</em>. ${esc(r.platform)}. <a href="${r.url}" target="_blank" rel="noopener">${esc(r.url)}</a></p>`;
+    if (r.img) {
+      return `<div class="ref-img-block"><img class="ref-img" src="${r.img}" alt="${esc(r.title)}">${citation}</div>`;
+    }
+    return citation;
+  }).join('\n  ');
   return `<div id="view-${viewKey}" class="view sub-view" hidden>
   <button class="back-btn" data-back="hub">← Volver</button>
   <h2>${esc(label)} · ${esc(tema.titleShort)}</h2>
@@ -1407,6 +1416,7 @@ const TEMAS = [
           { author: 'linguAIstica', date: '2026, 20 de agosto', title: '5 tokenizadores, una frase, 5 visiones', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/Wh35H7lOSxU' },
           { author: 'linguAIstica', date: '2026, 25 de agosto', title: '¿Puede un sistema de NLP tokenizar mal y aun así "funcionar"?', type: 'Publicación', platform: 'LinkedIn', url: 'https://es.linkedin.com/posts/linguaistica_linguaistica-nlp-tokenizaci%C3%B3n-activity-7498031528334045184-ueIN' },
           { author: 'linguAIstica', date: '2026, 18 de agosto', title: '¿Y si tokenizar un texto no significara simplemente separarlo por espacios?', type: 'Publicación', platform: 'LinkedIn', url: 'https://es.linkedin.com/posts/linguaistica_linguaistica-nlp-tokenizaci%C3%B3n-activity-7495494733327310848-Dtsx' },
+          { author: 'linguAIstica', date: '2026, 1 de septiembre', title: 'Tokenización práctica: ejemplos en múltiples idiomas', type: 'Infografía', platform: 'LinkedIn', url: 'https://www.linkedin.com/feed/update/urn:li:activity:7499081031787012096/', img: 'linguaistica_infografia_tokenizacion_practica.jpg' },
         ] },
       stopwords: { exists: true, kind: 'viewerdownload', label: 'Diferencias entre las stopwords de spaCy y NLTK', icon: '📄',
         desc: 'Documento comparativo, para consultar o descargar', file: 'stopwords.pdf' },
@@ -1476,6 +1486,9 @@ const TEMAS = [
           { author: 'linguAIstica', date: '2026, 29 de julio', title: 'Analizando obras literarias con Python (parte 3: definir qué buscamos)', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/oE19LAsrVbw' },
           { author: 'linguAIstica', date: '2026, 1 de septiembre', title: 'Representación textual clásica: bag-of-words, n-gramas y TF-IDF', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=OLUbL7H0b1g' },
           { author: 'linguAIstica', date: '2026, 2 de septiembre', title: 'Bag-of-Words y n-gramas: contando palabras para entender documentos', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/Dcygj7ajZey/' },
+          { author: 'linguAIstica', date: '2026, 10 de septiembre', title: 'TF-IDF: la magia de pesar palabras (y no solo contarlas)', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DdE1wdZDTG7/' },
+          { author: 'linguAIstica', date: '2026, 10 de septiembre', title: 'La palabra que aparece 10.000 veces y es inútil para un LLM', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/BciMr5FHeOg' },
+          { author: 'linguAIstica', date: '2026, 12 de septiembre', title: 'Representación textual clásica: bag-of-words, n-gramas y TF-IDF', type: 'Infografía', platform: 'LinkedIn', url: 'https://www.linkedin.com/feed/update/urn:li:activity:7504116614728933377/', img: 'linguaistica_infografia_representacion_textual.jpg' },
         ] },
       infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
@@ -1495,6 +1508,9 @@ const TEMAS = [
           { author: 'linguAIstica', date: '2026, 1 de septiembre', title: 'Representación textual clásica: bag-of-words, n-gramas y TF-IDF', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=OLUbL7H0b1g' },
           { author: 'linguAIstica', date: '2026, 3 de septiembre', title: '¿Quién mordió a quién? (Tú lo sabes, pero la IA no)', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/voep6S_SwOk' },
           { author: 'linguAIstica', date: '2026, 2 de septiembre', title: 'Bag-of-Words y n-gramas: contando palabras para entender documentos', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/Dcygj7ajZey/' },
+          { author: 'linguAIstica', date: '2026, 10 de septiembre', title: 'TF-IDF: la magia de pesar palabras (y no solo contarlas)', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DdE1wdZDTG7/' },
+          { author: 'linguAIstica', date: '2026, 10 de septiembre', title: 'La palabra que aparece 10.000 veces y es inútil para un LLM', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/BciMr5FHeOg' },
+          { author: 'linguAIstica', date: '2026, 12 de septiembre', title: 'Representación textual clásica: bag-of-words, n-gramas y TF-IDF', type: 'Infografía', platform: 'LinkedIn', url: 'https://www.linkedin.com/feed/update/urn:li:activity:7504116614728933377/', img: 'linguaistica_infografia_representacion_textual.jpg' },
         ] },
       infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
