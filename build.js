@@ -108,6 +108,10 @@ main { max-width:980px; margin:0 auto; padding:48px clamp(20px,6vw,48px) 60px; }
 .back-btn:hover { background:var(--azul); color:#fff; }
 .dl-big { display:inline-block; background:var(--amar); color:var(--azul-d); font-weight:bold; font-size:14px; text-decoration:none; padding:10px 20px; border-radius:20px; margin-bottom:18px; }
 .pdf-frame { width:100%; height:78vh; border:none; border-radius:8px; box-shadow:0 2px 10px rgba(159,177,186,.28); }
+.dl-row { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px; }
+.dl-row .dl-big { margin-bottom:0; }
+.dl-alt { background:#fff; color:var(--azul); border:2px solid var(--azul); padding:8px 18px; }
+.pdf-frame-xl { width:min(1300px,96vw); margin-left:calc(50% - min(650px,48vw)); height:calc(100vh - 150px); min-height:560px; }
 .img-frame { display:block; width:100%; height:auto; border-radius:8px; box-shadow:0 2px 10px rgba(159,177,186,.28); }
 .img-caption { font-size:11px; color:var(--humo); text-align:center; margin-top:10px; font-style:italic; }
 .img-caption em { font-style:italic; }
@@ -265,13 +269,13 @@ footer { text-align:center; padding:26px clamp(20px,6vw,48px) 40px; font-size:11
 
 const ICONS = { manual: '📘', principal: '📓', evaluable: '📝', practica: '🧪', quiz: '❓' };
 const LABELS = {
-  manual: 'Manual teórico', principal: 'Cuaderno principal', evaluable: 'Cuaderno evaluable',
+  manual: 'Manual teórico', principal: 'Cuaderno principal', evaluable: 'Actividades evaluables',
   practica: 'Prácticas', quiz: 'Cuestionario de práctica'
 };
 const DESCS = {
   manual: 'Lectura en PDF, descargable',
   principal: 'Descarga el cuaderno de trabajo',
-  evaluable: 'Descarga la plantilla del entregable',
+  evaluable: 'Enunciado en PDF y materiales de trabajo',
   practica: 'Documento de la práctica (solo lectura)',
   quiz: '10 preguntas al azar, puntuación sobre 10'
 };
@@ -344,6 +348,21 @@ function buildViewerDownloadView(viewKey, tema) {
   <p class="section-note">Puedes leerlo aquí o descargarlo.</p>
   <a class="dl-big" href="${cfg.file}" download>⬇ Descargar PDF</a>
   <iframe class="pdf-frame" src="${cfg.file}" title="${esc(label)}"></iframe>
+</div>`;
+}
+
+function buildEvaluableView(tema) {
+  const cfg = tema.views.evaluable;
+  if (!cfg || !cfg.exists) return '';
+  const label = viewLabel('evaluable', tema);
+  const mat = cfg.materials;
+  const matBtn = mat ? `<a class="dl-big dl-alt" href="${mat.file}" download>⬇ ${esc(mat.label)}</a>` : '';
+  return `<div id="view-evaluable" class="view sub-view" hidden>
+  <button class="back-btn" data-back="hub">← Volver</button>
+  <h2>${esc(label)} · ${esc(tema.titleShort)}</h2>
+  <p class="section-note">${esc(mat ? mat.note : 'Puedes leerlo aquí o descargarlo.')}</p>
+  <div class="dl-row"><a class="dl-big" href="${cfg.file}" download>⬇ Descargar PDF</a>${matBtn}</div>
+  <iframe class="pdf-frame pdf-frame-xl" src="${cfg.file}" title="${esc(label)} · ${esc(tema.titleShort)}"></iframe>
 </div>`;
 }
 
@@ -487,7 +506,7 @@ function buildTopicHtml(tema) {
     buildHub(tema),
     buildManualView(tema),
     buildDownloadView('principal', tema),
-    buildDownloadView('evaluable', tema),
+    buildEvaluableView(tema),
     buildViewerGroupView('practica', tema),
     ...extraHtml,
     buildQuizView(tema)
@@ -1396,7 +1415,7 @@ const TEMAS = [
       infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
-      evaluable: { exists: true, file: 'evaluable.ipynb' },
+      evaluable: { exists: true, file: 'evaluable.pdf', materials: { file: 'plantilla_evaluable.ipynb', label: 'Descargar plantilla de resolución (.ipynb)', note: 'Descarga el enunciado en PDF y, con el botón adicional, la plantilla de resolución (.ipynb) sobre la que debes trabajar y entregar.' } },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
@@ -1415,7 +1434,7 @@ const TEMAS = [
       infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
-      evaluable: { exists: true, file: 'evaluable.ipynb' },
+      evaluable: { exists: true, file: 'evaluable.pdf', materials: { file: 'plantilla_evaluable.ipynb', label: 'Descargar plantilla de resolución (.ipynb)', note: 'Descarga el enunciado en PDF y, con el botón adicional, la plantilla de resolución (.ipynb) sobre la que debes trabajar y entregar.' } },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
@@ -1440,7 +1459,7 @@ const TEMAS = [
       pandas: { exists: true, kind: 'viewerdownload', label: 'Pandas para lingüistas', icon: '📄',
         desc: 'Guía práctica de pandas, para consultar o descargar', file: 'pandas.pdf' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
-      evaluable: { exists: true, file: 'evaluable.ipynb' },
+      evaluable: { exists: true, file: 'evaluable.pdf', materials: { file: 'materiales_evaluable.zip', label: 'Descargar materiales y plantilla (.zip)', note: 'Descarga el enunciado en PDF y, con el botón adicional, el paquete de trabajo: los textos en .txt (carpeta materiales) y la plantilla de resolución (.ipynb).' } },
       practica: { exists: true, items: [
         { id: 'p1', label: 'Prácticas 3.1', file: 'practica1.pdf' },
         { id: 'p2', label: 'Prácticas 3.2', file: 'practica2.pdf' }
@@ -1457,7 +1476,7 @@ const TEMAS = [
           { author: 'linguAIstica', date: '2026, 1 de agosto', title: 'Historia de los chatbots: de ELIZA a ChatGPT y más allá', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=uKnjZx3jKeg' },
         ] },
       principal: { exists: true, file: 'cuaderno_principal.zip', note: 'Incluye el cuaderno y los dos ficheros de texto (texto1.txt, texto2.txt) que necesita para funcionar.' },
-      evaluable: { exists: true, file: 'evaluable.ipynb' },
+      evaluable: { exists: true, file: 'evaluable.pdf', materials: { file: 'plantilla_evaluable.ipynb', label: 'Descargar plantilla de resolución (.ipynb)', note: 'Descarga el enunciado en PDF y, con el botón adicional, la plantilla de resolución (.ipynb) sobre la que debes trabajar y entregar.' } },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }],
         extraDownload: { file: 'materiales_practica.zip', label: 'Descargar los 6 textos del corpus' } },
       quiz: { exists: true }
@@ -1472,7 +1491,7 @@ const TEMAS = [
           { author: 'linguAIstica', date: '2026, 3 de julio', title: 'La IA reemplazará a los traductores', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/4z_qvGFZwCU' },
         ] },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
-      evaluable: { exists: true, file: 'evaluable.ipynb' },
+      evaluable: { exists: true, file: 'evaluable.pdf', materials: { file: 'materiales_evaluable.zip', label: 'Descargar materiales y plantilla (.zip)', note: 'Descarga el enunciado en PDF y, con el botón adicional, el paquete de trabajo: los textos en .txt (carpeta materiales) y la plantilla de resolución (.ipynb).' } },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       metric2: { exists: true, kind: 'download', label: 'Métricas parte II', icon: '📐',
         desc: 'Cuaderno complementario sobre METEOR, para descargar', file: 'metrica2.ipynb' },
@@ -1510,7 +1529,7 @@ const TEMAS = [
       infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
-      evaluable: { exists: true, file: 'evaluable.ipynb' },
+      evaluable: { exists: true, file: 'evaluable.pdf', materials: { file: 'materiales_evaluable.zip', label: 'Descargar materiales y plantilla (.zip)', note: 'Descarga el enunciado en PDF y, con el botón adicional, el paquete de trabajo: los textos en .txt (carpeta materiales) y la plantilla de resolución (.ipynb).' } },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
       quiz: { exists: true }
     } },
@@ -1532,7 +1551,7 @@ const TEMAS = [
       infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
-      evaluable: { exists: true, file: 'evaluable.ipynb' },
+      evaluable: { exists: true, file: 'evaluable.pdf', materials: { file: 'plantilla_evaluable.ipynb', label: 'Descargar plantilla de resolución (.ipynb)', note: 'Descarga el enunciado en PDF y, con el botón adicional, la plantilla de resolución (.ipynb) sobre la que debes trabajar y entregar.' } },
       practica: { exists: true, items: [
         { id: 'sms', label: 'Clasificación de SMS', file: 'practica_sms.pdf' },
         { id: 'agnews', label: 'Clasificación AG News', file: 'practica_agnews.pdf' },
