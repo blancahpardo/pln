@@ -3,7 +3,7 @@
   "principal": false,
   "evaluable": false,
   "quiz": false,
-  "infografia": false,
+  "infografia": true,
   "adicionales": true,
   "manual_interactivo": true
 }
