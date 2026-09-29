@@ -2,7 +2,7 @@
   "manual": false,
   "principal": true,
   "evaluable": true,
-  "quiz": false,
+  "quiz": true,
   "infografia": true,
   "adicionales": true,
   "manual_interactivo": true,
