@@ -103,6 +103,7 @@ main { max-width:980px; margin:0 auto; padding:48px clamp(20px,6vw,48px) 60px; }
 .back-home { font-size:13px; color:var(--humo); text-decoration:none; }
 .back-home:hover { color:var(--azul); }
 .sub-view h2 { color:var(--azul); font-size:24px; margin:18px 0 4px; }
+.work-notice { background:#FFF7DD; border:1.5px solid var(--amar); border-radius:8px; padding:10px 14px; margin:0 0 14px; font-size:13.5px; color:var(--gris); line-height:1.5; }
 .sub-view .section-note { font-size:13px; color:var(--humo); margin:0 0 24px; }
 .back-btn { background:none; border:1.5px solid var(--azul); color:var(--azul); font-size:13px; font-weight:bold; padding:6px 14px; border-radius:20px; cursor:pointer; font-family:Arial,Helvetica,sans-serif; }
 .back-btn:hover { background:var(--azul); color:#fff; }
@@ -424,6 +425,7 @@ function buildViewerGroupView(viewKey, tema) {
   <h2>${esc(label)} · ${esc(tema.titleShort)}</h2>
   <p class="section-note">Documento de solo lectura, sin descarga.${cfg.extraDownload ? ' Los materiales que necesitas para trabajarla se descargan aparte, más abajo.' : ''}</p>
   ${extraLink}
+  ${cfg.notice ? `<div class="work-notice">⚠️ ${esc(cfg.notice)}</div>` : ''}
   <iframe class="pdf-frame" src="${it.file}#toolbar=0&navpanes=0" title="${esc(label)}"></iframe>
 </div>`;
   }
@@ -1435,7 +1437,9 @@ const TEMAS = [
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.pdf', materials: { file: 'plantilla_evaluable.ipynb', label: 'Descargar plantilla de resolución (.ipynb)', note: 'Descarga el enunciado en PDF y, con el botón adicional, la plantilla de resolución (.ipynb) sobre la que debes trabajar y entregar.' } },
-      practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
+      practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }],
+        extraDownload: { file: 'textos_y_diccionarios_practicas.md', label: 'Descargar textos y diccionario (actividades 1-3)' },
+        notice: 'Para las actividades 1, 2 y 3 de estas prácticas, utiliza los textos y el diccionario de falsos amigos del material de trabajo que puedes descargar con el botón de arriba (textos_y_diccionarios_practicas.md): ábrelo, copia lo que necesites y pégalo en tu código.' },
       quiz: { exists: true }
     } },
   { dir: 't3', numLabel: 'TEMA 3', titleShort: 'Tema 3', titleFull: 'Tema 3', kicker: 'Tema 3',
