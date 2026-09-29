@@ -3,7 +3,7 @@
   "principal": false,
   "evaluable": false,
   "quiz": false,
-  "stopwords": false,
+  "stopwords": true,
   "pandas": true,
   "adicionales": true
 }
