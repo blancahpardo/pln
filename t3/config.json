@@ -4,6 +4,6 @@
   "evaluable": false,
   "quiz": false,
   "stopwords": false,
-  "pandas": false,
+  "pandas": true,
   "adicionales": true
 }
