@@ -437,7 +437,9 @@ function buildViewerGroupView(viewKey, tema) {
   const leaves = cfg.items.map(it => `<div id="view-${viewKey}-${it.id}" class="view sub-view" hidden>
   <button class="back-btn" data-back="${viewKey}">← Volver</button>
   <h2>${esc(it.label)} · ${esc(tema.titleShort)}</h2>
-  <p class="section-note">Documento de solo lectura, sin descarga.</p>
+  <p class="section-note">Documento de solo lectura, sin descarga.${it.extraDownload ? ' Los materiales que necesitas para trabajarla se descargan aparte.' : ''}</p>
+  ${it.extraDownload ? `<a class="dl-big" href="${it.extraDownload.file}" download>⬇ ${esc(it.extraDownload.label)}</a>` : ''}
+  ${it.notice ? `<div class="work-notice">⚠️ ${esc(it.notice)}</div>` : ''}
   <iframe class="pdf-frame" src="${it.file}#toolbar=0&navpanes=0" title="${esc(it.label)}"></iframe>
 </div>`).join('\n');
   return `<div id="view-${viewKey}" class="view sub-view" hidden>
@@ -1514,7 +1516,9 @@ const TEMAS = [
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: false },
-      practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
+      practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }],
+        extraDownload: { file: 'datos_twitter.zip', label: 'Descargar los tuits (3 ficheros)' },
+        notice: 'Construye el corpus con los tres ficheros de tuits como en los apartados 11.1 y 11.2 del cuaderno principal (se descargan solos con ese código). Si la descarga automática falla, usa los ficheros del botón de arriba. Los temas y listas de términos que debes usar están en el PDF.' },
       quiz: { exists: true }
     } },
   { dir: 't7', numLabel: 'TEMA 7', titleShort: 'Tema 7', titleFull: 'Tema 7', kicker: 'Tema 7',
@@ -1563,9 +1567,9 @@ const TEMAS = [
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.pdf', materials: { file: 'plantilla_evaluable.ipynb', label: 'Descargar plantilla de resolución (.ipynb)', note: 'Descarga el enunciado en PDF y, con el botón adicional, la plantilla de resolución (.ipynb) sobre la que debes trabajar y entregar.' } },
       practica: { exists: true, items: [
-        { id: 'sms', label: 'Clasificación de SMS', file: 'practica_sms.pdf' },
-        { id: 'agnews', label: 'Clasificación AG News', file: 'practica_agnews.pdf' },
-        { id: 'imdb', label: 'Clasificación IMDB', file: 'practica_imdb.pdf' }
+        { id: 'sms', label: 'Clasificación de SMS', file: 'practica_sms.pdf', extraDownload: { file: 'spam.csv', label: 'Descargar spam.csv (por si falla la carga desde la URL)' }, notice: 'Carga el corpus desde la dirección que indica el ejercicio 1 del PDF. Si no funciona, descarga spam.csv con el botón de arriba y cárgalo desde tu ordenador.' },
+        { id: 'agnews', label: 'Clasificación AG News', file: 'practica_agnews.pdf', notice: 'El corpus se carga directamente desde Hugging Face con el código del ejercicio 1 del PDF: no hay que descargar ningún fichero.' },
+        { id: 'imdb', label: 'Clasificación IMDB', file: 'practica_imdb.pdf', extraDownload: { file: 'imdb_dataset.zip', label: 'Descargar IMDB Dataset.csv (.zip, 27 MB)' }, notice: 'Descarga el fichero con el botón de arriba y descomprímelo: dentro está IMDB Dataset.csv, el corpus con el que trabajan todos los ejercicios.' }
       ] },
       quiz: { exists: true }
     } }

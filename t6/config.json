@@ -3,5 +3,6 @@
   "principal": false,
   "quiz": false,
   "infografia": false,
-  "adicionales": false
+  "adicionales": false,
+  "practica": false
 }
