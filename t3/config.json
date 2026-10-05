@@ -1,7 +1,7 @@
 {
   "manual": true,
   "principal": true,
-  "evaluable": false,
+  "evaluable": true,
   "quiz": false,
   "stopwords": true,
   "pandas": true,
