@@ -1,0 +1,2208 @@
+{
+ "header": {
+  "kicker": "Tema 4.",
+  "title": "Análisis automático de textos para revisión lingüística",
+  "subtitle": "Informe automático de divergencias en textos paralelos monolingües",
+  "meta": "Material teórico | Programación para PLN | Universidad Pontificia Comillas",
+  "narrative": "Revisar dos versiones de un mismo texto ya no consiste solo en leer con atención: consiste en saber convertir el texto en datos, detectar indicios y devolver al equipo humano una lista razonada de lugares que merecen revisión. En esta unidad, la revisión lingüística se plantea como una tarea profesional híbrida: el criterio sigue siendo humano, pero Python ayuda a localizar de forma rápida patrones repetitivos, incoherencias terminológicas y señales formales que pueden pasar inadvertidas cuando el volumen de texto crece."
+ },
+ "sections": [
+  {
+   "id": "contexto-profesional",
+   "title": "Contexto profesional",
+   "blocks": [
+    {
+     "type": "p",
+     "text": "Imagina que te incorporas al equipo lingüístico de una institución multilateral, un organismo público o una gran empresa que trabaja con documentación institucional en varias lenguas: Verba Pública. La institución ha encargado la traducción de un documento oficial a varios proveedores. Las versiones llegan en el mismo idioma, pero no son idénticas: una habla de equipo donde otra habla de grupo; una prefiere compañía y otra empresa; una mantiene una puntuación impecable y otra acumula pequeños problemas de espaciado."
+    },
+    {
+     "type": "p",
+     "text": "La pregunta profesional no es únicamente cuál de las versiones «suena mejor». El equipo necesita tomar decisiones justificables:"
+    },
+    {
+     "type": "ul",
+     "items": [
+      "Qué versión puede validarse como base.",
+      "Qué términos deben incorporarse a un glosario consolidado.",
+      "Qué proveedor respeta mejor la política terminológica de la institución.",
+      "Qué problemas formales conviene corregir antes de publicar el documento.",
+      "Qué patrones lingüísticos necesitan revisión humana especializada."
+     ]
+    },
+    {
+     "type": "p",
+     "text": "La institución no quiere una lectura subjetiva aislada, sino un procedimiento repetible que ayude a responder preguntas concretas:"
+    },
+    {
+     "type": "ul",
+     "items": [
+      "¿Hay divergencias terminológicas entre versiones?",
+      "¿Aparecen patrones formales que sugieran falta de revisión, como espacios dobles o ausencia de espacio tras puntuación?",
+      "¿Se repiten estructuras que podrían requerir criterio lingüístico, como ciertos usos de a + infinitivo o gerundios?",
+      "¿Puede generarse un pequeño informe que reúna los hallazgos sin tener que revisar manualmente todo el corpus desde cero?"
+     ]
+    },
+    {
+     "type": "p",
+     "text": "En una revisión manual tradicional, una lingüista tendría que leer las versiones una al lado de la otra, oración por oración, y marcar diferencias. Esa lectura sigue siendo imprescindible, porque interpretar un texto exige criterio lingüístico. Sin embargo, cuando el volumen crece, la revisión exclusivamente manual se vuelve lenta, costosa y difícil de documentar."
+    },
+    {
+     "type": "p",
+     "text": "Python permite construir una primera capa de revisión automática. Esa capa no reemplaza la lectura profesional, pero ayuda a organizarla. Localiza indicios, cuenta fenómenos, compara usos y genera un informe preliminar que orienta el trabajo humano. La idea central de este tema es muy importante para el PLN: un texto puede leerse como discurso, pero también puede representarse como dato."
+    },
+    {
+     "type": "p",
+     "text": "Este manual desarrolla esa mirada: cómo preparar un pequeño sistema de análisis textual para revisar versiones paralelas monolingües, detectar divergencias terminológicas y localizar posibles problemas de estilo, puntuación y gramática."
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Contexto profesional"
+  },
+  {
+   "id": "que-vas-a-aprender-en-esta-unidad",
+   "title": "Qué vas a aprender en esta unidad",
+   "blocks": [
+    {
+     "type": "p",
+     "text": "Al terminar esta unidad deberías poder explicar, antes de ejecutar código, por qué cada operación es relevante para una tarea de revisión lingüística. En concreto, aprenderás a:"
+    },
+    {
+     "type": "ul",
+     "items": [
+      "entender qué son los textos paralelos monolingües en el contexto de una revisión comparativa;",
+      "distinguir entre indicio automático, error lingüístico y decisión profesional;",
+      "leer archivos de texto en Python controlando la codificación;",
+      "representar un corpus pequeño como una lista de textos;",
+      "segmentar textos en oraciones con procedimientos simples y reconocer sus limitaciones;",
+      "normalizar texto con operaciones como minúsculas para facilitar comparaciones;",
+      "contar palabras o expresiones como primera aproximación a la coherencia terminológica;",
+      "recorrer muchos textos con bucles y enumerate;",
+      "usar expresiones regulares para localizar patrones formales;",
+      "recuperar contexto alrededor de una coincidencia;",
+      "comparar versiones paralelas oración a oración;",
+      "organizar comprobaciones en funciones reutilizables;",
+      "diferenciar entre mostrar un resultado con print y devolverlo con return;",
+      "reunir varios análisis parciales en un informe final interpretable."
+     ]
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Qué vas a aprender"
+  },
+  {
+   "id": "mapa-conceptual-de-la-unidad",
+   "title": "Mapa conceptual de la unidad",
+   "blocks": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "Bloque",
+       "Pregunta lingüística",
+       "Herramienta de Python",
+       "Resultado esperado"
+      ],
+      [
+       "Textos paralelos monolingües",
+       "¿Cómo comparo dos versiones españolas de un mismo contenido?",
+       "Listas, índices, zip",
+       "Correspondencia entre segmentos"
+      ],
+      [
+       "Lectura de archivos",
+       "¿Cómo convierto documentos externos en texto procesable?",
+       "open, encoding=\"utf-8\", pathlib.Path",
+       "Cadenas de texto cargadas en memoria"
+      ],
+      [
+       "Segmentación",
+       "¿Dónde empieza y termina cada unidad revisable?",
+       "split, strip, listas por comprensión",
+       "Lista de oraciones o segmentos"
+      ],
+      [
+       "Frecuencia léxica",
+       "¿Qué términos se repiten y en qué versiones?",
+       "lower, count, bucles",
+       "Recuentos comparables"
+      ],
+      [
+       "Patrones formales",
+       "¿Dónde hay señales mecánicas de posible error?",
+       "in, finditer, índices, slicing",
+       "Posiciones y contexto"
+      ],
+      [
+       "Expresiones regulares",
+       "¿Cómo busco estructuras textuales flexibles?",
+       "Módulo re, patrones, grupos",
+       "Coincidencias interpretables"
+      ],
+      [
+       "Funciones",
+       "¿Cómo evito repetir análisis manualmente?",
+       "def, parámetros, return",
+       "Comprobaciones reutilizables"
+      ],
+      [
+       "Informe",
+       "¿Cómo convierto hallazgos dispersos en evidencia?",
+       "Funciones combinadas, tablas, texto formateado",
+       "Informe de revisión preliminar"
+      ]
+     ],
+     "title": "Bloque · Pregunta lingüística · Herramienta de Python · Resultado esperado"
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Mapa conceptual"
+  },
+  {
+   "id": "1-marco-teorico",
+   "title": "1. Marco teórico",
+   "blocks": [],
+   "subsections": [
+    {
+     "id": "1-1-textos-paralelos-monolingues",
+     "title": "1.1. Textos paralelos monolingües",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "En corpus lingüísticos y estudios de traducción, un corpus paralelo suele entenderse como un conjunto de textos alineados en dos o más lenguas, normalmente un original y su traducción. Un corpus comparable, en cambio, reúne textos que comparten rasgos relevantes, como dominio, género o periodo, pero no necesariamente son traducciones directas entre sí {{cite:olohan2004,zanettin2012}}(Olohan, 2004; Zanettin, 2012){{/cite}}. La unidad trabaja con una adaptación pedagógica de esa lógica: textos paralelos monolingües, es decir, versiones en la misma lengua que representan un mismo contenido o una misma función comunicativa y que pueden compararse por secciones, párrafos u oraciones."
+      },
+      {
+       "type": "p",
+       "text": "La expresión «paralelo monolingüe» debe entenderse aquí con cuidado. No significa que exista una categoría universal cerrada con ese nombre en todas las tradiciones de corpus, sino que la unidad aprovecha la idea de paralelismo textual para una tarea profesional concreta: comparar versiones españolas de un mismo documento. En revisión institucional esto es habitual. Puede haber dos proveedores que traducen o adaptan un texto, dos versiones sucesivas de un informe, una versión revisada y otra sin revisar, o variantes regionales de un mismo contenido."
+      },
+      {
+       "type": "p",
+       "text": "El interés lingüístico de estos textos está en la divergencia. Si dos versiones dicen exactamente lo mismo con las mismas palabras, la comparación automática aporta poco. Si difieren, en cambio, esas diferencias pueden revelar decisiones de estilo, terminología, registro, puntuación o estructura sintáctica. La tarea no consiste en asumir que toda diferencia es mala. La variación es normal y, en muchos casos, legítima. Lo importante es distinguir entre variación aceptable, incoherencia terminológica y posible error."
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Tipo de divergencia",
+         "Ejemplo",
+         "Interpretación posible"
+        ],
+        [
+         "Terminológica",
+         "«equipo» frente a «grupo»",
+         "Puede ser variación aceptable o falta de glosario común"
+        ],
+        [
+         "Ortográfica o mecánica",
+         "«empresa,el»",
+         "Probable problema formal por ausencia de espacio"
+        ],
+        [
+         "Estilística",
+         "«llevar a cabo» frente a «realizar»",
+         "Puede responder a preferencias de estilo"
+        ],
+        [
+         "Sintáctica",
+         "«decidió a revisar»",
+         "Puede ser candidato a revisión según contexto"
+        ],
+        [
+         "Discursiva",
+         "Una versión divide en dos oraciones y otra en una",
+         "Puede afectar claridad o ritmo"
+        ]
+       ],
+       "title": "Tipo de divergencia · Ejemplo · Interpretación posible"
+      },
+      {
+       "type": "p",
+       "text": "Para una lingüista computacional en formación, el punto clave es que el texto se convierte en un objeto analizable. Una versión puede representarse como una cadena de caracteres; varias versiones pueden guardarse en una lista; cada oración puede ocupar una posición; cada término puede contarse; cada patrón puede buscarse. Esa representación no agota el análisis lingüístico, pero lo hace operativo."
+      }
+     ]
+    },
+    {
+     "id": "1-2-por-que-automatizar-parte-de-la-revision",
+     "title": "1.2. Por qué automatizar parte de la revisión",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La revisión lingüística y la revisión de traducción son tareas expertas que requieren comprensión, competencia textual, conocimiento del dominio y criterio profesional. Las normas de servicios de traducción insisten en procesos de revisión y verificación que no se reducen a una comprobación mecánica {{cite:internationalorganiz2015}}(ISO, 2015){{/cite}}. La evaluación de la calidad de una traducción también exige criterios definidos y categorías de error o adecuación, no solo impresiones generales {{cite:internationalorganiz2024,lommel2014}}(ISO, 2024; Lommel et al., 2014){{/cite}}."
+      },
+      {
+       "type": "p",
+       "text": "Automatizar parte de la revisión no significa automatizar la decisión final. Significa delegar en el programa las operaciones que son repetitivas, sistemáticas y fácilmente verificables. Python puede contar cuántas veces aparece un término, localizar dobles espacios, detectar una coma sin espacio posterior o listar estructuras candidatas a revisión. La persona especialista conserva la responsabilidad de interpretar esos hallazgos."
+      },
+      {
+       "type": "p",
+       "text": "Este reparto de tareas tiene varias ventajas. En primer lugar, reduce la carga de búsqueda manual. En un texto largo, encontrar todas las ocurrencias de una palabra o todos los espacios dobles es una tarea tediosa y propensa a omisiones. En segundo lugar, aumenta la trazabilidad: si se usa el mismo patrón de búsqueda, el procedimiento puede repetirse en otra versión o en otro corpus. En tercer lugar, facilita la documentación de decisiones: un informe con recuentos, ejemplos y posiciones permite discutir con más precisión."
+      },
+      {
+       "type": "p",
+       "text": "También existen riesgos. Un detector basado en reglas puede producir falsos positivos, es decir, casos señalados por el programa que no son errores reales. También puede producir falsos negativos, casos problemáticos que no se detectan porque no cumplen el patrón previsto. Por eso conviene hablar de candidatos a revisión y no de errores automáticos. El lenguaje es demasiado variable para que una regla simple capture todos los matices."
+      },
+      {
+       "type": "p",
+       "text": "En Verba Pública, esta idea se traduce en una regla profesional clara: el informe automático no se entrega como veredicto, sino como mapa de lectura. La revisora sénior no recibe una lista de «fallos», sino una lista de «lugares que conviene mirar». Esa diferencia protege la calidad del trabajo lingüístico y evita que la herramienta aparente más certeza de la que realmente tiene."
+      }
+     ]
+    },
+    {
+     "id": "1-3-del-corpus-al-informe-una-cadena-de-analisis",
+     "title": "1.3. Del corpus al informe: una cadena de análisis",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Una tarea de PLN no empieza con el informe final, sino con una cadena de decisiones. En esta unidad, esa cadena puede resumirse así: recopilar textos, leerlos correctamente, normalizarlos cuando sea necesario, segmentarlos, aplicar comprobaciones, guardar resultados, interpretarlos y comunicarlos. Cada eslabón condiciona los siguientes."
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Fase",
+         "Pregunta",
+         "Decisión técnica",
+         "Riesgo si se descuida"
+        ],
+        [
+         "Entrada",
+         "¿De dónde viene el texto?",
+         "Leer archivos .txt con codificación explícita",
+         "Caracteres dañados o errores de lectura"
+        ],
+        [
+         "Representación",
+         "¿Cómo guardo una o varias versiones?",
+         "Cadenas, listas, diccionarios si procede",
+         "Datos desordenados o difíciles de comparar"
+        ],
+        [
+         "Normalización",
+         "¿Qué diferencias quiero ignorar?",
+         "Pasar a minúsculas, limpiar espacios",
+         "Comparaciones injustas o pérdida de información"
+        ],
+        [
+         "Segmentación",
+         "¿Qué unidad reviso?",
+         "Oraciones, párrafos, líneas",
+         "Coincidencias sin contexto"
+        ],
+        [
+         "Análisis",
+         "¿Qué busco?",
+         "Recuentos, patrones, regex, funciones",
+         "Resultados irrelevantes"
+        ],
+        [
+         "Interpretación",
+         "¿Qué significa el hallazgo?",
+         "Criterio lingüístico",
+         "Confundir señal con error"
+        ],
+        [
+         "Informe",
+         "¿Cómo lo comunico?",
+         "Tablas, ejemplos, resumen",
+         "Evidencia difícil de usar"
+        ]
+       ],
+       "title": "Fase · Pregunta · Decisión técnica · Riesgo si se descuida"
+      },
+      {
+       "type": "p",
+       "text": "La literatura de corpus insiste en que el corpus no es una colección neutra de textos, sino un recurso construido para responder preguntas concretas {{cite:mcenery2012}}(McEnery y Hardie, 2012){{/cite}}. En una revisión profesional, esa idea es especialmente importante: no se recopilan versiones porque sí, sino porque se quiere verificar coherencia, detectar divergencias y justificar decisiones."
+      },
+      {
+       "type": "p",
+       "text": "El informe final debe preservar la relación entre dato y contexto. Un recuento aislado puede ser útil, pero no basta. Saber que «implementación» aparece cinco veces en una versión y una vez en otra puede sugerir divergencia terminológica, pero la revisión necesita mirar dónde aparece, qué función cumple y si existe una alternativa aceptada por el glosario. Por eso el análisis automático debe tender a producir resultados contextualizados."
+      },
+      {
+       "type": "p",
+       "text": "Por ejemplo, si una herramienta detecta diez casos de a + infinitivo, no puede afirmar automáticamente que todos sean galicismos. Algunos serán correctos. Otros dependerán del sustantivo anterior, del régimen preposicional o de la construcción completa. La herramienta reduce el espacio de búsqueda; la lingüista interpreta."
+      },
+      {
+       "type": "p",
+       "text": "Esta relación entre automatización y revisión humana es esencial en entornos profesionales:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Tarea automática",
+         "Decisión lingüística posterior"
+        ],
+        [
+         "Contar ocurrencias de empresa y compañía",
+         "Decidir cuál debe incorporarse al glosario"
+        ],
+        [
+         "Detectar ., seguido de una letra sin espacio",
+         "Confirmar si hay error tipográfico real"
+        ],
+        [
+         "Localizar gerundios",
+         "Clasificar usos correctos, de posterioridad o especificativos"
+        ],
+        [
+         "Comparar términos por versión",
+         "Valorar consistencia, estilo y adecuación al cliente"
+        ],
+        [
+         "Generar un informe preliminar",
+         "Priorizar la revisión humana"
+        ]
+       ],
+       "title": "Tarea automática · Decisión lingüística posterior"
+      },
+      {
+       "type": "p",
+       "text": "Para una lingüista de segundo curso, esta unidad introduce una idea muy poderosa: programar no consiste solo en «hacer que algo funcione». Programar para PLN consiste en formalizar una pregunta lingüística."
+      },
+      {
+       "type": "image_reveal",
+       "src": "img/fig_cadena.svg",
+       "alt": "Del corpus al informe: resultado de cada paso",
+       "labelClosed": "🔎 Descubre la cadena de análisis paso a paso",
+       "caption": "Figura elaborada a partir del mapa conceptual de la unidad."
+      }
+     ]
+    },
+    {
+     "id": "1-4-revision-linguistica-calidad-y-evidencia",
+     "title": "1.4. Revisión lingüística, calidad y evidencia",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La calidad textual no es una propiedad única. En traducción y comunicación especializada suele relacionarse con adecuación al encargo, fidelidad funcional, coherencia terminológica, corrección lingüística, legibilidad y cumplimiento de convenciones del cliente o institución. Las normas profesionales, como ISO 17100 para servicios de traducción, subrayan la importancia de procesos definidos, competencias profesionales y revisión por una persona distinta cuando procede {{cite:internationalorganiz2015}}(ISO, 2015){{/cite}}."
+      },
+      {
+       "type": "p",
+       "text": "La evaluación de calidad también puede apoyarse en marcos de categorías. MQM, por ejemplo, propone describir problemas de calidad mediante dimensiones y tipos de error, lo que permite pasar de una impresión global a una anotación más sistemática {{cite:lommel2014}}(Lommel et al., 2014){{/cite}}. ISO 5060 actualiza este terreno al ofrecer una norma para evaluar resultados de traducción, con atención a criterios, especificaciones y finalidad de la evaluación {{cite:internationalorganiz2024}}(ISO, 2024){{/cite}}."
+      },
+      {
+       "type": "p",
+       "text": "La unidad no pretende que el alumnado aplique una taxonomía completa de calidad, sino que entienda una idea fundamental: un buen análisis automático debe estar al servicio de una pregunta de revisión. No se busca «todo lo raro»; se buscan indicios relacionados con una necesidad profesional. En el caso de Verba Pública, la necesidad es comparar versiones españolas para detectar divergencias antes de consolidar una versión final."
+      },
+      {
+       "type": "p",
+       "text": "Esta perspectiva evita dos errores frecuentes. El primero es tecnicista: creer que si Python detecta algo, ese algo ya es un error. El segundo es antitécnico: pensar que, como el criterio final es humano, la automatización no aporta valor. Entre ambos extremos está la práctica profesional madura: usar herramientas para observar mejor y decidir con más fundamento."
+      }
+     ]
+    },
+    {
+     "id": "1-5-corpus-texto-y-unidad-de-analisis",
+     "title": "1.5. Corpus, texto y unidad de análisis",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Un corpus es un conjunto de textos reunidos con un propósito. Puede ser grande o pequeño, especializado o general, monolingüe o multilingüe, equilibrado o diseñado para una tarea muy concreta. Lo importante es que permite estudiar patrones de uso a partir de datos. En PLN, un corpus pequeño puede ser suficiente para aprender procedimientos; en investigación o producción profesional, el tamaño y diseño del corpus deben justificarse con más cuidado {{cite:mcenery2012,olohan2004}}(McEnery y Hardie, 2012; Olohan, 2004){{/cite}}."
+      },
+      {
+       "type": "p",
+       "text": "En esta unidad, el corpus es pequeño y controlado: varias versiones de textos de trabajo. Esa escala es didáctica, pero no trivial. Muchas tareas profesionales reales comienzan con corpus modestos: un contrato, un informe, una guía de estilo, una batería de páginas web o un conjunto de documentos institucionales. En esos casos, Python no se usa para descubrir leyes generales de la lengua, sino para apoyar una revisión concreta."
+      },
+      {
+       "type": "p",
+       "text": "La unidad de análisis puede cambiar. A veces interesa el texto completo, por ejemplo para contar cuántas veces aparece un término. Otras veces interesa la oración, porque permite localizar un problema en contexto. En otros proyectos podrían interesar párrafos, segmentos alineados, títulos, notas al pie o unidades terminológicas. Elegir la unidad de análisis es una decisión lingüística antes que técnica."
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Unidad",
+         "Ventaja",
+         "Limitación"
+        ],
+        [
+         "Texto completo",
+         "Permite recuentos globales",
+         "Puede ocultar dónde ocurre el fenómeno"
+        ],
+        [
+         "Párrafo",
+         "Mantiene contexto discursivo",
+         "Puede ser demasiado amplio para revisión puntual"
+        ],
+        [
+         "Oración",
+         "Facilita localización y comparación",
+         "La segmentación automática puede fallar"
+        ],
+        [
+         "Palabra",
+         "Permite frecuencias y concordancias",
+         "No capta siempre expresiones complejas"
+        ],
+        [
+         "Patrón",
+         "Localiza estructuras específicas",
+         "Depende de una formulación precisa"
+        ]
+       ],
+       "title": "Unidad · Ventaja · Limitación"
+      }
+     ]
+    },
+    {
+     "id": "1-6-segmentacion-en-oraciones",
+     "title": "1.6. Segmentación en oraciones",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Segmentar un texto consiste en dividirlo en unidades menores. En la unidad se trabaja con una segmentación muy simple basada en el punto: texto.split(\".\"). Este procedimiento es comprensible para empezar, pero tiene limitaciones evidentes. No todos los puntos cierran oraciones: pueden aparecer en abreviaturas, números, siglas, iniciales o direcciones. Además, una oración puede terminar con signos de interrogación, exclamación o puntos suspensivos."
+      },
+      {
+       "type": "p",
+       "text": "La segmentación de oraciones es una tarea clásica del procesamiento del lenguaje natural. {{cite:kiss2006}}Kiss y Strunk (2006){{/cite}} mostraron que incluso la detección de límites oracionales puede tratarse con métodos no supervisados y multilingües, precisamente porque no es tan simple como buscar puntos. Los manuales generales de PLN también la presentan como parte de la normalización y el preprocesamiento textual {{cite:bird2009,jurafsky2025}}(Bird et al., 2009; Jurafsky & Martin, 2025){{/cite}}."
+      },
+      {
+       "type": "p",
+       "text": "En una unidad inicial de programación para lingüistas, usar split(\".\") tiene valor didáctico: permite ver que una cadena puede convertirse en una lista de segmentos y que cada segmento puede limpiarse con strip. Lo importante es acompañar el procedimiento con una advertencia: es una aproximación, no un segmentador robusto. Cuando el proyecto sea real y de mayor escala, convendrá usar herramientas especializadas o reglas más cuidadosas."
+      },
+      {
+       "type": "p",
+       "text": "La segmentación también afecta a la interpretación. Si el programa localiza un doble espacio dentro de la oración 4, la revisora puede ir directamente a esa zona. Si solo se informa de que hay tres dobles espacios en todo el texto, el dato es menos útil. Por eso segmentar no es solo dividir: es hacer que los resultados sean revisables."
+      }
+     ]
+    },
+    {
+     "id": "1-7-frecuencia-lexica-y-coherencia-terminologica",
+     "title": "1.7. Frecuencia léxica y coherencia terminológica",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La frecuencia léxica mide cuántas veces aparece una palabra o expresión. En corpus lingüísticos, las frecuencias permiten observar patrones de uso, comparar variedades, estudiar colocaciones o identificar rasgos de un dominio. En revisión lingüística, los recuentos pueden funcionar como indicios de coherencia o divergencia terminológica."
+      },
+      {
+       "type": "p",
+       "text": "Si una versión usa «equipo» diez veces y otra usa «grupo» diez veces para referirse a la misma entidad, puede haber una diferencia de criterio. Si dentro de una misma versión alternan «compañía», «empresa» y «sociedad» sin justificación, puede haber un problema de coherencia terminológica. Sin embargo, el recuento no decide por sí solo. Puede haber sinónimos legítimos, diferencias de contexto o términos que no sean equivalentes."
+      },
+      {
+       "type": "p",
+       "text": "La normalización a minúsculas con lower facilita comparaciones básicas, porque permite contar «Empresa» y «empresa» como la misma forma. Pero también implica una decisión: se ignora la diferencia entre mayúscula y minúscula. En muchos recuentos esto es útil; en otros puede ser problemático, por ejemplo si se comparan nombres propios, siglas o usos institucionales."
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Decisión",
+         "Ejemplo",
+         "Efecto"
+        ],
+        [
+         "Contar con mayúsculas",
+         "texto.count(\"Empresa\")",
+         "Distingue entre mayúscula y minúscula"
+        ],
+        [
+         "Contar en minúsculas",
+         "texto.lower().count(\"empresa\")",
+         "Agrupa variantes de capitalización"
+        ],
+        [
+         "Contar una palabra aislada",
+         "«empresa»",
+         "Puede incluir parte de formas si no se controla el contexto"
+        ],
+        [
+         "Contar expresión",
+         "«equipo técnico»",
+         "Más preciso para unidades pluriverbales"
+        ]
+       ],
+       "title": "Decisión · Ejemplo · Efecto"
+      },
+      {
+       "type": "p",
+       "text": "En proyectos profesionales, la coherencia terminológica suele relacionarse con glosarios, memorias de traducción, bases terminológicas y guías de estilo. Python no sustituye esos recursos, pero puede ayudar a comprobar si una versión respeta una lista de términos o si dos versiones toman decisiones divergentes."
+      }
+     ]
+    },
+    {
+     "id": "1-8-patrones-formales-espacios-puntuacion-y-normalizacion",
+     "title": "1.8. Patrones formales: espacios, puntuación y normalización",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Los patrones formales son señales de superficie: espacios dobles, puntuación pegada, saltos de línea extraños, caracteres invisibles o inconsistencias de formato. A menudo no requieren un análisis lingüístico profundo para detectarse, pero sí afectan a la calidad percibida del texto y a su preparación para otros procesos."
+      },
+      {
+       "type": "p",
+       "text": "Un ejemplo claro es la ausencia de espacio después de coma o punto: empresa,el o temporales.Utilizando. En español escrito, lo normal es que después de una coma o un punto haya un espacio si continúa otra palabra, salvo contextos específicos como números, direcciones web, abreviaturas o ciertos formatos técnicos. La detección automática debe tener en cuenta que una regla demasiado simple puede señalar casos legítimos."
+      },
+      {
+       "type": "p",
+       "text": "Los espacios dobles son otro ejemplo. En muchas versiones finales de documentos, un doble espacio entre palabras es una señal mecánica de falta de limpieza. Sin embargo, en algunos contextos preformateados, tablas o código puede haber espacios intencionales. De nuevo, la regla detecta una señal; la revisión decide."
+      },
+      {
+       "type": "p",
+       "text": "La normalización textual puede incluir pasar a minúsculas, eliminar espacios sobrantes, sustituir saltos de línea o unificar comillas. Pero normalizar demasiado puede borrar información relevante. En revisión lingüística conviene distinguir entre normalización para analizar y corrección del texto original. Una cosa es crear una copia en minúsculas para contar; otra muy distinta es modificar el documento final."
+      }
+     ]
+    },
+    {
+     "id": "1-9-expresiones-regulares-como-reglas-transparentes",
+     "title": "1.9. Expresiones regulares como reglas transparentes",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Las expresiones regulares son patrones formales que permiten buscar secuencias de caracteres con cierta flexibilidad. El módulo re de Python implementa operaciones de búsqueda, coincidencia, sustitución y extracción basadas en estos patrones {{cite:pythonsoftwarefounda2026a}}(Python Software Foundation, 2026a){{/cite}}. En PLN, las expresiones regulares se usan para tareas como localizar fechas, abreviaturas, formatos, terminaciones, espacios anómalos o construcciones textuales relativamente previsibles {{cite:bird2009,friedl2006}}(Bird et al., 2009; Friedl, 2006){{/cite}}."
+      },
+      {
+       "type": "p",
+       "text": "Una expresión regular no «comprende» el texto. Lo que hace es comprobar si una secuencia encaja con una forma. Por ejemplo, el patrón [.,][^\\s] busca un punto o una coma seguido de un carácter que no sea espacio. Eso puede localizar casos como texto.Sin o empresa,el. El patrón es transparente: podemos explicar qué significa cada parte. Esa transparencia es valiosa en contextos docentes y profesionales, porque la regla puede discutirse, corregirse y documentarse."
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Elemento",
+         "Significado aproximado",
+         "Ejemplo"
+        ],
+        [
+         "[.,]",
+         "Un punto o una coma",
+         ". o ,"
+        ],
+        [
+         "\\s",
+         "Un espacio o carácter de espacio en blanco",
+         "espacio, tabulación, salto de línea"
+        ],
+        [
+         "[^\\s]",
+         "Un carácter que no es espacio",
+         "a, E, 5"
+        ],
+        [
+         "\\w+",
+         "Una o más letras, números o guiones bajos",
+         "revisar, texto1"
+        ],
+        [
+         "\\b",
+         "Límite de palabra",
+         "Final de revisar"
+        ],
+        [
+         "`(ar | er | ir)`",
+         "Una de varias terminaciones",
+         "ar, er, ir"
+        ]
+       ],
+       "title": "Elemento · Significado aproximado · Ejemplo"
+      },
+      {
+       "type": "p",
+       "text": "La ventaja de las expresiones regulares es su precisión formal. La limitación es que esa precisión no equivale a interpretación lingüística. Un patrón puede encontrar todas las formas acabadas en ando o iendo, pero no puede decidir automáticamente si el gerundio está bien usado en cada contexto. Por eso la unidad las presenta como herramientas para generar candidatos a revisión, no como jueces gramaticales."
+      }
+     ]
+    },
+    {
+     "id": "1-10-posibles-calcos-y-estructuras-con-a-infinitivo",
+     "title": "1.10. Posibles calcos y estructuras con a + infinitivo",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "En español, ciertas secuencias de sustantivo seguido de a + infinitivo, como «temas a tratar» o «problemas a resolver», han sido tradicionalmente comentadas en obras normativas y de estilo. La valoración depende del contexto, de la estructura exacta y del grado de asentamiento de la expresión. Las obras académicas panhispánicas recomiendan evitar usos innecesarios cuando exista una alternativa más natural, pero no toda aparición de a + infinitivo es incorrecta {{cite:realacademiaespanola2005}}(Real Academia Española & ASALE, 2005/2023){{/cite}}."
+      },
+      {
+       "type": "p",
+       "text": "La unidad trabaja con un patrón más amplio, por ejemplo formas como «decidió a revisar» o «intentó a implementar», que pueden sonar anómalas en español estándar según el verbo y el régimen exigido. Desde el punto de vista computacional, lo relevante es que muchas de estas secuencias comparten una forma superficial: una palabra, la preposición a y un infinitivo. Ese parecido formal permite buscarlas con una expresión regular."
+      },
+      {
+       "type": "p",
+       "text": "Ahora bien, el patrón no debe confundirse con una norma. El español tiene muchas construcciones legítimas con a + infinitivo: «empezó a revisar», «volvió a leer», «ayudó a preparar», «salió a comprar». Un detector automático que busque cualquier palabra seguida de a y un infinitivo encontrará tanto casos aceptables como casos dudosos. Por eso el resultado debe llamarse candidato."
+      },
+      {
+       "type": "p",
+       "text": "Esta distinción es fundamental para estudiantes de lingüística. El programa no sabe régimen verbal, estructura argumental ni aceptabilidad contextual. Solo observa forma. La persona lingüista interpreta si esa forma merece revisión a partir de gramática, uso, estilo y finalidad comunicativa."
+      }
+     ]
+    },
+    {
+     "id": "1-11-gerundios-como-candidatos-a-revision",
+     "title": "1.11. Gerundios como candidatos a revisión",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "El gerundio en español es una forma no personal del verbo que puede expresar simultaneidad, modo, causa u otras relaciones, según el contexto. La gramática académica describe usos aceptables y usos problemáticos, entre ellos ciertos gerundios de posterioridad o usos adjetivales no asentados {{cite:realacademiaespanola2009}}(Real Academia Española & ASALE, 2009){{/cite}}. En revisión lingüística, los gerundios suelen revisarse porque pueden generar ambigüedad, encadenamiento excesivo o interferencias de estilo."
+      },
+      {
+       "type": "p",
+       "text": "Detectar gerundios automáticamente parece fácil: muchas formas terminan en -ando, -iendo o -yendo. Sin embargo, una búsqueda por terminación no basta para valorar el uso. «El equipo revisó el informe, incorporando las observaciones» puede requerir lectura contextual; «entró sonriendo» no plantea el mismo tipo de problema; «leyendo el documento, encontró una incoherencia» funciona de otra manera. La forma no determina por completo la función."
+      },
+      {
+       "type": "p",
+       "text": "La unidad usa expresiones regulares para localizar posibles gerundios y recuperar palabras cercanas. Esto tiene una razón didáctica: el contexto inmediato ayuda a que la revisión sea más útil. No es lo mismo devolver solo utilizando que mostrar «temporales utilizando una herramienta». Cuanto mejor se preserve el contexto, más fácil será decidir si el candidato exige corrección."
+      },
+      {
+       "type": "p",
+       "text": "El enfoque conecta con una idea general del PLN basado en reglas: muchas tareas empiezan con patrones simples y mejoran cuando incorporan más información. El alumnado debe aprender a valorar ese equilibrio. Una regla muy amplia encuentra muchos casos, pero obliga a revisar más falsos positivos. Una regla muy estrecha encuentra menos ruido, pero puede dejar fuera casos relevantes."
+      }
+     ]
+    },
+    {
+     "id": "1-12-falsos-positivos-falsos-negativos-y-criterio-linguistic",
+     "title": "1.12. Falsos positivos, falsos negativos y criterio lingüístico",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Un falso positivo aparece cuando el sistema señala un caso que no es realmente problemático. Un falso negativo aparece cuando no señala un caso que sí habría convenido revisar. Estos dos conceptos proceden de la evaluación de sistemas de clasificación, pero son muy útiles para pensar cualquier detector basado en reglas. Si el patrón es muy general, aumentan los falsos positivos. Si el patrón es demasiado restrictivo, aumentan los falsos negativos."
+      },
+      {
+       "type": "p",
+       "text": "En revisión lingüística, los falsos positivos no son necesariamente un fracaso. Si el volumen es pequeño y el objetivo es no dejar escapar posibles problemas, puede aceptarse una lista más amplia. En cambio, si el volumen es grande y el equipo tiene poco tiempo, conviene diseñar patrones más precisos. La calidad de la herramienta depende de la finalidad del encargo."
+      },
+      {
+       "type": "docimg",
+       "src": "img/doc_01.jpg",
+       "alt": "Figura del manual",
+       "w": 460
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Situación",
+         "Ejemplo",
+         "Consecuencia"
+        ],
+        [
+         "Falso positivo",
+         "El sistema señala «empezó a revisar» como sospechoso",
+         "La persona revisora descarta el caso"
+        ],
+        [
+         "Falso negativo",
+         "El sistema no detecta una incoherencia terminológica expresada con sinónimo",
+         "El problema queda fuera del informe"
+        ],
+        [
+         "Regla amplia",
+         "Busca cualquier a + infinitivo",
+         "Mayor cobertura, más ruido"
+        ],
+        [
+         "Regla estrecha",
+         "Busca solo una lista de verbos problemáticos",
+         "Menos ruido, menor cobertura"
+        ]
+       ],
+       "title": "Situación · Ejemplo · Consecuencia"
+      },
+      {
+       "type": "p",
+       "text": "La competencia lingüística consiste también en saber diseñar preguntas razonables para la máquina. Python no debe recibir la orden vaga de «encuentra errores». Debe recibir tareas observables: cuenta este término, busca este patrón, devuelve este contexto, compara estas versiones. Cuanto mejor formulada esté la pregunta, más útil será la respuesta."
+      }
+     ]
+    },
+    {
+     "id": "1-13-funciones-informes-y-trazabilidad",
+     "title": "1.13. Funciones, informes y trazabilidad",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "En programación, una función permite encapsular una tarea: recibe datos, aplica una operación y puede devolver un resultado. En una revisión lingüística, las funciones aportan orden y trazabilidad. En lugar de copiar el mismo código varias veces, se crea una comprobación reutilizable: una función para contar términos, otra para detectar espacios dobles, otra para buscar patrones de puntuación, otra para generar un resumen."
+      },
+      {
+       "type": "p",
+       "text": "La trazabilidad es especialmente importante en entornos profesionales. Si una revisora pregunta cómo se detectaron los casos, el equipo debe poder responder: se usó este patrón, sobre estos textos, con esta normalización. Si el cliente pide repetir la comprobación en una versión nueva, la función permite hacerlo sin rediseñar todo el proceso."
+      },
+      {
+       "type": "p",
+       "text": "El informe final es la forma comunicativa de esa trazabilidad. No basta con que el código funcione; el resultado debe ser comprensible para una persona que toma decisiones. Un informe útil no solo lista números: explica qué se ha buscado, qué se ha encontrado, dónde aparece y qué cautela interpretativa debe aplicarse."
+      },
+      {
+       "type": "p",
+       "text": "En Verba Pública, el informe no pretende reemplazar una revisión de estilo completa. Su finalidad es preparar una primera lectura asistida: reducir incertidumbre, ordenar prioridades y documentar indicios. Ese es un uso profesional realista de Python en lingüística aplicada."
+      }
+     ]
+    },
+    {
+     "id": "1-14-limites-de-los-metodos-basados-en-reglas",
+     "title": "1.14. Límites de los métodos basados en reglas",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Los métodos basados en reglas son transparentes, fáciles de enseñar y útiles para fenómenos con forma reconocible. Pero tienen límites. El lenguaje natural es variable, ambiguo y dependiente del contexto. Una palabra puede pertenecer a varias categorías; una construcción puede ser aceptable en un contexto y discutible en otro; un sinónimo puede ser deseable o problemático según la política terminológica."
+      },
+      {
+       "type": "p",
+       "text": "Frente a modelos estadísticos o neuronales, las reglas simples no aprenden de datos ni generalizan semánticamente. Sin embargo, esa limitación también puede ser una ventaja en ciertos encargos. Si se necesita comprobar una convención formal muy concreta, una regla explícita puede ser más adecuada que un sistema opaco. En PLN profesional conviven enfoques distintos: reglas, recursos lingüísticos, corpus, aprendizaje automático y revisión humana."
+      },
+      {
+       "type": "p",
+       "text": "La unidad se centra deliberadamente en reglas y operaciones básicas porque construyen una base conceptual sólida. Antes de usar bibliotecas avanzadas, conviene entender qué significa leer un texto, dividirlo, recorrerlo, contar, buscar y devolver resultados. Esos fundamentos seguirán siendo necesarios cuando el alumnado trabaje con herramientas más complejas."
+      }
+     ]
+    }
+   ],
+   "navTitle": "Marco teórico"
+  },
+  {
+   "id": "2-analisis-automatico-de-textos-para-revision-linguistica-co",
+   "title": "2. Análisis automático de textos para revisión lingüística con Python",
+   "blocks": [],
+   "subsections": [
+    {
+     "id": "2-1-leer-textos-como-datos",
+     "title": "2.1. Leer textos como datos",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Para que Python pueda analizar un documento, primero debe leerlo como texto. En la práctica, eso significa abrir un archivo y convertir su contenido en una cadena de caracteres. La cadena es el tipo de dato básico para trabajar con texto: permite buscar palabras, contar secuencias, dividir por signos, extraer fragmentos y aplicar expresiones regulares."
+      },
+      {
+       "type": "p",
+       "text": "Un detalle técnico decisivo es la codificación. En español aparecen tildes, eñes, comillas angulares y otros caracteres que deben interpretarse correctamente. Por eso se indica encoding=\"utf-8\". UTF-8 es una codificación estándar ampliamente usada que permite representar caracteres de muchas lenguas. Si se omite la codificación, el sistema puede elegir una por defecto y producir errores o caracteres dañados."
+      },
+      {
+       "type": "code",
+       "code": "with open(\"texto1.txt\", encoding=\"utf-8\") as archivo:\n    texto1 = archivo.read()"
+      },
+      {
+       "type": "p",
+       "text": "El bloque with abre el archivo y se encarga de cerrarlo al terminar. La variable texto1 guarda todo el contenido como una cadena. Desde ese momento, el texto ya puede tratarse como dato lingüístico procesable."
+      },
+      {
+       "type": "p",
+       "text": "Antes de analizar un documento, Python debe poder leerlo. Un archivo .txt contiene texto plano: caracteres sin estilos, sin tablas internas y sin formatos complejos. Por eso resulta muy útil para aprender PLN. Reduce el ruido técnico y permite concentrarse en el contenido lingüístico."
+      },
+      {
+       "type": "p",
+       "text": "Una forma sencilla de leer un archivo es:"
+      },
+      {
+       "type": "code",
+       "code": "texto_a = open(\"version_a.txt\", encoding=\"utf-8\").read()\ntexto_b = open(\"version_b.txt\", encoding=\"utf-8\").read()"
+      },
+      {
+       "type": "p",
+       "text": "Aquí ocurren varias cosas importantes:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "open(...) abre el archivo.",
+        "\"version_a.txt\" indica el nombre del archivo.",
+        "encoding=\"utf-8\" le dice a Python cómo interpretar caracteres como á, ñ, ü o ¿.",
+        ".read() lee todo el contenido y lo convierte en una cadena de texto.",
+        "texto_a y texto_b son variables que guardan cada versión."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "En español, la codificación es especialmente importante. Si se lee mal un archivo, pueden aparecer caracteres extraños: implementaciÃ³n en lugar de implementación. Ese problema no es lingüístico, pero afecta directamente al análisis. Si Python no reconoce bien las tildes, los conteos pueden fallar."
+      }
+     ]
+    },
+    {
+     "id": "2-2-rutas-de-archivos-y-pathlib",
+     "title": "2.2. Rutas de archivos y pathlib",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Cuando los documentos están en una carpeta local, conviene trabajar con rutas claras. El módulo pathlib permite representar rutas de forma más legible y menos dependiente de detalles del sistema operativo {{cite:pythonsoftwarefounda2026b}}(Python Software Foundation, 2026b){{/cite}}. En lugar de escribir una ruta como una cadena larga, se crea un objeto Path."
+      },
+      {
+       "type": "code",
+       "code": "from pathlib import Path\n\ncarpeta_trabajo = Path(\"ruta/a/la/carpeta/de/textos\")\n\nruta_a = carpeta_trabajo / \"version_a.txt\"\nruta_b = carpeta_trabajo / \"version_b.txt\"\n\nwith open(ruta_a, encoding=\"utf-8\") as f:\n    texto_a = f.read()\n\nwith open(ruta_b, encoding=\"utf-8\") as f:\n    texto_b = f.read()"
+      },
+      {
+       "type": "p",
+       "text": "Esta forma tiene dos ventajas. La primera es que separa la carpeta de trabajo del nombre de cada archivo. La segunda es que usa with open(...) as f, una estructura que abre el archivo, permite leerlo y lo cierra automáticamente al terminar."
+      },
+      {
+       "type": "p",
+       "text": "Desde el punto de vista del PLN, lo relevante es que cada documento queda representado como un string. Un string es una cadena de caracteres. Para Python, un informe institucional, una frase corta o un discurso entero son objetos manipulables siempre que estén guardados como texto."
+      }
+     ]
+    },
+    {
+     "id": "2-3-cadenas-listas-y-corpus-pequeno",
+     "title": "2.3. Cadenas, listas y corpus pequeño",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Cuando solo hay dos versiones, es tentador crear variables separadas y repetir el mismo código para cada una:"
+      },
+      {
+       "type": "code",
+       "code": "texto_a_lower = texto_a.lower()\ntexto_b_lower = texto_b.lower()"
+      },
+      {
+       "type": "p",
+       "text": "Esto funciona, pero escala mal. Si mañana llegan cincuenta versiones, repetir cincuenta líneas parecidas sería incómodo y propenso a errores."
+      },
+      {
+       "type": "p",
+       "text": "Una idea fundamental en programación es agrupar elementos relacionados en una lista:"
+      },
+      {
+       "type": "code",
+       "code": "textos = [texto_a, texto_b]"
+      },
+      {
+       "type": "p",
+       "text": "La lista textos contiene todas las versiones que queremos analizar. A partir de ese momento, podemos recorrerlas con un bucle:"
+      },
+      {
+       "type": "code",
+       "code": "for i, texto in enumerate(textos, start=1):\n    print(f\"Analizando versión {i}\")"
+      },
+      {
+       "type": "p",
+       "text": "La función enumerate() permite recorrer una lista y, al mismo tiempo, obtener un número de orden. El argumento start=1 indica que queremos empezar a contar en 1, no en 0. Esto es más natural para informes destinados a personas: versión 1, versión 2, versión 3."
+      },
+      {
+       "type": "p",
+       "text": "Esta estructura cambia la forma de pensar el análisis. Ya no escribimos una solución para un archivo concreto, sino una solución para cualquier conjunto de textos:"
+      },
+      {
+       "type": "code",
+       "code": "textos = [texto_a, texto_b, texto_c]\n\nfor i, texto in enumerate(textos, start=1):\n    longitud = len(texto)\n    print(f\"Versión {i}: {longitud} caracteres\")"
+      },
+      {
+       "type": "p",
+       "text": "En proyectos de revisión, esta generalización es muy valiosa. La misma lógica sirve para dos versiones de una traducción, tres discursos institucionales o cien documentos de una licitación."
+      }
+     ]
+    },
+    {
+     "id": "2-4-segmentar-en-oraciones-con-split-y-strip",
+     "title": "2.4. Segmentar en oraciones con split y strip",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La oración es una unidad lingüística central. En revisión automática, segmentar un texto en oraciones permite observar el contenido en fragmentos manejables. No es lo mismo detectar que una palabra aparece en un documento entero que saber en qué oración aparece."
+      },
+      {
+       "type": "p",
+       "text": "Una estrategia inicial consiste en dividir el texto cada vez que aparece un punto:"
+      },
+      {
+       "type": "code",
+       "code": "oraciones_a = texto_a.split(\".\")\noraciones_b = texto_b.split(\".\")"
+      },
+      {
+       "type": "p",
+       "text": "El método .split(\".\") corta la cadena cada vez que encuentra el carácter \".\". El resultado es una lista:"
+      },
+      {
+       "type": "code",
+       "code": "for i, oracion in enumerate(oraciones_a[:3], start=1):\n    print(f\"{i}. {oracion.strip()}\")"
+      },
+      {
+       "type": "p",
+       "text": "El método .strip() elimina espacios al principio y al final del fragmento. Es útil porque, después de cortar por puntos, muchas oraciones empiezan con un espacio."
+      },
+      {
+       "type": "p",
+       "text": "Esta segmentación es sencilla y comprensible, pero no perfecta. En español, el punto no siempre marca el final de una oración. Puede aparecer en abreviaturas, cifras, iniciales, direcciones web o enumeraciones:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Caso",
+         "Problema"
+        ],
+        [
+         "Sr. García",
+         "El punto no cierra una oración"
+        ],
+        [
+         "art. 15",
+         "El punto pertenece a una abreviatura"
+        ],
+        [
+         "3.2 millones",
+         "El punto puede formar parte de una cifra o sección"
+        ],
+        [
+         "www.ejemplo.org",
+         "El punto aparece dentro de una dirección"
+        ]
+       ],
+       "title": "Caso · Problema"
+      },
+      {
+       "type": "p",
+       "text": "Para un primer análisis de control de calidad, split(\".\") puede ser suficiente. Para herramientas profesionales más precisas, convendría usar segmentadores especializados, como los que ofrecen bibliotecas de PLN."
+      },
+      {
+       "type": "p",
+       "text": "Lo importante es entender la decisión lingüística que hay detrás: segmentar es elegir qué cuenta como unidad de análisis."
+      }
+     ]
+    },
+    {
+     "id": "2-5-contar-palabras-y-normalizar-con-minusculas",
+     "title": "2.5. Contar palabras y normalizar con minúsculas",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Contar palabras es una de las operaciones más simples y, al mismo tiempo, más útiles del análisis textual. En un contexto de revisión, la frecuencia permite detectar preferencias terminológicas, cambios de estilo o posibles incoherencias."
+      },
+      {
+       "type": "p",
+       "text": "Supongamos que queremos saber cuántas veces aparece la palabra implementación en dos versiones:"
+      },
+      {
+       "type": "code",
+       "code": "texto_a_lower = texto_a.lower()\ntexto_b_lower = texto_b.lower()\n\nconteo_a = texto_a_lower.count(\"implementación\")\nconteo_b = texto_b_lower.count(\"implementación\")\n\nprint(f\"Versión A: {conteo_a} apariciones\")\nprint(f\"Versión B: {conteo_b} apariciones\")"
+      },
+      {
+       "type": "p",
+       "text": "El método .lower() convierte todo el texto a minúsculas. Así, Implementación al inicio de una oración y implementación en medio de una frase se cuentan igual."
+      },
+      {
+       "type": "p",
+       "text": "Sin esta normalización, Python distinguiría entre:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "Implementación",
+        "implementación",
+        "IMPLEMENTACIÓN"
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Desde el punto de vista lingüístico, pueden ser la misma unidad léxica. Desde el punto de vista computacional, son cadenas distintas. Normalizar el texto permite acercar la representación computacional a la pregunta lingüística."
+      },
+      {
+       "type": "p",
+       "text": "Ahora bien, .count(\"implementación\") tiene límites. Cuenta apariciones exactas de esa secuencia de caracteres. Eso significa que no agrupa automáticamente variantes como:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "implementar",
+        "implementado",
+        "implementaciones",
+        "implementativa"
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Para agrupar formas relacionadas haría falta lematización o análisis morfológico. En esta unidad trabajamos con conteo exacto porque es transparente y fácil de interpretar."
+      }
+     ]
+    },
+    {
+     "id": "2-6-recorrer-varias-versiones-con-enumerate",
+     "title": "2.6. Recorrer varias versiones con enumerate",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "El análisis mejora cuando dejamos de pensar en una pareja fija de textos y empezamos a pensar en un conjunto variable de versiones:"
+      },
+      {
+       "type": "code",
+       "code": "textos = [texto_a, texto_b, texto_c]\npalabra = \"implementación\"\n\nfor i, texto in enumerate(textos, start=1):\n    texto_lower = texto.lower()\n    conteo = texto_lower.count(palabra)\n    print(f\"Versión {i}: {conteo} apariciones de '{palabra}'\")"
+      },
+      {
+       "type": "p",
+       "text": "Esta estructura contiene tres ideas esenciales:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "textos agrupa todos los documentos.",
+        "for repite el mismo análisis para cada documento.",
+        "enumerate() permite etiquetar cada salida con un número de versión."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "El resultado puede servir para detectar diferencias llamativas:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Versión",
+         "Apariciones de implementación",
+         "Interpretación inicial"
+        ],
+        [
+         "1",
+         "8",
+         "Alta preferencia por el término"
+        ],
+        [
+         "2",
+         "1",
+         "Posible uso de alternativa terminológica"
+        ],
+        [
+         "3",
+         "0",
+         "Puede haber sustitución por otro concepto o paráfrasis"
+        ]
+       ],
+       "title": "El resultado puede servir para detectar diferencias llamativas"
+      },
+      {
+       "type": "p",
+       "text": "La interpretación no debe precipitarse. Que una versión use menos un término no significa necesariamente que sea peor. Puede ser más concisa, haber reformulado el contenido o emplear un término recomendado. El conteo solo abre una pregunta."
+      }
+     ]
+    },
+    {
+     "id": "2-7-detectar-ausencia-de-espacio-despues-de-puntuacion",
+     "title": "2.7. Detectar ausencia de espacio después de puntuación",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Uno de los problemas formales más fáciles de detectar automáticamente es la ausencia de espacio después de punto o coma:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Fragmento",
+         "Problema"
+        ],
+        [
+         "El informe fue aprobado.La comisión lo publicó.",
+         "Falta espacio tras punto"
+        ],
+        [
+         "El proyecto incluye formación,seguimiento y evaluación.",
+         "Falta espacio tras coma"
+        ]
+       ],
+       "title": "Fragmento · Problema"
+      },
+      {
+       "type": "p",
+       "text": "Estos errores parecen pequeños, pero en documentos institucionales afectan a la calidad percibida. También pueden dificultar procesos automáticos posteriores, como la segmentación o la tokenización."
+      },
+      {
+       "type": "p",
+       "text": "Para detectarlos, se puede usar una expresión regular:"
+      },
+      {
+       "type": "code",
+       "code": "import re\n\nerrores = [m.start() for m in re.finditer(r\"[.,][^\\s]\", texto_a)]\nprint(f\"Número de signos sin espacio después: {len(errores)}\")"
+      },
+      {
+       "type": "p",
+       "text": "La expresión r\"[.,][^\\s]\" se lee así:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Parte",
+         "Significado"
+        ],
+        [
+         "r\"...\"",
+         "Cadena cruda, útil para escribir patrones de expresiones regulares"
+        ],
+        [
+         "[.,]",
+         "Un punto o una coma"
+        ],
+        [
+         "[^\\s]",
+         "Un carácter que no sea espacio"
+        ]
+       ],
+       "title": "La expresión r\"[.,][^\\s]\" se lee así"
+      },
+      {
+       "type": "p",
+       "text": "Por tanto, el patrón busca un punto o una coma seguidos inmediatamente de un carácter que no sea espacio."
+      },
+      {
+       "type": "p",
+       "text": "El método re.finditer() devuelve coincidencias con información de posición. Por eso podemos usar m.start() para saber en qué índice del texto empieza cada caso."
+      }
+     ]
+    },
+    {
+     "id": "2-8-recuperar-contexto-con-indices-y-slicing",
+     "title": "2.8. Recuperar contexto con índices y slicing",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Un informe que solo dice «hay 12 errores» no es suficiente. La persona que revisa necesita saber dónde están. Para eso se extraen fragmentos de contexto:"
+      },
+      {
+       "type": "code",
+       "code": "for pos in errores:\n    inicio = max(pos - 20, 0)\n    fin = pos + 20\n    fragmento = texto_a[inicio:fin]\n    print(f\"...{fragmento}...\")"
+      },
+      {
+       "type": "p",
+       "text": "Este fragmento introduce varias ideas:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "pos es la posición donde se detectó el patrón.",
+        "pos - 20 toma veinte caracteres anteriores.",
+        "pos + 20 toma veinte caracteres posteriores.",
+        "max(pos - 20, 0) evita que el índice inicial sea negativo.",
+        "texto_a[inicio:fin] extrae una porción del texto."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "El resultado permite ver algo como:"
+      },
+      {
+       "type": "code",
+       "code": "...evaluación.La comisión aprobó...\n...formación,seguimiento y apoyo..."
+      },
+      {
+       "type": "p",
+       "text": "La extracción de contexto es una práctica habitual en revisión automática. No basta con encontrar el error; hay que mostrarlo de forma útil."
+      }
+     ]
+    },
+    {
+     "id": "2-9-localizar-dobles-espacios",
+     "title": "2.9. Localizar dobles espacios",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Los dobles espacios son otro problema formal frecuente. Suelen aparecer al editar, copiar y pegar o combinar fragmentos procedentes de distintas fuentes:"
+      },
+      {
+       "type": "code",
+       "code": "La institución  publicará el informe final."
+      },
+      {
+       "type": "p",
+       "text": "Una detección mínima puede hacerse con el operador in:"
+      },
+      {
+       "type": "code",
+       "code": "hay_dobles_espacios = \"  \" in texto_a\nprint(hay_dobles_espacios)"
+      },
+      {
+       "type": "p",
+       "text": "La expresión \"  \" in texto_a pregunta si la secuencia de dos espacios aparece en el texto. Devuelve True o False."
+      },
+      {
+       "type": "p",
+       "text": "Para contar cuántas veces aparece:"
+      },
+      {
+       "type": "code",
+       "code": "total = texto_a.count(\"  \")\nprint(f\"Dobles espacios detectados: {total}\")"
+      },
+      {
+       "type": "p",
+       "text": "Y para saber en qué oraciones se encuentran:"
+      },
+      {
+       "type": "code",
+       "code": "dobles = [\n    i + 1\n    for i, oracion in enumerate(oraciones_a)\n    if \"  \" in oracion\n]\n\nprint(f\"Aparecen en las oraciones: {dobles}\")"
+      },
+      {
+       "type": "p",
+       "text": "Esta estructura es una lista por comprensión. Construye una lista nueva a partir de una condición. En este caso, guarda los números de las oraciones que contienen dobles espacios."
+      },
+      {
+       "type": "p",
+       "text": "La parte i + 1 se usa porque Python empieza a contar en 0, pero en un informe para personas suele ser más natural empezar por 1."
+      }
+     ]
+    },
+    {
+     "id": "2-10-comparacion-terminologica-basica",
+     "title": "2.10. Comparación terminológica básica",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Cuando se trabaja con varios textos, también conviene guardar las oraciones de cada texto en una lista:"
+      },
+      {
+       "type": "code",
+       "code": "textos = [texto_a, texto_b, texto_c]\noraciones_textos = [oraciones_a, oraciones_b, oraciones_c]"
+      },
+      {
+       "type": "p",
+       "text": "Para recorrer al mismo tiempo cada texto y su lista de oraciones, se puede usar zip():"
+      },
+      {
+       "type": "code",
+       "code": "for i, (texto, oraciones) in enumerate(zip(textos, oraciones_textos), start=1):\n    dobles = [\n        n + 1\n        for n, oracion in enumerate(oraciones)\n        if \"  \" in oracion\n    ]\n    print(f\"Versión {i}: {texto.count('  ')} dobles espacios\")\n    print(f\"Oraciones afectadas: {dobles}\")"
+      },
+      {
+       "type": "p",
+       "text": "zip(textos, oraciones_textos) empareja los elementos de ambas listas:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Elemento de textos",
+         "Elemento de oraciones_textos"
+        ],
+        [
+         "texto_a",
+         "oraciones_a"
+        ],
+        [
+         "texto_b",
+         "oraciones_b"
+        ],
+        [
+         "texto_c",
+         "oraciones_c"
+        ]
+       ],
+       "title": "zip(textos, oraciones_textos) empareja los elementos de ambas listas"
+      },
+      {
+       "type": "p",
+       "text": "Esta técnica es muy útil cuando varias estructuras de datos representan distintos niveles del mismo corpus: texto completo, oraciones, metadatos, proveedor, fecha de entrega o estado de revisión."
+      },
+      {
+       "type": "p",
+       "text": "La comparación terminológica es el corazón profesional de esta unidad. En textos paralelos monolingües, muchas divergencias no son errores gramaticales, sino diferencias de elección léxica."
+      },
+      {
+       "type": "p",
+       "text": "Supongamos que queremos comparar estas parejas:"
+      },
+      {
+       "type": "code",
+       "code": "parejas_terminos = [\n    (\"equipo\", \"grupo\"),\n    (\"compañía\", \"empresa\"),\n    (\"gerente\", \"director\"),\n    (\"procesos\", \"procedimientos\"),\n]"
+      },
+      {
+       "type": "p",
+       "text": "Cada pareja representa dos formas que pueden competir dentro de una misma política terminológica. Una institución puede considerar que ambas son aceptables en contextos distintos, o puede preferir una."
+      },
+      {
+       "type": "p",
+       "text": "Un análisis sencillo cuenta cada término en cada versión:"
+      },
+      {
+       "type": "code",
+       "code": "texto_a_lower = texto_a.lower()\ntexto_b_lower = texto_b.lower()\n\nfor termino_1, termino_2 in parejas_terminos:\n    c1_a = texto_a_lower.count(termino_1)\n    c2_a = texto_a_lower.count(termino_2)\n    c1_b = texto_b_lower.count(termino_1)\n    c2_b = texto_b_lower.count(termino_2)\n\n    print(f\"{termino_1}: versión A={c1_a}, versión B={c1_b}\")\n    print(f\"{termino_2}: versión A={c2_a}, versión B={c2_b}\")"
+      },
+      {
+       "type": "p",
+       "text": "El resultado puede revelar situaciones como estas:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Situación",
+         "Posible interpretación"
+        ],
+        [
+         "Una versión usa equipo y otra grupo",
+         "Divergencia terminológica entre proveedores"
+        ],
+        [
+         "Una versión alterna empresa y compañía",
+         "Falta de uniformidad interna"
+        ],
+        [
+         "Un término recomendado no aparece",
+         "Posible incumplimiento de glosario"
+        ],
+        [
+         "Un término aparece en exceso",
+         "Puede haber traducción literal, repetición o preferencia estilística"
+        ]
+       ],
+       "title": "El resultado puede revelar situaciones como estas"
+      },
+      {
+       "type": "p",
+       "text": "La tabla no decide por sí sola qué término es mejor. Proporciona evidencia para discutirlo."
+      }
+     ]
+    },
+    {
+     "id": "2-11-tablas-de-resultados",
+     "title": "2.11. Tablas de resultados",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "En revisión profesional, la forma de presentar los resultados importa. Una salida desordenada puede ser difícil de interpretar. Python permite alinear texto y números mediante cadenas formateadas."
+      },
+      {
+       "type": "code",
+       "code": "print(f\"{'Término':<20} | {'Versión 1':^10} | {'Versión 2':^10}\")\nprint(\"-\" * 48)\n\nfor termino_1, termino_2 in parejas_terminos:\n    print(f\"{termino_1:<20} | {c1_a:^10} | {c1_b:^10}\")\n    print(f\"{termino_2:<20} | {c2_a:^10} | {c2_b:^10}\")\n    print(\"-\" * 48)"
+      },
+      {
+       "type": "p",
+       "text": "Las expresiones entre llaves controlan el formato:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Código",
+         "Significado"
+        ],
+        [
+         "{termino_1:<20}",
+         "Escribe el término alineado a la izquierda en 20 caracteres"
+        ],
+        [
+         "{c1_a:^10}",
+         "Centra el número en 10 caracteres"
+        ],
+        [
+         "\"-\" * 48",
+         "Repite el guion 48 veces para crear una línea separadora"
+        ]
+       ],
+       "title": "Las expresiones entre llaves controlan el formato"
+      },
+      {
+       "type": "p",
+       "text": "Este tipo de formato no es solo estético. Ayuda a leer la comparación como una tabla. Cuando los resultados se entregan a un equipo editorial, claridad visual y precisión técnica van juntas."
+      }
+     ]
+    },
+    {
+     "id": "2-12-comparar-terminos-en-muchas-versiones",
+     "title": "2.12. Comparar términos en muchas versiones",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La comparación puede generalizarse a cualquier número de textos:"
+      },
+      {
+       "type": "code",
+       "code": "textos = [texto_a, texto_b, texto_c]\ntextos_lower = [texto.lower() for texto in textos]\n\ncabecera = \"Término\".ljust(20)\nfor i in range(len(textos_lower)):\n    cabecera += f\" | Versión {i + 1:^8}\"\nprint(cabecera)\n\nfor pareja in parejas_terminos:\n    for termino in pareja:\n        fila = f\"{termino:<20}\"\n        for texto in textos_lower:\n            fila += f\" | {texto.count(termino):^10}\"\n        print(fila)"
+      },
+      {
+       "type": "p",
+       "text": "Aquí aparece una nueva lista por comprensión:"
+      },
+      {
+       "type": "code",
+       "code": "textos_lower = [texto.lower() for texto in textos]"
+      },
+      {
+       "type": "p",
+       "text": "Esta línea crea una lista con todas las versiones en minúsculas. Es una forma compacta de preparar los datos antes de contarlos."
+      },
+      {
+       "type": "p",
+       "text": "La comparación en muchas versiones permite detectar patrones más ricos:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Término",
+         "Versión 1",
+         "Versión 2",
+         "Versión 3"
+        ],
+        [
+         "adquirir",
+         "4",
+         "0",
+         "1"
+        ],
+        [
+         "obtener",
+         "0",
+         "5",
+         "2"
+        ],
+        [
+         "conseguir",
+         "1",
+         "0",
+         "6"
+        ],
+        [
+         "trabajador",
+         "8",
+         "1",
+         "0"
+        ],
+        [
+         "empleado",
+         "0",
+         "6",
+         "2"
+        ],
+        [
+         "asalariado",
+         "0",
+         "0",
+         "5"
+        ]
+       ],
+       "title": "Término · Versión 1 · Versión 2 · Versión 3"
+      },
+      {
+       "type": "p",
+       "text": "Una tabla así invita a formular hipótesis:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "Quizá cada proveedor tiene una preferencia léxica estable.",
+        "Quizá una versión es más técnica y otra más general.",
+        "Quizá se están usando términos que no pertenecen al mismo registro.",
+        "Quizá hay que consolidar un glosario antes de publicar."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "El análisis cuantitativo no cierra la interpretación; la abre de forma ordenada."
+      }
+     ]
+    },
+    {
+     "id": "2-13-posibles-galicismos-buscar-candidatos-a-infinitivo",
+     "title": "2.13. Posibles galicismos: Buscar candidatos a + infinitivo",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "En español normativo, una construcción como temas a tratar suele citarse como posible calco del francés cuando funciona como sustantivo + a + infinitivo. En muchos contextos se recomienda reformular con estructuras como:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Construcción revisable",
+         "Posible alternativa"
+        ],
+        [
+         "asuntos a debatir",
+         "asuntos que se deben debatir"
+        ],
+        [
+         "tareas a realizar",
+         "tareas que hay que realizar"
+        ],
+        [
+         "documentos a presentar",
+         "documentos que deben presentarse"
+        ]
+       ],
+       "title": "Construcción revisable · Posible alternativa"
+      },
+      {
+       "type": "p",
+       "text": "No obstante, el diagnóstico no puede automatizarse con una regla tan simple como «toda secuencia a + infinitivo es incorrecta». En español hay muchísimas construcciones correctas con a + infinitivo:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "vamos a revisar",
+        "empezó a trabajar",
+        "aprendió a programar",
+        "ayuda a entender"
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Por eso conviene hablar de posibles galicismos o candidatos a revisión, no de errores automáticos."
+      },
+      {
+       "type": "p",
+       "text": "Un patrón inicial puede localizar secuencias de palabra + a + infinitivo:"
+      },
+      {
+       "type": "code",
+       "code": "import re\n\npatron = r\"(\\w+)\\s+a\\s+(\\w+(ar|er|ir))\\b\"\nresultados = re.findall(patron, texto_a.lower())\n\npares = [(anterior, verbo) for anterior, verbo, _ in resultados]\n\nfor anterior, verbo in pares:\n    print(f\"{anterior} a {verbo}\")"
+      },
+      {
+       "type": "p",
+       "text": "La lista pares conserva solo la palabra anterior y el verbo. El tercer elemento de cada coincidencia, la terminación ar, er o ir, se descarta con _ porque no nos interesa para el informe."
+      },
+      {
+       "type": "p",
+       "text": "Este análisis es útil como filtro inicial. Si aparecen muchos casos, la lingüista puede revisar el contexto y distinguir:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Caso detectado",
+         "Lectura posible"
+        ],
+        [
+         "documentos a presentar",
+         "Candidato a revisión"
+        ],
+        [
+         "vamos a presentar",
+         "Construcción verbal correcta"
+        ],
+        [
+         "ayuda a presentar",
+         "Régimen verbal correcto"
+        ],
+        [
+         "aspectos a considerar",
+         "Candidato a revisión según estilo"
+        ]
+       ],
+       "title": "Caso detectado · Lectura posible"
+      },
+      {
+       "type": "p",
+       "text": "Para automatizar mejor esta tarea haría falta combinar varias técnicas: tokenización, lematización y etiquetado morfosintáctico. En particular, habría que comprobar si la palabra anterior es un sustantivo y si la secuencia forma realmente una construcción nominal."
+      }
+     ]
+    },
+    {
+     "id": "2-14-buscar-gerundios-y-contexto-inmediato",
+     "title": "2.14. Buscar gerundios y contexto inmediato",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "El gerundio en español tiene usos correctos y usos problemáticos. Puede expresar simultaneidad, modo o proceso:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "El equipo revisó el informe siguiendo las instrucciones.",
+        "La comisión analizó los datos comparando las dos versiones."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Pero también puede aparecer en usos desaconsejados, como el gerundio de posterioridad o ciertos gerundios especificativos:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Tipo",
+         "Fragmento revisable",
+         "Motivo"
+        ],
+        [
+         "Posterioridad",
+         "Se aprobó el informe, publicándose al día siguiente.",
+         "El gerundio expresa una acción posterior"
+        ],
+        [
+         "Especificativo",
+         "Se envió una carta informando del cambio.",
+         "Puede funcionar como modificador poco natural"
+        ]
+       ],
+       "title": "Tipo · Fragmento revisable · Motivo"
+      },
+      {
+       "type": "p",
+       "text": "Una regla formal inicial consiste en buscar palabras terminadas en -ando, -iendo o -yendo:"
+      },
+      {
+       "type": "code",
+       "code": "import re\n\npatron = r\"(\\w+)?\\s*(\\w+(ando|iendo|yendo))\\s*(\\w+)?\"\ncoincidencias = re.findall(patron, texto_a.lower())\n\ngerundios = [\n    (anterior if anterior else \"\", gerundio, siguiente if siguiente else \"\")\n    for anterior, gerundio, _, siguiente in coincidencias\n]\n\nfor anterior, gerundio, siguiente in gerundios:\n    print(anterior, gerundio, siguiente)"
+      },
+      {
+       "type": "p",
+       "text": "Este patrón busca el gerundio y captura, si existen, una palabra anterior y una palabra siguiente. El contexto mínimo ayuda a decidir si el caso requiere revisión."
+      },
+      {
+       "type": "p",
+       "text": "De nuevo, la herramienta no declara automáticamente que un gerundio sea incorrecto. Solo localiza formas que una persona puede evaluar. La diferencia entre detectar y diagnosticar es central:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Detección automática",
+         "Diagnóstico lingüístico"
+        ],
+        [
+         "Encuentra palabras terminadas en -ando, -iendo, -yendo",
+         "Decide si el uso del gerundio es aceptable"
+        ],
+        [
+         "Muestra contexto inmediato",
+         "Interpreta relación temporal, sintáctica y semántica"
+        ],
+        [
+         "Cuenta ocurrencias",
+         "Valora si hay patrón estilístico problemático"
+        ]
+       ],
+       "title": "Detección automática · Diagnóstico lingüístico"
+      },
+      {
+       "type": "p",
+       "text": "Como se explicó en el marco teórico, un falso positivo es un caso que la herramienta marca como sospechoso, pero que no constituye realmente un problema."
+      },
+      {
+       "type": "p",
+       "text": "En análisis de revisión lingüística, los falsos positivos son inevitables cuando usamos reglas simples. Por ejemplo:"
+      },
+      {
+       "type": "code",
+       "code": "patron = r\"(\\w+)\\s+a\\s+(\\w+(ar|er|ir))\\b\""
+      },
+      {
+       "type": "p",
+       "text": "Este patrón puede detectar:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "vamos a revisar",
+        "ayuda a entender",
+        "documentos a presentar"
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Solo algunos casos serán revisables como posible calco. El patrón no sabe si la palabra anterior es un sustantivo, un verbo conjugado o una forma auxiliar. Tampoco conoce el régimen verbal."
+      },
+      {
+       "type": "p",
+       "text": "Esto no invalida el análisis. Al contrario: enseña una lección metodológica importante. En PLN, muchas herramientas funcionan por aproximación. Una buena herramienta no es necesariamente la que no se equivoca nunca, sino la que reduce el trabajo humano sin ocultar sus límites."
+      },
+      {
+       "type": "p",
+       "text": "Para una lingüista, el objetivo no es aceptar ciegamente la salida del programa. El objetivo es aprender a preguntar:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "¿Qué está detectando exactamente esta regla?",
+        "¿Qué casos deja fuera?",
+        "¿Qué casos marca indebidamente?",
+        "¿Qué conocimiento lingüístico haría falta añadir?",
+        "¿Qué coste tendría mejorar la precisión?"
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Esta actitud crítica diferencia el uso superficial de Python de un verdadero análisis lingüístico computacional."
+      }
+     ]
+    },
+    {
+     "id": "2-15-organizar-el-analisis-con-funciones",
+     "title": "2.15. Organizar el análisis con funciones",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Cuando un análisis crece, conviene organizarlo en funciones. Una función es un bloque de código con nombre que realiza una tarea concreta."
+      },
+      {
+       "type": "p",
+       "text": "Por ejemplo:"
+      },
+      {
+       "type": "code",
+       "code": "def contar_palabra(texto, palabra):\n    texto_lower = texto.lower()\n    return texto_lower.count(palabra)"
+      },
+      {
+       "type": "p",
+       "text": "Esta función recibe un texto y una palabra. Convierte el texto a minúsculas y devuelve el número de apariciones."
+      },
+      {
+       "type": "p",
+       "text": "Podemos usarla así:"
+      },
+      {
+       "type": "code",
+       "code": "conteo = contar_palabra(texto_a, \"implementación\")\nprint(conteo)"
+      },
+      {
+       "type": "p",
+       "text": "Las funciones aportan varias ventajas:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Ventaja",
+         "Explicación"
+        ],
+        [
+         "Organización",
+         "Cada tarea tiene un nombre claro"
+        ],
+        [
+         "Reutilización",
+         "La misma función sirve para otros textos"
+        ],
+        [
+         "Legibilidad",
+         "El informe final puede llamar funciones en orden"
+        ],
+        [
+         "Mantenimiento",
+         "Si se mejora una regla, se cambia en un solo lugar"
+        ],
+        [
+         "Escalabilidad",
+         "Es más fácil añadir nuevas comprobaciones"
+        ]
+       ],
+       "title": "Las funciones aportan varias ventajas"
+      },
+      {
+       "type": "p",
+       "text": "Sin funciones, el código puede convertirse en una sucesión larga de instrucciones repetidas. Con funciones, el análisis se parece más a un conjunto ordenado de herramientas."
+      },
+      {
+       "type": "p",
+       "text": "Un sistema básico de revisión puede organizarse en funciones como estas:"
+      },
+      {
+       "type": "code",
+       "code": "def contar_palabra(texto, palabra):\n    return texto.lower().count(palabra)"
+      },
+      {
+       "type": "code",
+       "code": "def buscar_falta_espacio(texto):\n    import re\n    return [m.start() for m in re.finditer(r\"[.,][^\\s]\", texto)]"
+      },
+      {
+       "type": "code",
+       "code": "def detectar_dobles_espacios(texto, oraciones):\n    posiciones = [\n        i + 1\n        for i, oracion in enumerate(oraciones)\n        if \"  \" in oracion\n    ]\n    return texto.count(\"  \"), posiciones"
+      },
+      {
+       "type": "code",
+       "code": "def analizar_a_infinitivo(texto):\n    import re\n    patron = r\"(\\w+)\\s+a\\s+(\\w+(ar|er|ir))\\b\"\n    resultados = re.findall(patron, texto.lower())\n    return [(anterior, verbo) for anterior, verbo, _ in resultados]"
+      },
+      {
+       "type": "code",
+       "code": "def buscar_gerundios(texto):\n    import re\n    patron = r\"(\\w+)?\\s*(\\w+(ando|iendo|yendo))\\s*(\\w+)?\"\n    coincidencias = re.findall(patron, texto.lower())\n    return [\n        (anterior if anterior else \"\", gerundio, siguiente if siguiente else \"\")\n        for anterior, gerundio, _, siguiente in coincidencias\n    ]"
+      },
+      {
+       "type": "p",
+       "text": "Cada función resuelve una pregunta concreta:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Función",
+         "Pregunta que responde"
+        ],
+        [
+         "contar_palabra()",
+         "¿Cuántas veces aparece este término?"
+        ],
+        [
+         "buscar_falta_espacio()",
+         "¿Dónde falta espacio tras punto o coma?"
+        ],
+        [
+         "detectar_dobles_espacios()",
+         "¿Cuántos dobles espacios hay y en qué oraciones?"
+        ],
+        [
+         "analizar_a_infinitivo()",
+         "¿Qué secuencias pueden requerir revisión como a + infinitivo?"
+        ],
+        [
+         "buscar_gerundios()",
+         "¿Qué gerundios aparecen y con qué contexto mínimo?"
+        ]
+       ],
+       "title": "Cada función resuelve una pregunta concreta"
+      },
+      {
+       "type": "p",
+       "text": "El nombre de una función debe ser transparente. Una persona que lea buscar_gerundios(texto) entiende la intención sin tener que estudiar cada línea interna."
+      }
+     ]
+    },
+    {
+     "id": "2-16-devolver-resultados-con-return",
+     "title": "2.16. Devolver resultados con `return`",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Una función puede imprimir algo en pantalla o puede devolver un resultado. No es lo mismo."
+      },
+      {
+       "type": "p",
+       "text": "Observa esta función:"
+      },
+      {
+       "type": "code",
+       "code": "def sumar(a, b):\n    resultado = a + b"
+      },
+      {
+       "type": "p",
+       "text": "Calcula a + b, pero no devuelve el resultado. Si se intenta guardar la salida:"
+      },
+      {
+       "type": "code",
+       "code": "x = sumar(3, 4)\nprint(x)"
+      },
+      {
+       "type": "p",
+       "text": "Python imprimirá:"
+      },
+      {
+       "type": "code",
+       "code": "None"
+      },
+      {
+       "type": "p",
+       "text": "None significa que la función no ha devuelto ningún valor."
+      },
+      {
+       "type": "p",
+       "text": "Para que el resultado pueda usarse fuera de la función, necesitamos return:"
+      },
+      {
+       "type": "code",
+       "code": "def sumar(a, b):\n    resultado = a + b\n    return resultado"
+      },
+      {
+       "type": "p",
+       "text": "O, de forma más breve:"
+      },
+      {
+       "type": "code",
+       "code": "def sumar(a, b):\n    return a + b"
+      },
+      {
+       "type": "p",
+       "text": "Entonces:"
+      },
+      {
+       "type": "code",
+       "code": "x = sumar(3, 4)\nprint(x)"
+      },
+      {
+       "type": "p",
+       "text": "produce:"
+      },
+      {
+       "type": "code",
+       "code": "7"
+      },
+      {
+       "type": "p",
+       "text": "En un informe de revisión lingüística, return es importante porque permite combinar resultados. Una función puede contar términos y devolver números; otra puede detectar errores y devolver posiciones; otra puede construir una tabla. Si solo imprimen, los resultados se ven en pantalla, pero es más difícil reutilizarlos."
+      }
+     ]
+    },
+    {
+     "id": "2-17-generar-un-informe-final",
+     "title": "2.17. Generar un informe final",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "El objetivo práctico no es acumular fragmentos de código, sino producir un informe ordenado. Un informe final puede organizarse por secciones:"
+      },
+      {
+       "type": "ol",
+       "items": [
+        "Frecuencia de términos clave.",
+        "Ausencias de espacio tras puntuación.",
+        "Dobles espacios.",
+        "Comparación terminológica.",
+        "Posibles estructuras a + infinitivo.",
+        "Gerundios localizados.",
+        "Observaciones para revisión humana."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Un esquema simplificado podría ser:"
+      },
+      {
+       "type": "code",
+       "code": "textos = [texto_a, texto_b]\noraciones_textos = [oraciones_a, oraciones_b]\n\nprint(\"INFORME DE REVISIÓN LINGÜÍSTICA\")\nprint(\"=\" * 40)\n\nfor i, texto in enumerate(textos, start=1):\n    print(f\"\\nVERSIÓN {i}\")\n    print(\"-\" * 20)\n\n    conteo = contar_palabra(texto, \"implementación\")\n    print(f\"Frecuencia de 'implementación': {conteo}\")\n\n    errores = buscar_falta_espacio(texto)\n    print(f\"Signos sin espacio después: {len(errores)}\")\n\n    total_dobles, oraciones = detectar_dobles_espacios(\n        texto,\n        oraciones_textos[i - 1]\n    )\n    print(f\"Dobles espacios: {total_dobles}\")\n    print(f\"Oraciones afectadas: {oraciones}\")\n\n    candidatos = analizar_a_infinitivo(texto)\n    print(f\"Posibles casos de 'a + infinitivo': {len(candidatos)}\")\n\n    gerundios = buscar_gerundios(texto)\n    print(f\"Gerundios encontrados: {len(gerundios)}\")"
+      },
+      {
+       "type": "p",
+       "text": "Este informe no pretende ser el documento final que se entregaría a una institución. Es una base. A partir de él, se podrían añadir:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "Exportación a .csv o .xlsx.",
+        "Resúmenes por proveedor.",
+        "Fragmentos de contexto para cada hallazgo.",
+        "Clasificación manual de casos correctos e incorrectos.",
+        "Gráficos de distribución terminológica.",
+        "Integración con glosarios institucionales."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "La idea clave es que Python organiza la evidencia. La decisión profesional sigue perteneciendo a la especialista."
+      }
+     ]
+    },
+    {
+     "id": "2-18-como-leer-los-resultados-antes-de-corregir",
+     "title": "2.18. Cómo leer los resultados antes de corregir",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Una buena práctica consiste en leer los resultados con tres preguntas:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "¿Qué regla produjo este hallazgo?",
+        "¿Qué parte del texto se muestra como contexto?",
+        "¿Qué decisión humana hace falta ahora?"
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Estas preguntas evitan una confianza excesiva en la salida automática. También ayudan a documentar el trabajo. Si una incidencia se descarta, puede anotarse por qué. Si se confirma, puede corregirse con una justificación. En entornos profesionales, esta trazabilidad puede ser tan importante como la corrección misma."
+      }
+     ]
+    }
+   ],
+   "navTitle": "Python para PLN"
+  },
+  {
+   "id": "reglas-simples-frente-a-analisis-linguistico-avanzado",
+   "title": "Reglas simples frente a análisis lingüístico avanzado",
+   "blocks": [
+    {
+     "type": "p",
+     "text": "Las técnicas de esta unidad se basan en reglas simples:"
+    },
+    {
+     "type": "ul",
+     "items": [
+      "Cortar por puntos.",
+      "Contar cadenas exactas.",
+      "Buscar patrones con expresiones regulares.",
+      "Identificar terminaciones como -ando, -iendo o -yendo."
+     ]
+    },
+    {
+     "type": "p",
+     "text": "Estas reglas son transparentes. Podemos explicar exactamente qué hacen. Esa transparencia es una virtud en formación y en revisión profesional. Sin embargo, también tienen límites:"
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       "Regla simple",
+       "Límite"
+      ],
+      [
+       "split(\".\")",
+       "Confunde puntos de abreviaturas con finales de oración"
+      ],
+      [
+       ".count(\"empresa\")",
+       "Puede contar partes de palabras o no agrupar variantes flexivas"
+      ],
+      [
+       "Patrón a + infinitivo",
+       "No distingue sustantivos de verbos conjugados"
+      ],
+      [
+       "Terminaciones de gerundio",
+       "No interpreta la función sintáctica del gerundio"
+      ],
+      [
+       "Conteo de sinónimos",
+       "No sabe si dos términos son equivalentes en contexto"
+      ]
+     ],
+     "title": "Regla simple · Límite"
+    },
+    {
+     "type": "p",
+     "text": "Para mejorar la precisión, se pueden incorporar técnicas más avanzadas:"
+    },
+    {
+     "type": "ul",
+     "items": [
+      "Tokenización, para separar el texto en unidades lingüísticas más precisas.",
+      "Lematización, para agrupar formas como trabaja, trabajó, trabajar.",
+      "Etiquetado morfosintáctico, para saber si una palabra es sustantivo, verbo, adjetivo, etc.",
+      "Análisis de dependencias, para estudiar relaciones sintácticas.",
+      "Reconocimiento de entidades, para detectar instituciones, lugares o personas.",
+      "Modelos estadísticos o neuronales, para capturar patrones no formulados manualmente."
+     ]
+    },
+    {
+     "type": "p",
+     "text": "La progresión natural en PLN consiste en empezar por reglas simples, comprender sus límites y avanzar hacia herramientas más sofisticadas cuando la pregunta lo requiere."
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Reglas y análisis avanzado"
+  },
+  {
+   "id": "buenas-practicas-para-revisar-textos-con-python",
+   "title": "Buenas prácticas para revisar textos con Python",
+   "blocks": [
+    {
+     "type": "p",
+     "text": "Un análisis automático de revisión lingüística debe ser claro, reproducible y prudente. Algunas buenas prácticas son:"
+    },
+    {
+     "type": "ol",
+     "items": [
+      "Nombrar bien las variables. texto_a es más claro que x.",
+      "Guardar juntos los textos relacionados. Una lista facilita el análisis conjunto.",
+      "Normalizar cuando sea necesario. .lower() evita diferencias irrelevantes entre mayúsculas y minúsculas.",
+      "Conservar contexto. Un hallazgo sin fragmento puede ser difícil de corregir.",
+      "Distinguir detección de diagnóstico. Que una regla encuentre algo no significa que sea un error.",
+      "Presentar resultados con etiquetas claras. El informe debe poder leerlo otra persona.",
+      "Evitar copiar y pegar bloques repetidos. Las funciones reducen errores y mejoran la reutilización.",
+      "Documentar los límites. Toda herramienta debe decir qué detecta y qué no.",
+      "Mantener el criterio lingüístico en el centro. Python apoya la revisión; no sustituye la interpretación."
+     ]
+    },
+    {
+     "type": "p",
+     "text": "Estas prácticas son tan importantes como la sintaxis. En entornos profesionales, un análisis útil no es solo el que produce números, sino el que permite tomar decisiones con confianza."
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Buenas prácticas"
+  },
+  {
+   "id": "errores-frecuentes-de-aprendizaje",
+   "title": "Errores frecuentes de aprendizaje",
+   "blocks": [
+    {
+     "type": "ul",
+     "items": [
+      "Confundir una coincidencia automática con un error lingüístico confirmado.",
+      "Pensar que split(\".\") segmenta siempre oraciones correctamente.",
+      "Olvidar encoding=\"utf-8\" al leer textos con tildes, eñes o comillas españolas.",
+      "Contar términos sin normalizar mayúsculas y minúsculas cuando la comparación lo requiere.",
+      "Usar count sin recordar que busca secuencias, no necesariamente palabras completas.",
+      "Interpretar una divergencia terminológica como error sin consultar el glosario o el contexto.",
+      "Creer que una expresión regular comprende gramática, régimen verbal o estilo.",
+      "Diseñar patrones demasiado amplios y no prever falsos positivos.",
+      "Diseñar patrones demasiado estrechos y dejar fuera casos relevantes.",
+      "Usar print dentro de todo el código y luego no poder reutilizar los resultados.",
+      "Repetir bloques casi idénticos en lugar de crear funciones.",
+      "Presentar un informe sin contexto suficiente para que una revisora pueda decidir."
+     ]
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Errores frecuentes"
+  },
+  {
+   "id": "sintesis-final",
+   "title": "Síntesis final",
+   "blocks": [
+    {
+     "type": "p",
+     "text": "Esta unidad muestra cómo Python puede apoyar la revisión lingüística de textos paralelos monolingües. El objetivo no es automatizar el juicio experto, sino construir una cadena de análisis que convierta los textos en datos observables: se leen archivos, se guardan versiones, se segmentan oraciones, se cuentan términos, se buscan patrones formales y se generan resultados interpretables."
+    },
+    {
+     "type": "p",
+     "text": "El marco teórico de la unidad conecta tres ámbitos: la revisión y evaluación de calidad en servicios lingüísticos, la lingüística de corpus y el PLN basado en reglas. De la revisión profesional se toma la importancia del criterio y de la trazabilidad. De la lingüística de corpus se toma la idea de observar patrones en colecciones de textos. Del PLN se toman herramientas como cadenas, listas, bucles, expresiones regulares y funciones."
+    },
+    {
+     "type": "p",
+     "text": "El aprendizaje más importante es metodológico: el código debe formular preguntas concretas. Python puede ayudar a responder «cuántas veces aparece este término», «dónde hay una coma sin espacio posterior» o «qué segmentos contienen una forma terminada en gerundio». No puede responder por sí solo «qué versión es mejor» sin un marco de decisión humano."
+    },
+    {
+     "type": "p",
+     "text": "Para una alumna o un alumno lingüista, esta unidad ofrece una base profesional muy valiosa. Permite pasar de la lectura lineal a la lectura asistida por evidencias, y de la intuición individual a un procedimiento más documentable. Esa es una competencia central en PLN aplicado a revisión, traducción, edición y control de calidad textual."
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Síntesis"
+  },
+  {
+   "id": "cierre-narrativo",
+   "title": "Cierre narrativo",
+   "blocks": [
+    {
+     "type": "p",
+     "text": "Al final de la simulación, Verba Pública no entrega a la institución una sentencia automática. Entrega un informe preliminar de revisión: términos que conviene unificar, patrones formales que deben comprobarse, estructuras candidatas a lectura lingüística y una explicación clara de las cautelas. La revisora sénior conserva la última palabra, pero ya no parte de una página en blanco."
+    },
+    {
+     "type": "p",
+     "text": "La institución gana tiempo y transparencia. El equipo lingüístico gana una forma de justificar mejor sus recomendaciones. Y el alumnado aprende una lección clave: programar para PLN no consiste solo en escribir código que funcione, sino en diseñar procedimientos que respeten la complejidad del lenguaje y ayuden a tomar mejores decisiones."
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Cierre narrativo"
+  }
+ ],
+ "references": [
+  {
+   "key": "bird2009",
+   "text": "Bird, S., Klein, E. y Loper, E. (2009). *Natural language processing with Python*. O'Reilly Media. https://www.nltk.org/book/"
+  },
+  {
+   "key": "bowker2002",
+   "text": "Bowker, L. (2002). *Computer-aided translation technology: A practical introduction*. University of Ottawa Press."
+  },
+  {
+   "key": "friedl2006",
+   "text": "Friedl, J. E. F. (2006). *Mastering regular expressions* (3rd ed.). O'Reilly Media."
+  },
+  {
+   "key": "internationalorganiz2015",
+   "text": "International Organization for Standardization. (2015). *ISO 17100:2015. Translation services: Requirements for translation services*. https://www.iso.org/standard/59149.html"
+  },
+  {
+   "key": "internationalorganiz2024",
+   "text": "International Organization for Standardization. (2024). *ISO 5060:2024. Translation services: Evaluation of translation output*. https://www.iso.org/standard/80786.html"
+  },
+  {
+   "key": "jurafsky2025",
+   "text": "Jurafsky, D. y Martin, J. H. (2025). *Speech and language processing* (3rd ed. draft). Stanford University. https://web.stanford.edu/~jurafsky/slp3/"
+  },
+  {
+   "key": "kiss2006",
+   "text": "Kiss, T. y Strunk, J. (2006). Unsupervised multilingual sentence boundary detection. *Computational Linguistics, 32*(4), 485-525. https://doi.org/10.1162/coli.2006.32.4.485"
+  },
+  {
+   "key": "lommel2014",
+   "text": "Lommel, A., Burchardt, A. y Uszkoreit, H. (2014). Multidimensional Quality Metrics: A flexible system for assessing translation quality. *Tradumàtica, 12*, 455-463. https://doi.org/10.5565/rev/tradumatica.77"
+  },
+  {
+   "key": "mcenery2012",
+   "text": "McEnery, T. y Hardie, A. (2012). *Corpus linguistics: Method, theory and practice*. Cambridge University Press."
+  },
+  {
+   "key": "olohan2004",
+   "text": "Olohan, M. (2004). *Introducing corpora in translation studies*. Routledge."
+  },
+  {
+   "key": "pythonsoftwarefounda2026a",
+   "text": "Python Software Foundation. (2026a). *re: Regular expression operations*. Python 3.14 documentation. https://docs.python.org/3/library/re.html"
+  },
+  {
+   "key": "pythonsoftwarefounda2026b",
+   "text": "Python Software Foundation. (2026b). *pathlib: Object-oriented filesystem paths*. Python 3.14 documentation. https://docs.python.org/3/library/pathlib.html"
+  },
+  {
+   "key": "pythonsoftwarefounda2026c",
+   "text": "Python Software Foundation. (2026c). *Built-in functions: open*. Python 3.14 documentation. https://docs.python.org/3/library/functions.html#open"
+  },
+  {
+   "key": "realacademiaespanola2005",
+   "text": "Real Academia Española & Asociación de Academias de la Lengua Española. (2005/2023). *Diccionario panhispánico de dudas*. https://www.rae.es/dpd/"
+  },
+  {
+   "key": "realacademiaespanola2009",
+   "text": "Real Academia Española & Asociación de Academias de la Lengua Española. (2009). *Nueva gramática de la lengua española*. Espasa."
+  },
+  {
+   "key": "zanettin2012",
+   "text": "Zanettin, F. (2012). *Translation-driven corpora: Corpus resources for descriptive and applied translation studies*. Routledge."
+  }
+ ]
+}

@@ -1,0 +1,1599 @@
+{
+ "header": {
+  "kicker": "Tema 3.",
+  "title": "Preprocesamiento y análisis morfosintáctico con spaCy",
+  "subtitle": "Preparar un corpus sanitario para traducción automática neuronal",
+  "meta": "Material teórico | Programación para PLN | Universidad Pontificia Comillas",
+  "narrative": "Preprocesamiento y análisis morfosintáctico de textos médico-farmacéuticos: preparar el corpus antes de analizarlo con Python"
+ },
+ "sections": [
+  {
+   "id": "contexto-profesional",
+   "title": "Contexto profesional",
+   "blocks": [
+    {
+     "type": "p",
+     "text": "Imagina que trabajas como lingüista computacional junior en una empresa internacional que desarrolla un sistema de traducción automática especializado en documentación médica y farmacéutica. La empresa ha recopilado miles de textos multilingües: prospectos de medicamentos, informes clínicos, artículos científicos, instrucciones de administración, fichas técnicas y materiales de farmacovigilancia."
+    },
+    {
+     "type": "p",
+     "text": "El equipo de ingeniería quiere usar esos textos para mejorar un motor de traducción automática neuronal. Sin embargo, antes de entrenar o evaluar cualquier sistema, aparece un problema básico: los textos están en bruto. Tienen mayúsculas inconsistentes, signos de puntuación variables, palabras funcionales de alta frecuencia, formas flexionadas, duplicidades, terminología especializada y segmentos que no siempre están preparados para ser procesados por una máquina."
+    },
+    {
+     "type": "p",
+     "text": "Tu tarea consiste en diseñar un pipeline de preprocesamiento lingüístico. Un pipeline es una secuencia ordenada de pasos que transforma un texto bruto en una representación más limpia, homogénea y útil para el análisis automático."
+    },
+    {
+     "type": "p",
+     "text": "En este escenario profesional, preparar bien el corpus no es una tarea secundaria. En traducción médica y farmacéutica, una mala preparación de datos puede afectar a la terminología, a la detección de negaciones, a la calidad de los glosarios y, en última instancia, a la fiabilidad del sistema."
+    },
+    {
+     "type": "p",
+     "text": "La idea central de esta unidad es que el procesamiento automático no empieza cuando aplicamos un modelo avanzado. Empieza mucho antes: cuando decidimos cómo normalizar, cómo tokenizar, qué eliminar, qué conservar, qué lematizar y cómo extraer las unidades lingüísticas relevantes."
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Contexto profesional"
+  },
+  {
+   "id": "que-vas-a-aprender-en-esta-unidad",
+   "title": "Qué vas a aprender en esta unidad",
+   "blocks": [
+    {
+     "type": "p",
+     "text": "Al terminar este manual, deberías poder explicar y aplicar los siguientes conocimientos:"
+    },
+    {
+     "type": "ol",
+     "items": [
+      "Qué es el preprocesamiento textual y por qué es imprescindible en PLN.",
+      "Qué significa construir un pipeline de procesamiento lingüístico.",
+      "Cómo se instala y utiliza una biblioteca lingüística como spaCy.",
+      "Para qué sirve NLTK en tareas de stopwords.",
+      "Qué es un modelo de lengua en spaCy y qué aporta es_core_news_sm.",
+      "Qué diferencia hay entre texto bruto, texto normalizado, tokens y lemas.",
+      "Qué implica convertir un texto a minúsculas con .lower().",
+      "Cómo se eliminan signos de puntuación mediante expresiones regulares.",
+      "Qué es la tokenización y por qué no equivale a \"separar por espacios\" sin más.",
+      "Qué son las stopwords y por qué eliminarlas puede ser útil.",
+      "Por qué en textos técnicos no todas las stopwords deben eliminarse automáticamente.",
+      "Qué es la lematización y por qué ayuda a agrupar variantes morfológicas.",
+      "Cómo se cuentan frecuencias con Counter.",
+      "Qué es el etiquetado morfosintáctico o PoS tagging.",
+      "Cómo se usan categorías como NOUN, VERB y ADJ.",
+      "Por qué los sustantivos suelen ser relevantes para glosarios técnicos.",
+      "Cómo se construye un glosario terminológico con contexto.",
+      "Qué decisiones lingüísticas deben documentarse en un pipeline profesional."
+     ]
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Qué vas a aprender"
+  },
+  {
+   "id": "mapa-conceptual-de-la-unidad",
+   "title": "Mapa conceptual de la unidad",
+   "blocks": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "Concepto",
+       "En Python",
+       "En PLN aplicado"
+      ],
+      [
+       "Pipeline",
+       "Secuencia de instrucciones",
+       "Flujo ordenado de transformación textual"
+      ],
+      [
+       "spaCy",
+       "Biblioteca de PLN",
+       "Tokenización, lematización y análisis morfosintáctico"
+      ],
+      [
+       "NLTK",
+       "Biblioteca clásica de PLN",
+       "Listas de stopwords y recursos lingüísticos"
+      ],
+      [
+       "Modelo es_core_news_sm",
+       "Modelo preentrenado para español",
+       "Analiza texto español con reglas y estadísticas aprendidas"
+      ],
+      [
+       "Normalización",
+       ".lower() y otras transformaciones",
+       "Unifica variantes superficiales"
+      ],
+      [
+       "Limpieza",
+       "re.sub()",
+       "Elimina ruido como puntuación no necesaria"
+      ],
+      [
+       "Tokenización",
+       "nlp(texto) y token.text",
+       "Divide el texto en unidades analizables"
+      ],
+      [
+       "Stopwords",
+       "stopwords.words('spanish')",
+       "Filtra palabras funcionales frecuentes"
+      ],
+      [
+       "Lematización",
+       "token.lemma_",
+       "Reduce formas flexionadas a una forma base"
+      ],
+      [
+       "Frecuencia",
+       "Counter",
+       "Cuenta términos, lemas o categorías"
+      ],
+      [
+       "PoS",
+       "token.pos_",
+       "Etiqueta la categoría gramatical"
+      ],
+      [
+       "Glosario técnico",
+       "Sustantivos + contexto",
+       "Extrae unidades terminológicas relevantes"
+      ]
+     ],
+     "title": "Concepto · En Python · En PLN aplicado"
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Mapa conceptual"
+  },
+  {
+   "id": "1-marco-teorico",
+   "title": "1. Marco teórico",
+   "blocks": [
+    {
+     "type": "p",
+     "text": "El marco teórico de esta unidad debe leerse como una secuencia: primero se entiende por qué el preprocesamiento es una fase decisiva del PLN; después se estudia cómo se ordena esa fase en un pipeline; a continuación se analizan las operaciones lingüísticas principales; y, finalmente, se sitúan esas decisiones en un contexto profesional médico-farmacéutico, con herramientas concretas como spaCy, NLTK {{cite:naturallanguagetoolk2026}}(Natural Language Toolkit, 2026){{/cite}} y pandas {{cite:thepandasdevelopment2026a,thepandasdevelopment2026b,thepandasdevelopment2026c}}(The pandas development team, 2026a, 2026b, 2026c){{/cite}}. El hilo conductor es que preparar un corpus no es una tarea secundaria, sino una forma de modelar lingüísticamente qué información verá después la máquina."
+    }
+   ],
+   "subsections": [
+    {
+     "id": "1-1-el-preprocesamiento-como-etapa-fundacional-del-pln",
+     "title": "1.1. El preprocesamiento como etapa fundacional del PLN",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "El preprocesamiento textual es el conjunto de operaciones que transforma textos brutos en representaciones más regulares, comparables y explotables por un sistema computacional. Un texto real puede contener mayúsculas inconsistentes, puntuación variable, saltos de línea, abreviaturas, cifras, unidades de medida, formas flexionadas, palabras funcionales de alta frecuencia y terminología especializada. Antes de contar, clasificar, traducir o extraer información, es necesario decidir cómo se tratarán todos esos elementos."
+      },
+      {
+       "type": "p",
+       "text": "En PLN, la calidad de los resultados posteriores depende en parte de la calidad de la representación inicial. Por eso preprocesar no significa «limpiar por limpiar», sino preparar el texto para una tarea concreta. Una representación adecuada para contar frecuencias no tiene por qué ser adecuada para segmentar oraciones, extraer terminología o alimentar un sistema de traducción automática neuronal. La misma operación puede ser útil en una tarea y perjudicial en otra."
+      },
+      {
+       "type": "p",
+       "text": "Esta idea es especialmente importante para alumnado de lingüística. El preprocesamiento no es solo una operación técnica: es una decisión lingüística. Cada vez que se normaliza una forma, se elimina una palabra o se reduce una variante a su lema, se está decidiendo qué rasgos del texto se consideran relevantes y cuáles se consideran prescindibles."
+      }
+     ]
+    },
+    {
+     "id": "1-2-que-es-un-pipeline-linguistico",
+     "title": "1.2. Qué es un pipeline lingüístico",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Un pipeline lingüístico es una cadena ordenada de pasos en la que cada operación recibe una entrada, la transforma y produce una salida que será utilizada por el paso siguiente. En una unidad sobre preprocesamiento y análisis morfosintáctico, un pipeline básico puede incluir carga del texto, normalización, limpieza de puntuación, tokenización, filtrado de stopwords, lematización, recuento de frecuencias, etiquetado gramatical, extracción de sustantivos y construcción de un glosario preliminar."
+      },
+      {
+       "type": "p",
+       "text": "El orden del pipeline importa. Si se elimina toda la puntuación antes de segmentar oraciones, pueden perderse marcas que ayudan a detectar límites oracionales. Si se eliminan stopwords antes de revisar negaciones, puede desaparecer información semántica crítica. Si se lematiza sin conservar el texto original, puede ser difícil volver al contexto real de uso."
+      },
+      {
+       "type": "p",
+       "text": "Por eso una buena práctica consiste en conservar versiones intermedias del texto. En lugar de sobrescribir siempre la misma variable, conviene crear variables distintas para cada fase: texto original, texto normalizado, texto sin puntuación, documento procesado con spaCy y documento con puntuación conservada para segmentar oraciones. Esta trazabilidad permite comprobar errores, justificar decisiones y reproducir el análisis."
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Fase",
+         "Pregunta lingüística",
+         "Riesgo si se aplica sin criterio"
+        ],
+        [
+         "Normalización",
+         "¿Qué variantes formales quiero unificar?",
+         "Borrar siglas, nombres propios o marcas funcionales"
+        ],
+        [
+         "Limpieza",
+         "¿Qué signos dificultan la tarea y cuáles informan?",
+         "Eliminar unidades, dosis, límites oracionales o contexto"
+        ],
+        [
+         "Stopwords",
+         "¿Qué palabras frecuentes son realmente prescindibles?",
+         "Eliminar negación, temporalidad o restricción"
+        ],
+        [
+         "Lematización",
+         "¿Qué variantes deben agruparse bajo una forma base?",
+         "Perder información morfológica útil"
+        ],
+        [
+         "Extracción gramatical",
+         "¿Qué categorías interesan para la tarea?",
+         "Confundir núcleos terminológicos con palabras aisladas"
+        ]
+       ],
+       "title": "Fase · Pregunta lingüística · Riesgo si se aplica sin criterio"
+      },
+      {
+       "type": "image",
+       "src": "img/fig_pipeline.svg",
+       "alt": "El pipeline de preprocesamiento de la unidad, de la normalización al glosario técnico",
+       "caption": "Figura elaborada a partir del mapa conceptual de la unidad."
+      }
+     ]
+    },
+    {
+     "id": "1-3-preprocesar-es-modelar-reducir-ruido-sin-destruir-inform",
+     "title": "1.3. Preprocesar es modelar: reducir ruido sin destruir información",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Una de las ideas centrales de la unidad es que preprocesar equivale a modelar. No existe una limpieza universalmente correcta. Lo que suele llamarse «ruido» depende de la tarea, del dominio y de la pregunta de análisis. En recuperación de información puede interesar eliminar muchas palabras frecuentes; en textos médicos, en cambio, algunas palabras frecuentes pueden indicar contraindicación, temporalidad o restricción."
+      },
+      {
+       "type": "p",
+       "text": "En un corpus médico-farmacéutico, elementos aparentemente pequeños pueden ser decisivos. La palabra «no» cambia el sentido de «se recomienda su uso» frente a «no se recomienda su uso». La forma «sin» puede introducir una condición clínica. Una cifra seguida de una unidad, como «10 mg/kg», no es un detalle tipográfico, sino información especializada. Por tanto, el pipeline ideal no es el más agresivo, sino el más adecuado al objetivo."
+      },
+      {
+       "type": "p",
+       "text": "La literatura sobre adaptación de dominio en traducción neuronal y sobre procesamiento biomédico insiste en que los datos especializados requieren decisiones de representación propias. Un sistema que funciona aceptablemente en textos generales puede degradarse cuando se enfrenta a terminología médica, abreviaturas, negación clínica o unidades de medida. La preparación del corpus forma parte de esa adaptación de dominio, no solo de una limpieza previa {{cite:chu2018,neumann2019}}(Chu y Wang, 2018; Neumann et al., 2019){{/cite}}."
+      }
+     ]
+    },
+    {
+     "id": "1-4-normalizacion-textual-y-limpieza-de-puntuacion",
+     "title": "1.4. Normalización textual y limpieza de puntuación",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La normalización textual agrupa operaciones destinadas a reducir variación superficial: pasar a minúsculas, unificar caracteres, tratar puntuación, resolver espacios o estandarizar formas equivalentes. En el cuaderno se trabaja de forma inicial con lower, que convierte el texto a minúsculas y permite contar de forma conjunta variantes como «Paciente» y «paciente»."
+      },
+      {
+       "type": "p",
+       "text": "Esta operación puede ser útil para análisis de frecuencias, pero tiene límites. En textos especializados, las mayúsculas pueden distinguir siglas como AINE, nombres comerciales, códigos, instituciones o entidades clínicas. Convertir todo a minúsculas puede ser razonable para un glosario exploratorio, pero no necesariamente para una versión final del corpus."
+      },
+      {
+       "type": "p",
+       "text": "La limpieza de puntuación mediante expresiones regulares plantea una tensión parecida. Eliminar signos puede facilitar ciertos recuentos, pero también puede destruir información sintáctica o semántica. Los puntos ayudan a segmentar oraciones; las comas pueden delimitar incisos; los guiones pueden formar parte de términos compuestos; los símbolos y porcentajes pueden ser relevantes en textos médicos. La pregunta profesional no es «¿puedo eliminar esto?», sino «¿qué pierdo si lo elimino?»."
+      }
+     ]
+    },
+    {
+     "id": "1-5-tokenizacion-segmentar-no-es-solo-dividir-palabras",
+     "title": "1.5. Tokenización: segmentar no es solo dividir palabras",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La tokenización es el proceso por el que un flujo de caracteres se convierte en unidades manipulables por el sistema. Suele explicarse como dividir un texto en palabras, pero esa explicación se queda corta. Un token puede ser una palabra, un número, un signo de puntuación, una abreviatura, una unidad especial o una subunidad, según el tokenizador y la tarea."
+      },
+      {
+       "type": "p",
+       "text": "En spaCy, al procesar un texto con `nlp(texto)`, se obtiene un objeto `Doc` que contiene objetos Token. Cada token conserva atributos como la forma textual, el lema, la categoría gramatical y, en su caso, información adicional. Esta estructura permite que los pasos posteriores del pipeline no trabajen solo con cadenas, sino con unidades lingüísticamente anotadas."
+      },
+      {
+       "type": "p",
+       "text": "En traducción automática neuronal, la tokenización ha sido especialmente importante por el uso de subpalabras. Métodos como BPE o SentencePiece ayudan a tratar palabras raras y morfología productiva, pero también muestran que tokenizar no es una operación trivial. La forma en que se segmenta el texto condiciona qué regularidades puede aprender el sistema {{cite:kudo2018,schmidt2024,sennrich2016}}(Kudo y Richardson, 2018; Schmidt et al., 2024; Sennrich et al., 2016){{/cite}}."
+      }
+     ]
+    },
+    {
+     "id": "1-6-stopwords-una-categoria-util-pero-dependiente-de-la-tare",
+     "title": "1.6. Stopwords: una categoría útil, pero dependiente de la tarea",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Las stopwords o palabras vacías son unidades de alta frecuencia que, en algunas tareas, aportan poca información temática o discriminativa. En español suelen incluir artículos, preposiciones, conjunciones, pronombres y formas funcionales. Su eliminación ha sido clásica en recuperación de información, clasificación textual, análisis de frecuencias y representación vectorial basada en conteos {{cite:manning2008}}(Manning et al., 2008){{/cite}}."
+      },
+      {
+       "type": "p",
+       "text": "Sin embargo, no existe una lista de stopwords universal. La utilidad de eliminar una palabra depende del género textual, del dominio, de la lengua y de la tarea. En textos médicos, palabras como «no», «sin», «antes», «después», «durante», «excepto» o «contra» pueden codificar negación, temporalidad, condición o contraindicación. Eliminarlas de manera automática puede alterar el significado del texto."
+      },
+      {
+       "type": "p",
+       "text": "Por eso, en corpus especializados conviene entender la lista de stopwords como un punto de partida revisable. El criterio profesional puede exigir conservar negaciones, ajustar la lista general o construir una lista personalizada. En esta unidad, el caso de la negación funciona como advertencia metodológica: una palabra muy frecuente no siempre es irrelevante."
+      }
+     ]
+    },
+    {
+     "id": "1-7-spacy-y-nltk-dos-herramientas-complementarias",
+     "title": "1.7. spaCy y NLTK: dos herramientas complementarias",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "spaCy y NLTK permiten trabajar con PLN en Python, pero responden a orientaciones distintas. NLTK es una biblioteca clásica, muy valiosa en docencia y en trabajo introductorio con corpus, porque permite ver de forma explícita recursos y operaciones: cargar una lista de stopwords, inspeccionarla, convertirla en conjunto y filtrarla. Su ventaja pedagógica es la transparencia del proceso {{cite:bird2009,loper2002}}(Bird et al., 2009; Loper y Bird, 2002){{/cite}}."
+      },
+      {
+       "type": "p",
+       "text": "spaCy, en cambio, está orientada a pipelines lingüísticos eficientes e integrados. Un modelo de spaCy para español no funciona solo como diccionario: permite tokenizar, lematizar, etiquetar morfosintácticamente, segmentar oraciones y consultar atributos lingüísticos de cada token. En spaCy, las stopwords pueden consultarse como parte de los datos del modelo o mediante el atributo `token.is_stop`."
+      },
+      {
+       "type": "p",
+       "text": "Las listas de stopwords de NLTK y spaCy no tienen por qué coincidir. Cada biblioteca mantiene recursos propios y criterios de inclusión distintos. Por eso, dos procedimientos que parecen equivalentes pueden producir salidas diferentes: conservarán o eliminarán conjuntos de tokens no idénticos. Esta diferencia no debe interpretarse como que una herramienta sea siempre mejor que la otra, sino como una decisión metodológica que debe documentarse."
+      },
+      {
+       "type": "p",
+       "text": "Para una práctica inicial, NLTK ayuda a comprender el filtrado de forma explícita. Para un pipeline completo, spaCy resulta más natural porque integra el filtrado con tokenización, lematización, PoS tagging y segmentación. En proyectos profesionales, lo más riguroso es elegir la herramienta según la tarea, revisar sus efectos y justificar la decisión."
+      },
+      {
+       "type": "p",
+       "text": "Para saber más, se recomienda leer el artículo complementario «Diferencias entre las stopwords de spaCy y NLTK en el preprocesamiento textual»."
+      }
+     ]
+    },
+    {
+     "id": "1-8-lematizacion-reducir-variacion-flexiva-sin-anular-la-gra",
+     "title": "1.8. Lematización: reducir variación flexiva sin anular la gramática",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La lematización asocia una forma flexionada con su forma canónica o lema. En español, esta operación permite agrupar formas como «paciente» y «pacientes», o relacionar ciertas formas verbales con su infinitivo. Para análisis de frecuencias y glosarios preliminares, lematizar puede reducir dispersión morfológica y facilitar la lectura de patrones."
+      },
+      {
+       "type": "p",
+       "text": "Lematizar no equivale a tokenizar. Tokenizar responde a la pregunta «¿cuáles son las unidades del texto?». Lematizar responde a otra: «¿cuál es la forma de referencia de cada unidad?». Ambas operaciones son complementarias y ocupan lugares distintos en el pipeline. Primero se necesitan unidades; después puede decidirse si conviene reducirlas a lemas."
+      },
+      {
+       "type": "p",
+       "text": "También conviene evitar una interpretación excesivamente automática. En dominios especializados, los modelos pueden producir lemas dudosos, sobre todo con abreviaturas, tecnicismos, formas raras o usos fuera de dominio. La lematización moderna se beneficia del contexto, pero sus resultados deben revisarse cuando el objetivo sea construir glosarios o preparar recursos terminológicos {{cite:toporkov2024}}(Toporkov y Agerri, 2024){{/cite}}."
+      }
+     ]
+    },
+    {
+     "id": "1-9-analisis-morfosintactico-de-las-categorias-gramaticales-",
+     "title": "1.9. Análisis morfosintáctico: de las categorías gramaticales a la terminología",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "El análisis morfosintáctico añade a cada token información gramatical. Una de sus tareas principales es el etiquetado PoS, que asigna categorías como sustantivo, verbo, adjetivo, adverbio, determinante o preposición. Esta capa permite pasar de una simple lista de palabras a una representación más estructurada del texto."
+      },
+      {
+       "type": "p",
+       "text": "En textos médicos y farmacéuticos, los sustantivos son especialmente relevantes porque muchos candidatos terminológicos son nombres o grupos nominales: «ibuprofeno», «tratamiento», «efectos adversos», «úlcera gástrica», «principio activo», «insuficiencia hepática» o «sistema nacional de farmacovigilancia». Extraer sustantivos individuales puede ser un primer paso, pero no basta para capturar toda la terminología."
+      },
+      {
+       "type": "p",
+       "text": "De sustantivos a terminología hay un salto metodológico. La terminología especializada suele estar formada por unidades multipalabra, con patrones como sustantivo + adjetivo, sustantivo + preposición + sustantivo o grupos nominales más extensos. Por eso, la categoría gramatical no debe verse solo como etiqueta descriptiva: puede convertirse en una regla de búsqueda para localizar candidatos terminológicos."
+      },
+      {
+       "type": "p",
+       "text": "El marco de Universal Dependencies y los tagsets universales ayudan a entender que estas etiquetas no son arbitrarias: responden a tradiciones de anotación lingüística formalizadas y comparables entre lenguas {{cite:demarneffe2021,petrov2012}}(de Marneffe et al., 2021; Petrov et al., 2012){{/cite}}."
+      }
+     ]
+    },
+    {
+     "id": "1-10-pandas-para-linguistas-organizar-revisar-y-exportar-res",
+     "title": "1.10. Pandas para lingüistas: organizar, revisar y exportar resultados",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "spaCy y NLTK producen o facilitan análisis lingüísticos, pero muchas veces los resultados necesitan organizarse en una estructura consultable. Ahí aparece pandas. Pandas no analiza lingüísticamente el texto; su función es convertir resultados en datos tabulares: filas y columnas que pueden inspeccionarse, filtrarse, ordenarse, calcularse y exportarse."
+      },
+      {
+       "type": "p",
+       "text": "La estructura central de pandas es el DataFrame. Para un perfil lingüístico, puede entenderse como una tabla de anotación: cada fila representa una unidad —un token, una oración, un documento, un lema o un candidato terminológico— y cada columna almacena una variable —forma textual, lema, categoría gramatical, frecuencia, documento de origen o contexto—. Esta forma de organización conecta con el principio de tidy data: cada variable en una columna, cada observación en una fila y cada tipo de unidad en una tabla {{cite:wickham2014}}(Wickham, 2014){{/cite}}."
+      },
+      {
+       "type": "p",
+       "text": "En PLN aplicado, pandas aporta claridad y reproducibilidad. Permite revisar si los lemas son correctos, filtrar solo sustantivos, calcular frecuencias por categoría gramatical, ordenar resultados y exportar a CSV. El CSV es un archivo de texto plano que representa datos tabulares y puede abrirse en Excel, LibreOffice, Google Sheets, R o Python. Exportar resultados permite compartirlos, revisarlos fuera del cuaderno y conservar evidencias del análisis."
+      },
+      {
+       "type": "p",
+       "text": "La distinción metodológica es importante: spaCy analiza; NLTK proporciona recursos; pandas organiza y exporta. En una práctica profesional, esta separación ayuda a documentar qué parte del código realiza análisis lingüístico y qué parte convierte ese análisis en un producto revisable."
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Estructura",
+         "Qué representa",
+         "Utilidad en PLN"
+        ],
+        [
+         "Lista",
+         "Elementos en orden",
+         "Guardar tokens o lemas de forma simple"
+        ],
+        [
+         "Diccionario",
+         "Pares clave-valor",
+         "Describir una unidad con atributos"
+        ],
+        [
+         "Lista de diccionarios",
+         "Muchas unidades anotadas",
+         "Preparar datos para una tabla"
+        ],
+        [
+         "DataFrame",
+         "Tabla con filas y columnas",
+         "Revisar, filtrar, contar y exportar resultados"
+        ],
+        [
+         "CSV",
+         "Archivo tabular en texto plano",
+         "Conservar y compartir los resultados"
+        ]
+       ],
+       "title": "Estructura · Qué representa · Utilidad en PLN"
+      },
+      {
+       "type": "p",
+       "text": "Para saber más, se recomienda leer el artículo complementario «Pandas para lingüistas»."
+      }
+     ]
+    },
+    {
+     "id": "1-11-el-caso-de-los-prospectos-farmaceuticos",
+     "title": "1.11. El caso de los prospectos farmacéuticos",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Los prospectos farmacéuticos son un buen escenario para esta unidad porque combinan instrucciones, advertencias, contraindicaciones, dosis, unidades, condiciones temporales, síntomas y terminología médica. Además, son textos en los que pequeños cambios pueden alterar el significado: una negación, una cifra, una unidad o una preposición pueden tener impacto interpretativo."
+      },
+      {
+       "type": "p",
+       "text": "Un pipeline mal diseñado podría eliminar información crítica. Si elimina «no», cambia la polaridad de una recomendación. Si elimina puntuación indiscriminadamente, puede dificultar la segmentación de instrucciones y advertencias. Si no lematiza, puede dispersar formas relacionadas. Si extrae palabras sin contexto, puede producir un glosario pobre o ambiguo."
+      },
+      {
+       "type": "p",
+       "text": "Por eso, en este dominio el preprocesamiento debe responder al texto y a la finalidad. No se trata de aplicar una receta general, sino de decidir qué transformaciones ayudan a preparar el corpus sin comprometer información clínica, terminológica o traductológica relevante. Recursos como PharmaCoNER o NUBes muestran que el español biomédico requiere atención específica a entidades farmacológicas, negación e incertidumbre {{cite:gonzalezagirre2019,limalopez2020}}(González-Agirre et al., 2019; Lima López et al., 2020){{/cite}}."
+      }
+     ]
+    },
+    {
+     "id": "1-12-preprocesamiento-y-traduccion-automatica-neuronal",
+     "title": "1.12. Preprocesamiento y traducción automática neuronal",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La traducción automática neuronal aprende patrones a partir de grandes cantidades de datos. Aunque los modelos actuales son más potentes que los enfoques clásicos, siguen siendo sensibles al dominio, a la cobertura terminológica y a la forma en que el texto se representa. Un corpus especializado mal preparado puede introducir ruido, dispersar términos o hacer que el sistema aprenda equivalencias poco fiables."
+      },
+      {
+       "type": "p",
+       "text": "Un buen preprocesamiento puede ayudar a reducir variación superficial innecesaria, detectar términos frecuentes, preparar glosarios, localizar segmentos problemáticos y documentar decisiones. Pero también puede perjudicar si elimina demasiada información. Para traducción médica, por ejemplo, no siempre conviene alimentar un sistema final con texto excesivamente simplificado: puede ser útil preprocesar para analizar y depurar, pero conservar información rica para traducir."
+      },
+      {
+       "type": "p",
+       "text": "La relación entre preprocesamiento y traducción automática debe entenderse así: el pipeline no sustituye al modelo, pero condiciona los datos que el modelo aprenderá o que el equipo humano revisará. En ámbitos de alto riesgo, la terminología no es un detalle estilístico, sino una condición de seguridad y adecuación {{cite:chu2018,semenov2025}}(Chu y Wang, 2018; Semenov et al., 2025){{/cite}}."
+      }
+     ]
+    },
+    {
+     "id": "1-13-buenas-practicas-y-limitaciones-del-pipeline",
+     "title": "1.13. Buenas prácticas y limitaciones del pipeline",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Un pipeline profesional debe ser reproducible, justificable y revisable. Esto implica conservar siempre una copia del texto original, crear variables para cada versión procesada, revisar muestras de salida, documentar la lista de stopwords utilizada, comprobar cómo se tratan siglas, cifras y unidades, y no eliminar negaciones sin una razón explícita."
+      },
+      {
+       "type": "p",
+       "text": "También conviene reconocer las limitaciones de las herramientas. spaCy puede equivocarse al tokenizar, lematizar o etiquetar textos especializados. NLTK ofrece recursos útiles, pero sus listas generales no están diseñadas específicamente para corpus biomédicos. pandas organiza resultados, pero no decide si una etiqueta o un lema son lingüísticamente correctos."
+      },
+      {
+       "type": "p",
+       "text": "Estas limitaciones no invalidan el uso de las herramientas; simplemente las sitúan en su lugar. El objetivo de la unidad no es confiar ciegamente en spaCy, NLTK o pandas, sino aprender a utilizarlos con criterio lingüístico: observar resultados, detectar errores, adaptar decisiones y justificar el pipeline."
+      }
+     ]
+    },
+    {
+     "id": "1-14-conclusiones-del-marco-teorico",
+     "title": "1.14. Conclusiones del marco teórico",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Antes de modelar el lenguaje, hay que decidir cómo representarlo. El preprocesamiento convierte un texto complejo en una estructura computable, pero esa conversión nunca es neutra. Normalizar, tokenizar, eliminar stopwords, lematizar, etiquetar categorías gramaticales, extraer sustantivos o exportar resultados son decisiones técnicas con consecuencias lingüísticas."
+      },
+      {
+       "type": "p",
+       "text": "La secuencia conceptual de la unidad puede resumirse así: el texto bruto se convierte en versiones procesadas; esas versiones permiten obtener tokens, lemas, categorías y frecuencias; esos resultados pueden organizarse en tablas; y todo el proceso debe documentarse para que sea revisable. En corpus médico-farmacéuticos, esta cadena exige especial cuidado porque la terminología, la negación, la puntuación y las unidades pueden ser semánticamente críticas."
+      },
+      {
+       "type": "p",
+       "text": "Por tanto, el objetivo formativo no es solo aprender a ejecutar código con spaCy, NLTK o pandas. El objetivo es aprender a diseñar, justificar y evaluar un pipeline lingüístico: una forma ordenada de transformar textos en datos sin perder de vista que esos datos siguen siendo lenguaje."
+      }
+     ]
+    }
+   ],
+   "navTitle": "Marco teórico"
+  },
+  {
+   "id": "2-preprocesamiento-y-analisis-morfosintactico-con-python",
+   "title": "2. Preprocesamiento y análisis morfosintáctico con Python",
+   "blocks": [],
+   "subsections": [
+    {
+     "id": "2-1-instalacion-y-recursos-linguisticos",
+     "title": "2.1. Instalación y recursos lingüísticos",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Para trabajar con estas herramientas, es necesario instalar bibliotecas y descargar recursos. En un entorno como Google Colab puede hacerse con comandos de instalación:"
+      },
+      {
+       "type": "code",
+       "code": "!pip install --quiet spacy nltk\n!python -m nltk.downloader stopwords\n!python -m spacy download es_core_news_sm"
+      },
+      {
+       "type": "p",
+       "text": "Estos comandos cumplen tres funciones:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "Instalan las bibliotecas spacy y nltk.",
+        "Descargan la lista de stopwords de NLTK.",
+        "Descargan el modelo pequeño de español de spaCy."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Después, en Python se importan las bibliotecas necesarias:"
+      },
+      {
+       "type": "code",
+       "code": "import spacy\nimport nltk\nfrom nltk.corpus import stopwords\nimport re\nfrom collections import Counter"
+      },
+      {
+       "type": "p",
+       "text": "Cada importación responde a una necesidad:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Importación",
+         "Para qué sirve"
+        ],
+        [
+         "spacy",
+         "Procesar texto con modelos lingüísticos"
+        ],
+        [
+         "nltk",
+         "Descargar y gestionar recursos"
+        ],
+        [
+         "stopwords",
+         "Acceder a listas de palabras vacías"
+        ],
+        [
+         "re",
+         "Usar expresiones regulares"
+        ],
+        [
+         "Counter",
+         "Contar frecuencias de elementos"
+        ]
+       ],
+       "title": "Cada importación responde a una necesidad"
+      },
+      {
+       "type": "p",
+       "text": "El siguiente paso es cargar el modelo:"
+      },
+      {
+       "type": "code",
+       "code": "nlp = spacy.load(\"es_core_news_sm\")"
+      },
+      {
+       "type": "p",
+       "text": "nlp funciona como una herramienta de análisis. Cuando se aplica a un texto, devuelve un objeto Doc con información lingüística."
+      }
+     ]
+    },
+    {
+     "id": "2-2-cargar-un-texto-especializado",
+     "title": "2.2. Cargar un texto especializado",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Un corpus puede empezar como un fragmento de texto guardado en una variable:"
+      },
+      {
+       "type": "code",
+       "code": "texto = \"\"\"\nLa administración de ibuprofeno debe realizarse con precaución en pacientes con antecedentes de úlcera gástrica.\nLos AINE pueden provocar efectos adversos, especialmente en pacientes de edad avanzada.\nSe recomienda consultar con un profesional de la salud antes de iniciar cualquier tratamiento.\n\"\"\""
+      },
+      {
+       "type": "p",
+       "text": "Este texto pertenece al ámbito médico-farmacéutico. Contiene términos técnicos como:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "administración",
+        "ibuprofeno",
+        "pacientes",
+        "antecedentes",
+        "úlcera gástrica",
+        "AINE",
+        "efectos adversos",
+        "tratamiento"
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Desde el punto de vista lingüístico, estos términos no deben perderse. Son precisamente las unidades que pueden formar parte de un glosario técnico o de un sistema de traducción especializada."
+      },
+      {
+       "type": "p",
+       "text": "La carga del texto es el punto de partida. Todo lo que hagamos después transformará esta materia prima."
+      }
+     ]
+    },
+    {
+     "id": "2-3-normalizacion-convertir-a-minusculas",
+     "title": "2.3. Normalización: convertir a minúsculas",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La normalización busca reducir variaciones superficiales. Una de las operaciones más comunes es convertir todo el texto a minúsculas:"
+      },
+      {
+       "type": "code",
+       "code": "texto_normalizado = texto.lower()"
+      },
+      {
+       "type": "p",
+       "text": "El método .lower() devuelve una nueva cadena en la que las letras aparecen en minúscula. Esto permite tratar como equivalentes formas que solo difieren por mayúscula inicial:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Forma original",
+         "Forma normalizada"
+        ],
+        [
+         "Paciente",
+         "paciente"
+        ],
+        [
+         "paciente",
+         "paciente"
+        ],
+        [
+         "TRATAMIENTO",
+         "tratamiento"
+        ]
+       ],
+       "title": "Forma original · Forma normalizada"
+      },
+      {
+       "type": "p",
+       "text": "Esta operación es útil para contar frecuencias. Si no normalizamos, Paciente y paciente podrían contarse como formas distintas."
+      },
+      {
+       "type": "p",
+       "text": "Pero en textos técnicos hay que ser prudentes. Algunas mayúsculas contienen información:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "Siglas: AINE, VIH, ADN.",
+        "Nombres comerciales.",
+        "Unidades o códigos.",
+        "Nombres propios de instituciones."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Convertir todo a minúsculas puede ser adecuado para un glosario preliminar, pero no siempre para una aplicación final. La decisión depende de la tarea."
+      }
+     ]
+    },
+    {
+     "id": "2-4-limpieza-de-puntuacion-con-expresiones-regulares",
+     "title": "2.4. Limpieza de puntuación con expresiones regulares",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Una forma habitual de eliminar signos de puntuación es usar re.sub():"
+      },
+      {
+       "type": "code",
+       "code": "texto_sin_puntuacion = re.sub(r'[^\\w\\s]', '', texto_normalizado)"
+      },
+      {
+       "type": "p",
+       "text": "Esta línea sustituye por una cadena vacía todo lo que coincida con el patrón."
+      },
+      {
+       "type": "p",
+       "text": "El patrón es:"
+      },
+      {
+       "type": "code",
+       "code": "r'[^\\w\\s]'"
+      },
+      {
+       "type": "p",
+       "text": "Su significado puede desglosarse así:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Parte",
+         "Significado"
+        ],
+        [
+         "r''",
+         "Cadena raw"
+        ],
+        [
+         "[...]",
+         "Clase de caracteres"
+        ],
+        [
+         "^ dentro de corchetes",
+         "Negación: \"todo lo que no sea...\""
+        ],
+        [
+         "\\w",
+         "Caracteres de palabra"
+        ],
+        [
+         "\\s",
+         "Espacios en blanco"
+        ]
+       ],
+       "title": "Su significado puede desglosarse así"
+      },
+      {
+       "type": "p",
+       "text": "Por tanto, el patrón significa: busca todo carácter que no sea carácter de palabra ni espacio. En la práctica, elimina muchos signos de puntuación."
+      },
+      {
+       "type": "p",
+       "text": "Esta limpieza puede facilitar recuentos y tokenización, pero también puede eliminar información útil:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "Puntos que marcan final de oración.",
+        "Comas que indican estructura sintáctica.",
+        "Guiones en términos compuestos.",
+        "Porcentajes o símbolos en textos médicos."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Ejemplo:"
+      },
+      {
+       "type": "code",
+       "code": "10 mg/kg"
+      },
+      {
+       "type": "p",
+       "text": "Si se eliminan símbolos sin cuidado, puede perderse la relación entre cantidad y unidad. En textos biomédicos, la puntuación y los símbolos pueden ser semánticamente importantes."
+      }
+     ]
+    },
+    {
+     "id": "2-5-tokenizacion-convertir-texto-en-unidades",
+     "title": "2.5. Tokenización: convertir texto en unidades",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La tokenización consiste en dividir un texto en unidades mínimas de análisis llamadas tokens. Un token puede ser una palabra, un número, un signo de puntuación o una unidad especial, según el tokenizador."
+      },
+      {
+       "type": "p",
+       "text": "Con spaCy, se procesa el texto así:"
+      },
+      {
+       "type": "code",
+       "code": "doc = nlp(texto_sin_puntuacion)\ntokens = [token.text for token in doc]"
+      },
+      {
+       "type": "p",
+       "text": "doc es un objeto de spaCy que contiene el análisis lingüístico. Al recorrer doc, obtenemos objetos Token. Cada token tiene atributos."
+      },
+      {
+       "type": "p",
+       "text": "El atributo token.text devuelve la forma textual del token:"
+      },
+      {
+       "type": "code",
+       "code": "tokens = [token.text for token in doc]"
+      },
+      {
+       "type": "p",
+       "text": "La tokenización es más que separar por espacios. Un tokenizador lingüístico puede reconocer signos, abreviaturas, contracciones, números y límites de una forma más sofisticada que un simple .split()."
+      },
+      {
+       "type": "p",
+       "text": "En un pipeline profesional, tokenizar correctamente es esencial porque muchos pasos posteriores dependen de los tokens:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "Eliminación de stopwords.",
+        "Lematización.",
+        "Conteo de frecuencias.",
+        "Etiquetado gramatical.",
+        "Extracción terminológica."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Si la tokenización es mala, los pasos siguientes heredarán ese error."
+      }
+     ]
+    },
+    {
+     "id": "2-6-stopwords-palabras-vacias-y-decisiones-de-filtrado",
+     "title": "2.6. Stopwords: palabras vacías y decisiones de filtrado",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Las stopwords son palabras muy frecuentes que suelen aportar poca información léxica en ciertas tareas. En español, pueden incluir artículos, preposiciones, conjunciones y algunos pronombres."
+      },
+      {
+       "type": "p",
+       "text": "Con NLTK se obtiene la lista así:"
+      },
+      {
+       "type": "code",
+       "code": "stopwords_es = stopwords.words('spanish')"
+      },
+      {
+       "type": "p",
+       "text": "Después se filtran los tokens:"
+      },
+      {
+       "type": "code",
+       "code": "tokens_filtrados = [token for token in tokens if token not in stopwords_es]"
+      },
+      {
+       "type": "p",
+       "text": "La lectura es:"
+      },
+      {
+       "type": "code",
+       "code": "Conserva cada token si no está en la lista de stopwords en español."
+      },
+      {
+       "type": "p",
+       "text": "Esta operación puede ser útil si queremos quedarnos con palabras de mayor carga léxica, como sustantivos, verbos o adjetivos relevantes."
+      },
+      {
+       "type": "p",
+       "text": "Por ejemplo, en un texto farmacéutico puede interesar conservar:"
+      },
+      {
+       "type": "code",
+       "code": "ibuprofeno, úlcera, gástrica, efectos, adversos, tratamiento"
+      },
+      {
+       "type": "p",
+       "text": "y eliminar palabras como:"
+      },
+      {
+       "type": "code",
+       "code": "la, de, con, en, los"
+      },
+      {
+       "type": "p",
+       "text": "Pero esta decisión no es automática ni universal. En algunos contextos, palabras aparentemente funcionales son críticas."
+      }
+     ]
+    },
+    {
+     "id": "2-7-stopwords-en-textos-tecnicos-el-caso-de-la-negacion",
+     "title": "2.7. Stopwords en textos técnicos: el caso de la negación",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "En textos médicos, algunas palabras que podrían considerarse funcionales tienen un valor semántico decisivo. La negación es el caso más claro."
+      },
+      {
+       "type": "p",
+       "text": "Compara:"
+      },
+      {
+       "type": "code",
+       "code": "Se recomienda su uso.\nNo se recomienda su uso."
+      },
+      {
+       "type": "p",
+       "text": "La diferencia entre ambas frases depende de no. Si una lista de stopwords elimina no, el sistema puede perder una parte esencial del significado."
+      },
+      {
+       "type": "p",
+       "text": "También son delicadas formas como:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "sin",
+        "antes",
+        "después",
+        "durante",
+        "excepto",
+        "contra"
+       ]
+      },
+      {
+       "type": "p",
+       "text": "En textos farmacéuticos, estas palabras pueden indicar condiciones, restricciones, secuencias temporales o contraindicaciones."
+      },
+      {
+       "type": "p",
+       "text": "Por tanto, en contextos técnicos conviene revisar y adaptar la lista de stopwords. Una opción profesional sería crear una lista personalizada:"
+      },
+      {
+       "type": "code",
+       "code": "stopwords_personalizadas = [w for w in stopwords_es if w not in [\"no\", \"sin\", \"antes\"]]"
+      },
+      {
+       "type": "p",
+       "text": "Esta decisión muestra que el preprocesamiento no es solo técnico. Es lingüístico y profesional."
+      }
+     ]
+    },
+    {
+     "id": "2-8-lematizacion-reducir-variantes-a-una-forma-base",
+     "title": "2.8. Lematización: reducir variantes a una forma base",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La lematización consiste en obtener la forma canónica o de diccionario de una palabra. Esa forma se llama lema."
+      },
+      {
+       "type": "p",
+       "text": "Ejemplos:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Forma flexionada",
+         "Lema"
+        ],
+        [
+         "pacientes",
+         "paciente"
+        ],
+        [
+         "recomienda",
+         "recomendar"
+        ],
+        [
+         "provocar",
+         "provocar"
+        ],
+        [
+         "adversos",
+         "adverso"
+        ],
+        [
+         "tratamientos",
+         "tratamiento"
+        ]
+       ],
+       "title": "Ejemplos"
+      },
+      {
+       "type": "p",
+       "text": "Con spaCy, el lema se obtiene mediante:"
+      },
+      {
+       "type": "code",
+       "code": "token.lemma_"
+      },
+      {
+       "type": "p",
+       "text": "Una lista de lemas filtrados puede construirse así:"
+      },
+      {
+       "type": "code",
+       "code": "lemmas = [token.lemma_ for token in doc if token.text not in stopwords_es]"
+      },
+      {
+       "type": "p",
+       "text": "La lematización es muy útil para análisis de frecuencia. Sin lematizar, paciente y pacientes se contarían como formas diferentes. Con lematización, pueden agruparse bajo una misma forma base."
+      },
+      {
+       "type": "p",
+       "text": "Esto ayuda a construir glosarios más coherentes y a reducir dispersión morfológica en los datos."
+      }
+     ]
+    },
+    {
+     "id": "2-9-tokenizar-no-es-lematizar",
+     "title": "2.9. Tokenizar no es lematizar",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Es importante no confundir tokenización y lematización."
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Proceso",
+         "Qué hace",
+         "Resultado"
+        ],
+        [
+         "Tokenización",
+         "Divide el texto en unidades",
+         "pacientes, tratamientos, adversos"
+        ],
+        [
+         "Lematización",
+         "Reduce cada unidad a su forma base",
+         "paciente, tratamiento, adverso"
+        ]
+       ],
+       "title": "Proceso · Qué hace · Resultado"
+      },
+      {
+       "type": "p",
+       "text": "Tokenizar responde a la pregunta:"
+      },
+      {
+       "type": "code",
+       "code": "¿Cuáles son las unidades del texto?"
+      },
+      {
+       "type": "p",
+       "text": "Lematizar responde a otra:"
+      },
+      {
+       "type": "code",
+       "code": "¿Cuál es la forma canónica de cada unidad?"
+      },
+      {
+       "type": "p",
+       "text": "Ambas operaciones son complementarias. Primero necesitamos unidades; después podemos obtener sus lemas."
+      },
+      {
+       "type": "p",
+       "text": "En traducción automática y análisis terminológico, lematizar puede ayudar a detectar que varias formas pertenecen a la misma familia léxica o al mismo término base."
+      }
+     ]
+    },
+    {
+     "id": "2-10-frecuencias-con-counter",
+     "title": "2.10. Frecuencias con Counter",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Una vez obtenidos tokens o lemas, suele interesar contar cuántas veces aparece cada uno. Python ofrece Counter en el módulo collections:"
+      },
+      {
+       "type": "code",
+       "code": "from collections import Counter\nfrecuencias = Counter(lemmas)"
+      },
+      {
+       "type": "p",
+       "text": "Counter crea una estructura parecida a un diccionario:"
+      },
+      {
+       "type": "code",
+       "code": "{\n    \"paciente\": 2,\n    \"tratamiento\": 1,\n    \"salud\": 1\n}"
+      },
+      {
+       "type": "p",
+       "text": "Después se puede recorrer ordenando alfabéticamente:"
+      },
+      {
+       "type": "code",
+       "code": "for palabra in sorted(frecuencias):\n    print(f\"- {palabra} ({frecuencias[palabra]})\")"
+      },
+      {
+       "type": "p",
+       "text": "O por frecuencia:"
+      },
+      {
+       "type": "code",
+       "code": "frecuencias.most_common()"
+      },
+      {
+       "type": "p",
+       "text": "El recuento de frecuencias permite identificar términos recurrentes. En un corpus técnico, las palabras frecuentes pueden apuntar a conceptos centrales del dominio."
+      }
+     ]
+    },
+    {
+     "id": "2-11-glosario-preliminar-de-lemas",
+     "title": "2.11. Glosario preliminar de lemas",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Un glosario preliminar de lemas es una lista de formas canónicas con sus frecuencias. No es todavía un glosario terminológico validado, pero sirve como primera aproximación."
+      },
+      {
+       "type": "p",
+       "text": "Ejemplo de salida:"
+      },
+      {
+       "type": "code",
+       "code": "- adverso (1)\n- antecedente (1)\n- ibuprofeno (1)\n- paciente (2)\n- tratamiento (1)"
+      },
+      {
+       "type": "p",
+       "text": "Este glosario ayuda a ver qué contenido léxico permanece después del filtrado. También permite detectar problemas:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "Lemas incorrectos.",
+        "Términos partidos en varias unidades.",
+        "Palabras técnicas eliminadas por error.",
+        "Formas que deberían agruparse y no se han agrupado."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "En un proyecto real, este glosario debería revisarse por una persona con conocimiento lingüístico y terminológico."
+      }
+     ]
+    },
+    {
+     "id": "2-12-analisis-morfosintactico",
+     "title": "2.12. Análisis morfosintáctico",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "El análisis morfosintáctico consiste en asignar información gramatical a las palabras de un texto. Una de sus tareas más habituales es el etiquetado PoS, del inglés *Part-of-Speech tagging*."
+      },
+      {
+       "type": "p",
+       "text": "El etiquetado PoS asigna categorías como:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Etiqueta",
+         "Categoría"
+        ],
+        [
+         "NOUN",
+         "Sustantivo común"
+        ],
+        [
+         "PROPN",
+         "Nombre propio"
+        ],
+        [
+         "VERB",
+         "Verbo"
+        ],
+        [
+         "ADJ",
+         "Adjetivo"
+        ],
+        [
+         "ADV",
+         "Adverbio"
+        ],
+        [
+         "ADP",
+         "Adposición o preposición"
+        ],
+        [
+         "DET",
+         "Determinante"
+        ],
+        [
+         "CCONJ",
+         "Conjunción coordinante"
+        ]
+       ],
+       "title": "El etiquetado PoS asigna categorías como"
+      },
+      {
+       "type": "p",
+       "text": "Con spaCy se accede a la categoría mediante:"
+      },
+      {
+       "type": "code",
+       "code": "token.pos_"
+      },
+      {
+       "type": "p",
+       "text": "Un recorrido básico sería:"
+      },
+      {
+       "type": "code",
+       "code": "for token in doc:\n    print(token.text, token.pos_)"
+      },
+      {
+       "type": "p",
+       "text": "Este análisis permite ir más allá de la forma superficial. Ya no solo vemos qué palabra aparece, sino qué papel gramatical general tiene."
+      }
+     ]
+    },
+    {
+     "id": "2-13-por-que-interesan-los-sustantivos-en-textos-tecnicos",
+     "title": "2.13. Por qué interesan los sustantivos en textos técnicos",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "En textos médicos y farmacéuticos, muchos términos importantes son sustantivos o grupos nominales:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "administración",
+        "ibuprofeno",
+        "pacientes",
+        "antecedentes",
+        "úlcera",
+        "efectos",
+        "tratamiento",
+        "sobredosis",
+        "farmacovigilancia"
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Por eso, una estrategia inicial para crear un glosario técnico consiste en extraer sustantivos:"
+      },
+      {
+       "type": "code",
+       "code": "sustantivos = [token.text.lower() for token in doc if token.pos_ == \"NOUN\"]"
+      },
+      {
+       "type": "p",
+       "text": "Esta línea conserva solo tokens cuya categoría gramatical sea NOUN."
+      },
+      {
+       "type": "p",
+       "text": "Después se cuentan:"
+      },
+      {
+       "type": "code",
+       "code": "frecuencia_sustantivos = Counter(sustantivos)"
+      },
+      {
+       "type": "p",
+       "text": "Este procedimiento no captura toda la terminología, porque muchos términos técnicos son unidades multipalabra:"
+      },
+      {
+       "type": "code",
+       "code": "úlcera gástrica\nefectos adversos\nprincipio activo\ninsuficiencia hepática\ncentro médico"
+      },
+      {
+       "type": "p",
+       "text": "Aun así, la extracción de sustantivos es un primer paso útil para localizar núcleos terminológicos."
+      }
+     ]
+    },
+    {
+     "id": "2-14-frecuencia-por-categoria-gramatical",
+     "title": "2.14. Frecuencia por categoría gramatical",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "También se puede contar cuántas veces aparece cada categoría gramatical:"
+      },
+      {
+       "type": "code",
+       "code": "categorias = [token.pos_ for token in doc]\nconteo_categorias = Counter(categorias)"
+      },
+      {
+       "type": "p",
+       "text": "Después se pueden mostrar solo algunas categorías:"
+      },
+      {
+       "type": "code",
+       "code": "for categoria, freq in conteo_categorias.items():\n    if categoria in [\"NOUN\", \"VERB\", \"ADJ\"]:\n        print(f\"{categoria}: {freq}\")"
+      },
+      {
+       "type": "p",
+       "text": "Este análisis da una visión general del tipo de texto. Un texto técnico suele tener una densidad importante de sustantivos y adjetivos especializados. Un texto instructivo puede tener muchos verbos en formas imperativas o perífrasis de obligación."
+      },
+      {
+       "type": "p",
+       "text": "La distribución gramatical no es una interpretación completa, pero ayuda a caracterizar el corpus."
+      }
+     ]
+    },
+    {
+     "id": "2-15-glosario-tecnico-con-contexto",
+     "title": "2.15. Glosario técnico con contexto",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Un glosario útil no debería limitarse a listar palabras. Debe mostrar contexto. El contexto permite saber cómo se usa un término y si realmente es relevante."
+      },
+      {
+       "type": "p",
+       "text": "Una estrategia consiste en recorrer las oraciones y mostrar cada sustantivo en su segmento:"
+      },
+      {
+       "type": "code",
+       "code": "for sent in doc.sents:\n    for palabra in frecuencia_sustantivos:\n        if palabra in sent.text.lower():\n            print(f\"- [{palabra}] → {sent.text.strip()}\")"
+      },
+      {
+       "type": "p",
+       "text": "La salida puede tener esta forma:"
+      },
+      {
+       "type": "code",
+       "code": "- [ibuprofeno] → La administración de ibuprofeno debe realizarse con precaución...\n- [pacientes] → Los AINE pueden provocar efectos adversos..."
+      },
+      {
+       "type": "p",
+       "text": "El contexto es fundamental para terminología. Una palabra aislada puede ser ambigua. En su oración, se ve su función, sus colocaciones y su relación con otros términos."
+      },
+      {
+       "type": "p",
+       "text": "En traducción especializada, un glosario con contexto es mucho más útil que una lista descontextualizada."
+      }
+     ]
+    },
+    {
+     "id": "2-16-segmentacion-de-oraciones-con-spacy",
+     "title": "2.16. Segmentación de oraciones con spaCy",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "spaCy permite acceder a las oraciones detectadas mediante:"
+      },
+      {
+       "type": "code",
+       "code": "doc.sents"
+      },
+      {
+       "type": "p",
+       "text": "Esto es útil para construir glosarios con contexto o para generar informes por oración."
+      },
+      {
+       "type": "p",
+       "text": "Sin embargo, la segmentación depende de la puntuación y del modelo. Si antes eliminamos toda la puntuación, el sistema puede tener más dificultades para detectar límites oracionales. Por eso, para glosarios con contexto puede convenir procesar una versión que conserve la puntuación:"
+      },
+      {
+       "type": "code",
+       "code": "doc_con_puntuacion = nlp(texto_normalizado)"
+      },
+      {
+       "type": "p",
+       "text": "Esta decisión muestra de nuevo la importancia de conservar distintas versiones del texto. Una versión sin puntuación puede servir para contar palabras; una versión con puntuación puede servir para segmentar oraciones."
+      }
+     ]
+    },
+    {
+     "id": "2-17-versiones-del-texto-y-trazabilidad",
+     "title": "2.17. Versiones del texto y trazabilidad",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Un pipeline responsable conserva versiones intermedias del texto:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Variable",
+         "Qué contiene",
+         "Para qué sirve"
+        ],
+        [
+         "texto",
+         "Texto original",
+         "Referencia y comparación"
+        ],
+        [
+         "texto_normalizado",
+         "Texto en minúsculas",
+         "Unificar formas"
+        ],
+        [
+         "texto_sin_puntuacion",
+         "Texto sin signos",
+         "Recuento y filtrado básico"
+        ],
+        [
+         "doc",
+         "Texto procesado por spaCy",
+         "Tokens, lemas, PoS"
+        ],
+        [
+         "doc_con_puntuacion",
+         "Texto con puntuación procesado",
+         "Oraciones y contexto"
+        ]
+       ],
+       "title": "Un pipeline responsable conserva versiones intermedias del texto"
+      },
+      {
+       "type": "p",
+       "text": "Esta trazabilidad es muy importante en trabajos profesionales. Si un resultado parece extraño, podemos volver atrás y comprobar en qué paso se produjo el problema."
+      },
+      {
+       "type": "p",
+       "text": "También ayuda a documentar decisiones. Un cliente o un equipo técnico puede preguntar por qué se eliminó la puntuación, por qué se conservaron ciertas palabras o por qué se extrajeron solo sustantivos. La respuesta debe poder reconstruirse."
+      }
+     ]
+    }
+   ],
+   "navTitle": "Python para PLN"
+  },
+  {
+   "id": "errores-frecuentes-de-aprendizaje",
+   "title": "Errores frecuentes de aprendizaje",
+   "blocks": [
+    {
+     "type": "errorlist",
+     "items": [
+      {
+       "term": "Pensar que limpiar siempre mejora el texto",
+       "desc": "Limpiar demasiado puede eliminar información crucial."
+      },
+      {
+       "term": "Confundir token con palabra ortográfica",
+       "desc": "Un token depende del tokenizador. No siempre coincide con la intuición escolar de «palabra»."
+      },
+      {
+       "term": "Eliminar stopwords sin revisar la lista",
+       "desc": "En textos técnicos, algunas stopwords pueden ser semánticamente importantes."
+      },
+      {
+       "term": "Creer que lematizar es traducir",
+       "desc": "Lematizar obtiene una forma base dentro de la misma lengua. No produce equivalencias entre lenguas."
+      },
+      {
+       "term": "Usar el texto sin puntuación para todo",
+       "desc": "Puede servir para algunas tareas, pero perjudicar la segmentación en oraciones."
+      },
+      {
+       "term": "No revisar los errores del modelo",
+       "desc": "spaCy ofrece análisis automático, pero conviene revisar muestras, especialmente en dominios especializados."
+      },
+      {
+       "term": "Extraer solo palabras aisladas",
+       "desc": "La terminología técnica suele estar formada por grupos de palabras."
+      }
+     ]
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Errores frecuentes"
+  },
+  {
+   "id": "sintesis-final",
+   "title": "Síntesis final",
+   "blocks": [
+    {
+     "type": "p",
+     "text": "El preprocesamiento es una fase decisiva en cualquier proyecto de PLN. En un corpus médico-farmacéutico, no basta con dividir el texto en palabras. Hay que decidir cómo normalizar, qué limpiar, qué conservar, qué filtrar y qué representar como unidad relevante."
+    },
+    {
+     "type": "p",
+     "text": "spaCy permite procesar texto español y obtener tokens, lemas, categorías gramaticales y oraciones. NLTK aporta recursos como listas de stopwords. re permite limpiar mediante patrones. Counter ayuda a contar frecuencias. Juntas, estas herramientas permiten construir un pipeline inicial de análisis lingüístico."
+    },
+    {
+     "type": "p",
+     "text": "Pero la herramienta más importante sigue siendo el criterio lingüístico. Un pipeline profesional no aplica reglas de forma ciega. Las adapta al dominio, revisa sus efectos y documenta sus decisiones."
+    },
+    {
+     "type": "p",
+     "text": "En el escenario de la empresa de traducción automática biomédica, el objetivo no es producir una lista bonita de palabras. El objetivo es preparar datos fiables para que los sistemas posteriores trabajen con menos ruido y con más información útil."
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Síntesis"
+  },
+  {
+   "id": "cierre-narrativo",
+   "title": "Cierre narrativo",
+   "blocks": [
+    {
+     "type": "p",
+     "text": "La empresa internacional no necesita únicamente más textos. Necesita textos preparados con criterio. En traducción automática biomédica, el corpus no es una materia prima neutra: contiene decisiones, riesgos y conocimiento especializado."
+    },
+    {
+     "type": "p",
+     "text": "Tu papel como lingüista computacional consiste en transformar textos brutos en datos lingüísticamente útiles. Para ello combinas Python, spaCy, NLTK, expresiones regulares y análisis gramatical, pero sobre todo aplicas criterio: sabes qué se puede eliminar, qué se debe conservar y qué debe revisarse con cuidado."
+    },
+    {
+     "type": "p",
+     "text": "Ese es el aprendizaje central de esta unidad: el preprocesamiento no es una tarea mecánica previa al verdadero análisis. Es ya análisis lingüístico aplicado. Cada paso del pipeline decide qué versión del texto verá la máquina y, por tanto, qué podrá aprender de él."
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Cierre narrativo"
+  }
+ ],
+ "references": [
+  {
+   "key": "chu2018",
+   "text": "Chu, C. y Wang, R. (2018). A survey of domain adaptation for neural machine translation. En Proceedings of the 27th International Conference on Computational Linguistics (pp. 1304–1319). Association for Computational Linguistics."
+  },
+  {
+   "key": "demarneffe2021",
+   "text": "de Marneffe, M.-C., Manning, C. D., Nivre, J. y Zeman, D. (2021). Universal Dependencies. Computational Linguistics, 47(2), 255–308. https://doi.org/10.1162/coli_a_00402"
+  },
+  {
+   "key": "gonzalezagirre2019",
+   "text": "González-Agirre, A., Marimon, M., Intxaurrondo, A., Rabal, O., Villegas, M. y Krallinger, M. (2019). PharmaCoNER: Pharmacological substances, compounds and proteins named entity recognition track. En Proceedings of the 5th Workshop on BioNLP Open Shared Tasks. Association for Computational Linguistics."
+  },
+  {
+   "key": "kudo2018",
+   "text": "Kudo, T. y Richardson, J. (2018). SentencePiece: A simple and language independent subword tokenizer and detokenizer for neural text processing. En Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing: System Demonstrations. Association for Computational Linguistics."
+  },
+  {
+   "key": "limalopez2020",
+   "text": "Lima López, S., Pérez, N., Cuadros, M. y Rigau, G. (2020). NUBes: A corpus of negation and uncertainty in Spanish clinical texts. En Proceedings of the Twelfth Language Resources and Evaluation Conference (pp. 5772–5781). European Language Resources Association."
+  },
+  {
+   "key": "neumann2019",
+   "text": "Neumann, M., King, D., Beltagy, I. y Ammar, W. (2019). ScispaCy: Fast and robust models for biomedical natural language processing. En Proceedings of the 18th BioNLP Workshop and Shared Task. Association for Computational Linguistics."
+  },
+  {
+   "key": "petrov2012",
+   "text": "Petrov, S., Das, D. y McDonald, R. (2012). A universal part-of-speech tagset. En Proceedings of the Eighth International Conference on Language Resources and Evaluation (LREC’12). European Language Resources Association."
+  },
+  {
+   "key": "schmidt2024",
+   "text": "Schmidt, C. W., Reddy, V., Zhang, H., Alameddine, A., Uzan, O., Pinter, Y. y Tanner, C. (2024). Tokenization is more than compression. En Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing (pp. 678–702). Association for Computational Linguistics. https://doi.org/10.18653/v1/2024.emnlp-main.40"
+  },
+  {
+   "key": "semenov2025",
+   "text": "Semenov, K., Huang, X., Zouhar, V., Berger, N., Zhu, D., Oncevay, A. y Chen, P. (2025). Findings of the WMT25 terminology translation task: Terminology is useful especially for good MTs. En Proceedings of the Tenth Conference on Machine Translation. Association for Computational Linguistics."
+  },
+  {
+   "key": "sennrich2016",
+   "text": "Sennrich, R., Haddow, B. y Birch, A. (2016). Neural machine translation of rare words with subword units. En Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) (pp. 1715–1725). Association for Computational Linguistics. https://doi.org/10.18653/v1/P16-1162"
+  },
+  {
+   "key": "toporkov2024",
+   "text": "Toporkov, O. y Agerri, R. (2024). On the role of morphological information for contextual lemmatization. Computational Linguistics, 50(1), 157–191. https://doi.org/10.1162/coli_a_00497"
+  },
+  {
+   "key": "bird2009",
+   "text": "Bird, S., Klein, E. y Loper, E. (2009). Natural language processing with Python: Analyzing text with the Natural Language Toolkit. O’Reilly Media."
+  },
+  {
+   "key": "loper2002",
+   "text": "Loper, E. y Bird, S. (2002). NLTK: The Natural Language Toolkit. Proceedings of the ACL Workshop on Effective Tools and Methodologies for Teaching Natural Language Processing and Computational Linguistics (pp. 63-70). Association for Computational Linguistics. https://aclanthology.org/W02-0109/"
+  },
+  {
+   "key": "manning2008",
+   "text": "Manning, C. D., Raghavan, P. y Schütze, H. (2008). Introduction to information retrieval. Cambridge University Press."
+  },
+  {
+   "key": "naturallanguagetoolk2026",
+   "text": "Natural Language Toolkit Project. (2026). Natural Language Toolkit. NLTK. https://www.nltk.org/"
+  },
+  {
+   "key": "thepandasdevelopment2026a",
+   "text": "The pandas development team. (2026a). 10 minutes to pandas. pandas documentation. https://pandas.pydata.org/docs/user_guide/10min.html"
+  },
+  {
+   "key": "thepandasdevelopment2026b",
+   "text": "The pandas development team. (2026b). pandas.DataFrame. pandas documentation. https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html"
+  },
+  {
+   "key": "thepandasdevelopment2026c",
+   "text": "The pandas development team. (2026c). pandas.DataFrame.to_csv. pandas documentation. https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html"
+  },
+  {
+   "key": "wickham2014",
+   "text": "Wickham, H. (2014). Tidy data. Journal of Statistical Software, 59(10), 1–23. https://doi.org/10.18637/jss.v059.i10"
+  }
+ ]
+}

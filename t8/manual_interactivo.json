@@ -1,0 +1,1209 @@
+{
+ "header": {
+  "kicker": "Tema 8.",
+  "title": "Clasificación temática de textos",
+  "subtitle": "Palabras clave, vectores TF, similitud del coseno y clasificación textual con Python",
+  "meta": "Material teórico | Programación para PLN | Universidad Pontificia Comillas",
+  "narrative": "Clasificar textos con evidencias: cuando Python no solo decide, sino que muestra sus razones."
+ },
+ "sections": [
+  {
+   "id": "contexto-profesional",
+   "title": "Contexto profesional",
+   "blocks": [],
+   "subsections": [
+    {
+     "id": "encargo-organizar-un-archivo-textual-heterogeneo",
+     "title": "Encargo: organizar un archivo textual heterogéneo",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Imagina que te incorporas como analista junior de PLN al Centro Atlas de Documentación Textual, una institución pública que gestiona colecciones digitales procedentes de administraciones, bibliotecas, servicios técnicos, medios culturales y repositorios educativos. Cada semana llegan documentos muy distintos: fragmentos jurídicos, manuales técnicos, textos divulgativos, materiales literarios y documentos híbridos que no siempre encajan de forma limpia en una sola categoría."
+      },
+      {
+       "type": "p",
+       "text": "El equipo de archivo necesita clasificar esos textos antes de indexarlos, derivarlos a especialistas o incorporarlos a una base documental. El problema no es solo asignar una etiqueta. El equipo necesita justificar la decisión: si un texto se archiva como jurídico, técnico, divulgativo o literario, la persona responsable debe poder explicar qué señales lingüísticas han llevado a esa clasificación."
+      },
+      {
+       "type": "p",
+       "text": "La institución no quiere empezar con un modelo neuronal opaco. No dispone de miles de textos etiquetados, y además trabaja con documentos sensibles donde las decisiones deben poder revisarse. Por eso encarga un sistema sencillo, auditable y pedagógicamente transparente: un clasificador temático basado en palabras clave, vectores simples de frecuencia y similitud coseno."
+      }
+     ]
+    },
+    {
+     "id": "el-caso-de-trabajo",
+     "title": "El caso de trabajo",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "El flujo profesional se formula así:"
+      },
+      {
+       "type": "ol",
+       "items": [
+        "Definir varias clases temáticas: jurídico, técnico, divulgativo y literario.",
+        "Construir un perfil o prototipo de cada clase mediante palabras clave.",
+        "Preprocesar los textos con criterios lingüísticos.",
+        "Convertir cada texto en un vector de frecuencias.",
+        "Comparar el vector del texto con cada prototipo.",
+        "Asignar la clase con mayor similitud.",
+        "Mostrar evidencias léxicas: qué palabras compartidas explican la decisión."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "El valor del sistema no está solo en la etiqueta final. Está en que permite decir: «este texto se parece más al prototipo jurídico porque comparte lemas como ley, contrato u obligación». Esa explicación puede discutirse, corregirse y mejorar los prototipos."
+      },
+      {
+       "type": "p",
+       "text": "En esta unidad aprenderás a construir ese clasificador explicable. No se trata de competir con modelos de aprendizaje profundo. Se trata de entender una de las ideas fundamentales del PLN clásico: un texto puede representarse como un vector, y dos textos pueden compararse por la orientación de esos vectores."
+      }
+     ]
+    }
+   ],
+   "navTitle": "Contexto profesional"
+  },
+  {
+   "id": "que-vas-a-aprender-en-esta-unidad",
+   "title": "Qué vas a aprender en esta unidad",
+   "blocks": [
+    {
+     "type": "p",
+     "text": "Al finalizar esta unidad, deberías ser capaz de:"
+    },
+    {
+     "type": "ul",
+     "items": [
+      "explicar qué es la clasificación temática de textos;",
+      "distinguir entre clasificación, etiquetado, indexación y agrupación temática;",
+      "entender qué papel cumplen las palabras clave como señales interpretables;",
+      "representar un texto como bolsa de palabras;",
+      "explicar qué es un vector simple de frecuencia o TF;",
+      "comprender por qué TF cuenta palabras pero no mide por sí solo especificidad;",
+      "explicar el funcionamiento de IDF y TF-IDF;",
+      "interpretar la similitud coseno como medida de parecido léxico entre vectores;",
+      "comprender qué es un prototipo temático;",
+      "explicar cómo se construyen prototipos por clase a partir de palabras clave;",
+      "aplicar tokenización, lematización y eliminación de stopwords con spaCy;",
+      "entender cómo Counter representa un vector TF;",
+      "seguir paso a paso una función de similitud coseno en Python;",
+      "justificar una decisión de clasificación mediante evidencias léxicas;",
+      "reconocer los límites del enfoque en textos híbridos, breves, irónicos o con sinonimia."
+     ]
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Qué vas a aprender"
+  },
+  {
+   "id": "mapa-conceptual-de-la-unidad",
+   "title": "Mapa conceptual de la unidad",
+   "blocks": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "Bloque",
+       "Concepto",
+       "Operación en Python",
+       "Resultado"
+      ],
+      [
+       "Clases temáticas",
+       "Categorías de archivo o análisis",
+       "Diccionario de etiquetas",
+       "Jurídico, técnico, divulgativo, literario"
+      ],
+      [
+       "Palabras clave",
+       "Señales léxicas de cada clase",
+       "class_keywords",
+       "Prototipos interpretables"
+      ],
+      [
+       "Preprocesamiento",
+       "Preparar el texto lingüísticamente",
+       "spaCy: tokenizar, lematizar, filtrar",
+       "Lista de lemas"
+      ],
+      [
+       "TF",
+       "Frecuencia de términos",
+       "Counter(tokens)",
+       "Vector simple del texto"
+      ],
+      [
+       "TF-IDF",
+       "Frecuencia ponderada por especificidad",
+       "TF por IDF",
+       "Vector más sensible a palabras distintivas"
+      ],
+      [
+       "Coseno",
+       "Parecido entre vectores",
+       "Producto escalar y normas",
+       "Puntuación de similitud"
+      ],
+      [
+       "Prototipo",
+       "Perfil vectorial de una clase",
+       "Keywords preprocesadas y vectorizadas",
+       "Vector por temática"
+      ],
+      [
+       "Clasificación",
+       "Elección de la clase más similar",
+       "max(scores, key=scores.get)",
+       "Etiqueta predicha"
+      ],
+      [
+       "Evidencias",
+       "Rasgos que justifican la decisión",
+       "Intersección texto/prototipo",
+       "Lemas compartidos"
+      ],
+      [
+       "Informe",
+       "Salida legible y auditable",
+       "DataFrame y print_report",
+       "Tabla y explicación"
+      ]
+     ],
+     "title": "Al finalizar esta unidad, deberías ser capaz de"
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Mapa conceptual"
+  },
+  {
+   "id": "1-marco-teorico",
+   "title": "1. Marco teórico",
+   "blocks": [],
+   "subsections": [
+    {
+     "id": "1-1-que-es-la-clasificacion-tematica-de-textos",
+     "title": "1.1. Qué es la clasificación temática de textos",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La clasificación temática consiste en asignar a un texto una etiqueta que resume su tema, dominio o tipo de contenido. En esta unidad las etiquetas son jurídico, técnico, divulgativo y literario, pero el mismo enfoque podría adaptarse a noticias, reseñas, documentos administrativos, comunicaciones científicas o textos patrimoniales."
+      },
+      {
+       "type": "p",
+       "text": "La clasificación de textos es una tarea central del PLN. Sebastiani (2002) la describe como la asignación automática de documentos a categorías predefinidas, una tarea que creció con la disponibilidad masiva de documentos digitales. {{cite:kowsari2019}}Kowsari et al. (2019){{/cite}} y {{cite:gasparetto2022}}Gasparetto et al. (2022){{/cite}} muestran que la clasificación textual se ha abordado con métodos muy variados: reglas, bolsas de palabras, TF-IDF, Naive Bayes, SVM, árboles, redes neuronales y transformadores."
+      },
+      {
+       "type": "p",
+       "text": "La unidad se sitúa deliberadamente en el lado interpretable de esa tradición. No entrena un modelo complejo. Usa clases definidas por personas, palabras clave visibles y una medida de similitud calculable a mano si fuera necesario. Esto permite que el alumnado entienda la lógica de la clasificación antes de pasar a modelos más opacos."
+      },
+      {
+       "type": "p",
+       "text": "Una clasificación temática no es una lectura total del texto. Es una decisión operativa. Un fragmento puede tener rasgos técnicos y divulgativos al mismo tiempo; un texto literario puede mencionar una ley; un texto jurídico puede tener una introducción divulgativa. Por eso la etiqueta debe acompañarse de evidencias."
+      }
+     ]
+    },
+    {
+     "id": "1-2-clasificacion-palabras-clave-e-indexacion",
+     "title": "1.2. Clasificación, palabras clave e indexación",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Las palabras clave son unidades léxicas que condensan información temática. En un texto jurídico pueden aparecer ley, artículo, cláusula u obligación. En un texto técnico, dispositivo, puerto, controlador o configurar. En un texto literario, memoria, noche, viajero o metáfora. Estas palabras no son mágicas: son señales. Su valor depende del contexto y del sistema de clases."
+      },
+      {
+       "type": "p",
+       "text": "La extracción de palabras clave y la clasificación temática están relacionadas. Las palabras clave ayudan a describir un texto; la clasificación usa esas señales para decidir una etiqueta. {{cite:rose2010}}Rose et al. (2010){{/cite}} presentan RAKE como un método de extracción automática de palabras clave desde documentos individuales, y {{cite:papagiannopoulou2023}}Papagiannopoulou y Tsoumakas (2023){{/cite}} revisan la extracción de palabras clave desde perspectivas estadísticas, de recuperación de información, PLN y enfoques neuronales."
+      },
+      {
+       "type": "p",
+       "text": "En esta unidad no se extraen automáticamente las palabras clave: se definen manualmente como perfiles de clase. Esta decisión es pedagógica y profesionalmente útil. Permite ver con claridad qué considera el sistema como señal temática. Si una categoría falla, se puede revisar su lista de palabras clave."
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Concepto",
+         "Función",
+         "Ejemplo"
+        ],
+        [
+         "Palabra clave",
+         "Señal léxica de un tema",
+         "ley, contrato, controlador"
+        ],
+        [
+         "Perfil temático",
+         "Conjunto de señales de una clase",
+         "lista jurídica o técnica"
+        ],
+        [
+         "Prototipo",
+         "Perfil convertido en vector",
+         "Counter de lemas"
+        ],
+        [
+         "Evidencia",
+         "Coincidencia que apoya la decisión",
+         "texto y prototipo comparten ley"
+        ]
+       ],
+       "title": "Concepto · Función · Ejemplo"
+      }
+     ]
+    },
+    {
+     "id": "1-3-representar-textos-como-vectores",
+     "title": "1.3. Representar textos como vectores",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Una de las ideas más influyentes de la recuperación de información clásica es el modelo de espacio vectorial. Salton, Wong y Yang (1975) propusieron representar documentos como vectores, de modo que cada dimensión corresponde a un término y cada valor indica el peso de ese término en el documento. Desde ese punto de vista, un texto deja de ser solo una secuencia lineal de palabras y se convierte en un punto o dirección dentro de un espacio."
+      },
+      {
+       "type": "p",
+       "text": "Para estudiantes de lingüística, puede imaginarse así: si el vocabulario relevante contiene ley, contrato, puerto, dispositivo y memoria, cada texto puede representarse con cinco posiciones. Si aparece ley dos veces, la posición de ley vale 2. Si no aparece puerto, la posición de puerto vale 0."
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Término",
+         "Texto jurídico",
+         "Texto técnico"
+        ],
+        [
+         "ley",
+         "2",
+         "0"
+        ],
+        [
+         "contrato",
+         "1",
+         "0"
+        ],
+        [
+         "puerto",
+         "0",
+         "1"
+        ],
+        [
+         "dispositivo",
+         "0",
+         "2"
+        ],
+        [
+         "memoria",
+         "0",
+         "0"
+        ]
+       ],
+       "title": "Término · Texto jurídico · Texto técnico"
+      },
+      {
+       "type": "p",
+       "text": "Este enfoque se conoce también como bag-of-words o bolsa de palabras. La metáfora es útil: metemos las palabras en una bolsa, contamos cuántas hay de cada tipo y perdemos el orden. Eso simplifica mucho el problema, pero también pierde información sintáctica, narrativa y discursiva."
+      }
+     ]
+    },
+    {
+     "id": "1-4-tf-frecuencia-de-terminos",
+     "title": "1.4. TF: frecuencia de términos",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "TF significa term frequency, frecuencia de término. En su versión más sencilla, TF cuenta cuántas veces aparece una palabra en un texto. Si un texto contiene ley dos veces y contrato una vez, su vector TF incluye ley: 2 y contrato: 1."
+      },
+      {
+       "type": "p",
+       "text": "En Python, esta idea se implementa con Counter:"
+      },
+      {
+       "type": "code",
+       "code": "Counter([\"ley\", \"contrato\", \"ley\"])"
+      },
+      {
+       "type": "p",
+       "text": "El resultado conceptual es:"
+      },
+      {
+       "type": "code",
+       "code": "{\"ley\": 2, \"contrato\": 1}"
+      },
+      {
+       "type": "p",
+       "text": "TF es intuitivo y transparente. Una persona puede revisar qué términos han contado. Sin embargo, TF tiene un problema: favorece palabras frecuentes dentro del texto aunque no sean necesariamente distintivas. En un corpus grande, palabras como sistema, documento o información pueden aparecer en muchas clases. Por eso, TF suele combinarse con otras ponderaciones."
+      },
+      {
+       "type": "p",
+       "text": "En esta unidad, el código principal usa TF porque el objetivo es comprender la mecánica de la representación vectorial. Antes de ponderar, conviene entender qué se está ponderando."
+      }
+     ]
+    },
+    {
+     "id": "1-5-idf-y-tf-idf",
+     "title": "1.5. IDF y TF-IDF",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "IDF significa inverse document frequency, frecuencia inversa de documento. La idea, formulada de manera clásica por Spärck Jones (1972), es que una palabra es más informativa si aparece en pocos documentos y menos informativa si aparece en casi todos. {{cite:robertson2004}}Robertson (2004){{/cite}} ofrece argumentos teóricos sobre por qué IDF funciona en recuperación de información."
+      },
+      {
+       "type": "p",
+       "text": "La intuición es sencilla:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "si una palabra aparece en todos los documentos, ayuda poco a distinguirlos;",
+        "si una palabra aparece en pocos documentos, puede ser más específica;",
+        "si una palabra aparece muchas veces en un texto y poco en el resto, puede ser especialmente relevante para ese texto."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "TF-IDF combina ambas ideas:"
+      },
+      {
+       "type": "p",
+       "text": "TF-IDF(t, d) = TF(t, d) * IDF(t)"
+      },
+      {
+       "type": "p",
+       "text": "Donde t es el término y d es el documento. En formulaciones habituales:"
+      },
+      {
+       "type": "p",
+       "text": "IDF(t) = log(N / df(t))"
+      },
+      {
+       "type": "p",
+       "text": "N es el número total de documentos y df(t) es el número de documentos que contienen el término. Muchas implementaciones añaden suavizado para evitar divisiones problemáticas. La documentación de scikit-learn explica que TfidfVectorizer convierte documentos en matrices TF-IDF y que, en la práctica, se combina un conteo de términos con una transformación IDF {{cite:scikitlearndeveloper2026}}(scikit-learn developers, 2026){{/cite}}."
+      },
+      {
+       "type": "p",
+       "text": "En PLN8, el pipeline principal usa TF para mantener la explicación al nivel más transparente. Pero TF-IDF es el siguiente paso natural: permite que palabras comunes entre clases pesen menos y que términos distintivos pesen más."
+      }
+     ]
+    },
+    {
+     "id": "1-6-similitud-lexica-y-similitud-coseno",
+     "title": "1.6. Similitud léxica y similitud coseno",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Una vez que los textos son vectores, necesitamos compararlos. La similitud coseno mide el parecido entre dos vectores por su orientación, no por su tamaño absoluto. En términos intuitivos: dos textos son parecidos si apuntan hacia direcciones léxicas similares."
+      },
+      {
+       "type": "p",
+       "text": "La fórmula es:"
+      },
+      {
+       "type": "p",
+       "text": "coseno(A, B) = (A · B) / (||A|| * ||B||)"
+      },
+      {
+       "type": "p",
+       "text": "El numerador, A · B, es el producto escalar. En el código, se calcula multiplicando los valores de los términos comunes y sumando. Si dos vectores no comparten términos, el producto escalar será 0."
+      },
+      {
+       "type": "p",
+       "text": "El denominador multiplica las normas o longitudes de los vectores. Esta normalización evita que un texto más largo sea automáticamente más parecido solo porque tiene más palabras. {{cite:manning2008}}Manning et al. (2008){{/cite}} presentan la similitud coseno como una medida central del modelo vectorial para recuperación de información y comparación documental."
+      },
+      {
+       "type": "p",
+       "text": "La interpretación didáctica es:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "1: vectores muy similares;",
+        "cercano a 0: poca coincidencia léxica;",
+        "0: sin términos compartidos relevantes."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "En esta unidad, el coseno mide similitud léxica, no comprensión semántica profunda. Si un texto usa sinónimos que no están en el prototipo, la similitud puede ser baja aunque el tema sea correcto."
+      }
+     ]
+    },
+    {
+     "id": "1-7-prototipos-tematicos-y-clasificacion-por-cercania",
+     "title": "1.7. Prototipos temáticos y clasificación por cercanía",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "El cuaderno utiliza una estrategia basada en prototipos. Cada clase se representa mediante un conjunto de palabras clave. Esas palabras se preprocesan y se convierten en un vector TF. Después, cada texto se compara con cada prototipo. Gana la clase más similar."
+      },
+      {
+       "type": "p",
+       "text": "Esta idea se relaciona con los clasificadores de centroides y con el algoritmo de Rocchio en recuperación de información, donde una clase o una consulta puede representarse como un vector prototípico dentro del espacio vectorial {{cite:manning2008}}(Manning et al., 2008){{/cite}}. En esta unidad no se calcula un centroide a partir de muchos documentos etiquetados, sino un prototipo manual construido con palabras clave. La lógica, sin embargo, es parecida: comparar el texto nuevo con representaciones de clases."
+      },
+      {
+       "type": "p",
+       "text": "La ventaja es la explicabilidad. Si el prototipo jurídico contiene ley, artículo, obligación y contrato, el sistema tiene un criterio visible. La desventaja es que depende mucho de la calidad de esas listas. Una clase pobremente representada será débil; una clase con palabras demasiado generales puede atraer textos que no le corresponden."
+      },
+      {
+       "type": "image",
+       "src": "img/fig_prototipos.svg",
+       "alt": "Clasificación por prototipos temáticos",
+       "caption": "Figura elaborada a partir del apartado 1.7 y del mapa conceptual de la unidad."
+      }
+     ]
+    },
+    {
+     "id": "1-8-preprocesamiento-linguistico-con-spacy",
+     "title": "1.8. Preprocesamiento lingüístico con spaCy",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "El preprocesamiento convierte el texto bruto en unidades comparables. En esta unidad se usa spaCy, una librería profesional de PLN, para tokenizar, lematizar, eliminar stopwords y filtrar tokens alfabéticos. La documentación de spaCy describe el procesamiento lingüístico como una forma de pasar de texto crudo a un objeto Doc con anotaciones como tokens, lemas y atributos {{cite:explosionai2026}}(Explosion AI, 2026){{/cite}}."
+      },
+      {
+       "type": "p",
+       "text": "Los pasos principales son:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "pasar el texto a minúsculas;",
+        "dividirlo en tokens;",
+        "conservar solo tokens alfabéticos;",
+        "eliminar stopwords;",
+        "conservar lemas;",
+        "filtrar tokens demasiado cortos."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "La lematización es clave en español. Permite agrupar variantes como leyes y ley, contratos y contrato, instalar e instalación en la medida en que el modelo pueda analizarlas correctamente. No es perfecta, pero ayuda a reducir variación morfológica."
+      },
+      {
+       "type": "p",
+       "text": "Eliminar stopwords también tiene coste. Palabras como por, en, de o que suelen ser poco distintivas, pero algunas expresiones temáticas pueden contenerlas. En esta unidad la prioridad es que los vectores recojan señales léxicas de contenido. En tareas más finas, habría que revisar si ciertas palabras funcionales deben conservarse."
+      }
+     ]
+    },
+    {
+     "id": "1-9-explicabilidad-evidencias-lexicas",
+     "title": "1.9. Explicabilidad: evidencias léxicas",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La clasificación explicable busca que una persona pueda entender por qué se ha tomado una decisión. En modelos complejos, técnicas como LIME {{cite:ribeiro2016}}(Ribeiro et al., 2016){{/cite}} o SHAP {{cite:lundberg2017}}(Lundberg & Lee, 2017){{/cite}} intentan explicar predicciones mostrando qué rasgos han contribuido. Esta unidad no necesita esas técnicas porque el modelo ya es interpretable por diseño."
+      },
+      {
+       "type": "p",
+       "text": "La explicación se basa en evidencias léxicas:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "el texto se convierte en un vector;",
+        "el prototipo ganador tiene su propio vector;",
+        "se identifican términos compartidos;",
+        "se ordenan por una contribución simple;",
+        "se muestran al usuario."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Esto permite decir: «la clase técnica gana porque el texto comparte dispositivo, puerto y controlador con el prototipo técnico». No es una explicación perfecta, pero sí una explicación inspeccionable. El alumnado puede discutir si esas palabras clave son adecuadas, si falta alguna, si sobran otras o si conviene usar TF-IDF."
+      }
+     ]
+    },
+    {
+     "id": "1-10-clasificacion-tematica-frente-a-modelos-neuronales",
+     "title": "1.10. Clasificación temática frente a modelos neuronales",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Los modelos modernos de clasificación textual pueden lograr resultados muy superiores en muchos escenarios. {{cite:minaee2021}}Minaee et al. (2021){{/cite}} revisan más de 150 modelos de aprendizaje profundo para clasificación textual, y {{cite:li2020}}Li et al. (2020){{/cite}} muestran la evolución desde métodos superficiales hasta enfoques profundos. Sin embargo, esos modelos requieren datos, entrenamiento, evaluación y suelen ser menos transparentes."
+      },
+      {
+       "type": "p",
+       "text": "El enfoque de PLN8 es útil cuando:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "hay pocos datos etiquetados;",
+        "se necesita una primera solución rápida;",
+        "importa justificar cada decisión;",
+        "el dominio requiere auditoría humana;",
+        "el objetivo es didáctico;",
+        "las clases se pueden describir mediante palabras clave."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "No es el enfoque ideal cuando:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "las clases dependen de significado implícito;",
+        "hay mucha sinonimia;",
+        "los textos son muy largos y heterogéneos;",
+        "las categorías son abstractas;",
+        "el vocabulario cambia mucho;",
+        "se necesita alto rendimiento en producción."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Aprender este enfoque no es retroceder frente a la IA moderna. Es aprender la arquitectura conceptual que está debajo de muchas técnicas más avanzadas: representación, ponderación, similitud y decisión."
+      }
+     ]
+    },
+    {
+     "id": "1-11-limites-linguisticos-del-metodo",
+     "title": "1.11. Límites lingüísticos del método",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Un clasificador por palabras clave y coseno funciona bien cuando las clases tienen vocabulario característico. Pero presenta varios límites:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Límite",
+         "Qué ocurre",
+         "Ejemplo"
+        ],
+        [
+         "Sinonimia",
+         "No se detecta una idea si usa otra palabra",
+         "normativa frente a ley"
+        ],
+        [
+         "Polisemia",
+         "Una palabra puede pertenecer a varias clases",
+         "artículo jurídico o artículo divulgativo"
+        ],
+        [
+         "Textos híbridos",
+         "Dos clases comparten señales",
+         "divulgación técnica"
+        ],
+        [
+         "Textos breves",
+         "Hay pocas evidencias",
+         "una frase muy corta"
+        ],
+        [
+         "Metáfora e ironía",
+         "El sentido no está en palabras literales",
+         "estilo literario indirecto"
+        ],
+        [
+         "Prototipos sesgados",
+         "La lista de keywords decide el criterio",
+         "clase técnica con más keywords que las demás"
+        ]
+       ],
+       "title": "Límite · Qué ocurre · Ejemplo"
+      },
+      {
+       "type": "p",
+       "text": "Para mejorar sin perder interpretabilidad se puede:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "ampliar palabras clave con variantes y sinónimos;",
+        "usar TF-IDF en lugar de TF simple;",
+        "conservar bigramas o expresiones;",
+        "revisar stopwords por dominio;",
+        "añadir umbrales de confianza;",
+        "permitir etiqueta «indeterminado»;",
+        "mostrar siempre evidencias y puntuaciones;",
+        "validar con ejemplos humanos."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "1-12-que-significa-clasificar-con-responsabilidad",
+     "title": "1.12. Qué significa «clasificar con responsabilidad»",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Clasificar textos no es solo aplicar una fórmula. Es crear una regla de decisión que tendrá consecuencias: archivar un documento, priorizar revisión, sugerir metadatos o enviar un texto a un equipo especializado. En instituciones públicas, bibliotecas digitales o entornos educativos, la transparencia importa."
+      },
+      {
+       "type": "p",
+       "text": "Un informe responsable no debería decir simplemente «el sistema ha acertado». Debería indicar:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "qué clases estaban disponibles;",
+        "qué palabras clave definían cada clase;",
+        "cómo se preprocesaron los textos;",
+        "qué medida de similitud se usó;",
+        "qué puntuación obtuvo cada clase;",
+        "qué evidencias léxicas apoyaron la decisión;",
+        "qué límites tiene el resultado."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Esa forma de informar convierte el código en una herramienta lingüística auditada. La decisión no queda escondida: se puede revisar, corregir y mejorar."
+      }
+     ]
+    }
+   ],
+   "navTitle": "Marco teórico"
+  },
+  {
+   "id": "2-clasificacion-tematica-explicable-con-python",
+   "title": "2. Clasificación temática explicable con Python",
+   "blocks": [],
+   "subsections": [
+    {
+     "id": "2-1-preparar-el-entorno",
+     "title": "2.1. Preparar el entorno",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La unidad importa herramientas ligeras y comprensibles:"
+      },
+      {
+       "type": "code",
+       "code": "import re\nfrom collections import Counter\nfrom math import sqrt\nfrom typing import List, Dict, Tuple\nimport pandas as pd"
+      },
+      {
+       "type": "p",
+       "text": "re permite trabajar con expresiones regulares, aunque en la parte principal el preprocesamiento se apoya en spaCy. Counter representa vectores TF contando lemas. sqrt calcula raíces cuadradas para la norma de los vectores en la similitud coseno. List, Dict y Tuple ayudan a documentar tipos. pandas permite construir tablas de resultados."
+      },
+      {
+       "type": "p",
+       "text": "Después se importa spaCy y se carga el modelo de español:"
+      },
+      {
+       "type": "code",
+       "code": "import spacy\nnlp = spacy.load(\"es_core_news_sm\")"
+      },
+      {
+       "type": "p",
+       "text": "nlp es el pipeline lingüístico. Cuando se aplica a un texto, devuelve un objeto con tokens, lemas, marcas de stopword y otros atributos."
+      }
+     ]
+    },
+    {
+     "id": "2-2-textos-para-clasificar",
+     "title": "2.2. Textos para clasificar",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "El código trabaja con una lista de textos:"
+      },
+      {
+       "type": "code",
+       "code": "texts_to_classify = [\n    \"Texto jurídico...\",\n    \"Texto técnico...\",\n    \"Texto divulgativo...\",\n    \"Texto literario...\"\n]"
+      },
+      {
+       "type": "p",
+       "text": "Cada elemento es un documento que el sistema debe clasificar. En la actividad práctica, esos textos se sustituyen por fragmentos reales. En el manual no se resuelven esos casos; lo importante es comprender la estructura: una lista de documentos entra en el sistema y una tabla de clasificaciones sale al final."
+      },
+      {
+       "type": "p",
+       "text": "En una versión con identificadores, la estructura puede ser:"
+      },
+      {
+       "type": "code",
+       "code": "(\"JUR_1\", \"Texto jurídico...\")"
+      },
+      {
+       "type": "p",
+       "text": "Así se conserva un ID junto con el texto. Esto facilita crear informes y rastrear decisiones."
+      }
+     ]
+    },
+    {
+     "id": "2-3-perfiles-tematicos-mediante-palabras-clave",
+     "title": "2.3. Perfiles temáticos mediante palabras clave",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Las clases se definen con un diccionario:"
+      },
+      {
+       "type": "code",
+       "code": "class_keywords = {\n    \"jurídico\": [\"artículo\", \"ley\", \"cláusula\", \"contrato\"],\n    \"técnico\": [\"instalar\", \"dispositivo\", \"puerto\", \"manual\"],\n    \"divulgativo\": [\"explicar\", \"sencillo\", \"concepto\", \"introducción\"],\n    \"literario\": [\"noche\", \"memoria\", \"horizonte\", \"metáfora\"]\n}"
+      },
+      {
+       "type": "p",
+       "text": "Cada clave del diccionario es una etiqueta de clase. Cada valor es una lista de palabras representativas. Esta estructura hace visible el criterio del sistema: si una palabra no está en el perfil, no podrá contribuir directamente a esa clase."
+      },
+      {
+       "type": "p",
+       "text": "El diseño de keywords es una tarea lingüística. Conviene que sean:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "específicas de la clase;",
+        "suficientemente frecuentes en textos reales;",
+        "no excesivamente generales;",
+        "revisables por especialistas;",
+        "equilibradas entre clases."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "2-4-preprocesamiento-con-spacy",
+     "title": "2.4. Preprocesamiento con spaCy",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La función principal es:"
+      },
+      {
+       "type": "code",
+       "code": "def preprocess(text: str) -> List[str]:\n    doc = nlp(text.lower())\n    tokens = [\n        tok.lemma_\n        for tok in doc\n        if tok.is_alpha and not tok.is_stop and len(tok) >= 2\n    ]\n    return tokens"
+      },
+      {
+       "type": "p",
+       "text": "Primero, text.lower() pasa el texto a minúsculas. Después, nlp(...) aplica el pipeline de spaCy. La comprensión de listas recorre cada token y conserva solo los que cumplen tres condiciones:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "tok.is_alpha: el token está formado por letras;",
+        "not tok.is_stop: no es stopword;",
+        "len(tok) >= 2: tiene al menos dos caracteres."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "La forma que se guarda es tok.lemma_, es decir, el lema. Esto ayuda a comparar variantes morfológicas. La salida de la función no es texto, sino una lista de lemas."
+      }
+     ]
+    },
+    {
+     "id": "2-5-vectorizacion-tf-con-counter",
+     "title": "2.5. Vectorización TF con Counter",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La función de vectorización es mínima:"
+      },
+      {
+       "type": "code",
+       "code": "def tf_vector(tokens: List[str]) -> Counter:\n    return Counter(tokens)"
+      },
+      {
+       "type": "p",
+       "text": "Recibe una lista de tokens o lemas y devuelve un contador. Si el texto produce [\"ley\", \"contrato\", \"ley\"], el vector será Counter({\"ley\": 2, \"contrato\": 1})."
+      },
+      {
+       "type": "p",
+       "text": "Este Counter funciona como vector disperso. Solo guarda términos que aparecen. Los términos ausentes se comportan como si tuvieran frecuencia cero."
+      },
+      {
+       "type": "p",
+       "text": "Este diseño es muy cómodo para textos: no hace falta crear una lista gigantesca con todas las palabras posibles. Solo se almacenan las que están presentes."
+      }
+     ]
+    },
+    {
+     "id": "2-6-similitud-coseno-en-python",
+     "title": "2.6. Similitud coseno en Python",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La función de similitud coseno es:"
+      },
+      {
+       "type": "code",
+       "code": "def cosine_similarity(v1: Counter, v2: Counter) -> float:\n    common = set(v1.keys()) & set(v2.keys())\n    dot = sum(v1[t] * v2[t] for t in common)\n    norm1 = sqrt(sum(v**2 for v in v1.values()))\n    norm2 = sqrt(sum(v**2 for v in v2.values()))\n    if norm1 == 0 or norm2 == 0:\n        return 0.0\n    return dot / (norm1 * norm2)"
+      },
+      {
+       "type": "p",
+       "text": "common calcula los términos compartidos entre los dos vectores. El operador & obtiene la intersección de conjuntos."
+      },
+      {
+       "type": "p",
+       "text": "dot calcula el producto escalar. Para cada término común, multiplica la frecuencia en el primer vector por la frecuencia en el segundo y suma."
+      },
+      {
+       "type": "p",
+       "text": "norm1 y norm2 calculan la longitud de cada vector. Elevan cada frecuencia al cuadrado, suman y aplican raíz cuadrada."
+      },
+      {
+       "type": "p",
+       "text": "Si alguna norma es cero, significa que uno de los vectores está vacío. En ese caso, la similitud devuelve 0.0 para evitar división entre cero."
+      },
+      {
+       "type": "p",
+       "text": "La función devuelve un número entre 0 y 1 en este tipo de vectores no negativos."
+      }
+     ]
+    },
+    {
+     "id": "2-7-construir-prototipos-tematicos",
+     "title": "2.7. Construir prototipos temáticos",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Las palabras clave de cada clase se convierten en prototipos vectoriales:"
+      },
+      {
+       "type": "code",
+       "code": "def build_class_prototypes(class_keywords: dict) -> dict:\n    prototypes = {}\n    for label, keywords in class_keywords.items():\n        tokens = []\n        for kw in keywords:\n            tokens.extend(preprocess(kw))\n        prototypes[label] = tf_vector(tokens)\n    return prototypes"
+      },
+      {
+       "type": "p",
+       "text": "La función recorre cada etiqueta y su lista de keywords. Cada keyword se preprocesa, y sus lemas se añaden a una lista. Después esa lista se convierte en vector TF."
+      },
+      {
+       "type": "p",
+       "text": "El resultado es un diccionario de prototipos:"
+      },
+      {
+       "type": "code",
+       "code": "prototypes = {\n    \"jurídico\": Counter(...),\n    \"técnico\": Counter(...),\n    \"divulgativo\": Counter(...),\n    \"literario\": Counter(...)\n}"
+      },
+      {
+       "type": "p",
+       "text": "Cada clase ya no es solo una lista de palabras, sino un vector comparable con cualquier texto."
+      }
+     ]
+    },
+    {
+     "id": "2-8-evidencias-lexicas",
+     "title": "2.8. Evidencias léxicas",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La función de evidencias identifica qué lemas del texto aparecen también en el prototipo ganador:"
+      },
+      {
+       "type": "code",
+       "code": "def top_evidence_terms(text_vec: Counter, proto_vec: Counter, top_k: int = 8):\n    contrib = []\n    for t, f in text_vec.items():\n        if t in proto_vec:\n            contrib.append((t, f * proto_vec[t]))\n    contrib.sort(key=lambda x: x[1], reverse=True)\n    return contrib[:top_k]"
+      },
+      {
+       "type": "p",
+       "text": "La contribución simple se calcula como frecuencia del término en el texto por frecuencia del término en el prototipo. Si una palabra aparece varias veces y además está presente en el prototipo, tendrá más peso."
+      },
+      {
+       "type": "p",
+       "text": "La salida es una lista de pares:"
+      },
+      {
+       "type": "code",
+       "code": "[(\"ley\", 2), (\"contrato\", 1)]"
+      },
+      {
+       "type": "p",
+       "text": "Esto permite presentar evidencia legible. La explicación no dice «el modelo pensó esto», sino «la coincidencia léxica que más apoya esta clase es esta»."
+      }
+     ]
+    },
+    {
+     "id": "2-9-clasificar-un-texto",
+     "title": "2.9. Clasificar un texto",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La función classify_text reúne todo el pipeline:"
+      },
+      {
+       "type": "code",
+       "code": "def classify_text(text: str, prototypes: dict) -> dict:\n    tokens = preprocess(text)\n    vec = tf_vector(tokens)\n    scores = {\n        label: cosine_similarity(vec, proto)\n        for label, proto in prototypes.items()\n    }\n    best_label = max(scores, key=scores.get)\n    evidence = top_evidence_terms(vec, prototypes[best_label])\n    return {\n        \"text\": text,\n        \"tokens\": tokens,\n        \"predicted_label\": best_label,\n        \"scores\": scores,\n        \"evidence\": evidence\n    }"
+      },
+      {
+       "type": "p",
+       "text": "Primero preprocesa el texto. Después lo vectoriza. Luego calcula una similitud por cada prototipo. scores es un diccionario donde cada clase tiene su puntuación."
+      },
+      {
+       "type": "p",
+       "text": "max(scores, key=scores.get) devuelve la etiqueta con puntuación más alta. Por último, se calculan evidencias frente al prototipo ganador."
+      },
+      {
+       "type": "p",
+       "text": "La función devuelve un diccionario completo, no solo la etiqueta. Esta es una buena práctica: conserva datos, puntuaciones y explicación."
+      }
+     ]
+    },
+    {
+     "id": "2-10-clasificar-varios-textos-y-crear-una-tabla",
+     "title": "2.10. Clasificar varios textos y crear una tabla",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Para aplicar el sistema a todos los textos se usa una comprensión de listas:"
+      },
+      {
+       "type": "code",
+       "code": "results = [classify_text(t, prototypes) for t in texts_to_classify]"
+      },
+      {
+       "type": "p",
+       "text": "Después se construye una tabla:"
+      },
+      {
+       "type": "code",
+       "code": "rows = []\nfor r in results:\n    row = {\n        \"predicted_label\": r[\"predicted_label\"],\n        \"text\": r[\"text\"]\n    }\n    for label, score in r[\"scores\"].items():\n        row[f\"sim_{label}\"] = score\n    rows.append(row)\n\ndf_scores = pd.DataFrame(rows)"
+      },
+      {
+       "type": "p",
+       "text": "Cada fila contiene texto, clase predicha y puntuaciones de similitud. Las columnas sim_jurídico, sim_técnico, sim_divulgativo y sim_literario permiten comparar por qué gana una clase y no otra."
+      },
+      {
+       "type": "p",
+       "text": "La tabla es parte de la explicabilidad. No solo muestra el resultado final, sino también alternativas y diferencias de puntuación."
+      }
+     ]
+    },
+    {
+     "id": "2-11-informe-de-clasificacion",
+     "title": "2.11. Informe de clasificación",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "La función print_report convierte los resultados en una salida narrativa:"
+      },
+      {
+       "type": "code",
+       "code": "def print_report(results):\n    for i, r in enumerate(results, 1):\n        print(f\"TEXTO #{i}\")\n        print(r[\"text\"])\n        print(f\"Clase predicha: {r['predicted_label']}\")\n        for label, score in sorted(r[\"scores\"].items(), key=lambda x: x[1], reverse=True):\n            print(f\"{label}: {score:.3f}\")\n        print(\"Evidencias:\", r[\"evidence\"])"
+      },
+      {
+       "type": "p",
+       "text": "El informe ordena similitudes de mayor a menor y muestra evidencias. Para una persona no técnica, esto es más útil que una tabla de números sin explicación."
+      },
+      {
+       "type": "p",
+       "text": "En un entorno profesional, este informe podría convertirse en una ficha de revisión: clase sugerida, confianza aproximada, evidencias y comentario humano."
+      }
+     ]
+    },
+    {
+     "id": "2-12-donde-entraria-tf-idf",
+     "title": "2.12. Dónde entraría TF-IDF",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "El cuaderno principal utiliza TF simple. Una versión ampliada podría sustituir o complementar esos vectores con TF-IDF. En scikit-learn, el patrón general sería:"
+      },
+      {
+       "type": "code",
+       "code": "from sklearn.feature_extraction.text import TfidfVectorizer\n\nvectorizer = TfidfVectorizer()\nX = vectorizer.fit_transform(textos)"
+      },
+      {
+       "type": "p",
+       "text": "La idea sería que palabras demasiado comunes pesaran menos. Por ejemplo, si sistema aparece en textos técnicos y divulgativos, TF-IDF puede reducir su peso frente a palabras más distintivas. Sin embargo, en un sistema de prototipos manuales hay que decidir con cuidado sobre qué colección se calcula IDF: documentos reales, prototipos, textos de entrenamiento o una mezcla. Esa decisión cambia las ponderaciones."
+      },
+      {
+       "type": "p",
+       "text": "Para esta unidad, basta con entender la diferencia:"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         "Representación",
+         "Qué mide",
+         "Ventaja",
+         "Límite"
+        ],
+        [
+         "TF",
+         "Frecuencia dentro del texto",
+         "Muy interpretable",
+         "No penaliza palabras comunes"
+        ],
+        [
+         "IDF",
+         "Especificidad en la colección",
+         "Reduce peso de términos generales",
+         "Depende del corpus de referencia"
+        ],
+        [
+         "TF-IDF",
+         "Frecuencia ponderada por especificidad",
+         "Más útil en colecciones grandes",
+         "Menos transparente que TF puro"
+        ]
+       ],
+       "title": "Para esta unidad, basta con entender la diferencia"
+      }
+     ]
+    },
+    {
+     "id": "2-13-como-leer-los-resultados-antes-de-la-practica",
+     "title": "2.13. Cómo leer los resultados antes de la práctica",
+     "blocks": [
+      {
+       "type": "p",
+       "text": "Cuando ejecutes el cuaderno, no mires solo la etiqueta. Observa:"
+      },
+      {
+       "type": "ul",
+       "items": [
+        "qué tokens produjo preprocess;",
+        "qué palabras clave definían cada prototipo;",
+        "qué similitud obtuvo cada clase;",
+        "cuánto margen hay entre la clase ganadora y la segunda;",
+        "qué evidencias aparecen;",
+        "qué evidencias faltan;",
+        "si el texto podría ser híbrido;",
+        "si una palabra clave demasiado general está influyendo demasiado."
+       ]
+      },
+      {
+       "type": "p",
+       "text": "Una clasificación responsable se formula así: «el sistema asigna la clase técnico porque el vector del texto comparte estos lemas con el prototipo técnico y obtiene mayor similitud que las demás clases». Esa frase es más precisa que «el texto es técnico»."
+      }
+     ]
+    }
+   ],
+   "navTitle": "Python para PLN"
+  },
+  {
+   "id": "errores-frecuentes-de-aprendizaje",
+   "title": "Errores frecuentes de aprendizaje",
+   "blocks": [
+    {
+     "type": "ul",
+     "items": [
+      "Confundir palabras clave con significado completo del texto.",
+      "Pensar que TF-IDF entiende semántica, cuando solo pondera términos.",
+      "Interpretar coseno alto como comprensión profunda.",
+      "Olvidar que bag-of-words pierde el orden de las palabras.",
+      "Creer que el prototipo temático es neutral: lo diseña una persona.",
+      "Comparar puntuaciones sin mirar evidencias.",
+      "No revisar si las stopwords eliminadas eran importantes.",
+      "Usar keywords demasiado generales, como sistema o información, sin control.",
+      "No distinguir textos híbridos de errores del clasificador.",
+      "Presentar la etiqueta predicha sin explicar el criterio."
+     ]
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Errores frecuentes"
+  },
+  {
+   "id": "sintesis-final",
+   "title": "Síntesis final",
+   "blocks": [
+    {
+     "type": "p",
+     "text": "Esta unidad introduce la clasificación temática explicable desde la base: palabras clave, vectores simples, frecuencia, similitud coseno y evidencias léxicas. El objetivo no es ocultar la decisión dentro de un modelo complejo, sino aprender cómo se construye una decisión automática revisable."
+    },
+    {
+     "type": "p",
+     "text": "El marco teórico conecta el cuaderno con el modelo de espacio vectorial, TF, IDF, TF-IDF, prototipos temáticos, clasificación textual e interpretabilidad. Estos conceptos forman una base imprescindible para entender métodos posteriores más sofisticados, incluidos clasificadores supervisados y modelos neuronales."
+    },
+    {
+     "type": "p",
+     "text": "La parte de Python muestra un pipeline completo: cargar spaCy, preprocesar textos, convertir lemas en vectores TF, construir prototipos por clase, calcular similitud coseno, elegir la clase con mayor puntuación y mostrar evidencias. Cada bloque puede explicarse lingüísticamente."
+    },
+    {
+     "type": "p",
+     "text": "La idea principal es que clasificar no es solo etiquetar. Clasificar con responsabilidad significa definir criterios, mostrar puntuaciones, ofrecer evidencias y permitir revisión humana."
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Síntesis"
+  },
+  {
+   "id": "cierre-narrativo",
+   "title": "Cierre narrativo",
+   "blocks": [
+    {
+     "type": "p",
+     "text": "Al terminar la simulación, el Centro Atlas de Documentación Textual no recibe una caja negra. Recibe un prototipo transparente. Puede revisar las palabras clave de cada clase, ver cómo se procesan los textos, observar qué similitud tiene cada documento con cada perfil y comprobar qué lemas explican la decisión. Ese es el valor profesional de esta unidad. Una lingüista computacional no solo ejecuta código: diseña criterios de clasificación, detecta ambigüedades, interpreta evidencias y comunica límites. Si un documento se clasifica como jurídico, técnico, divulgativo o literario, la decisión debe poder contarse con palabras."
+    },
+    {
+     "type": "p",
+     "text": "En clase se trabajarán los casos concretos. Este manual prepara el terreno: cuando ejecutes el cuaderno, ya sabrás qué significa cada vector, por qué importa cada palabra clave y qué está midiendo realmente el coseno."
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Cierre narrativo"
+  },
+  {
+   "id": "para-saber-mas-preparacion-previa-a-la-practica",
+   "title": "Para saber más: Preparación previa a la práctica",
+   "blocks": [
+    {
+     "type": "biblist",
+     "items": [
+      "Ali, M. (2024, 3 de mayo). Clasificación de textos en Python. DataCamp. https://www.datacamp.com/es/tutorial/text-classification-python",
+      "Alura Latam. (s. f.). ¿Qué es Bag of Words? #AluraMás [vídeo]. YouTube. https://www.youtube.com/watch?v=NKy59utXjcg&t=194s",
+      "Barnard, J. (s. f.). ¿Qué son las incrustaciones de palabras? IBM. https://www.ibm.com/es-es/think/topics/word-embeddings",
+      "Gutiérrez, O. [Codigo Maquina]. (s. f.). TF-IDF: Vectorización de Documentos para NLP con Python [vídeo]. YouTube. https://www.youtube.com/watch?v=4QsG4oNcGpM&t=583s",
+      "Krantz, T. y Jonker, A. (s. f.). ¿Qué es la similitud de coseno? IBM. https://www.ibm.com/es-es/think/topics/cosine-similarity",
+      "Murel, J. y Kavlakoglu, E. (s. f.). ¿Qué es la bolsa de palabras? IBM. https://www.ibm.com/es-es/think/topics/bag-of-words",
+      "Starmer, J. [StatQuest with Josh Starmer]. (s. f.). Cosine Similarity, Clearly Explained!!! [vídeo]. YouTube. https://www.youtube.com/watch?v=e9U0QAFbfLI&t=131s"
+     ]
+    }
+   ],
+   "subsections": [],
+   "navTitle": "Para saber más"
+  }
+ ],
+ "references": [
+  {
+   "key": "explosionai2026",
+   "text": "Explosion AI. (2026). *Linguistic features*. spaCy usage documentation. https://spacy.io/usage/linguistic-features"
+  },
+  {
+   "key": "gasparetto2022",
+   "text": "Gasparetto, A., Marcuzzo, M., Zangari, A. y Albarelli, A. (2022). A survey on text classification algorithms: From text to predictions. *Information, 13*(2), 83. https://doi.org/10.3390/info13020083"
+  },
+  {
+   "key": "kowsari2019",
+   "text": "Kowsari, K., Jafari Meimandi, K., Heidarysafa, M., Mendu, S., Barnes, L. y Brown, D. (2019). Text classification algorithms: A survey. *Information, 10*(4), 150. https://doi.org/10.3390/info10040150"
+  },
+  {
+   "key": "li2020",
+   "text": "Li, Q., Peng, H., Li, J., Xia, C., Yang, R., Sun, L., Yu, P. S. y He, L. (2020). *A survey on text classification: From shallow to deep learning*. arXiv. https://arxiv.org/abs/2008.00364"
+  },
+  {
+   "key": "lundberg2017",
+   "text": "Lundberg, S. M. y Lee, S.-I. (2017). A unified approach to interpreting model predictions. In *Advances in Neural Information Processing Systems, 30*. https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions"
+  },
+  {
+   "key": "manning2008",
+   "text": "Manning, C. D., Raghavan, P. y Schütze, H. (2008). *Introduction to information retrieval*. Cambridge University Press. https://nlp.stanford.edu/IR-book/"
+  },
+  {
+   "key": "minaee2021",
+   "text": "Minaee, S., Kalchbrenner, N., Cambria, E., Nikzad, N., Chenaghlu, M. y Gao, J. (2021). Deep learning-based text classification: A comprehensive review. *ACM Computing Surveys, 54*(3), Article 62. https://doi.org/10.1145/3439726"
+  },
+  {
+   "key": "papagiannopoulou2023",
+   "text": "Papagiannopoulou, E. y Tsoumakas, G. (2023). Keyword extraction: A modern perspective. *SN Computer Science, 4*, Article 92. https://doi.org/10.1007/s42979-022-01481-7"
+  },
+  {
+   "key": "ribeiro2016",
+   "text": "Ribeiro, M. T., Singh, S. y Guestrin, C. (2016). Why should I trust you? Explaining the predictions of any classifier. In *Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining* (pp. 1135-1144). ACM. https://doi.org/10.1145/2939672.2939778"
+  },
+  {
+   "key": "robertson2004",
+   "text": "Robertson, S. (2004). Understanding inverse document frequency: On theoretical arguments for IDF. *Journal of Documentation, 60*(5), 503-520. https://doi.org/10.1108/00220410410560582"
+  },
+  {
+   "key": "rose2010",
+   "text": "Rose, S., Engel, D., Cramer, N. y Cowley, W. (2010). Automatic keyword extraction from individual documents. En M. W. Berry y J. Kogan (Eds.), *Text mining: Applications and theory* (pp. 1-20). Wiley. https://doi.org/10.1002/9780470689646.ch1"
+  },
+  {
+   "key": "salton1975",
+   "text": "Salton, G., Wong, A. y Yang, C. S. (1975). A vector space model for automatic indexing. *Communications of the ACM, 18*(11), 613-620. https://doi.org/10.1145/361219.361220"
+  },
+  {
+   "key": "scikitlearndeveloper2026",
+   "text": "scikit-learn developers. (2026). *TfidfVectorizer*. scikit-learn documentation. https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html"
+  },
+  {
+   "key": "sparckjones1972",
+   "text": "Spärck Jones, K. (1972). A statistical interpretation of term specificity and its application in retrieval. *Journal of Documentation, 28*(1), 11-21. https://doi.org/10.1108/eb026526"
+  }
+ ]
+}

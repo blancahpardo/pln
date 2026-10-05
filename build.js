@@ -143,6 +143,38 @@ main { max-width:980px; margin:0 auto; padding:48px clamp(20px,6vw,48px) 60px; }
 .quiz-result { background:var(--claro); border-radius:12px; padding:30px; text-align:center; }
 /* interactive manual */
 .im-root { margin-top:0; }
+.im-view .im-root { width:min(1320px, 96vw); margin-left:calc(50% - min(660px, 48vw)); }
+.im-root:fullscreen { width:100%; margin:0; background:#fff; overflow:auto; padding:22px clamp(16px,4vw,56px) 40px; box-sizing:border-box; }
+.im-root:-webkit-full-screen { width:100%; margin:0; background:#fff; overflow:auto; padding:22px clamp(16px,4vw,56px) 40px; box-sizing:border-box; }
+.im-hero-tools { position:absolute; top:16px; right:16px; display:flex; gap:8px; z-index:1; flex-wrap:wrap; justify-content:flex-end; }
+.im-hero-tools .im-hero-dl { position:static; }
+.im-fs-btn { background:rgba(255,255,255,.14); color:#fff; border:1.5px solid rgba(255,255,255,.55); border-radius:20px; padding:8px 14px; font-size:12px; font-weight:bold; cursor:pointer; font-family:Arial,Helvetica,sans-serif; }
+.im-fs-btn:hover { background:rgba(255,255,255,.26); }
+.im-rail .im-fs-rail { margin-left:auto; }
+.im-hero-lema { color:#fff; opacity:.86; font-style:italic; font-size:14.5px; line-height:1.5; margin:12px 0 0; max-width:720px; position:relative; z-index:1; }
+.im-card { position:relative; }
+.im-card.visited::after { content:"✓ leído"; position:absolute; top:12px; right:12px; font-size:10.5px; font-weight:bold; color:var(--verde); background:#DFF3E0; border-radius:10px; padding:2px 8px; }
+.im-progress { font-size:12.5px; color:var(--humo); margin:-8px 0 14px; }
+.im-docimg { margin:8px 0 18px; text-align:center; }
+.im-docimg img { max-width:100%; max-height:60vh; height:auto; cursor:zoom-in; border-radius:6px; }
+.im-biblist { list-style:none; padding:0; margin:0 0 8px; }
+.im-biblist li { background:var(--claro); border-left:3px solid var(--amar); border-radius:0 8px 8px 0; padding:10px 14px; margin-bottom:8px; font-size:13.5px; line-height:1.55; color:var(--gris); }
+.im-biblist a { color:var(--azul); word-break:break-word; }
+.im-check { list-style:none; padding:0; margin:0 0 14px; }
+.im-check li { margin-bottom:8px; }
+.im-check label { display:flex; gap:10px; align-items:flex-start; cursor:pointer; font-size:14.5px; line-height:1.55; color:var(--gris); background:var(--claro); border-radius:10px; padding:10px 14px; }
+.im-check input { margin-top:4px; accent-color:var(--azul); width:16px; height:16px; flex:none; }
+.im-check input:checked + span { text-decoration:line-through; text-decoration-color:var(--humo); color:var(--humo); }
+.im-check-hint { font-size:12.5px; color:var(--humo); margin:0 0 10px; font-style:italic; }
+.im-errorlist li.im-err-reveal { cursor:pointer; }
+.im-errorlist li.im-err-reveal .im-error-desc { display:none; }
+.im-errorlist li.im-err-reveal.open .im-error-desc { display:block; animation:imFadeIn .2s ease; }
+.im-errorlist li.im-err-reveal .im-err-cta { display:inline-block; font-size:11.5px; font-weight:bold; color:var(--azul); margin-top:4px; }
+.im-errorlist li.im-err-reveal.open .im-err-cta { display:none; }
+.im-pager { display:flex; justify-content:space-between; gap:12px; margin:30px 0 6px; flex-wrap:wrap; }
+.im-pager button { background:#fff; border:1.5px solid var(--azul); color:var(--azul); border-radius:22px; padding:9px 16px; font-size:13px; font-weight:bold; cursor:pointer; font-family:Arial,Helvetica,sans-serif; max-width:48%; }
+.im-pager button:hover { background:var(--azul); color:#fff; }
+.im-pager .im-next { margin-left:auto; }
 .im-hero { position:relative; background:linear-gradient(135deg, var(--azul) 0%, var(--azul-d) 100%); border-radius:16px; padding:34px 26px 30px; margin-bottom:22px; overflow:hidden; }
 .im-hero::before { content:""; position:absolute; top:-46px; right:-46px; width:190px; height:190px; border-radius:50%; background:rgba(244,197,66,.12); }
 .im-hero::after { content:""; position:absolute; bottom:-60px; left:30%; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,.05); }
@@ -154,6 +186,8 @@ main { max-width:980px; margin:0 auto; padding:48px clamp(20px,6vw,48px) 60px; }
   /* Absolute top-right placement overlaps the kicker/title on narrow
      screens (confirmed on a real phone-width viewport) -> drop it back into
      normal flow above them instead, full-width so it's easy to tap. */
+  .im-hero-tools { position:static; margin:0 0 14px; justify-content:stretch; }
+  .im-hero-tools > * { flex:1; text-align:center; justify-content:center; }
   .im-hero-dl { position:static; display:flex; justify-content:center; width:100%; margin:0 0 16px; box-sizing:border-box; }
 }
 .im-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
@@ -462,7 +496,7 @@ function buildInteractiveManualView(viewKey, tema) {
   // guide per button) sets pdfViewKey on each one to point at its own PDF.
   const pdfKey = cfg.pdfViewKey || 'manual';
   const pdfFile = (tema.views[pdfKey] && tema.views[pdfKey].exists) ? tema.views[pdfKey].file : '';
-  return `<div id="view-${viewKey}" class="view sub-view" hidden>
+  return `<div id="view-${viewKey}" class="view sub-view im-view" hidden>
   <button class="back-btn" data-back="hub">← Volver</button>
   <div id="im-root-${viewKey}" class="im-root" data-pdf="${esc(pdfFile)}"></div>
 </div>`;
@@ -676,7 +710,8 @@ function buildTopicHtml(tema) {
   var IM_ICONS = {
     "Contexto profesional": "💼", "Qué vas a aprender": "🎯", "Mapa conceptual": "🗺️",
     "Marco teórico": "📚", "Python para PLN": "🐍", "Errores frecuentes": "⚠️",
-    "Síntesis": "✅", "Cierre narrativo": "🎬"
+    "Síntesis": "✅", "Cierre narrativo": "🎬",
+    "Reglas y análisis avanzado": "⚖️", "Buenas prácticas": "🧭", "Para saber más": "🔭"
   };
   function imEsc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -728,7 +763,7 @@ function buildTopicHtml(tema) {
     overlay.className = "im-modal-overlay";
     overlay.innerHTML = '<div class="im-modal' + (wide ? " im-modal-wide" : "") + '"><div class="im-modal-head"><h4>' + imEsc(title) +
       '</h4><button class="im-modal-close" aria-label="Cerrar">✕</button></div><div class="im-modal-body">' + bodyHtml + "</div></div>";
-    document.body.appendChild(overlay);
+    (document.fullscreenElement || document.webkitFullscreenElement || document.body).appendChild(overlay);
     function close() { overlay.remove(); document.removeEventListener("keydown", onKey); }
     overlay.addEventListener("click", function(e) { if (e.target === overlay) close(); });
     overlay.querySelector(".im-modal-close").addEventListener("click", close);
@@ -747,6 +782,42 @@ function buildTopicHtml(tema) {
     var title = b.title || "Tabla";
     return '<button class="im-table-toggle" data-im-table="' + key + '" data-im-table-title="' + imEsc(title) + '">▤ Ver tabla: ' + imEsc(title) + "</button>" +
       '<template data-im-table-src="' + key + '">' + t + "</template>";
+  }
+  function imCheckKey(root, idx) { return "im-check:" + location.pathname + ":" + root.id + ":" + idx; }
+  function imRenderChecklist(root, idx, blocks) {
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(imCheckKey(root, idx)) || "{}"); } catch (e) {}
+    var n = 0, html = '<p class="im-check-hint">Marca lo que ya sabrías explicar con tus palabras. Se guarda en este navegador.</p>';
+    blocks.forEach(function(b, bi) {
+      if (b.type === "ul" || b.type === "ol") {
+        html += '<ul class="im-check">' + b.items.map(function(t) {
+          var k = n++;
+          return '<li><label><input type="checkbox" data-im-check="' + k + '"' + (saved[k] ? " checked" : "") + "><span>" + imFormatInline(t) + "</span></label></li>";
+        }).join("") + "</ul>";
+      } else html += imRenderBlocks([b], idx + "-c" + bi);
+    });
+    return html;
+  }
+  function imVisitedKey(root) { return "im-visited:" + location.pathname + ":" + root.id; }
+  function imGetVisited(root) { try { return JSON.parse(localStorage.getItem(imVisitedKey(root)) || "{}"); } catch (e) { return {}; } }
+  function imMarkVisited(root, idx) { try { var v = imGetVisited(root); v[idx] = 1; localStorage.setItem(imVisitedKey(root), JSON.stringify(v)); } catch (e) {} }
+  function imFsElement() { return document.fullscreenElement || document.webkitFullscreenElement; }
+  function imToggleFullscreen(root) {
+    if (imFsElement()) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); return; }
+    var req = root.requestFullscreen || root.webkitRequestFullscreen;
+    if (req) req.call(root);
+  }
+  function imFsLabel() { return imFsElement() ? "✕ Salir de pantalla completa" : "⛶ Pantalla completa"; }
+  ["fullscreenchange", "webkitfullscreenchange"].forEach(function(ev) {
+    document.addEventListener(ev, function() {
+      document.querySelectorAll(".im-fs-btn").forEach(function(btn) { btn.textContent = imFsLabel(); });
+      document.querySelectorAll(".im-fs-rail .im-rail-label").forEach(function(l) { l.textContent = imFsElement() ? "Salir" : "Pantalla"; });
+    });
+  });
+  function imScrollTop(root) {
+    if (imFsElement() === root) { root.scrollTop = 0; return; }
+    var y = root.getBoundingClientRect().top + window.pageYOffset - 20;
+    if (window.pageYOffset > y) window.scrollTo(0, y);
   }
   function imRenderBlocks(blocks, keyPrefix) {
     var html = "";
@@ -771,13 +842,30 @@ function buildTopicHtml(tema) {
       else if (b.type === "image_reveal") html += '<button class="im-reveal-toggle" data-im-reveal="' + key + '">' + (b.labelClosed || "🔎 Descubre la infografía") + "</button>" +
         '<div class="im-reveal-box" id="im-reveal-' + key + '"><img src="' + imEsc(b.src) + '" alt="' + imEsc(b.alt || "") + '">' +
         (b.caption ? '<figcaption class="im-figure-caption">' + imFormatInline(b.caption) + "</figcaption>" : "") + "</div>";
-      else if (b.type === "errorlist") html += '<ul class="im-errorlist">' + b.items.map(function(it) {
-        return '<li><span class="im-error-term">' + imFormatInline(it.term) + '</span><span class="im-error-desc">' + imFormatInline(it.desc) + "</span></li>";
+      else if (b.type === "errorlist") html += '<p class="im-check-hint">Antes de abrir cada error, piensa por qué es un error. Después, toca la tarjeta para comprobarlo.</p>' +
+        '<ul class="im-errorlist">' + b.items.map(function(it) {
+        return '<li class="im-err-reveal"><span class="im-error-term">' + imFormatInline(it.term) + '</span><span class="im-err-cta">¿Por qué es un error? Toca para verlo ▸</span><span class="im-error-desc">' + imFormatInline(it.desc) + "</span></li>";
       }).join("") + "</ul>";
+      else if (b.type === "docimg") html += '<figure class="im-docimg"><img class="im-docimg-img" src="' + imEsc(b.src) + '" alt="' + imEsc(b.alt || "") + '"' + (b.w ? ' style="width:' + b.w + 'px"' : "") + "></figure>";
+      else if (b.type === "biblist") html += '<ul class="im-biblist">' + b.items.map(function(t) { return "<li>" + imBibText(t) + "</li>"; }).join("") + "</ul>";
     });
     return html;
   }
   function imWireCommon(root, data) {
+    root.querySelectorAll(".im-err-reveal").forEach(function(li) {
+      li.addEventListener("click", function() { li.classList.toggle("open"); });
+    });
+    root.querySelectorAll(".im-docimg-img").forEach(function(img) {
+      img.addEventListener("click", function() { imOpenModal("Figura del manual", '<img src="' + img.src + '" alt="">', true); });
+    });
+    root.querySelectorAll("[data-im-check]").forEach(function(cb) {
+      cb.addEventListener("change", function() {
+        var key = cb.closest("[data-im-checklist]").dataset.imChecklist, saved = {};
+        try { saved = JSON.parse(localStorage.getItem(key) || "{}"); } catch (e) {}
+        if (cb.checked) saved[cb.dataset.imCheck] = 1; else delete saved[cb.dataset.imCheck];
+        try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+      });
+    });
     root.querySelectorAll(".im-figure-img").forEach(function(img) {
       img.addEventListener("click", function() {
         imOpenModal(img.alt || "Infografía", '<img src="' + img.src + '" alt="' + img.alt.replace(/"/g, "&quot;") + '">', true);
@@ -840,6 +928,7 @@ function buildTopicHtml(tema) {
       items += '<button class="im-rail-btn' + (activeIdx === "bib" ? " active" : "") + '" data-im-rail-bib="1">' +
         '<span class="im-rail-icon">📖</span><span class="im-rail-label">Bibliografía</span></button>';
     }
+    items += '<button class="im-rail-btn im-fs-rail" data-im-fs-rail="1" title="Pantalla completa"><span class="im-rail-icon">⛶</span><span class="im-rail-label">' + (imFsElement() ? "Salir" : "Pantalla") + "</span></button>";
     return '<div class="im-rail">' + items + "</div>";
   }
   function imWireRail(root, data) {
@@ -850,6 +939,8 @@ function buildTopicHtml(tema) {
     });
     var railBib = root.querySelector("[data-im-rail-bib]");
     if (railBib) railBib.addEventListener("click", function() { imShowBib(root, data, null); });
+    var railFs = root.querySelector("[data-im-fs-rail]");
+    if (railFs) railFs.addEventListener("click", function() { imToggleFullscreen(root); });
   }
   function imShowBib(root, data, highlightKey) {
     var html = imRailHtml(data, "bib");
@@ -871,14 +962,29 @@ function buildTopicHtml(tema) {
     var icon = IM_ICONS[sec.navTitle] || "📖";
     var html = imRailHtml(data, idx);
     html += '<div class="im-chapter"><h3 class="im-chapter-title">' + icon + " " + imFormatInline(sec.title) + "</h3>";
-    html += imRenderBlocks(sec.blocks, idx + "-i");
+    if (sec.navTitle === "Qué vas a aprender") html += '<div data-im-checklist="' + imCheckKey(root, idx) + '">' + imRenderChecklist(root, idx, sec.blocks) + "</div>";
+    else html += imRenderBlocks(sec.blocks, idx + "-i");
     sec.subsections.forEach(function(sub, j) {
       html += '<div class="im-sub" data-im-sub="' + j + '">' +
         '<button class="im-sub-head"><span class="im-sub-title">' + imFormatInline(sub.title) + '</span><span class="im-sub-arrow">▶</span></button>' +
         '<div class="im-sub-body">' + imRenderBlocks(sub.blocks, idx + "-" + j) + "</div></div>";
     });
+    var prev = data.sections[idx - 1], next = data.sections[idx + 1];
+    html += '<div class="im-pager">' +
+      (prev ? '<button class="im-prev" data-im-goto="' + (idx - 1) + '">← ' + imEsc(prev.navTitle) + "</button>" : "") +
+      (next ? '<button class="im-next" data-im-goto="' + (idx + 1) + '">' + imEsc(next.navTitle) + " →</button>"
+            : (data.references && data.references.length ? '<button class="im-next" data-im-goto="bib">Bibliografía →</button>' : "")) +
+      "</div>";
     html += "</div>";
     root.innerHTML = html;
+    imMarkVisited(root, idx);
+    imScrollTop(root);
+    root.querySelectorAll("[data-im-goto]").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        if (btn.dataset.imGoto === "bib") imShowBib(root, data, null);
+        else imShowChapter(root, data, parseInt(btn.dataset.imGoto, 10));
+      });
+    });
     imWireCommon(root, data);
     imWireRail(root, data);
     root.querySelectorAll(".im-sub-head").forEach(function(head) {
@@ -892,9 +998,11 @@ function buildTopicHtml(tema) {
   }
   function imShowIndex(root, data) {
     var pdf = root.dataset.pdf;
+    var visited = imGetVisited(root);
+    var nVisited = data.sections.filter(function(s, i) { return visited[i]; }).length;
     var cards = data.sections.map(function(sec, i) {
       var icon = IM_ICONS[sec.navTitle] || "📖";
-      return '<button class="im-card" data-im-chapter="' + i + '" style="animation-delay:' + (i * 0.04) + 's">' +
+      return '<button class="im-card' + (visited[i] ? " visited" : "") + '" data-im-chapter="' + i + '" style="animation-delay:' + (i * 0.04) + 's">' +
         '<span class="im-card-icon">' + icon + '</span>' +
         '<span class="im-card-title">' + imEsc(sec.navTitle) + "</span>" +
         (sec.subsections.length ? '<span class="im-card-meta">' + sec.subsections.length + " apartados</span>" : "") +
@@ -905,11 +1013,16 @@ function buildTopicHtml(tema) {
         '<span class="im-card-icon">📖</span><span class="im-card-title">Bibliografía</span>' +
         '<span class="im-card-meta">' + data.references.length + ' referencias en APA 7ª ed.</span></button>'
       : "";
-    var hero = '<div class="im-hero">' +
-      (pdf ? '<a class="im-hero-dl" href="' + imEsc(pdf) + '" download>⬇ Descargar manual en PDF</a>' : "") +
+    var hero = '<div class="im-hero"><div class="im-hero-tools">' +
+      '<button class="im-fs-btn">' + imFsLabel() + "</button>" +
+      (pdf ? '<a class="im-hero-dl" href="' + imEsc(pdf) + '" download>⬇ Descargar manual en PDF</a>' : "") + "</div>" +
       '<div class="im-hero-kicker">' + imEsc(data.header.kicker) + " · " + imEsc(data.header.title) + "</div>" +
-      '<h1 class="im-hero-title">' + imEsc(data.header.subtitle) + "</h1></div>";
-    root.innerHTML = hero + '<div class="im-grid">' + cards + bibCard + "</div>";
+      '<h1 class="im-hero-title">' + imEsc(data.header.subtitle) + "</h1>" +
+      (data.header.narrative ? '<p class="im-hero-lema">' + imEsc(data.header.narrative) + "</p>" : "") + "</div>";
+    var progress = nVisited ? '<p class="im-progress">Has abierto ' + nVisited + " de " + data.sections.length + " capítulos.</p>" : "";
+    root.innerHTML = hero + progress + '<div class="im-grid">' + cards + bibCard + "</div>";
+    root.querySelector(".im-fs-btn").addEventListener("click", function() { imToggleFullscreen(root); });
+    imScrollTop(root);
     root.querySelectorAll("[data-im-chapter]").forEach(function(btn) {
       btn.addEventListener("click", function() { imShowChapter(root, data, parseInt(btn.dataset.imChapter, 10)); });
     });
@@ -1445,9 +1558,11 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't3', numLabel: 'TEMA 3', titleShort: 'Tema 3', titleFull: 'Tema 3', kicker: 'Tema 3',
-    viewOrder: ['manual','adicionales','stopwords','pandas','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual_interactivo','adicionales','stopwords','pandas','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico', icon: '✨',
+        desc: 'Manual interactivo, navegable por paneles', dataFile: 'manual_interactivo.json' },
       adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
         desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
           { author: 'linguAIstica', date: '2026, 25 de agosto', title: 'Errores de tokenización que arruinan proyectos multilingües', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/Dcd6OP7jdQv/' },
@@ -1473,9 +1588,11 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't4', numLabel: 'TEMA 4', titleShort: 'Tema 4', titleFull: 'Tema 4', kicker: 'Tema 4',
-    viewOrder: ['manual','adicionales','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual_interactivo','adicionales','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico', icon: '✨',
+        desc: 'Manual interactivo, navegable por paneles', dataFile: 'manual_interactivo.json' },
       adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
         desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
           { author: 'linguAIstica', date: '2026, 19 de junio', title: 'NLP antes del machine learning: la era de las reglas y la estadística', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DZxocbUDXtV/' },
@@ -1488,9 +1605,11 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't5', numLabel: 'TEMA 5', titleShort: 'Tema 5', titleFull: 'Tema 5', kicker: 'Tema 5',
-    viewOrder: ['manual','adicionales','principal','evaluable','practica','metric2','quiz'],
+    viewOrder: ['manual_interactivo','adicionales','principal','evaluable','practica','metric2','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico', icon: '✨',
+        desc: 'Manual interactivo, navegable por paneles', dataFile: 'manual_interactivo.json' },
       adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
         desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
           { author: 'linguAIstica', date: '2026, 4 de julio', title: 'La IA traduce Shakespeare... pero no esto', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/yU7lt82hy_M' },
@@ -1504,9 +1623,11 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't6', numLabel: 'TEMA 6', titleShort: 'Tema 6', titleFull: 'Tema 6', kicker: 'Tema 6',
-    viewOrder: ['manual','adicionales','infografia','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual_interactivo','adicionales','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico', icon: '✨',
+        desc: 'Manual interactivo, navegable por paneles', dataFile: 'manual_interactivo.json' },
       adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
         desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
           { author: 'linguAIstica', date: '2026, 10 de agosto', title: 'El chatbot que se volvió n*zi en 24 horas', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/fCbntlnKXwg' },
@@ -1522,9 +1643,11 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't7', numLabel: 'TEMA 7', titleShort: 'Tema 7', titleFull: 'Tema 7', kicker: 'Tema 7',
-    viewOrder: ['manual','adicionales','infografia','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual_interactivo','adicionales','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico', icon: '✨',
+        desc: 'Manual interactivo, navegable por paneles', dataFile: 'manual_interactivo.json' },
       adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
         desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
           { author: 'linguAIstica', date: '2026, 29 de julio', title: 'Analizando obras literarias con Python (parte 3: definir qué buscamos)', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/oE19LAsrVbw' },
@@ -1542,9 +1665,11 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't8', numLabel: 'TEMA 8', titleShort: 'Tema 8', titleFull: 'Tema 8', kicker: 'Tema 8',
-    viewOrder: ['manual','adicionales','infografia','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual_interactivo','adicionales','infografia','principal','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
+      manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico', icon: '✨',
+        desc: 'Manual interactivo, navegable por paneles', dataFile: 'manual_interactivo.json' },
       adicionales: { exists: true, kind: 'reflist', label: 'Conocimientos adicionales', icon: '🔗',
         desc: 'Recursos externos recomendados (LinguAIstica)', refs: [
           { author: 'linguAIstica', date: '2026, 12 de julio', title: 'El PDF que cambió el mundo (Attention is all you need)', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/2OJT5H0wnio' },

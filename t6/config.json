@@ -4,5 +4,6 @@
   "quiz": false,
   "infografia": false,
   "adicionales": false,
-  "practica": false
+  "practica": false,
+  "manual_interactivo": false
 }

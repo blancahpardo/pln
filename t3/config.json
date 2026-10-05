@@ -5,5 +5,7 @@
   "quiz": false,
   "stopwords": true,
   "pandas": true,
-  "adicionales": true
+  "adicionales": true,
+  "manual_interactivo": true,
+  "practica": false
 }
