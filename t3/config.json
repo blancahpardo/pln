@@ -2,7 +2,7 @@
   "manual": true,
   "principal": true,
   "evaluable": true,
-  "quiz": false,
+  "quiz": true,
   "stopwords": true,
   "pandas": true,
   "adicionales": true,
