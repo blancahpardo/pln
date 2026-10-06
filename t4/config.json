@@ -4,6 +4,6 @@
   "evaluable": false,
   "quiz": false,
   "adicionales": false,
-  "manual_interactivo": false,
+  "manual_interactivo": true,
   "practica": false
 }
