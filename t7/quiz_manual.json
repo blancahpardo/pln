@@ -30,7 +30,7 @@
       "question": "En el contexto de la extracción terminológica, ¿qué mide específicamente el concepto de 'termhood'?",
       "answerOptions": [
         {
-          "text": "La probabilidad de que una unidad sea propia o relevante para un dominio especializado.",
+          "text": "El grado en que una unidad es propia o relevante para un dominio especializado.",
           "isCorrect": true,
           "rationale": "El termhood cuantifica la especificidad de una unidad respecto a un campo temático frente a un corpus general."
         },
@@ -58,7 +58,7 @@
         {
           "text": "0.005",
           "isCorrect": true,
-          "rationale": "La frecuencia relativa se calcula dividiendo la frecuencia absoluta entre el total de tokens: 50 / 10000 = 0.005."
+          "rationale": "La frecuencia relativa se calcula dividiendo la frecuencia absoluta entre el total de tokens: 50 / 10 000 = 0.005."
         },
         {
           "text": "200",
@@ -71,7 +71,7 @@
           "rationale": "Este valor implicaría una frecuencia absoluta de 500 apariciones en lugar de 50 para el tamaño de corpus dado."
         },
         {
-          "text": "500.000",
+          "text": "500 000",
           "isCorrect": false,
           "rationale": "Este valor es el producto de la frecuencia por el tamaño del corpus, no su proporción."
         }

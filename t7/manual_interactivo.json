@@ -2,7 +2,7 @@
  "header": {
   "kicker": "Tema 7.",
   "title": "Extracción automática de terminología",
-  "subtitle": "Candidatos terminológicos, n-gramas, weidness, KWIC y miniglosarios con Python",
+  "subtitle": "Candidatos terminológicos, n-gramas, weirdness, KWIC y miniglosarios con Python",
   "meta": "Material teórico | Programación para PLN | Universidad Pontificia Comillas",
   "narrative": "Detectar terminología especializada: de leer documentos a construir candidatos de glosario con Python."
  },
@@ -18,15 +18,15 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Imagina que formas parte de LexiData Solutions, una empresa especializada en traducción, localización, documentación técnica y gestión terminológica. Sus clientes trabajan en ámbitos institucionales, científicos, jurídicos, sanitarios y tecnológicos. En todos esos sectores aparece el mismo problema: los equipos de traducción y revisión necesitan glosarios fiables, pero los documentos crecen más rápido que la capacidad humana para leerlos desde cero."
+       "text": "Imagina que formas parte de **LexiData Solutions**, una empresa especializada en traducción, localización, documentación técnica y gestión terminológica. Sus clientes trabajan en ámbitos institucionales, científicos, jurídicos, sanitarios y tecnológicos. En todos esos sectores aparece el mismo problema: los equipos de traducción y revisión necesitan glosarios fiables, pero los documentos crecen más rápido que la capacidad humana para leerlos desde cero."
       },
       {
        "type": "p",
-       "text": "Hasta ahora, la empresa elaboraba muchos glosarios de forma manual. Una terminóloga o un traductor especializado leía documentos, subrayaba unidades importantes, buscaba ejemplos, comprobaba si esas unidades designaban conceptos del dominio y decidía cuáles entraban en la base terminológica. Ese procedimiento sigue siendo necesario, porque la validación terminológica final requiere criterio experto. Pero ya no basta como primer filtro: cada semana llegan manuales, informes, páginas web, memorias institucionales, normativas y documentación multilingüe."
+       "text": "Hasta ahora, la empresa elaboraba muchos glosarios de forma manual: una terminóloga o un traductor especializado leía documentos, subrayaba unidades importantes, buscaba ejemplos, comprobaba si esas unidades designaban conceptos del dominio y decidía cuáles entraban en la base terminológica. Ese procedimiento sigue siendo necesario, porque la validación terminológica final requiere criterio experto, pero ya no basta como primer filtro, ahora que cada semana llegan manuales, informes, páginas web, memorias institucionales, normativas y documentación multilingüe."
       },
       {
        "type": "p",
-       "text": "La dirección de LexiData decide crear un prototipo de apoyo. No quiere una herramienta opaca que sustituya al equipo humano. Quiere una herramienta interpretable que genere una lista priorizada de candidatos a término. El objetivo profesional es ahorrar tiempo en la fase inicial: localizar palabras y expresiones que parecen propias de un dominio especializado para que una persona experta pueda revisarlas."
+       "text": "La dirección de LexiData decide crear un prototipo de apoyo: en lugar de una herramienta opaca que sustituya al equipo humano, quiere una herramienta interpretable que genere una lista priorizada de **candidatos a término**. El objetivo profesional es ahorrar tiempo en la fase inicial, localizando palabras y expresiones que parecen propias de un dominio especializado para que una persona experta pueda revisarlas."
       }
      ]
     },
@@ -36,7 +36,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "El equipo define una simulación de trabajo muy concreta: comparar un corpus especializado con un corpus general. Si una unidad aparece con frecuencia relativa alta en el corpus especializado y aparece poco o nada en el corpus general, puede ser un buen candidato terminológico. Esta idea no garantiza que la unidad sea un término, pero ayuda a priorizar."
+       "text": "El equipo define una simulación de trabajo muy concreta: comparar un corpus especializado con un corpus general. Si una unidad aparece con una frecuencia relativa alta en el corpus especializado y poco o nada en el corpus general, puede ser un buen candidato terminológico; la idea no garantiza que la unidad sea un término, pero ayuda a priorizar."
       },
       {
        "type": "p",
@@ -48,19 +48,19 @@
         "Preparar dos corpus: uno especializado y otro general.",
         "Limpiar y tokenizar los textos.",
         "Extraer unigramas, bigramas y trigramas.",
-        "Filtrar candidatos por frecuencia y stopwords.",
+        "Filtrar candidatos por frecuencia y *stopwords*.",
         "Calcular frecuencia relativa.",
-        "Rankear candidatos mediante una medida contrastiva sencilla, weirdness.",
+        "Ordenar los candidatos mediante una medida contrastiva sencilla, *weirdness*.",
         "Crear un miniglosario con ejemplos KWIC para facilitar la validación humana."
        ]
       },
       {
        "type": "p",
-       "text": "La pregunta profesional no es «¿puede Python saber qué términos son correctos?». La pregunta es más útil: «¿puede Python ordenar indicios para que una especialista revise primero los candidatos más prometedores?»."
+       "text": "La pregunta profesional no es «¿puede Python saber qué términos son correctos?», sino otra más útil: «¿puede Python ordenar indicios para que una especialista revise primero los candidatos más prometedores?»."
       },
       {
        "type": "p",
-       "text": "En esta unidad aprenderás a construir esa primera capa de apoyo terminológico. El resultado no será un glosario final, sino una lista razonada de candidatos. La diferencia importa: un candidato puede ser interesante, ruidoso, incompleto o estar deformado por el preprocesamiento. La validación lingüística y terminológica sigue siendo el centro del trabajo."
+       "text": "En esta unidad aprenderás a construir esa primera capa de apoyo terminológico, cuyo resultado será una lista razonada de candidatos, y no un glosario final. La diferencia importa, porque un candidato puede ser interesante, ruidoso, incompleto o estar deformado por el preprocesamiento: la validación lingüística y terminológica sigue siendo el centro del trabajo."
       }
      ]
     }
@@ -83,13 +83,13 @@
       "comprender la diferencia entre frecuencia absoluta y frecuencia relativa;",
       "explicar por qué se comparan corpus especializados y corpus generales;",
       "entender qué es un n-grama y por qué muchos términos son multipalabra;",
-      "relacionar termhood y unithood con la extracción automática de terminología;",
+      "relacionar *termhood* y *unithood* con la extracción automática de terminología;",
       "implementar un tokenizador simple y transparente con expresiones regulares;",
-      "aplicar stopwords y comprender sus ventajas y riesgos;",
+      "aplicar *stopwords* y comprender sus ventajas y riesgos;",
       "extraer unigramas, bigramas y trigramas con Python;",
-      "contar frecuencias con Counter;",
+      "contar frecuencias con `Counter`;",
       "filtrar candidatos por frecuencia mínima;",
-      "calcular weirdness como medida contrastiva;",
+      "calcular *weirdness* como medida contrastiva;",
       "unificar candidatos de distinta longitud en una tabla común;",
       "depurar candidatos mediante listas negras o heurísticas lingüísticas;",
       "generar ejemplos KWIC para validar candidatos en contexto;",
@@ -108,10 +108,10 @@
      "type": "table",
      "rows": [
       [
-       "Bloque",
-       "Concepto lingüístico",
-       "Operación en Python",
-       "Resultado"
+       "**Bloque**",
+       "**Concepto lingüístico**",
+       "**Operación en Python**",
+       "**Resultado**"
       ],
       [
        "Corpus especializado",
@@ -128,43 +128,43 @@
       [
        "Tokenización",
        "Unidad mínima de análisis",
-       "simple_tokenize()",
-       "Lista de tokens"
+       "`simple_tokenize()`",
+       "Lista de *tokens*"
       ],
       [
-       "Stopwords",
+       "*Stopwords*",
        "Palabras frecuentes poco informativas",
-       "remove_stopwords()",
-       "Tokens más orientados a contenido"
+       "`remove_stopwords()`",
+       "*Tokens* más orientados a contenido"
       ],
       [
        "N-gramas",
        "Secuencias de palabras",
-       "get_ngrams(tokens, n)",
+       "`get_ngrams(tokens, n)`",
        "Unigramas, bigramas y trigramas"
       ],
       [
        "Frecuencia absoluta",
        "Apariciones directas",
-       "Counter",
+       "`Counter`",
        "Conteos por candidato"
       ],
       [
        "Frecuencia relativa",
        "Frecuencia normalizada por tamaño",
-       "freq / N",
+       "`freq / N`",
        "Comparación más justa entre corpus"
       ],
       [
-       "Weirdness",
+       "*Weirdness*",
        "Rareza relativa o especificidad de dominio",
        "Cociente entre frecuencias relativas",
-       "Ranking contrastivo"
+       "*Ranking* contrastivo"
       ],
       [
        "Heurísticas",
        "Reglas interpretables de depuración",
-       "Umbral, blacklist, bordes",
+       "Umbral, lista negra, bordes",
        "Candidatos menos ruidosos"
       ],
       [
@@ -174,7 +174,7 @@
        "Ejemplos para validar"
       ]
      ],
-     "title": "Al finalizar esta unidad, deberías ser capaz de"
+     "title": "Mapa conceptual de la unidad: conceptos lingüísticos y operaciones en Python"
     },
     {
      "type": "image",
@@ -197,51 +197,51 @@
      "blocks": [
       {
        "type": "p",
-       "text": "En terminología, un término no es simplemente una palabra difícil. Un término es una unidad lingüística que designa un concepto dentro de un dominio especializado. Puede ser una sola palabra, como tokenización, o una expresión multipalabra, como modelo de lenguaje, etiquetado morfosintáctico o frecuencia relativa."
+       "text": "En terminología, un término es algo más que una palabra difícil: es una unidad lingüística que designa un concepto dentro de un dominio especializado. Puede ser una sola palabra, como *tokenización*, o una expresión multipalabra, como *modelo de lenguaje*, *etiquetado morfosintáctico* o *frecuencia relativa*."
       },
       {
        "type": "p",
-       "text": "{{cite:cabre1999}}Cabré (1999){{/cite}} entiende la terminología como un campo que conecta lenguaje, conocimiento especializado, comunicación profesional y documentación. Desde esta perspectiva, los términos no existen aislados: funcionan dentro de situaciones comunicativas concretas, comunidades expertas, prácticas de traducción, clasificación conceptual y circulación de conocimiento. {{cite:cabre2003}}Cabré (2003){{/cite}} insiste además en que una teoría de la terminología debe explicar no solo la dimensión conceptual, sino también la lingüística y la comunicativa."
+       "text": "{{cite:cabre1999}}Cabré (1999){{/cite}} entiende la terminología como un campo que une lenguaje, conocimiento especializado, comunicación profesional y documentación. Vistos así, los términos no existen aislados: funcionan dentro de situaciones comunicativas concretas, comunidades expertas, prácticas de traducción, clasificación conceptual y circulación de conocimiento. {{cite:cabre2003}}Cabré (2003){{/cite}} insiste además en que una teoría de la terminología debe explicar, junto a la dimensión conceptual, la lingüística y la comunicativa."
       },
       {
        "type": "p",
-       "text": "Esta idea es esencial para PLN. Un sistema automático puede contar formas y detectar patrones, pero no comprende por sí solo el concepto especializado que una unidad designa. Por eso hablamos de candidatos a término. La extracción automática propone unidades que parecen terminológicas; la validación humana decide si realmente lo son."
+       "text": "Esta idea es esencial para el PLN. Un sistema automático puede contar formas y detectar patrones, pero no comprende por sí solo el concepto especializado que una unidad designa, y por eso hablamos de **candidatos a término**: la extracción automática propone unidades que parecen terminológicas, y la validación humana decide si realmente lo son."
       },
       {
        "type": "table",
        "rows": [
         [
-         "Unidad",
-         "Puede aparecer en un corpus especializado",
-         "¿Es necesariamente término?"
+         "**Unidad**",
+         "**Puede aparecer en un corpus especializado**",
+         "**¿Es necesariamente término?**"
         ],
         [
-         "lenguaje",
+         "*lenguaje*",
          "Sí",
          "No siempre: puede ser palabra general"
         ],
         [
-         "modelo de lenguaje",
+         "*modelo de lenguaje*",
          "Sí",
          "Muy probablemente en PLN"
         ],
         [
-         "sistema",
+         "*sistema*",
          "Sí",
          "Depende del contexto"
         ],
         [
-         "procesamiento del lenguaje natural",
+         "*procesamiento del lenguaje natural*",
          "Sí",
          "Sí, si designa el campo o técnica"
         ],
         [
-         "paso fundamental",
+         "*paso fundamental*",
          "Sí",
          "Normalmente no: expresión descriptiva"
         ]
        ],
-       "title": "Unidad · Puede aparecer en un corpus especializado · ¿Es necesariamente término?"
+       "title": "Unidades de un corpus especializado y su carácter terminológico"
       },
       {
        "type": "p",
@@ -255,7 +255,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La terminología tiene un papel central en traducción especializada, localización, documentación técnica, normalización y gestión del conocimiento. Un glosario no es solo una lista de palabras: es una herramienta para mantener coherencia conceptual, evitar ambigüedades, facilitar equivalencias multilingües y reducir costes de revisión."
+       "text": "La terminología tiene un papel central en la traducción especializada, la localización, la documentación técnica, la normalización y la gestión del conocimiento. Un glosario es algo más que una lista de palabras: sirve para mantener la coherencia conceptual, evitar ambigüedades, facilitar equivalencias multilingües y reducir costes de revisión."
       },
       {
        "type": "p",
@@ -278,11 +278,11 @@
       },
       {
        "type": "p",
-       "text": "El prototipo de esta unidad no crea toda esa ficha terminológica. Produce una primera macroestructura: una lista de candidatos que pueden convertirse en entradas de glosario. Esta distinción está también en herramientas recientes como Termout, que plantea la producción semiautomática de bases terminológicas a partir de procesamiento de corpus, extracción de terminología y posterior población de datos gramaticales y semánticos {{cite:nazar2023}}(Nazar & Acosta, 2023){{/cite}}."
+       "text": "El prototipo de esta unidad no crea toda esa ficha terminológica; produce una primera macroestructura, una lista de candidatos que pueden convertirse en entradas de glosario. La misma distinción aparece en herramientas recientes como Termout, que plantea la producción semiautomática de bases terminológicas a partir del procesamiento de corpus, la extracción de terminología y la posterior población de datos gramaticales y semánticos {{cite:nazar2023}}(Nazar y Acosta, 2023){{/cite}}."
       },
       {
        "type": "p",
-       "text": "Para una estudiante de lingüística, esta unidad muestra cómo el PLN puede integrarse en un flujo profesional real: no sustituye la terminología, pero acelera la fase de localización y priorización."
+       "text": "Para una estudiante de lingüística, esta unidad muestra cómo el PLN puede integrarse en un flujo profesional real: lejos de sustituir la terminología, acelera la fase de localización y priorización."
       }
      ]
     },
@@ -292,15 +292,15 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La literatura utiliza expresiones como Automatic Term Extraction (ATE), Automatic Term Recognition (ATR) o automatic terminology extraction. En términos generales, se trata de localizar y rankear unidades lingüísticas que son relevantes para describir un dominio especializado. {{cite:kageura1996}}Kageura y Umino (1996){{/cite}} ya planteaban que los métodos de reconocimiento automático de términos deben apoyarse en una comprensión adecuada de la naturaleza de los términos. No basta con contar palabras."
+       "text": "La literatura utiliza expresiones como *Automatic Term Extraction* (ATE), *Automatic Term Recognition* (ATR) o *automatic terminology extraction*. En términos generales, se trata de localizar y ordenar por relevancia las unidades lingüísticas que describen un dominio especializado. {{cite:kageura1996}}Kageura y Umino (1996){{/cite}} ya planteaban que los métodos de reconocimiento automático de términos deben apoyarse en una comprensión adecuada de la naturaleza de los términos, porque no basta con contar palabras."
       },
       {
        "type": "p",
-       "text": "{{cite:tran2023}}Tran et al. (2023){{/cite}} definen la extracción automática de términos como una tarea de PLN que reduce el esfuerzo de identificar manualmente términos en corpus de dominio, generando listas de candidatos. También señalan que los términos extraídos son útiles para tareas terminográficas y para aplicaciones posteriores como recuperación de información, traducción automática, detección de temas o análisis de opinión."
+       "text": "Tran *et al.* (2023) definen la extracción automática de términos como una tarea de PLN que reduce el esfuerzo de identificar manualmente términos en corpus de dominio, generando listas de candidatos, y señalan que los términos extraídos son útiles para tareas terminográficas y para aplicaciones posteriores como la recuperación de información, la traducción automática, la detección de temas o el análisis de opinión."
       },
       {
        "type": "p",
-       "text": "La unidad se sitúa dentro de los métodos no supervisados y transparentes. No entrena un clasificador ni usa modelos neuronales. El procedimiento se basa en frecuencia, comparación de corpus, n-gramas y reglas explícitas. Esto es especialmente adecuado para alumnado de Humanidades porque cada decisión puede discutirse."
+       "text": "La unidad se enmarca en los métodos no supervisados y transparentes: no entrena un clasificador ni usa modelos neuronales, sino que se basa en la frecuencia, la comparación de corpus, los n-gramas y unas reglas precisas. Este enfoque conviene mucho al alumnado de Humanidades, porque cada decisión puede discutirse."
       }
      ]
     },
@@ -310,45 +310,45 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Dos conceptos clásicos en extracción terminológica son termhood y unithood. {{cite:kageura1996}}Kageura y Umino (1996){{/cite}} los presentan como dimensiones centrales para reconocer términos."
+       "text": "Dos conceptos clásicos en extracción terminológica son ***termhood*** y ***unithood***, que {{cite:kageura1996}}Kageura y Umino (1996){{/cite}} presentan como dimensiones centrales para reconocer términos."
       },
       {
        "type": "p",
-       "text": "Termhood se refiere al grado en que una unidad es propia o relevante para un dominio especializado. Por ejemplo, tokenización puede tener alta termhood en un corpus de PLN porque aparece más en ese dominio que en textos generales."
+       "text": "***Termhood*** se refiere al grado en que una unidad es propia o relevante para un dominio especializado. Por ejemplo, *tokenización* puede tener un *termhood* alto en un corpus de PLN porque aparece más en ese dominio que en textos generales."
       },
       {
        "type": "p",
-       "text": "Unithood se refiere al grado en que una secuencia de palabras funciona como una unidad estable. Por ejemplo, modelo de lenguaje es más que la suma casual de modelo y lenguaje: es una expresión estable que designa un concepto técnico."
+       "text": "***Unithood*** se refiere al grado en que una secuencia de palabras funciona como una unidad estable. Por ejemplo, *modelo de lenguaje* es más que la suma casual de *modelo* y *lenguaje*: es una expresión estable que designa un concepto técnico."
       },
       {
        "type": "table",
        "rows": [
         [
-         "Concepto",
-         "Pregunta",
-         "Ejemplo"
+         "**Concepto**",
+         "**Pregunta**",
+         "**Ejemplo**"
         ],
         [
-         "Termhood",
+         "*Termhood*",
          "¿Esta unidad es propia del dominio?",
-         "tokenización frente a reunión"
+         "*tokenización* frente a *reunión*"
         ],
         [
-         "Unithood",
+         "*Unithood*",
          "¿Esta secuencia funciona como unidad?",
-         "modelo de lenguaje frente a lenguaje necesita"
+         "*modelo de lenguaje* frente a *lenguaje necesita*"
         ],
         [
          "Candidato",
          "¿Conviene revisarla como posible término?",
-         "traducción automática neuronal"
+         "*traducción automática neuronal*"
         ]
        ],
-       "title": "Concepto · Pregunta · Ejemplo"
+       "title": "Termhood, unithood y candidato a término"
       },
       {
        "type": "p",
-       "text": "El cuaderno de PLN7 trabaja de forma simplificada con ambos conceptos. La comparación entre corpus aproxima termhood. La extracción de bigramas y trigramas aproxima unithood, aunque sin análisis sintáctico profundo."
+       "text": "El cuaderno de PLN7 trabaja de forma simplificada con ambos conceptos: la comparación entre corpus aproxima el *termhood*, y la extracción de bigramas y trigramas, el *unithood*, aunque sin análisis sintáctico profundo."
       }
      ]
     },
@@ -362,11 +362,11 @@
       },
       {
        "type": "p",
-       "text": "Sin embargo, la comparación solo tiene sentido si los corpus están bien pensados. El corpus especializado debe representar el dominio que se quiere estudiar. El corpus general debe funcionar como fondo de contraste. Si el corpus general es demasiado pequeño, demasiado distinto o temáticamente sesgado, la puntuación puede inflarse o distorsionarse."
+       "text": "Ahora bien, la comparación solo tiene sentido si los corpus están bien pensados: el especializado debe representar el dominio que se quiere estudiar, y el general, funcionar como fondo de contraste. Si el corpus general es demasiado pequeño, demasiado distinto o temáticamente sesgado, la puntuación puede inflarse o distorsionarse."
       },
       {
        "type": "p",
-       "text": "{{cite:verberne2016}}Verberne et al. (2016){{/cite}} muestran que el tamaño de la colección y la importancia de los términos multipalabra afectan de forma clara al rendimiento de métodos de puntuación terminológica. Su estudio también recuerda que los métodos de extracción no se comportan igual en todos los tipos de colección. Esta advertencia encaja con la unidad: en corpus pequeños, los rankings son didácticos, pero pueden ser inestables."
+       "text": "Verberne *et al.* (2016) muestran que el tamaño de la colección y la importancia de los términos multipalabra afectan claramente al rendimiento de los métodos de puntuación terminológica, y recuerdan que los métodos de extracción no se comportan igual en todos los tipos de colección. Esta advertencia cuadra con la unidad: en corpus pequeños, las clasificaciones son didácticas, pero pueden ser inestables."
       },
       {
        "type": "p",
@@ -378,7 +378,7 @@
         "qué textos forman el corpus especializado;",
         "qué textos forman el corpus general;",
         "cuántos documentos hay en cada corpus;",
-        "cuántos tokens tiene cada corpus;",
+        "cuántos *tokens* tiene cada corpus;",
         "de qué fechas, géneros y fuentes proceden;",
         "por qué esos textos son comparables;",
         "qué limitaciones tiene la muestra."
@@ -392,7 +392,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La frecuencia absoluta es el número de veces que aparece una unidad. Si tokenización aparece 25 veces, su frecuencia absoluta es 25. Esta medida es fácil de entender, pero puede ser engañosa cuando comparamos corpus de distinto tamaño."
+       "text": "La frecuencia absoluta es el número de veces que aparece una unidad: si *tokenización* aparece 25 veces, su frecuencia absoluta es 25. Esta medida es fácil de entender, pero puede resultar engañosa cuando comparamos corpus de distinto tamaño."
       },
       {
        "type": "p",
@@ -400,15 +400,15 @@
       },
       {
        "type": "p",
-       "text": "frecuencia relativa = frecuencia / total de tokens"
+       "text": "frecuencia relativa = frecuencia / total de *tokens*"
       },
       {
        "type": "p",
-       "text": "Si una palabra aparece 25 veces en 10.000 tokens y 25 veces en 100.000 tokens, no tiene el mismo peso. En el primer corpus ocupa una proporción mucho mayor. Por eso, el código de esta unidad calcula N_esp y N_gen, es decir, el tamaño del corpus especializado y del corpus general."
+       "text": "Si una palabra aparece 25 veces en 10 000 *tokens* y 25 veces en 100 000 *tokens*, no tiene el mismo peso, porque en el primer corpus ocupa una proporción mucho mayor. Por eso el código de esta unidad calcula `N_esp` y `N_gen`, es decir, el tamaño del corpus especializado y el del corpus general."
       },
       {
        "type": "p",
-       "text": "La frecuencia relativa no resuelve todos los problemas, pero permite una comparación más justa que la frecuencia absoluta. En extracción terminológica, esta normalización es la puerta de entrada a medidas contrastivas como weirdness."
+       "text": "La frecuencia relativa no resuelve todos los problemas, pero permite una comparación más justa que la frecuencia absoluta. En extracción terminológica, esta normalización es la puerta de entrada a medidas contrastivas como *weirdness*."
       }
      ]
     },
@@ -418,7 +418,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Weirdness es una medida contrastiva. Compara la frecuencia relativa de una unidad en el corpus especializado con su frecuencia relativa en el corpus general. La fórmula didáctica utilizada en la unidad es:"
+       "text": "*Weirdness* es una medida contrastiva que compara la frecuencia relativa de una unidad en el corpus especializado con su frecuencia relativa en el corpus general. La fórmula didáctica utilizada en la unidad es la siguiente:"
       },
       {
        "type": "p",
@@ -426,15 +426,15 @@
       },
       {
        "type": "p",
-       "text": "El término epsilon es un número muy pequeño que evita la división entre cero. Si una unidad aparece en el corpus especializado y no aparece en el corpus general, el denominador sería cero. Añadir epsilon permite calcular la puntuación sin romper el programa."
+       "text": "El término `epsilon` es un número muy pequeño que evita la división entre cero: si una unidad aparece en el corpus especializado y no en el general, el denominador sería cero, y añadir `epsilon` permite calcular la puntuación sin romper el programa."
       },
       {
        "type": "p",
-       "text": "La idea de rareza o especificidad se relaciona con enfoques contrastivos de extracción de términos, como el weirdness indexing de Ahmad, Gillam y Tostevin (1999), recogido en revisiones de extracción automática de terminología {{cite:heylen2015}}(Heylen & De Hertog, 2015){{/cite}}. También se conecta con la noción de informativeness: una unidad es informativa si ayuda a describir el corpus de dominio mejor que el fondo general."
+       "text": "La idea de rareza o especificidad se relaciona con enfoques contrastivos de extracción de términos, como el *weirdness indexing* de Ahmad *et al.* (1999), recogido en revisiones de extracción automática de terminología {{cite:heylen2015}}(Heylen y De Hertog, 2015){{/cite}}. También se relaciona con la noción de *informativeness*: una unidad es informativa si ayuda a describir el corpus de dominio mejor que el fondo general."
       },
       {
        "type": "p",
-       "text": "Weirdness es fácil de explicar y por eso resulta útil en docencia. Pero también tiene límites:"
+       "text": "*Weirdness* es fácil de explicar y por eso resulta útil en la docencia, aunque también tiene límites:"
       },
       {
        "type": "ul",
@@ -443,12 +443,12 @@
         "depende mucho del tamaño de ambos corpus;",
         "no mide estabilidad sintáctica;",
         "no distingue automáticamente términos de nombres propios o expresiones raras;",
-        "puede producir rankings inestables en corpus pequeños."
+        "puede producir *rankings* inestables en corpus pequeños."
        ]
       },
       {
        "type": "p",
-       "text": "La puntuación debe verse como una ayuda para ordenar, no como una validación terminológica."
+       "text": "La puntuación debe verse como una ayuda para ordenar, nunca como una validación terminológica."
       },
       {
        "type": "image_modal",
@@ -466,26 +466,26 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Un n-grama es una secuencia de n tokens consecutivos. Si n = 1, hablamos de unigramas. Si n = 2, de bigramas. Si n = 3, de trigramas. En terminología, los n-gramas son útiles porque muchos términos no son palabras aisladas:"
+       "text": "Un n-grama es una secuencia de *n tokens* consecutivos: si *n* = 1, hablamos de unigramas; si *n* = 2, de bigramas, y si *n* = 3, de trigramas. En terminología, los n-gramas son útiles porque muchos términos no son palabras aisladas:"
       },
       {
        "type": "ul",
        "items": [
-        "modelo de lenguaje;",
-        "procesamiento del lenguaje natural;",
-        "traducción automática neuronal;",
-        "etiquetado morfosintáctico;",
-        "frecuencia relativa;",
-        "corpus paralelo."
+        "*modelo de lenguaje*;",
+        "*procesamiento del lenguaje natural*;",
+        "*traducción automática neuronal*;",
+        "*etiquetado morfosintáctico*;",
+        "*frecuencia relativa*;",
+        "*corpus paralelo*."
        ]
       },
       {
        "type": "p",
-       "text": "La extracción de n-gramas es una aproximación simple a los términos multipalabra. No necesita análisis sintáctico, pero puede generar ruido. Si se eliminan stopwords antes de crear n-gramas, modelo de lenguaje puede convertirse en modelo lenguaje. Esa forma puede seguir siendo interpretable, pero no es la forma terminológica natural."
+       "text": "La extracción de n-gramas es una aproximación simple a los términos multipalabra que no necesita análisis sintáctico, pero que puede generar ruido. Si se eliminan las *stopwords* antes de crear n-gramas, *modelo de lenguaje* puede convertirse en *modelo lenguaje*, una forma que puede seguir siendo interpretable, pero que no es la forma terminológica natural."
       },
       {
        "type": "p",
-       "text": "{{cite:frantzi2000}}Frantzi et al. (2000){{/cite}}, con C-value/NC-value, mostraron la importancia de tratar términos multipalabra y términos anidados. Un término como procesamiento del lenguaje natural contiene unidades menores que también pueden ser candidatas. Los métodos más avanzados intentan ponderar estos casos. En esta unidad no se implementa C-value, pero sí se prepara la intuición: los términos multipalabra son centrales y no basta con contar palabras sueltas."
+       "text": "Frantzi *et al.* (2000), con el método C-value/NC-value, mostraron la importancia de tratar los términos multipalabra y los términos anidados: un término como *procesamiento del lenguaje natural* contiene unidades menores que también pueden ser candidatas, y los métodos más avanzados intentan ponderar estos casos. En esta unidad no se implementa C-value, pero sí se prepara la intuición: los términos multipalabra son centrales y no basta con contar palabras sueltas."
       }
      ]
     },
@@ -495,13 +495,13 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La extracción automática genera mucho ruido. Por eso, después de generar candidatos se aplican filtros. Los filtros de esta unidad son sencillos:"
+       "text": "La extracción automática genera mucho ruido, y por eso, después de generar candidatos, se aplican filtros, que en esta unidad son sencillos:"
       },
       {
        "type": "ul",
        "items": [
         "frecuencia mínima;",
-        "eliminación de stopwords;",
+        "eliminación de *stopwords*;",
         "longitud mínima;",
         "conversión de n-gramas a texto;",
         "lista negra de unidades demasiado generales."
@@ -509,11 +509,11 @@
       },
       {
        "type": "p",
-       "text": "La frecuencia mínima elimina candidatos que solo aparecen una vez. En corpus grandes esto suele mejorar la precisión, aunque puede eliminar términos raros pero importantes. Las stopwords eliminan palabras funcionales frecuentes. La lista negra permite descartar candidatos que la persona analista considera poco útiles para el dominio, como sistema, texto o análisis si aparecen de forma demasiado general."
+       "text": "La frecuencia mínima elimina los candidatos que solo aparecen una vez, lo que en corpus grandes suele mejorar la precisión, aunque puede eliminar términos raros pero importantes. Las *stopwords* eliminan palabras funcionales frecuentes, y la lista negra permite descartar candidatos que la persona analista considera poco útiles para el dominio, como *sistema*, *texto* o *análisis* si aparecen de forma demasiado general."
       },
       {
        "type": "p",
-       "text": "{{cite:pazienza2005}}Pazienza et al. (2005){{/cite}} subrayan que la extracción terminológica combina enfoques lingüísticos y estadísticos. Esta unidad sigue esa lógica en versión ligera: las estadísticas ordenan candidatos, pero las heurísticas lingüísticas corrigen ruido."
+       "text": "Pazienza *et al.* (2005) subrayan que la extracción terminológica combina enfoques lingüísticos y estadísticos, y esta unidad sigue esa lógica en versión ligera: las estadísticas ordenan los candidatos, y las heurísticas lingüísticas corrigen el ruido."
       }
      ]
     },
@@ -523,11 +523,11 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La extracción terminológica contemporánea incluye métodos basados en reglas, estadística, aprendizaje automático, modelos neuronales y enfoques híbridos. {{cite:tran2023}}Tran et al. (2023){{/cite}} revisan avances recientes, y Blandón Andrade et al. (2026) muestran en un mapeo sistemático que los enfoques híbridos son muy frecuentes en la literatura reciente, combinando componentes lingüísticos y estadísticos."
+       "text": "La extracción terminológica contemporánea incluye métodos basados en reglas, estadística, aprendizaje automático, modelos neuronales y enfoques híbridos. Tran *et al.* (2023) revisan los avances recientes, y Blandón Andrade *et al.* (2026) muestran en un mapeo sistemático que los enfoques híbridos, que combinan componentes lingüísticos y estadísticos, abundan en la literatura reciente."
       },
       {
        "type": "p",
-       "text": "Entonces, ¿por qué esta unidad empieza con un método frecuencial? Porque es interpretable. Si un candidato aparece arriba en el ranking, podemos explicar:"
+       "text": "¿Por qué, entonces, esta unidad empieza con un método frecuencial? Porque es interpretable: si un candidato aparece arriba en la clasificación, podemos explicar:"
       },
       {
        "type": "ul",
@@ -542,7 +542,7 @@
       },
       {
        "type": "p",
-       "text": "Para aprender PLN desde Lingüística, esa transparencia es fundamental. Antes de usar modelos más complejos, conviene comprender qué significa representar un texto como tokens, contar n-gramas, normalizar por tamaño y contrastar corpus."
+       "text": "Para aprender PLN desde la lingüística, esa transparencia resulta fundamental: antes de usar modelos más complejos, conviene comprender qué significa representar un texto como *tokens*, contar n-gramas, normalizar por tamaño y contrastar corpus."
       }
      ]
     },
@@ -552,11 +552,11 @@
      "blocks": [
       {
        "type": "p",
-       "text": "KWIC significa Key Word In Context. Una concordancia KWIC muestra una unidad con algunas palabras a la izquierda y a la derecha. En extracción terminológica, KWIC ayuda a decidir si un candidato funciona como término en contexto."
+       "text": "KWIC significa *Key Word In Context*. Una concordancia KWIC muestra una unidad con algunas palabras a su izquierda y a su derecha, y en extracción terminológica ayuda a decidir si un candidato funciona como término en contexto."
       },
       {
        "type": "p",
-       "text": "Por ejemplo, si el candidato es modelo lenguaje, el KWIC puede revelar que la forma real en el texto era modelo de lenguaje y que la preposición se perdió al eliminar stopwords. Si el candidato es traducción automática, el KWIC puede mostrar si aparece como concepto técnico estable o como combinación casual."
+       "text": "Por ejemplo, si el candidato es *modelo lenguaje*, el KWIC puede revelar que la forma real en el texto era *modelo de lenguaje* y que la preposición se perdió al eliminar las *stopwords*; si el candidato es *traducción automática*, puede mostrar si aparece como concepto técnico estable o como combinación casual."
       },
       {
        "type": "p",
@@ -576,7 +576,7 @@
       },
       {
        "type": "p",
-       "text": "{{cite:nazar2023}}Nazar y Acosta (2023){{/cite}} plantean justamente una producción semiautomática de bases terminológicas: la máquina propone y organiza, pero la terminología final exige decisiones humanas."
+       "text": "{{cite:nazar2023}}Nazar y Acosta (2023){{/cite}} plantean precisamente una producción semiautomática de bases terminológicas, en la que la máquina propone y organiza, pero la terminología final exige decisiones humanas."
       }
      ]
     },
@@ -586,22 +586,22 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Evaluar una lista de candidatos terminológicos no es trivial. La precisión pregunta cuántos candidatos recuperados son realmente términos. El recall pregunta cuántos términos reales del dominio ha recuperado el sistema. Pero para calcular recall hace falta saber previamente cuáles son todos los términos correctos del corpus, y eso exige una anotación humana muy costosa. En la práctica docente, la evaluación puede empezar con preguntas cualitativas:"
+       "text": "Evaluar una lista de candidatos terminológicos no es trivial. La precisión pregunta cuántos candidatos recuperados son realmente términos, y el *recall*, cuántos términos reales del dominio ha recuperado el sistema; pero para calcular el *recall* hace falta saber de antemano cuáles son todos los términos correctos del corpus, lo que exige una anotación humana muy costosa. En la práctica docente, la evaluación puede empezar con preguntas cualitativas:"
       },
       {
        "type": "ul",
        "items": [
-        "¿Los candidatos top parecen propios del dominio?",
+        "¿Los primeros candidatos de la lista parecen propios del dominio?",
         "¿Hay expresiones incompletas?",
         "¿Se han perdido términos raros?",
         "¿El corpus general distorsiona la comparación?",
-        "¿El filtrado por stopwords elimina partes necesarias?",
+        "¿El filtrado por *stopwords* elimina partes necesarias?",
         "¿Los ejemplos KWIC apoyan la interpretación?"
        ]
       },
       {
        "type": "p",
-       "text": "Herramientas recientes como TermoUD integran análisis lingüístico con Universal Dependencies y ranking por C-value, mostrando que la investigación actual busca métodos más robustos y multilingües sin perder la corrección lingüística de los candidatos {{cite:marciniak2023}}(Marciniak et al., 2023){{/cite}}. La unidad, en cambio, trabaja una versión inicial: más sencilla, pero suficientemente clara para entender la arquitectura del problema."
+       "text": "Herramientas recientes como TermoUD integran el análisis lingüístico con Universal Dependencies y la clasificación por C-value, lo que muestra que la investigación actual busca métodos más fiables y multilingües sin perder la corrección lingüística de los candidatos {{cite:marciniak2023}}(Marciniak *et al.*, 2023){{/cite}}. En cambio, la unidad trabaja una versión inicial, más sencilla, pero lo bastante clara para entender la arquitectura del problema."
       }
      ]
     }
@@ -619,7 +619,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La unidad comienza importando librerías ligeras:"
+       "text": "La unidad comienza importando bibliotecas ligeras:"
       },
       {
        "type": "code",
@@ -627,11 +627,11 @@
       },
       {
        "type": "p",
-       "text": "re permite usar expresiones regulares para limpiar texto. Counter permite contar tokens y n-gramas. defaultdict se importa como estructura útil para acumulaciones, aunque el pipeline principal puede resolverse con Counter. log queda disponible para métricas que usan logaritmos, aunque la medida central de la unidad es weirdness. List, Tuple y Dict se usan en anotaciones de tipo: ayudan a leer qué recibe y qué devuelve cada función. pandas permite construir tablas de resultados."
+       "text": "`re` permite usar expresiones regulares para limpiar texto, y `Counter`, contar *tokens* y n-gramas. `defaultdict` se importa como estructura útil para acumulaciones, aunque el *pipeline* principal puede resolverse con `Counter`; `log` queda disponible para métricas que usan logaritmos, aunque la medida central de la unidad es *weirdness*; `List`, `Tuple` y `Dict` se usan en anotaciones de tipo, que ayudan a leer qué recibe y qué devuelve cada función, y `pandas` permite construir tablas de resultados."
       },
       {
        "type": "p",
-       "text": "Esta combinación muestra una decisión docente: trabajar con herramientas comprensibles y ejecutables en casi cualquier entorno. El objetivo no es depender de una pila pesada de PLN, sino entender el proceso."
+       "text": "Esta combinación responde a una decisión docente: trabajar con herramientas comprensibles y ejecutables en casi cualquier entorno, para entender el proceso sin depender de una pila pesada de PLN."
       }
      ]
     },
@@ -649,11 +649,11 @@
       },
       {
        "type": "p",
-       "text": "Cada elemento de la lista representa un documento o fragmento. La separación entre corpus especializado y corpus general es la base del análisis. Si ambos se mezclaran, no podríamos calcular especificidad de dominio."
+       "text": "Cada elemento de la lista representa un documento o fragmento. La separación entre corpus especializado y corpus general es la base del análisis: si ambos se mezclaran, no podríamos calcular la especificidad de dominio."
       },
       {
        "type": "p",
-       "text": "En un proyecto real, esas listas podrían venir de archivos .txt, columnas de un .csv, resultados de una extracción web o documentos ya segmentados. El formato de lista es didáctico: permite centrarse en el pipeline sin cargar todavía con lectura de archivos."
+       "text": "En un proyecto real, esas listas podrían proceder de archivos .txt, columnas de un .csv, resultados de una extracción web o documentos ya segmentados. El formato de lista es didáctico, porque permite centrarse en el *pipeline* sin cargar todavía con la lectura de archivos."
       }
      ]
     },
@@ -663,7 +663,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La función simple_tokenize convierte un texto en una lista de tokens:"
+       "text": "La función `simple_tokenize` convierte un texto en una lista de *tokens*:"
       },
       {
        "type": "code",
@@ -671,11 +671,11 @@
       },
       {
        "type": "p",
-       "text": "Primero, el texto pasa a minúsculas. Después se eliminan URLs. La expresión regular r\"[^a-záéíóúüñ\\s]\" reemplaza por espacios todo lo que no sea una letra española básica o un espacio. Esto elimina puntuación, números y símbolos. Luego se colapsan espacios repetidos y se divide por espacios."
+       "text": "Primero, el texto pasa a minúsculas y se eliminan las URL. La expresión regular `r\"[^a-záéíóúüñ\\s]\"` reemplaza por espacios todo lo que no sea una letra española básica o un espacio, con lo que desaparecen la puntuación, los números y los símbolos. Luego se colapsan los espacios repetidos y se divide por espacios."
       },
       {
        "type": "p",
-       "text": "La línea final elimina tokens de un solo carácter. Es una heurística simple para reducir ruido. En otros dominios podría ser problemática: una letra puede ser relevante en química, genética o matemáticas. De nuevo, limpiar es decidir."
+       "text": "La línea final elimina los *tokens* de un solo carácter, una heurística simple para reducir ruido que en otros dominios podría ser problemática: una letra puede ser relevante en química, genética o matemáticas. De nuevo, limpiar es decidir."
       }
      ]
     },
@@ -685,7 +685,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La unidad define una lista básica de stopwords en español:"
+       "text": "La unidad define una lista básica de *stopwords* en español:"
       },
       {
        "type": "code",
@@ -693,11 +693,11 @@
       },
       {
        "type": "p",
-       "text": "La función recibe una lista de tokens y devuelve otra lista sin palabras funcionales. La comprensión de listas se lee así: conserva cada token t si t no está en stopwords."
+       "text": "La función recibe una lista de *tokens* y devuelve otra sin palabras funcionales. La comprensión de listas se lee así: conserva cada *token* `t` si `t` no está en `stopwords`."
       },
       {
        "type": "p",
-       "text": "En extracción terminológica, este paso suele mejorar los rankings de unigramas, porque evita que palabras como de, la o que dominen los conteos. Pero para términos multipalabra en español puede generar formas incompletas. Por eso la ampliación de la unidad propone conservar stopwords en el interior de los n-gramas y filtrar solo los bordes."
+       "text": "En extracción terminológica, este paso suele mejorar las clasificaciones de unigramas, porque evita que palabras como *de*, *la* o *que* dominen los conteos. Pero en los términos multipalabra del español puede generar formas incompletas, y por eso la ampliación de la unidad propone conservar las *stopwords* en el interior de los n-gramas y filtrar solo los bordes."
       }
      ]
     },
@@ -707,7 +707,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La función preprocess_corpus transforma una lista de textos en una lista plana de tokens:"
+       "text": "La función `preprocess_corpus` transforma una lista de textos en una lista plana de *tokens*:"
       },
       {
        "type": "code",
@@ -715,7 +715,7 @@
       },
       {
        "type": "p",
-       "text": "all_tokens empieza vacío. El bucle recorre cada documento. Para cada documento, tokeniza, elimina stopwords y añade los tokens a la lista general mediante .extend(). La diferencia entre .append() y .extend() es importante: .append() añadiría la lista completa como un elemento; .extend() añade sus elementos uno a uno."
+       "text": "`all_tokens` empieza vacía. El bucle recorre cada documento y, para cada uno, tokeniza, elimina *stopwords* y añade los *tokens* a la lista general mediante `.extend()`. La diferencia entre `.append()` y `.extend()` importa: `.append()` añadiría la lista completa como un solo elemento, mientras que `.extend()` añade sus elementos uno a uno."
       },
       {
        "type": "p",
@@ -727,7 +727,7 @@
       },
       {
        "type": "p",
-       "text": "tokens_esp y tokens_gen son las representaciones limpias sobre las que se calculan frecuencias y n-gramas."
+       "text": "`tokens_esp` y `tokens_gen` son las representaciones limpias sobre las que se calculan frecuencias y n-gramas."
       }
      ]
     },
@@ -737,7 +737,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La función get_ngrams crea secuencias de n tokens consecutivos:"
+       "text": "La función `get_ngrams` crea secuencias de *n tokens* consecutivos:"
       },
       {
        "type": "code",
@@ -745,7 +745,7 @@
       },
       {
        "type": "p",
-       "text": "Si los tokens son [\"modelo\", \"lenguaje\", \"grande\"] y n = 2, el resultado es:"
+       "text": "Si los *tokens* son `[\"modelo\", \"lenguaje\", \"grande\"]` y `n = 2`, el resultado es:"
       },
       {
        "type": "code",
@@ -753,11 +753,11 @@
       },
       {
        "type": "p",
-       "text": "Los n-gramas se guardan como tuplas porque una tupla es inmutable y puede usarse como clave en un Counter. Una lista no podría usarse igual porque es mutable."
+       "text": "Los n-gramas se guardan como tuplas porque una tupla es inmutable y puede usarse como clave en un `Counter`, algo que no admite una lista, que es mutable."
       },
       {
        "type": "p",
-       "text": "Esta función es corta, pero muy potente. Permite generar candidatos de distinta longitud sin escribir tres funciones diferentes."
+       "text": "Esta función es corta, pero muy potente: permite generar candidatos de distinta longitud sin escribir tres funciones diferentes."
       }
      ]
     },
@@ -767,7 +767,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La función count_ngrams combina extracción y conteo:"
+       "text": "La función `count_ngrams` combina extracción y conteo:"
       },
       {
        "type": "code",
@@ -783,7 +783,7 @@
       },
       {
        "type": "p",
-       "text": "Los nombres son sistemáticos. freq1_esp significa frecuencias de unigramas en el corpus especializado. freq2_gen significa frecuencias de bigramas en el corpus general. Nombrar bien las variables es parte del trabajo profesional: ayuda a interpretar el código sin perderse."
+       "text": "Los nombres son sistemáticos: `freq1_esp` significa frecuencias de unigramas en el corpus especializado, y `freq2_gen`, frecuencias de bigramas en el corpus general. Nombrar bien las variables forma parte del trabajo profesional, porque ayuda a interpretar el código sin perderse."
       }
      ]
     },
@@ -801,11 +801,11 @@
       },
       {
        "type": "p",
-       "text": "La función une los elementos de la tupla con espacios. Así, (\"modelo\", \"lenguaje\") se convierte en \"modelo lenguaje\"."
+       "text": "La función une los elementos de la tupla con espacios, de modo que `(\"modelo\", \"lenguaje\")` se convierte en `\"modelo lenguaje\"`."
       },
       {
        "type": "p",
-       "text": "Esta conversión es necesaria porque la tabla final debe ser legible para una persona terminóloga. El sistema puede trabajar con tuplas; el informe debe presentar formas comprensibles."
+       "text": "Esta conversión es necesaria porque la tabla final debe ser legible para una persona terminóloga: el sistema puede trabajar con tuplas, pero el informe debe presentar formas comprensibles."
       }
      ]
     },
@@ -815,7 +815,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Antes de rankear, el código filtra candidatos poco frecuentes:"
+       "text": "Antes de ordenar, el código filtra los candidatos poco frecuentes:"
       },
       {
        "type": "code",
@@ -823,7 +823,7 @@
       },
       {
        "type": "p",
-       "text": "La función recorre un Counter. Si la frecuencia f alcanza el umbral min_freq, convierte el n-grama a texto y lo guarda en un diccionario."
+       "text": "La función recorre un `Counter` y, si la frecuencia `f` alcanza el umbral `min_freq`, convierte el n-grama en texto y lo guarda en un diccionario."
       },
       {
        "type": "p",
@@ -835,7 +835,7 @@
       },
       {
        "type": "p",
-       "text": "El umbral 2 es didáctico. En corpus reales, podría ser 3, 5 o más, según tamaño y objetivo. Subir el umbral aumenta precisión pero puede perder candidatos raros. Bajar el umbral aumenta cobertura pero introduce más ruido."
+       "text": "El umbral 2 es didáctico; en corpus reales podría ser 3, 5 o más, según el tamaño y el objetivo. Subir el umbral aumenta la precisión, pero puede hacer perder candidatos raros, y bajarlo aumenta la cobertura, pero introduce más ruido."
       }
      ]
     },
@@ -845,7 +845,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "El tamaño de cada corpus se calcula con len():"
+       "text": "El tamaño de cada corpus se calcula con `len()`:"
       },
       {
        "type": "code",
@@ -861,7 +861,7 @@
       },
       {
        "type": "p",
-       "text": "La condición evita dividir entre cero. Si N es 0, devuelve 0.0. Esta precaución parece pequeña, pero enseña una práctica importante: el código debe prever datos vacíos o mal preparados."
+       "text": "La condición evita dividir entre cero: si `N` es 0, devuelve `0.0`. Esta precaución parece pequeña, pero enseña una práctica importante, la de que el código debe prever datos vacíos o mal preparados."
       },
       {
        "type": "p",
@@ -875,7 +875,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La función central del ranking es compute_weirdness:"
+       "text": "La función central de la clasificación es `compute_weirdness`:"
       },
       {
        "type": "code",
@@ -883,7 +883,7 @@
       },
       {
        "type": "p",
-       "text": "La función recibe candidatos del corpus especializado y frecuencias del corpus general. Primero convierte las claves del Counter general a texto para poder compararlas con los candidatos. Luego calcula frecuencia absoluta, frecuencia relativa y weirdness para cada término."
+       "text": "La función recibe los candidatos del corpus especializado y las frecuencias del corpus general. Primero convierte las claves del `Counter` general en texto para poder compararlas con los candidatos, y luego calcula la frecuencia absoluta, la frecuencia relativa y la *weirdness* de cada término."
       },
       {
        "type": "p",
@@ -893,39 +893,39 @@
        "type": "table",
        "rows": [
         [
-         "Columna",
-         "Significado"
+         "**Columna**",
+         "**Significado**"
         ],
         [
-         "term",
+         "`term`",
          "Candidato a término"
         ],
         [
-         "freq_esp",
+         "`freq_esp`",
          "Frecuencia absoluta en corpus especializado"
         ],
         [
-         "rel_esp",
+         "`rel_esp`",
          "Frecuencia relativa en corpus especializado"
         ],
         [
-         "freq_gen",
+         "`freq_gen`",
          "Frecuencia absoluta en corpus general"
         ],
         [
-         "rel_gen",
+         "`rel_gen`",
          "Frecuencia relativa en corpus general"
         ],
         [
-         "weirdness",
+         "`weirdness`",
          "Puntuación contrastiva"
         ]
        ],
-       "title": "La salida es un DataFrame. Sus columnas son"
+       "title": "Columnas de la tabla de weirdness"
       },
       {
        "type": "p",
-       "text": "La tabla se ordena de mayor a menor weirdness. Eso permite revisar primero los candidatos más característicos del corpus especializado según esta medida."
+       "text": "La tabla se ordena de mayor a menor *weirdness*, lo que permite revisar primero los candidatos más característicos del corpus especializado según esta medida."
       }
      ]
     },
@@ -943,11 +943,11 @@
       },
       {
        "type": "p",
-       "text": "Cada tabla contiene candidatos de una longitud distinta. df_uni contiene unigramas, df_bi bigramas y df_tri trigramas."
+       "text": "Cada tabla contiene candidatos de una longitud distinta: `df_uni`, unigramas; `df_bi`, bigramas, y `df_tri`, trigramas."
       },
       {
        "type": "p",
-       "text": "Separar primero por longitud ayuda a observar diferencias. Los unigramas suelen ser más frecuentes, pero pueden ser más ambiguos. Los bigramas y trigramas suelen ser más informativos, pero aparecen menos. En terminología, muchas unidades relevantes son multipalabra, así que no conviene quedarse solo con unigramas."
+       "text": "Separar primero por longitud ayuda a observar diferencias: los unigramas suelen ser más frecuentes, pero pueden ser más ambiguos, mientras que los bigramas y trigramas suelen ser más informativos, aunque aparecen menos. En terminología, muchas unidades relevantes son multipalabra, así que no conviene quedarse solo con los unigramas."
       }
      ]
     },
@@ -957,7 +957,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Para crear un ranking general se añade una columna n:"
+       "text": "Para crear una clasificación general se añade una columna `n`:"
       },
       {
        "type": "code",
@@ -965,7 +965,7 @@
       },
       {
        "type": "p",
-       "text": "df.copy() evita modificar el DataFrame original. La columna n indica si el candidato procede de unigramas, bigramas o trigramas. Después se concatenan las tablas:"
+       "text": "`df.copy()` evita modificar el DataFrame original, y la columna `n` indica si el candidato procede de unigramas, bigramas o trigramas. Después se concatenan las tablas:"
       },
       {
        "type": "code",
@@ -973,7 +973,7 @@
       },
       {
        "type": "p",
-       "text": "pd.concat une varias tablas. ignore_index=True crea un índice nuevo. La ordenación final produce una lista única de candidatos."
+       "text": "`pd.concat` une varias tablas; `ignore_index=True` crea un índice nuevo, y la ordenación final produce una lista única de candidatos."
       }
      ]
     },
@@ -991,7 +991,7 @@
       },
       {
        "type": "p",
-       "text": "La función divide el candidato en palabras y comprueba si todas están en la lista negra. Si todas son demasiado generales, el candidato se elimina:"
+       "text": "La función divide el candidato en palabras y comprueba si todas están en la lista negra; si todas son demasiado generales, el candidato se elimina:"
       },
       {
        "type": "code",
@@ -999,11 +999,11 @@
       },
       {
        "type": "p",
-       "text": "El símbolo ~ niega la condición. Es decir, conserva las filas para las que contains_blacklisted es falso."
+       "text": "El símbolo `~` niega la condición, es decir, conserva las filas para las que `contains_blacklisted` es falso."
       },
       {
        "type": "p",
-       "text": "Esta heurística no es universal. En un dominio, corpus puede ser un término válido; en otro, puede ser demasiado general. La lista negra debe ajustarse al dominio y justificarse."
+       "text": "Esta heurística no es universal: en un dominio, *corpus* puede ser un término válido, y en otro, demasiado general. La lista negra debe ajustarse al dominio y justificarse."
       }
      ]
     },
@@ -1013,7 +1013,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La función KWIC busca una secuencia exacta dentro de tokens:"
+       "text": "La función KWIC busca una secuencia exacta dentro de *tokens*:"
       },
       {
        "type": "code",
@@ -1021,15 +1021,15 @@
       },
       {
        "type": "p",
-       "text": "term_tokens es la forma del candidato separada en palabras. Si el candidato es modelo lenguaje, term_tokens será [\"modelo\", \"lenguaje\"]. La función recorre todas las posiciones posibles y compara segmentos de longitud n."
+       "text": "`term_tokens` es la forma del candidato separada en palabras: si el candidato es *modelo lenguaje*, `term_tokens` será `[\"modelo\", \"lenguaje\"]`. La función recorre todas las posiciones posibles y compara segmentos de longitud `n`."
       },
       {
        "type": "p",
-       "text": "Cuando encuentra una coincidencia, toma contexto izquierdo y derecho. El término aparece marcado entre >> y <<. Este formato permite localizar visualmente el candidato dentro de su entorno."
+       "text": "Cuando encuentra una coincidencia, toma el contexto izquierdo y el derecho, y el término aparece marcado entre `>>` y `<<`, un formato que permite localizar visualmente el candidato dentro de su entorno."
       },
       {
        "type": "p",
-       "text": "El KWIC ayuda a pasar del ranking automático a la validación terminológica. Un candidato con score alto pero contextos extraños debe revisarse con cautela."
+       "text": "El KWIC ayuda a pasar de la clasificación automática a la validación terminológica: un candidato con una puntuación alta pero con contextos extraños debe revisarse con cautela."
       }
      ]
     },
@@ -1039,7 +1039,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La función build_mini_glossary transforma el ranking en una tabla más útil:"
+       "text": "La función `build_mini_glossary` transforma la clasificación en una tabla más útil:"
       },
       {
        "type": "code",
@@ -1047,11 +1047,11 @@
       },
       {
        "type": "p",
-       "text": "La función recorre los primeros candidatos del ranking. Para cada candidato, recupera su tamaño, puntuación, frecuencias y ejemplos KWIC. El resultado es una tabla que se parece más a una primera ficha de glosario."
+       "text": "La función recorre los primeros candidatos de la clasificación y, para cada uno, recupera su tamaño, su puntuación, sus frecuencias y sus ejemplos KWIC. El resultado es una tabla que se parece más a una primera ficha de glosario."
       },
       {
        "type": "p",
-       "text": "No es una base terminológica final. Le faltan definiciones, equivalencias, variantes, notas y validación. Pero sí ofrece una estructura inicial muy útil para una terminóloga."
+       "text": "No es una base terminológica final, porque le faltan definiciones, equivalencias, variantes, notas y validación, pero ofrece una estructura inicial muy útil para una terminóloga."
       }
      ]
     },
@@ -1061,7 +1061,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La función print_glossary prepara una salida más fácil de leer:"
+       "text": "La función `print_glossary` prepara una salida más fácil de leer:"
       },
       {
        "type": "code",
@@ -1069,11 +1069,11 @@
       },
       {
        "type": "p",
-       "text": "iterrows() recorre las filas del DataFrame. Las cadenas con f\"...\" permiten insertar valores de variables dentro del texto. La expresión {row['weirdness']:.2f} muestra la puntuación con dos decimales."
+       "text": "`iterrows()` recorre las filas del DataFrame; las cadenas con `f\"...\"` permiten insertar valores de variables dentro del texto, y la expresión `{row['weirdness']:.2f}` muestra la puntuación con dos decimales."
       },
       {
        "type": "p",
-       "text": "La presentación importa. Una lista terminológica no solo debe calcularse; debe leerse. Si el equipo humano no entiende la salida, no podrá validarla."
+       "text": "La presentación importa: una lista terminológica, además de calcularse, debe poder leerse, porque si el equipo humano no entiende la salida, no podrá validarla."
       }
      ]
     },
@@ -1083,25 +1083,25 @@
      "blocks": [
       {
        "type": "p",
-       "text": "La ampliación opcional introduce una mejora metodológica: no eliminar stopwords antes de crear n-gramas, pero sí filtrar candidatos que empiezan o terminan con stopword."
+       "text": "La ampliación opcional introduce una mejora metodológica: no eliminar las *stopwords* antes de crear n-gramas, pero sí filtrar los candidatos que empiezan o terminan con una *stopword*."
       },
       {
        "type": "p",
-       "text": "La razón es lingüística. En español, muchos términos multipalabra incluyen conectores internos:"
+       "text": "La razón es lingüística: en español, muchos términos multipalabra incluyen conectores internos:"
       },
       {
        "type": "ul",
        "items": [
-        "modelo de lenguaje;",
-        "procesamiento del lenguaje natural;",
-        "extracción de términos;",
-        "lingüística de corpus;",
-        "análisis de colocaciones."
+        "*modelo de lenguaje*;",
+        "*procesamiento del lenguaje natural*;",
+        "*extracción de términos*;",
+        "*lingüística de corpus*;",
+        "*análisis de colocaciones*."
        ]
       },
       {
        "type": "p",
-       "text": "Si eliminamos de, del o la antes de formar n-gramas, el candidato queda truncado. La ampliación propone:"
+       "text": "Si eliminamos *de*, *del* o *la* antes de formar n-gramas, el candidato queda truncado. La ampliación propone lo siguiente:"
       },
       {
        "type": "code",
@@ -1109,11 +1109,11 @@
       },
       {
        "type": "p",
-       "text": "La función acepta candidatos que no empiezan ni terminan con stopword, aunque puedan contener stopwords en el interior. Es una heurística simple y bastante realista para español."
+       "text": "La función acepta los candidatos que no empiezan ni terminan con *stopword*, aunque contengan *stopwords* en el interior, una heurística simple y bastante realista para el español."
       },
       {
        "type": "p",
-       "text": "Esta mejora muestra una lección central: el preprocesamiento no es una receta fija. Debe adaptarse al objetivo lingüístico. Para unigramas, eliminar stopwords puede ser razonable. Para términos multipalabra, conservar algunas puede ser necesario."
+       "text": "Esta mejora deja una lección importante: el preprocesamiento no es una receta fija y debe adaptarse al objetivo lingüístico. Para los unigramas, eliminar *stopwords* puede ser razonable; para los términos multipalabra, conservar algunas puede resultar necesario."
       }
      ]
     },
@@ -1128,17 +1128,17 @@
       {
        "type": "ul",
        "items": [
-        "Un ranking alto indica prioridad de revisión, no verdad terminológica.",
-        "Una frecuencia alta puede deberse a repetición temática, no necesariamente a valor terminológico.",
+        "Un puesto alto en la clasificación indica prioridad de revisión, no verdad terminológica.",
+        "Una frecuencia alta puede deberse a la repetición temática, y no necesariamente a un valor terminológico.",
         "Un candidato multipalabra puede estar incompleto por la limpieza.",
         "Un término raro puede quedar fuera si el umbral de frecuencia es alto.",
-        "Un corpus general pequeño puede inflar weirdness.",
+        "Un corpus general pequeño puede inflar *weirdness*.",
         "El KWIC debe revisarse antes de aceptar una entrada de glosario."
        ]
       },
       {
        "type": "p",
-       "text": "El informe profesional debe formular resultados con prudencia. En vez de escribir «estos son los términos del dominio», es mejor escribir «estos son candidatos priorizados por frecuencia relativa y contraste con corpus general». Esa frase es más larga, pero mucho más correcta."
+       "text": "El informe profesional debe formular los resultados con prudencia. En vez de escribir «estos son los términos del dominio», es mejor escribir «estos son candidatos priorizados por frecuencia relativa y contraste con un corpus general», una frase más larga, pero mucho más correcta."
       }
      ]
     }
@@ -1153,12 +1153,12 @@
      "type": "ul",
      "items": [
       "Confundir término con palabra frecuente.",
-      "Pensar que weirdness valida automáticamente una entrada terminológica.",
+      "Pensar que *weirdness* valida automáticamente una entrada terminológica.",
       "Comparar frecuencias absolutas entre corpus de tamaños distintos.",
       "Olvidar que un corpus general pequeño puede inflar puntuaciones.",
-      "Eliminar stopwords antes de formar n-gramas sin revisar si se deforman términos en español.",
+      "Eliminar *stopwords* antes de formar n-gramas sin revisar si se deforman términos en español.",
       "Creer que todos los términos relevantes aparecen muchas veces.",
-      "No distinguir unigramas, bigramas y trigramas al interpretar rankings.",
+      "No distinguir unigramas, bigramas y trigramas al interpretar *rankings*.",
       "Aceptar candidatos sin mirar ejemplos KWIC.",
       "Usar una lista negra sin justificarla.",
       "Presentar un miniglosario automático como glosario final validado."
@@ -1174,19 +1174,19 @@
    "blocks": [
     {
      "type": "p",
-     "text": "Esta unidad introduce la extracción automática de terminología como una tarea de apoyo al trabajo terminológico humano. El objetivo no es que Python decida por sí solo qué unidades son términos, sino que genere candidatos razonables a partir de datos observables."
+     "text": "Esta unidad presenta la extracción automática de terminología como una tarea de apoyo al trabajo terminológico humano: más que conseguir que Python decida por sí solo qué unidades son términos, se busca que genere candidatos razonables a partir de datos observables."
     },
     {
      "type": "p",
-     "text": "El marco teórico ha mostrado que la terminología combina lengua, conocimiento especializado y comunicación profesional. También ha situado la extracción automática en una tradición de investigación que distingue termhood, unithood, frecuencia, especificidad, n-gramas, C-value/NC-value, weirdness y validación humana."
+     "text": "El marco teórico ha mostrado que la terminología combina lengua, conocimiento especializado y comunicación profesional, y ha enmarcado la extracción automática en una tradición de investigación que distingue *termhood*, *unithood*, frecuencia, especificidad, n-gramas, C-value/NC-value, *weirdness* y validación humana."
     },
     {
      "type": "p",
-     "text": "La parte de Python enseña un pipeline transparente: preparar corpus, tokenizar, filtrar stopwords, extraer n-gramas, contar frecuencias, normalizar por tamaño, calcular weirdness, unificar rankings, depurar candidatos y generar ejemplos KWIC. Cada bloque produce una representación distinta del corpus y exige decisiones lingüísticas."
+     "text": "La parte de Python enseña un *pipeline* transparente: preparar corpus, tokenizar, filtrar *stopwords*, extraer n-gramas, contar frecuencias, normalizar por tamaño, calcular *weirdness*, unificar *rankings*, depurar candidatos y generar ejemplos KWIC. Cada bloque produce una representación distinta del corpus y exige decisiones lingüísticas."
     },
     {
      "type": "p",
-     "text": "El aprendizaje más importante es metodológico: una lista automática de candidatos no es un glosario. Es una herramienta de priorización. Su valor depende de la calidad de los corpus, de los filtros, de las métricas y de la revisión experta."
+     "text": "El aprendizaje más importante es metodológico: una lista automática de candidatos es una herramienta de priorización, no un glosario, y su valor depende de la calidad de los corpus, de los filtros, de las métricas y de la revisión experta."
     }
    ],
    "subsections": [],
@@ -1198,15 +1198,15 @@
    "blocks": [
     {
      "type": "p",
-     "text": "Al terminar la simulación, LexiData Solutions no entrega al cliente una base terminológica cerrada. Entrega un primer detector de candidatos: transparente, explicable y revisable. El equipo puede enseñar por qué un candidato aparece arriba en el ranking, cuántas veces aparece en el corpus especializado, si aparece en el corpus general y qué contextos KWIC lo respaldan."
+     "text": "Al terminar la simulación, LexiData Solutions no entrega al cliente una base terminológica cerrada, sino un primer detector de candidatos transparente, explicable y revisable. El equipo puede enseñar por qué un candidato aparece arriba en la clasificación, cuántas veces aparece en el corpus especializado, si aparece en el corpus general y qué contextos KWIC lo respaldan."
     },
     {
      "type": "p",
-     "text": "La terminóloga humana sigue tomando la decisión final. Pero ahora no empieza desde una página en blanco. Tiene una lista priorizada, ejemplos de uso y una justificación cuantitativa inicial. Esa es la aportación real del PLN en este escenario: no sustituir la lectura experta, sino hacerla más eficiente, más trazable y más documentada."
+     "text": "La terminóloga humana sigue tomando la decisión final, pero ya no empieza desde una página en blanco: tiene una lista priorizada, ejemplos de uso y una justificación cuantitativa inicial. Esa es la aportación real del PLN en este escenario: hacer la lectura experta más eficiente y mejor documentada, sin pretender sustituirla."
     },
     {
      "type": "p",
-     "text": "En el aula, los casos prácticos permitirán modificar umbrales, sustituir corpus y discutir qué candidatos merecen entrar en un glosario. Este manual te prepara para leer el código antes de hacerlo: entender qué mide cada función, qué presupone cada filtro y qué tipo de afirmación puede sostener cada salida."
+     "text": "En el aula, los casos prácticos permitirán modificar umbrales, sustituir corpus y discutir qué candidatos merecen entrar en un glosario. Este manual te prepara para leer el código antes de hacerlo: entender qué mide cada función, qué presupone cada filtro y qué tipo de afirmación permite cada salida."
     }
    ],
    "subsections": [],
@@ -1216,51 +1216,51 @@
  "references": [
   {
    "key": "ahmad1999",
-   "text": "Ahmad, K., Gillam, L. y Tostevin, L. (1999). Weirdness indexing for logical document extrapolation and retrieval (WILDER). In E. M. Voorhees & D. K. Harman (Eds.), *The Eighth Text Retrieval Conference (TREC-8)* (pp. 717-724). National Institute of Standards and Technology."
+   "text": "Ahmad, K., Gillam, L. y Tostevin, L. (1999). Weirdness indexing for logical document extrapolation and retrieval (WILDER). En E. M. Voorhees y D. K. Harman (Eds.), *The Eighth Text REtrieval Conference (TREC-8)* (pp. 717–724). National Institute of Standards and Technology."
   },
   {
    "key": "blandonandrade2026",
-   "text": "Blandón Andrade, J. C., Medina Otálvaro, C. M., Zapata Jaramillo, C. M. y Morales Ríos, A. (2026). Approaches, tools, algorithms, and methods for automatic term extraction: A systematic literature mapping. *Journal of Intelligent & Fuzzy Systems, 50*(6), 1803-1823. https://doi.org/10.1177/18758967251392652"
+   "text": "Blandón Andrade, J. C., Medina Otálvaro, C. M., Zapata Jaramillo, C. M. y Morales Ríos, A. (2026). Approaches, tools, algorithms, and methods for automatic term extraction: A systematic literature mapping. *Journal of Intelligent & Fuzzy Systems*, *50*(6), 1803–1823. https://doi.org/10.1177/18758967251392652"
   },
   {
    "key": "cabre1999",
-   "text": "Cabré, M. T. (1999). *Terminology: Theory, methods and applications*. John Benjamins. https://doi.org/10.1075/tlrp.1"
+   "text": "Cabré, M. T. (1999). *Terminology: Theory, methods and applications* (J. A. DeCesaris, Trad.). John Benjamins. https://doi.org/10.1075/tlrp.1"
   },
   {
    "key": "cabre2003",
-   "text": "Cabré, M. T. (2003). Theories of terminology: Their description, prescription and explanation. *Terminology, 9*(2), 163-199. https://doi.org/10.1075/term.9.2.03cab"
+   "text": "Cabré, M. T. (2003). Theories of terminology: Their description, prescription and explanation. *Terminology*, *9*(2), 163–199. https://doi.org/10.1075/term.9.2.03cab"
   },
   {
    "key": "frantzi2000",
-   "text": "Frantzi, K. T., Ananiadou, S. y Mima, H. (2000). Automatic recognition of multi-word terms: The C-value/NC-value method. *International Journal on Digital Libraries, 3*(2), 115-130. https://doi.org/10.1007/s007999900023"
+   "text": "Frantzi, K., Ananiadou, S. y Mima, H. (2000). Automatic recognition of multi-word terms: The C-value/NC-value method. *International Journal on Digital Libraries*, *3*(2), 115–130. https://doi.org/10.1007/s007999900023"
   },
   {
    "key": "heylen2015",
-   "text": "Heylen, K. y De Hertog, D. (2015). Automatic term extraction. En H. J. Kockaert y F. Steurs (Eds.), *Handbook of terminology* (Vol. 1). John Benjamins. https://doi.org/10.1075/hot.1.aut1"
+   "text": "Heylen, K. y De Hertog, D. (2015). Automatic term extraction. En H. J. Kockaert y F. Steurs (Eds.), *Handbook of terminology* (Vol. 1, pp. 203–221). John Benjamins. https://doi.org/10.1075/hot.1.aut1"
   },
   {
    "key": "kageura1996",
-   "text": "Kageura, K. y Umino, B. (1996). Methods of automatic term recognition: A review. *Terminology, 3*(2), 259-289. https://doi.org/10.1075/term.3.2.03kag"
+   "text": "Kageura, K. y Umino, B. (1996). Methods of automatic term recognition: A review. *Terminology*, *3*(2), 259–289. https://doi.org/10.1075/term.3.2.03kag"
   },
   {
    "key": "marciniak2023",
-   "text": "Marciniak, M., Rychlik, P. y Mykowiecka, A. (2023). TermoUD: A language-independent terminology extraction tool. In *Proceedings of the 17th Conference of the European Chapter of the Association for Computational Linguistics: System Demonstrations* (pp. 178-186). Association for Computational Linguistics. https://doi.org/10.18653/v1/2023.eacl-demo.21"
+   "text": "Marciniak, M., Rychlik, P. y Mykowiecka, A. (2023). TermoUD: A language-independent terminology extraction tool. En *Proceedings of the 17th Conference of the European Chapter of the Association for Computational Linguistics: System Demonstrations* (pp. 178–186). Association for Computational Linguistics. https://doi.org/10.18653/v1/2023.eacl-demo.21"
   },
   {
    "key": "nazar2023",
-   "text": "Nazar, R. y Acosta, N. (2023). Termout: A tool for the semi-automatic creation of term databases. In *Proceedings of the Workshop on Computational Terminology in NLP and Translation Studies (ConTeNTS) Incorporating the 16th Workshop on Building and Using Comparable Corpora (BUCC)* (pp. 9-18). INCOMA Ltd. https://aclanthology.org/2023.contents-1.2/"
+   "text": "Nazar, R. y Acosta, N. (2023). Termout: A tool for the semi-automatic creation of term databases. En *Proceedings of the Workshop on Computational Terminology in NLP and Translation Studies (ConTeNTS) Incorporating the 16th Workshop on Building and Using Comparable Corpora (BUCC)* (pp. 9–18). INCOMA. https://aclanthology.org/2023.contents-1.2/"
   },
   {
    "key": "pazienza2005",
-   "text": "Pazienza, M. T., Pennacchiotti, M. y Zanzotto, F. M. (2005). Terminology extraction: An analysis of linguistic and statistical approaches. In S. Sirmakessis (Ed.), *Knowledge mining* (pp. 255-279). Springer. https://doi.org/10.1007/3-540-32394-5_20"
+   "text": "Pazienza, M. T., Pennacchiotti, M. y Zanzotto, F. M. (2005). Terminology extraction: An analysis of linguistic and statistical approaches. En S. Sirmakessis (Ed.), *Knowledge mining* (pp. 255–279). Springer. https://doi.org/10.1007/3-540-32394-5_20"
   },
   {
    "key": "tran2023",
-   "text": "Tran, H. T. H., Martinc, M., Caporusso, J., Doucet, A. y Pollak, S. (2023). *The recent advances in automatic term extraction: A survey*. arXiv. https://arxiv.org/abs/2301.06767"
+   "text": "Tran, H. T. H., Martinc, M., Caporusso, J., Doucet, A. y Pollak, S. (2023). *The recent advances in automatic term extraction: A survey* [Prepublicación]. arXiv. https://arxiv.org/abs/2301.06767"
   },
   {
    "key": "verberne2016",
-   "text": "Verberne, S., Sappelli, M., Hiemstra, D. y Kraaij, W. (2016). Evaluation and analysis of term scoring methods for term extraction. *Information Retrieval Journal, 19*, 510-545. https://doi.org/10.1007/s10791-016-9286-2"
+   "text": "Verberne, S., Sappelli, M., Hiemstra, D. y Kraaij, W. (2016). Evaluation and analysis of term scoring methods for term extraction. *Information Retrieval Journal*, *19*(5), 510–545. https://doi.org/10.1007/s10791-016-9286-2"
   }
  ]
 }

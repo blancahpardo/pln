@@ -18,15 +18,15 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Imagina que te incorporas al equipo de evaluación lingüística de NexaLingua Quality Lab, una consultora especializada en control de calidad lingüística, evaluación de traducción automática y diseño de flujos de revisión para organizaciones multilingües. La empresa trabaja con instituciones públicas, editoriales científicas y departamentos de comunicación internacional que necesitan publicar textos fiables en varias lenguas."
+       "text": "Imagina que te incorporas al equipo de evaluación lingüística de **NexaLingua Quality Lab**, una consultora especializada en control de calidad lingüística, evaluación de traducción automática y diseño de flujos de revisión para organizaciones multilingües. La empresa trabaja con instituciones públicas, editoriales científicas y departamentos de comunicación internacional que necesitan publicar textos fiables en varias lenguas."
       },
       {
        "type": "p",
-       "text": "NexaLingua no se presenta como una agencia que sustituye a traductores y revisores, sino como un laboratorio de evaluación aplicada: su trabajo consiste en medir, comparar y explicar la calidad de distintas salidas lingüísticas para que los equipos humanos puedan tomar mejores decisiones. En esta unidad, la empresa recibe un encargo concreto: un cliente institucional quiere explorar un flujo mixto de traducción automática más revisión humana."
+       "text": "NexaLingua se presenta como un laboratorio de evaluación aplicada, y no como una agencia que sustituya a traductores y revisores: su trabajo consiste en medir, comparar y explicar la calidad de distintas salidas lingüísticas para que los equipos humanos puedan tomar mejores decisiones. En esta unidad, la empresa recibe un encargo concreto: un cliente institucional quiere explorar un flujo mixto de traducción automática más revisión humana."
       },
       {
        "type": "p",
-       "text": "El cliente no pide una respuesta abstracta sobre si la traducción automática es «buena» o «mala». Necesita una decisión operativa:"
+       "text": "El cliente no pide una respuesta abstracta sobre si la traducción automática es «buena» o «mala»; necesita una decisión operativa:"
       },
       {
        "type": "ul",
@@ -40,11 +40,11 @@
       },
       {
        "type": "p",
-       "text": "Tu tarea consiste en construir un pequeño informe de evaluación. El equipo te proporciona un texto fuente, una traducción humana de referencia y una traducción automática. A partir de ahí, debes calcular varias métricas y, sobre todo, interpretarlas."
+       "text": "Tu tarea consiste en construir un pequeño informe de evaluación. El equipo te proporciona un texto fuente, una traducción humana de referencia y una traducción automática, y a partir de ahí debes calcular varias métricas y, sobre todo, interpretarlas."
       },
       {
        "type": "p",
-       "text": "El valor profesional de este trabajo no está solo en obtener números. Está en saber leerlos. Una precisión de 0.75 no significa automáticamente «traducción excelente». Un BLEU de 0.40 no significa automáticamente «traducción inútil». Cada métrica mide una dimensión concreta y deja fuera otras."
+       "text": "El valor profesional de este trabajo reside menos en obtener números que en saber leerlos. Una precisión de 0.75 no significa automáticamente «traducción excelente», del mismo modo que un BLEU de 0.40 no significa «traducción inútil»: cada métrica mide una dimensión concreta y deja fuera otras."
       }
      ]
     },
@@ -60,8 +60,8 @@
        "type": "table",
        "rows": [
         [
-         "Papel",
-         "Texto"
+         "**Papel**",
+         "**Texto**"
         ],
         [
          "Texto fuente",
@@ -76,11 +76,11 @@
          "Esos árboles eran grandes."
         ]
        ],
-       "title": "El caso inicial es deliberadamente sencillo"
+       "title": "Caso inicial: texto fuente, referencia y traducción automática"
       },
       {
        "type": "p",
-       "text": "La traducción automática no es absurda. Grandes y enormes están relacionadas semánticamente, aunque no sean idénticas. Por eso este caso es perfecto para aprender evaluación automática: las métricas basadas en coincidencia formal detectarán una diferencia, pero una lingüista deberá interpretar si esa diferencia es grave, aceptable o dependiente del contexto."
+       "text": "La traducción automática no es absurda: *grandes* y *enormes* están relacionadas semánticamente, aunque no sean idénticas. Por eso este caso sirve tan bien para aprender evaluación automática, porque las métricas basadas en coincidencia formal detectarán una diferencia, pero una lingüista deberá interpretar si esa diferencia es grave, aceptable o dependiente del contexto."
       },
       {
        "type": "p",
@@ -88,11 +88,11 @@
       },
       {
        "type": "p",
-       "text": "> Si una traducción automática se parece mucho a la referencia, pero cambia una palabra por otra próxima, ¿cómo reaccionan las métricas automáticas?"
+       "text": "Si una traducción automática se parece mucho a la referencia, pero cambia una palabra por otra próxima, ¿cómo reaccionan las métricas automáticas?"
       },
       {
        "type": "p",
-       "text": "Esta pregunta acompaña toda la unidad."
+       "text": "Esta pregunta recorre toda la unidad."
       }
      ]
     }
@@ -116,19 +116,19 @@
       "Cómo limpiar textos antes de compararlos.",
       "Cómo convertir una frase en una lista de palabras procesadas.",
       "Cómo calcular precisión léxica con Python.",
-      "Cómo calcular recall léxico.",
-      "Cómo combinar precision y recall mediante F1-score.",
+      "Cómo calcular *recall* léxico.",
+      "Cómo combinar *precision* y *recall* mediante el F1-score.",
       "Cómo comprobar Exact Match.",
-      "Cómo calcular índice Jaccard con conjuntos.",
+      "Cómo calcular el índice Jaccard con conjuntos.",
       "Cómo interpretar un conjunto de métricas léxicas.",
       "Qué mide BLEU y por qué utiliza n-gramas.",
       "Por qué BLEU puede bajar mucho en frases cortas.",
-      "Para qué sirve el suavizado o smoothing en BLEU.",
+      "Para qué sirve el suavizado (*smoothing*) en BLEU.",
       "Qué mide chrF y por qué compara caracteres.",
       "Por qué chrF puede complementar a BLEU.",
       "Qué mide METEOR y por qué su resultado depende de recursos lingüísticos.",
-      "Cómo usar bibliotecas como deep-translator, nltk y evaluate.",
-      "Cómo redactar una interpretación crítica de resultados automáticos."
+      "Cómo usar bibliotecas como `deep-translator`, `nltk` y `evaluate`.",
+      "Cómo redactar una interpretación argumentada de resultados automáticos."
      ]
     }
    ],
@@ -143,9 +143,9 @@
      "type": "table",
      "rows": [
       [
-       "Concepto",
-       "En Python",
-       "En evaluación lingüística"
+       "**Concepto**",
+       "**En Python**",
+       "**En evaluación lingüística**"
       ],
       [
        "Referencia",
@@ -159,32 +159,32 @@
       ],
       [
        "Limpieza",
-       ".lower(), .strip(), eliminación de puntuación",
+       "`.lower()`, `.strip()`, eliminación de puntuación",
        "Evita diferencias irrelevantes"
       ],
       [
        "Tokenización básica",
-       ".split()",
+       "`.split()`",
        "Divide el texto en palabras"
       ],
       [
-       "Precision",
+       "*Precision*",
        "Coincidencias sobre total generado",
        "Exactitud léxica de lo producido"
       ],
       [
-       "Recall",
+       "*Recall*",
        "Coincidencias sobre total de referencia",
        "Cobertura respecto a lo esperado"
       ],
       [
        "F1-score",
-       "Fórmula con precision y recall",
+       "Fórmula con *precision* y *recall*",
        "Equilibrio entre exactitud y cobertura"
       ],
       [
        "Exact Match",
-       "==",
+       "`==`",
        "Coincidencia total palabra por palabra"
       ],
       [
@@ -194,17 +194,17 @@
       ],
       [
        "BLEU",
-       "sentence_bleu()",
+       "`sentence_bleu()`",
        "Coincidencia de n-gramas"
       ],
       [
        "chrF",
-       "evaluate.load(\"chrf\")",
+       "`evaluate.load(\"chrf\")`",
        "Similitud formal por caracteres"
       ],
       [
        "METEOR",
-       "meteor_score()",
+       "`meteor_score()`",
        "Coincidencias flexibles y orden"
       ],
       [
@@ -213,7 +213,7 @@
        "Juicio lingüístico sobre las puntuaciones"
       ]
      ],
-     "title": "Concepto · En Python · En evaluación lingüística"
+     "title": "Mapa conceptual de la unidad: conceptos, Python y evaluación lingüística"
     }
    ],
    "subsections": [],
@@ -230,19 +230,19 @@
      "blocks": [
       {
        "type": "p",
-       "text": "En procesamiento del lenguaje natural y, de forma muy especial, en traducción automática, necesitamos valorar hasta qué punto la salida producida por un sistema se parece a una traducción humana de calidad. Cuando un motor traduce una frase, no basta con comprobar que haya generado una secuencia gramatical. También debemos preguntarnos si conserva el contenido del texto fuente, si respeta la estructura informativa, si utiliza un vocabulario adecuado, si mantiene la terminología esperada y si resulta natural en la lengua de llegada."
+       "text": "En procesamiento del lenguaje natural y, muy en particular, en traducción automática, necesitamos valorar hasta qué punto la salida producida por un sistema se parece a una traducción humana de calidad. Cuando un motor traduce una frase, no basta con comprobar que haya generado una secuencia gramatical: también debemos preguntarnos si conserva el contenido del texto fuente, si respeta la estructura informativa, si utiliza un vocabulario adecuado, si mantiene la terminología esperada y si resulta natural en la lengua de llegada."
       },
       {
        "type": "p",
-       "text": "La evaluación ideal sería siempre una evaluación humana realizada por traductores, lingüistas o anotadores expertos. Una persona puede detectar matices que una fórmula no ve: ambigüedad, ironía, estilo, adecuación pragmática, errores de sentido o problemas terminológicos. Sin embargo, la evaluación humana tiene límites prácticos. Es costosa, requiere tiempo, puede variar según el criterio de cada evaluador y no siempre resulta viable cuando se comparan muchos sistemas o grandes volúmenes de traducciones."
+       "text": "La evaluación ideal sería siempre una evaluación humana realizada por traductores, lingüistas o anotadores expertos, porque una persona puede detectar matices que una fórmula no ve: ambigüedad, ironía, estilo, adecuación pragmática, errores de sentido o problemas terminológicos. Pero la evaluación humana tiene límites prácticos: es costosa, requiere tiempo, puede variar según el criterio de cada evaluador y no siempre resulta viable cuando se comparan muchos sistemas o grandes volúmenes de traducciones."
       },
       {
        "type": "p",
-       "text": "Por esa razón se utilizan métricas automáticas: procedimientos que asignan una puntuación cuantitativa a una traducción de forma rápida, reproducible y relativamente barata. Estas métricas permiten comparar sistemas, detectar tendencias, analizar experimentos y decidir qué traducciones necesitan más revisión humana."
+       "text": "Por esa razón se utilizan **métricas automáticas**: procedimientos que asignan una puntuación cuantitativa a una traducción de forma rápida, reproducible y relativamente barata. Estas métricas permiten comparar sistemas, detectar tendencias, analizar experimentos y decidir qué traducciones necesitan más revisión humana."
       },
       {
        "type": "p",
-       "text": "Ahora bien, una métrica automática no debe confundirse con una verdad absoluta. Una puntuación es un indicador, no una explicación completa de la calidad. La competencia lingüística sigue siendo necesaria para interpretar qué mide esa puntuación, qué deja fuera y en qué contexto puede utilizarse con sentido."
+       "text": "Ahora bien, una métrica automática no debe confundirse con una verdad absoluta: una puntuación es un indicador, no una explicación completa de la calidad, y la competencia lingüística sigue siendo necesaria para interpretar qué mide, qué deja fuera y en qué contexto puede utilizarse con sentido."
       }
      ]
     },
@@ -258,9 +258,9 @@
        "type": "table",
        "rows": [
         [
-         "Elemento",
-         "Definición",
-         "Ejemplo"
+         "**Elemento**",
+         "**Definición**",
+         "**Ejemplo**"
         ],
         [
          "Texto fuente",
@@ -278,11 +278,11 @@
          "El niño abrió la ventana."
         ]
        ],
-       "title": "Elemento · Definición · Ejemplo"
+       "title": "Elementos que se comparan en la evaluación automática"
       },
       {
        "type": "p",
-       "text": "Muchas métricas clásicas comparan únicamente la hipótesis con la referencia. Es decir, no evalúan directamente si la hipótesis expresa correctamente el texto fuente, sino si se parece a una traducción humana disponible. Esta idea es crucial, porque la traducción es una tarea abierta: una misma frase puede traducirse de varias formas aceptables."
+       "text": "Muchas métricas clásicas comparan únicamente la hipótesis con la referencia; es decir, en lugar de evaluar directamente si la hipótesis expresa bien el texto fuente, miden si se parece a una traducción humana disponible. La idea pesa mucho, porque la traducción es una tarea abierta y una misma frase puede traducirse de varias formas aceptables."
       },
       {
        "type": "p",
@@ -292,9 +292,9 @@
        "type": "table",
        "rows": [
         [
-         "Texto fuente",
-         "Referencia",
-         "Hipótesis"
+         "**Texto fuente**",
+         "**Referencia**",
+         "**Hipótesis**"
         ],
         [
          "The child opened the window.",
@@ -302,11 +302,11 @@
          "El menor abrió la ventana."
         ]
        ],
-       "title": "Por ejemplo"
+       "title": "Hipótesis adecuada que no coincide con la referencia"
       },
       {
        "type": "p",
-       "text": "Desde el punto de vista lingüístico, la hipótesis puede ser adecuada en muchos contextos. Sin embargo, una métrica basada en coincidencias exactas de palabras penalizará la diferencia entre niño y menor. El ejemplo muestra uno de los problemas centrales de la evaluación automática: las métricas son útiles, pero no «entienden» la traducción del mismo modo que una persona."
+       "text": "Desde el punto de vista lingüístico, la hipótesis puede ser adecuada en muchos contextos, pero una métrica basada en coincidencias exactas de palabras penalizará la diferencia entre *niño* y *menor*. El ejemplo muestra uno de los problemas de fondo de la evaluación automática: las métricas son útiles, pero no «entienden» la traducción del mismo modo que una persona."
       },
       {
        "type": "p",
@@ -316,9 +316,9 @@
        "type": "table",
        "rows": [
         [
-         "Texto fuente",
-         "Referencia 1",
-         "Referencia 2"
+         "**Texto fuente**",
+         "**Referencia 1**",
+         "**Referencia 2**"
         ],
         [
          "The trees are tall.",
@@ -326,11 +326,11 @@
          "Los árboles tienen mucha altura."
         ]
        ],
-       "title": "Texto fuente · Referencia 1 · Referencia 2"
+       "title": "Dos referencias válidas para un mismo texto fuente"
       },
       {
        "type": "p",
-       "text": "Si solo existe la primera referencia, una hipótesis como Los árboles tienen mucha altura podría ser penalizada aunque sea correcta. Por eso la dependencia de una única referencia es una de las grandes limitaciones de muchas métricas clásicas."
+       "text": "Si solo existe la primera referencia, una hipótesis como *Los árboles tienen mucha altura* podría salir penalizada aunque sea correcta. Por eso la dependencia de una única referencia es una de las grandes limitaciones de muchas métricas clásicas."
       }
      ]
     },
@@ -340,15 +340,15 @@
      "blocks": [
       {
        "type": "p",
-       "text": "No todas las métricas observan lo mismo. Algunas comparan palabras exactas; otras comparan secuencias; otras se fijan en caracteres; otras intentan aproximarse al significado mediante modelos neuronales."
+       "text": "No todas las métricas observan lo mismo: algunas comparan palabras exactas; otras, secuencias; otras se fijan en caracteres, y otras intentan aproximarse al significado mediante modelos neuronales."
       },
       {
        "type": "table",
        "rows": [
         [
-         "Tipo de similitud",
-         "Qué observa",
-         "Ejemplo"
+         "**Tipo de similitud**",
+         "**Qué observa**",
+         "**Ejemplo**"
         ],
         [
          "Similitud superficial",
@@ -376,7 +376,7 @@
          "¿Suena bien en español?"
         ]
        ],
-       "title": "Tipo de similitud · Qué observa · Ejemplo"
+       "title": "Tipos de similitud que puede observar una métrica"
       },
       {
        "type": "p",
@@ -384,7 +384,7 @@
       },
       {
        "type": "p",
-       "text": "La conclusión inicial es sencilla: no existe una métrica que evalúe por sí sola todos los aspectos de una traducción. Por eso conviene combinar varias métricas e interpretarlas con prudencia."
+       "text": "De ahí una primera conclusión sencilla: ninguna métrica evalúa por sí sola todos los aspectos de una traducción, y por eso conviene combinar varias e interpretarlas con prudencia."
       },
       {
        "type": "image",
@@ -400,7 +400,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Las matrices de confusión se usan sobre todo en tareas de clasificación, pero son muy útiles para entender tres conceptos que aparecerán continuamente en evaluación: precision, recall y F1-score."
+       "text": "Las matrices de confusión se usan sobre todo en tareas de clasificación, pero son muy útiles para entender tres conceptos que aparecerán continuamente en evaluación: ***precision***, ***recall*** y **F1-score**."
       },
       {
        "type": "p",
@@ -410,8 +410,8 @@
        "type": "table",
        "rows": [
         [
-         "Caso",
-         "Significado"
+         "**Caso**",
+         "**Significado**"
         ],
         [
          "TP — True Positives",
@@ -430,13 +430,42 @@
          "El sistema predice correctamente «negativo»"
         ]
        ],
-       "title": "Caso · Significado"
+       "title": "Casos de una matriz de confusión"
       },
       {
-       "type": "docimg",
-       "src": "img/doc_01.jpg",
-       "alt": "Figura del manual",
-       "w": 469
+       "type": "image",
+       "src": "img/doc_02.jpg",
+       "alt": "Matriz de confusión y medidas derivadas: precision, recall y F1",
+       "caption": "Matriz de confusión y medidas derivadas: precision, recall y F1"
+      },
+      {
+       "type": "p",
+       "text": "Veámoslo con un ejemplo cercano al Tema 2. Un detector automático de falsos amigos revisa 100 segmentos de una traducción. Según la revisión humana, 20 de ellos contienen realmente un falso amigo y los 80 restantes, no. El sistema marca 25 segmentos como sospechosos: acierta en 15, se equivoca en 10 y deja escapar 5 de los que sí contenían el error. La matriz de confusión ordena estos resultados cruzando lo que ocurre realmente (filas) con lo que predice el sistema (columnas):"
+      },
+      {
+       "type": "table",
+       "rows": [
+        [
+         " ",
+         "**Predicción: con falso amigo**",
+         "**Predicción: sin falso amigo**"
+        ],
+        [
+         "**Realidad: con falso amigo**",
+         "15 (TP)",
+         "5 (FN)"
+        ],
+        [
+         "**Realidad: sin falso amigo**",
+         "10 (FP)",
+         "70 (TN)"
+        ]
+       ],
+       "title": "Matriz de confusión de un detector de falsos amigos aplicado a 100 segmentos"
+      },
+      {
+       "type": "p",
+       "text": "Cada celda se lee cruzando su fila y su columna. Los 15 verdaderos positivos (TP) son segmentos con falso amigo que el sistema ha marcado; los 10 falsos positivos (FP), segmentos correctos que ha marcado por error; los 5 falsos negativos (FN), errores reales que no ha visto, y los 70 verdaderos negativos (TN), segmentos correctos que ha dejado pasar con razón. La diagonal (15 y 70) recoge los aciertos, y las otras dos celdas, los dos tipos de error."
       },
       {
        "type": "p",
@@ -444,25 +473,29 @@
       },
       {
        "type": "docimg",
-       "src": "img/doc_02.png",
+       "src": "img/doc_03.png",
        "alt": "Figura del manual",
        "w": 185
       },
       {
        "type": "p",
-       "text": "La precision responde a la pregunta: de todo lo que el sistema ha marcado como positivo, ¿cuánto era realmente correcto?"
+       "text": "La ***precision*** responde a la pregunta: de todo lo que el sistema ha marcado como positivo, ¿cuánto era realmente correcto?"
       },
       {
        "type": "p",
-       "text": "El recall responde a otra pregunta: de todo lo que debería haber encontrado, ¿cuánto ha encontrado realmente?"
+       "text": "El ***recall*** responde a otra pregunta: de todo lo que debería haber encontrado, ¿cuánto ha encontrado realmente?"
       },
       {
        "type": "p",
-       "text": "El F1-score combina precision y recall mediante una media armónica. Se utiliza cuando queremos una sola medida que tenga en cuenta tanto los aciertos producidos como los elementos que faltan."
+       "text": "El **F1-score** combina *precision* y *recall* mediante una media armónica. Se utiliza cuando queremos una sola medida que tenga en cuenta tanto los aciertos producidos como los elementos que faltan."
       },
       {
        "type": "p",
-       "text": "En traducción automática no hablamos de verdaderos positivos y falsos positivos exactamente igual que en clasificación. Sin embargo, podemos trasladar la intuición: una traducción puede producir palabras correctas, omitir palabras importantes o añadir palabras innecesarias."
+       "text": "Con los datos del ejemplo, la *precision* es 15 / (15 + 10) = 0.60: de cada diez segmentos que el sistema marca, seis contienen realmente un falso amigo. El *recall* es 15 / (15 + 5) = 0.75: el sistema encuentra tres de cada cuatro falsos amigos reales. El F1 combina ambos valores: 2 × 0.60 × 0.75 / (0.60 + 0.75) ≈ 0.67. La matriz explica también por qué conviene desconfiar de la exactitud global, es decir, de la proporción de aciertos sobre el total: aquí vale (15 + 70) / 100 = 0.85, una cifra que parece alta porque la mayoría de los segmentos no tienen error, aunque al sistema se le escape uno de cada cuatro falsos amigos."
+      },
+      {
+       "type": "p",
+       "text": "En traducción automática no hablamos de verdaderos positivos y falsos positivos exactamente igual que en clasificación, pero podemos trasladar la intuición: una traducción puede producir palabras correctas, omitir palabras importantes o añadir palabras innecesarias."
       }
      ]
     },
@@ -472,7 +505,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Las métricas léxicas comparan la traducción candidata con la referencia a partir de las palabras que aparecen en cada una. Son fáciles de interpretar, pero tienen una limitación importante: normalmente no comprenden el significado. Cuentan coincidencias."
+       "text": "Las métricas léxicas comparan la traducción candidata con la referencia a partir de las palabras que aparecen en cada una. Son fáciles de interpretar, pero tienen una limitación importante: normalmente no comprenden el significado, se limitan a contar coincidencias."
       },
       {
        "type": "h4",
@@ -484,7 +517,7 @@
       },
       {
        "type": "docimg",
-       "src": "img/doc_03.png",
+       "src": "img/doc_04.png",
        "alt": "Figura del manual",
        "w": 283
       },
@@ -496,29 +529,29 @@
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis"
+         "**Referencia**",
+         "**Hipótesis**"
         ],
         [
          "los árboles son altos",
          "los árboles son grandes"
         ]
        ],
-       "title": "Ejemplo"
+       "title": "Ejemplo de cálculo de la precisión léxica"
       },
       {
        "type": "p",
-       "text": "Coinciden los, árboles y son. La hipótesis tiene cuatro palabras. Por tanto:"
+       "text": "Coinciden *los*, *árboles* y *son*, y la hipótesis tiene cuatro palabras. Por tanto:"
       },
       {
        "type": "docimg",
-       "src": "img/doc_04.png",
+       "src": "img/doc_05.png",
        "alt": "Figura del manual",
        "w": 131
       },
       {
        "type": "p",
-       "text": "La precisión indica que el 75 % de las palabras producidas por el sistema coincide con la referencia. Pero no nos dice si la palabra diferente cambia mucho o poco el significado. En este caso, grandes se parece parcialmente a altos, pero no son equivalentes en todos los contextos."
+       "text": "La precisión indica que el 75 % de las palabras producidas por el sistema coincide con la referencia, pero no dice si la palabra diferente cambia mucho o poco el significado. En este caso, *grandes* se parece parcialmente a *altos*, aunque no son equivalentes en todos los contextos."
       },
       {
        "type": "p",
@@ -528,19 +561,19 @@
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis"
+         "**Referencia**",
+         "**Hipótesis**"
         ],
         [
          "los árboles son altos",
          "los árboles"
         ]
        ],
-       "title": "Referencia · Hipótesis"
+       "title": "Precisión engañosa en una hipótesis demasiado corta"
       },
       {
        "type": "p",
-       "text": "Todas las palabras de la hipótesis aparecen en la referencia, pero la traducción está incompleta. Por eso necesitamos también recall."
+       "text": "Todas las palabras de la hipótesis aparecen en la referencia, pero la traducción está incompleta, y por eso necesitamos también el *recall*."
       },
       {
        "type": "h4",
@@ -548,39 +581,39 @@
       },
       {
        "type": "p",
-       "text": "El recall léxico mide qué proporción de las palabras de la referencia han sido recuperadas por la hipótesis."
-      },
-      {
-       "type": "docimg",
-       "src": "img/doc_05.png",
-       "alt": "Figura del manual",
-       "w": 203
-      },
-      {
-       "type": "p",
-       "text": "Si la referencia es los árboles son altos y la hipótesis es los árboles, el recall es:"
+       "text": "El *recall* léxico mide qué proporción de las palabras de la referencia recupera la hipótesis."
       },
       {
        "type": "docimg",
        "src": "img/doc_06.png",
        "alt": "Figura del manual",
+       "w": 203
+      },
+      {
+       "type": "p",
+       "text": "Si la referencia es *los árboles son altos* y la hipótesis es *los árboles*, el *recall* es:"
+      },
+      {
+       "type": "docimg",
+       "src": "img/doc_07.png",
+       "alt": "Figura del manual",
        "w": 109
       },
       {
        "type": "p",
-       "text": "El recall muestra que la hipótesis solo cubre la mitad de la referencia. Esta métrica ayuda a detectar omisiones: si el sistema deja sin traducir información importante, el recall baja."
+       "text": "El *recall* muestra que la hipótesis solo cubre la mitad de la referencia. Esta métrica ayuda a detectar omisiones, porque si el sistema deja sin traducir información importante, el *recall* baja."
       },
       {
        "type": "p",
-       "text": "La diferencia entre precision y recall puede explicarse así:"
+       "text": "La diferencia entre *precision* y *recall* puede explicarse así:"
       },
       {
        "type": "table",
        "rows": [
         [
-         "Situación",
-         "Precision",
-         "Recall"
+         "**Situación**",
+         "***Precision***",
+         "***Recall***"
         ],
         [
          "Traducción muy breve con palabras correctas",
@@ -598,7 +631,7 @@
          "Refleja cobertura de lo esperado"
         ]
        ],
-       "title": "La diferencia entre precision y recall puede explicarse así"
+       "title": "Comportamiento de precision y recall según el tipo de traducción"
       },
       {
        "type": "p",
@@ -608,19 +641,19 @@
        "type": "table",
        "rows": [
         [
-         "Métrica",
-         "Pregunta principal"
+         "**Métrica**",
+         "**Pregunta principal**"
         ],
         [
-         "Precision",
+         "*Precision*",
          "De lo que ha dicho el sistema, ¿cuánto coincide con la referencia?"
         ],
         [
-         "Recall",
+         "*Recall*",
          "De lo que decía la referencia, ¿cuánto ha recuperado el sistema?"
         ]
        ],
-       "title": "Es decir"
+       "title": "Pregunta principal de precision y recall"
       },
       {
        "type": "h4",
@@ -628,31 +661,31 @@
       },
       {
        "type": "p",
-       "text": "El F1-score combina precision y recall en una sola puntuación:"
-      },
-      {
-       "type": "docimg",
-       "src": "img/doc_07.png",
-       "alt": "Figura del manual",
-       "w": 165
-      },
-      {
-       "type": "p",
-       "text": "La media armónica penaliza los desequilibrios. Si una traducción tiene una precisión muy alta pero un recall muy bajo, el F1 no será alto. Por eso resulta útil cuando queremos una medida equilibrada."
-      },
-      {
-       "type": "p",
-       "text": "Si precision y recall valen 0.75, entonces:"
+       "text": "El F1-score combina *precision* y *recall* en una sola puntuación:"
       },
       {
        "type": "docimg",
        "src": "img/doc_08.png",
        "alt": "Figura del manual",
+       "w": 165
+      },
+      {
+       "type": "p",
+       "text": "La media armónica penaliza los desequilibrios: si una traducción tiene una precisión muy alta pero un *recall* muy bajo, el F1 no será alto, y por eso resulta útil cuando queremos una medida equilibrada."
+      },
+      {
+       "type": "p",
+       "text": "Si *precision* y *recall* valen 0.75, entonces:"
+      },
+      {
+       "type": "docimg",
+       "src": "img/doc_09.png",
+       "alt": "Figura del manual",
        "w": 132
       },
       {
        "type": "p",
-       "text": "El F1 léxico es más informativo que precision o recall por separado, pero sigue dependiendo de coincidencias de palabras. No entiende sinonimia, paráfrasis, estilo ni adecuación contextual."
+       "text": "El F1 léxico es más informativo que la *precision* o el *recall* por separado, pero sigue dependiendo de coincidencias de palabras y no entiende de sinonimia, paráfrasis, estilo ni adecuación contextual."
       },
       {
        "type": "h4",
@@ -664,7 +697,7 @@
       },
       {
        "type": "docimg",
-       "src": "img/doc_09.png",
+       "src": "img/doc_10.png",
        "alt": "Figura del manual",
        "w": 353
       },
@@ -672,9 +705,9 @@
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis",
-         "Exact Match"
+         "**Referencia**",
+         "**Hipótesis**",
+         "**Exact Match**"
         ],
         [
          "los árboles son altos",
@@ -692,11 +725,11 @@
          "0"
         ]
        ],
-       "title": "Referencia · Hipótesis · Exact Match"
+       "title": "Ejemplos de Exact Match"
       },
       {
        "type": "p",
-       "text": "Exact Match es muy fácil de entender, pero demasiado estricta para traducción automática. En tareas abiertas, una respuesta puede ser válida aunque no coincida palabra por palabra con la referencia. Por eso Exact Match solo suele ser adecuada en tareas cerradas, donde se espera una respuesta exacta, breve y normalizada."
+       "text": "Exact Match es muy fácil de entender, pero demasiado estricta para la traducción automática, porque en las tareas abiertas una respuesta puede ser válida aunque no coincida palabra por palabra con la referencia. Por eso solo suele ser adecuada en tareas cerradas, en las que se espera una respuesta exacta, breve y normalizada."
       },
       {
        "type": "h4",
@@ -708,7 +741,7 @@
       },
       {
        "type": "docimg",
-       "src": "img/doc_10.png",
+       "src": "img/doc_11.png",
        "alt": "Figura del manual",
        "w": 117
       },
@@ -733,15 +766,15 @@
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis"
+         "**Referencia**",
+         "**Hipótesis**"
         ],
         [
          "los árboles son altos",
          "los árboles son grandes"
         ]
        ],
-       "title": "Ejemplo"
+       "title": "Ejemplo de cálculo del índice Jaccard"
       },
       {
        "type": "code",
@@ -749,7 +782,7 @@
       },
       {
        "type": "p",
-       "text": "Jaccard es intuitivo porque mide solapamiento léxico. Sin embargo, ignora el orden y las repeticiones. Por tanto, no distingue bien entre una frase gramaticalmente correcta y una secuencia desordenada que contenga las mismas palabras."
+       "text": "Jaccard es intuitivo porque mide el solapamiento léxico, pero ignora el orden y las repeticiones, de modo que no distingue bien entre una frase gramaticalmente correcta y una secuencia desordenada que contenga las mismas palabras."
       }
      ]
     },
@@ -759,22 +792,22 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Para evaluar traducción automática no basta con saber si aparecen las mismas palabras. También importa el orden. La frase el perro muerde al hombre no significa lo mismo que el hombre muerde al perro, aunque contenga casi las mismas palabras."
+       "text": "Para evaluar traducción automática no basta con saber si aparecen las mismas palabras; también importa el orden. La frase *el perro muerde al hombre* no significa lo mismo que *el hombre muerde al perro*, aunque contenga casi las mismas palabras."
       },
       {
        "type": "p",
-       "text": "Un n-grama es una secuencia de n elementos consecutivos. En evaluación de traducción, esos elementos suelen ser palabras, aunque también pueden ser caracteres."
+       "text": "Un **n-grama** es una secuencia de *n* elementos consecutivos, que en evaluación de traducción suelen ser palabras, aunque también pueden ser caracteres."
       },
       {
        "type": "p",
-       "text": "Con la frase el gato duerme, obtenemos:"
+       "text": "Con la frase *el gato duerme* obtenemos:"
       },
       {
        "type": "table",
        "rows": [
         [
-         "Tipo",
-         "N-gramas"
+         "**Tipo**",
+         "**N-gramas**"
         ],
         [
          "Unigramas",
@@ -789,15 +822,15 @@
          "el gato duerme"
         ]
        ],
-       "title": "Con la frase el gato duerme, obtenemos"
+       "title": "N-gramas de la frase el gato duerme"
       },
       {
        "type": "p",
-       "text": "Cuanto mayor es el valor de n, más información sobre el orden se incorpora. Los unigramas miran palabras individuales. Los bigramas observan pares consecutivos. Los trigramas y 4-gramas captan fragmentos más largos de estructura."
+       "text": "Cuanto mayor es el valor de *n*, más información sobre el orden se incorpora: los unigramas miran palabras individuales; los bigramas, pares consecutivos, y los trigramas y 4-gramas captan fragmentos más largos de estructura."
       },
       {
        "type": "p",
-       "text": "Los n-gramas se utilizan en muchas áreas del PLN: modelado de lenguaje, análisis estadístico, detección de patrones, corrección ortográfica, clasificación textual y evaluación automática. En traducción automática son especialmente importantes porque permiten medir no solo qué palabras aparecen, sino también si aparecen en una secuencia similar a la referencia."
+       "text": "Los n-gramas se utilizan en muchas áreas del PLN: modelado de lenguaje, análisis estadístico, detección de patrones, corrección ortográfica, clasificación textual y evaluación automática. En traducción automática tienen mucho peso, porque permiten medir qué palabras aparecen y, además, si aparecen en una secuencia parecida a la de la referencia."
       }
      ]
     },
@@ -807,15 +840,15 @@
      "blocks": [
       {
        "type": "p",
-       "text": "BLEU, sigla de Bilingual Evaluation Understudy, es una de las métricas más influyentes en la historia de la traducción automática. Fue propuesta por {{cite:papineni2002}}Papineni et al. (2002){{/cite}} como una forma automática, rápida y económica de evaluar sistemas de traducción mediante la comparación entre traducciones generadas y traducciones humanas de referencia."
+       "text": "BLEU, sigla de **Bilingual Evaluation Understudy**, es una de las métricas más influyentes en la historia de la traducción automática. La propusieron Papineni *et al.* (2002) como una forma automática, rápida y económica de evaluar sistemas de traducción mediante la comparación entre traducciones generadas y traducciones humanas de referencia."
       },
       {
        "type": "p",
-       "text": "BLEU se basa en una idea sencilla: una buena traducción automática debería compartir muchos n-gramas con una o varias traducciones humanas de referencia. Por eso BLEU calcula coincidencias de n-gramas, normalmente desde unigramas hasta 4-gramas."
+       "text": "BLEU parte de una idea sencilla: una buena traducción automática debería compartir muchos n-gramas con una o varias traducciones humanas de referencia. Por eso calcula coincidencias de n-gramas, normalmente desde unigramas hasta 4-gramas."
       },
       {
        "type": "p",
-       "text": "Sin embargo, BLEU no cuenta simplemente todas las coincidencias. Utiliza una forma de precisión modificada, que evita que un sistema obtenga una puntuación artificialmente alta repitiendo muchas veces una palabra que aparece en la referencia."
+       "text": "Ahora bien, BLEU no cuenta sin más todas las coincidencias: utiliza una forma de **precisión modificada**, que evita que un sistema obtenga una puntuación artificialmente alta repitiendo muchas veces una palabra que aparece en la referencia."
       },
       {
        "type": "p",
@@ -825,41 +858,41 @@
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis mala"
+         "**Referencia**",
+         "**Hipótesis mala**"
         ],
         [
          "el gato duerme en casa",
          "el el el el el"
         ]
        ],
-       "title": "Ejemplo"
+       "title": "Hipótesis que repite una palabra de la referencia"
       },
       {
        "type": "p",
-       "text": "Si contáramos coincidencias de forma ingenua, la palabra el aparecería muchas veces en la hipótesis y podría producir una puntuación engañosa. BLEU limita las coincidencias según la frecuencia máxima observada en las referencias."
+       "text": "Si contáramos coincidencias de forma ingenua, la palabra *el* aparecería muchas veces en la hipótesis y podría producir una puntuación engañosa; BLEU limita las coincidencias según la frecuencia máxima observada en las referencias."
       },
       {
        "type": "p",
-       "text": "BLEU incorpora además una penalización por brevedad. Esta penalización evita que una traducción demasiado corta obtenga una puntuación alta solo porque las pocas palabras que contiene coinciden con la referencia."
+       "text": "BLEU incorpora además una **penalización por brevedad**, que evita que una traducción demasiado corta obtenga una puntuación alta solo porque las pocas palabras que contiene coinciden con la referencia."
       },
       {
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis"
+         "**Referencia**",
+         "**Hipótesis**"
         ],
         [
          "los árboles son altos y frondosos",
          "los árboles"
         ]
        ],
-       "title": "Referencia · Hipótesis"
+       "title": "Hipótesis afectada por la penalización por brevedad"
       },
       {
        "type": "p",
-       "text": "La hipótesis contiene palabras correctas, pero omite información. Sin penalización por brevedad, podría recibir una precisión relativamente alta. BLEU reduce la puntuación cuando la hipótesis es mucho más corta que la referencia."
+       "text": "La hipótesis contiene palabras correctas, pero omite información. Sin penalización por brevedad podría recibir una precisión relativamente alta, y por eso BLEU reduce la puntuación cuando la hipótesis es mucho más corta que la referencia."
       },
       {
        "type": "p",
@@ -869,10 +902,10 @@
        "type": "table",
        "rows": [
         [
-         "Tipo de n-grama",
-         "Referencia: esos árboles eran enormes",
-         "Hipótesis: esos árboles eran grandes",
-         "Coincidencias"
+         "**Tipo de n-grama**",
+         "**Referencia: esos árboles eran enormes**",
+         "**Hipótesis: esos árboles eran grandes**",
+         "**Coincidencias**"
         ],
         [
          "Unigramas",
@@ -899,11 +932,11 @@
          "0 de 1"
         ]
        ],
-       "title": "Un ejemplo conceptual"
+       "title": "Coincidencias de n-gramas entre referencia e hipótesis"
       },
       {
        "type": "p",
-       "text": "Este ejemplo muestra un aspecto fundamental de BLEU: un solo cambio léxico puede afectar a varios n-gramas. La sustitución de enormes por grandes afecta al unigrama, al bigrama, al trigrama y al 4-grama que contienen esa posición."
+       "text": "Este ejemplo muestra un rasgo esencial de BLEU: un solo cambio léxico puede afectar a varios n-gramas. La sustitución de *enormes* por *grandes* afecta al unigrama, al bigrama, al trigrama y al 4-grama que contienen esa posición."
       },
       {
        "type": "p",
@@ -913,8 +946,8 @@
        "type": "table",
        "rows": [
         [
-         "Ventaja",
-         "Explicación"
+         "**Ventaja**",
+         "**Explicación**"
         ],
         [
          "Es rápida",
@@ -933,7 +966,7 @@
          "Durante años fue una referencia estándar en traducción automática"
         ]
        ],
-       "title": "BLEU tiene ventajas claras"
+       "title": "Ventajas de BLEU"
       },
       {
        "type": "p",
@@ -943,8 +976,8 @@
        "type": "table",
        "rows": [
         [
-         "Limitación",
-         "Explicación"
+         "**Limitación**",
+         "**Explicación**"
         ],
         [
          "No entiende el significado",
@@ -967,15 +1000,15 @@
          "Una traducción puede compartir n-gramas y aun así alterar el sentido"
         ]
        ],
-       "title": "Pero también presenta limitaciones importantes"
+       "title": "Limitaciones de BLEU"
       },
       {
        "type": "p",
-       "text": "BLEU debe entenderse como una herramienta útil para comparar sistemas en condiciones controladas, no como una medida absoluta de «buena traducción»."
+       "text": "BLEU debe entenderse como una herramienta útil para comparar sistemas en condiciones controladas, y no como una medida absoluta de «buena traducción»."
       },
       {
        "type": "p",
-       "text": "La investigación posterior ha mostrado que la relación entre métricas automáticas y evaluación humana puede ser sensible a los datos, al dominio, al tipo de sistema evaluado y a la presencia de valores atípicos. {{cite:mathur2020}}Mathur et al. (2020){{/cite}}, por ejemplo, subrayan que la comparación entre métricas automáticas y juicios humanos no debe reducirse a una conclusión simple del tipo «esta métrica siempre es mejor». Para un uso responsable, BLEU debe interpretarse como una señal cuantitativa agregada y no como un veredicto completo sobre cada frase individual."
+       "text": "La investigación posterior ha mostrado que la relación entre las métricas automáticas y la evaluación humana puede ser sensible a los datos, al dominio, al tipo de sistema evaluado y a la presencia de valores atípicos. Mathur *et al.* (2020), por ejemplo, subrayan que la comparación entre métricas automáticas y juicios humanos no debe reducirse a una conclusión simple del tipo «esta métrica siempre es mejor». Para un uso responsable, BLEU debe interpretarse como una señal cuantitativa agregada, nunca como un veredicto completo sobre cada frase individual."
       }
      ]
     },
@@ -985,11 +1018,11 @@
      "blocks": [
       {
        "type": "p",
-       "text": "chrF es una métrica propuesta por {{cite:popovic2015}}Popović (2015){{/cite}} que evalúa traducciones mediante n-gramas de caracteres en lugar de n-gramas de palabras. Esta diferencia es importante porque permite detectar similitudes parciales entre palabras."
+       "text": "chrF es una métrica propuesta por {{cite:popovic2015}}Popović (2015){{/cite}} que evalúa traducciones mediante n-gramas de caracteres en lugar de n-gramas de palabras, una diferencia que importa porque permite detectar similitudes parciales entre palabras."
       },
       {
        "type": "p",
-       "text": "Mientras BLEU compara palabras o secuencias de palabras completas, chrF compara fragmentos de caracteres. Por ejemplo, entre traducir, traducción y traducido hay diferencias léxicas, pero también una raíz formal compartida. Una métrica basada en caracteres puede captar parte de esa relación."
+       "text": "Mientras BLEU compara palabras o secuencias de palabras completas, chrF compara fragmentos de caracteres. Por ejemplo, entre *traducir*, *traducción* y *traducido* hay diferencias léxicas, pero también una raíz formal compartida, y una métrica basada en caracteres puede captar parte de esa relación."
       },
       {
        "type": "p",
@@ -999,41 +1032,41 @@
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis"
+         "**Referencia**",
+         "**Hipótesis**"
         ],
         [
          "internacionalización",
          "internacionalizacion"
         ]
        ],
-       "title": "Ejemplo"
+       "title": "Similitud formal por caracteres ante una tilde ausente"
       },
       {
        "type": "p",
-       "text": "Aunque falta la tilde, las dos formas comparten casi todos sus caracteres. Una métrica basada en palabras podría tratarlas como tokens distintos. chrF, en cambio, reconocería una alta similitud formal."
+       "text": "Aunque falta la tilde, las dos formas comparten casi todos sus caracteres. Una métrica basada en palabras podría tratarlas como *tokens* distintos, mientras que chrF reconocería una alta similitud formal."
       },
       {
        "type": "p",
-       "text": "chrF resulta especialmente interesante para lenguas con variación morfológica, porque las palabras pueden cambiar por género, número, caso, persona, tiempo verbal o derivación."
+       "text": "chrF resulta muy interesante para las lenguas con variación morfológica, porque las palabras pueden cambiar por género, número, caso, persona, tiempo verbal o derivación."
       },
       {
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis"
+         "**Referencia**",
+         "**Hipótesis**"
         ],
         [
          "los investigadores analizaron los resultados",
          "las investigadoras analizaron el resultado"
         ]
        ],
-       "title": "Referencia · Hipótesis"
+       "title": "Variación morfológica entre referencia e hipótesis"
       },
       {
        "type": "p",
-       "text": "Hay diferencias de género y número, pero también mucho solapamiento formal entre investigadores e investigadoras, y entre resultados y resultado. chrF puede captar parte de esa proximidad formal, aunque no determine por sí sola si la traducción es correcta."
+       "text": "Hay diferencias de género y número, pero también mucho solapamiento formal entre *investigadores* e *investigadoras*, y entre *resultados* y *resultado*. chrF puede captar parte de esa proximidad formal, aunque no determine por sí sola si la traducción es correcta."
       },
       {
        "type": "p",
@@ -1043,8 +1076,8 @@
        "type": "table",
        "rows": [
         [
-         "Ventaja",
-         "Explicación"
+         "**Ventaja**",
+         "**Explicación**"
         ],
         [
          "Capta similitudes parciales",
@@ -1063,7 +1096,7 @@
          "No requiere entrenamiento de modelos neuronales"
         ]
        ],
-       "title": "Sus ventajas principales son"
+       "title": "Ventajas de chrF"
       },
       {
        "type": "p",
@@ -1073,8 +1106,8 @@
        "type": "table",
        "rows": [
         [
-         "Limitación",
-         "Explicación"
+         "**Limitación**",
+         "**Explicación**"
         ],
         [
          "Sigue siendo superficial",
@@ -1089,11 +1122,11 @@
          "Como muchas métricas con referencia, compara sobre todo hipótesis y referencia"
         ]
        ],
-       "title": "También tiene límites"
+       "title": "Limitaciones de chrF"
       },
       {
        "type": "p",
-       "text": "chrF++ incorpora también n-gramas de palabras. Es decir, no solo mira fragmentos de caracteres, sino también secuencias léxicas. Puede resultar útil cuando queremos añadir algo de sensibilidad al orden de palabras, pero para una introducción es menos transparente porque mezcla dos niveles: caracteres y palabras."
+       "text": "chrF++ incorpora también n-gramas de palabras, de modo que mira tanto fragmentos de caracteres como secuencias léxicas. Puede resultar útil cuando queremos añadir algo de sensibilidad al orden de palabras, pero para una introducción es menos transparente, porque mezcla dos niveles: caracteres y palabras."
       }
      ]
     },
@@ -1103,7 +1136,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "METEOR, sigla de Metric for Evaluation of Translation with Explicit ORdering, fue propuesta por {{cite:banerjee2005}}Banerjee y Lavie (2005){{/cite}}. Su objetivo era mejorar la correlación con juicios humanos respecto a métricas basadas exclusivamente en precisión de n-gramas."
+       "text": "{{cite:banerjee2005}}Banerjee y Lavie (2005){{/cite}} propusieron METEOR, sigla de **Metric for Evaluation of Translation with Explicit ORdering**, con el objetivo de mejorar la correlación con los juicios humanos respecto a las métricas basadas exclusivamente en la precisión de n-gramas."
       },
       {
        "type": "p",
@@ -1113,18 +1146,18 @@
        "type": "ul",
        "items": [
         "coincidencias exactas;",
-        "coincidencias por raíz o stemming;",
+        "coincidencias por raíz (*stemming*);",
         "coincidencias mediante sinónimos;",
         "penalizaciones cuando las palabras coincidentes aparecen en un orden muy fragmentado."
        ]
       },
       {
        "type": "p",
-       "text": "Esto la acerca más a la forma en que una persona podría comparar dos frases. No solo pregunta «¿son iguales las palabras?», sino también «¿hay palabras relacionadas?» y «¿aparecen en un orden razonable?»."
+       "text": "Esto la acerca a la forma en que una persona podría comparar dos frases: además de preguntar «¿son iguales las palabras?», pregunta «¿hay palabras relacionadas?» y «¿aparecen en un orden razonable?»."
       },
       {
        "type": "p",
-       "text": "METEOR se inspira en precision y recall, pero no los utiliza de forma tan simple como las métricas léxicas básicas. Da especial importancia al recall, porque en traducción es fundamental que no se pierda información relevante."
+       "text": "METEOR se inspira en la *precision* y el *recall*, pero no los utiliza de forma tan simple como las métricas léxicas básicas: da más peso al *recall*, porque en traducción es fundamental que no se pierda información relevante."
       },
       {
        "type": "p",
@@ -1133,32 +1166,32 @@
       {
        "type": "ul",
        "items": [
-        "Alineación. Se emparejan las palabras de la hipótesis con las de la referencia: primero las idénticas, después las que comparten raíz y, por último, los sinónimos. Cada palabra solo puede emparejarse una vez.",
-        "Media ponderada de precision y recall. Con las palabras emparejadas se calculan precision y recall y se combinan dando más peso al recall.",
-        "Penalización por fragmentación. Se comprueba si las palabras emparejadas aparecen agrupadas y en el mismo orden que en la referencia, o dispersas."
+        "**Alineación.** Se emparejan las palabras de la hipótesis con las de la referencia: primero las idénticas, después las que comparten raíz y, por último, los sinónimos. Cada palabra solo puede emparejarse una vez.",
+        "**Media ponderada de precision y recall.** Con las palabras emparejadas se calculan *precision* y *recall* y se combinan dando más peso al *recall*.",
+        "**Penalización por fragmentación.** Se comprueba si las palabras emparejadas aparecen agrupadas y en el mismo orden que en la referencia, o dispersas."
        ]
       },
       {
        "type": "p",
-       "text": "La media ponderada se denomina Fmean:"
+       "text": "La media ponderada se denomina *Fmean*:"
       },
       {
        "type": "docimg",
-       "src": "img/doc_11.png",
+       "src": "img/doc_12.png",
        "alt": "Figura del manual",
        "w": 246
       },
       {
        "type": "p",
-       "text": "El parámetro α controla el equilibrio entre precision y recall. En la formulación original y en NLTK, α = 0.9, de modo que el recall pesa nueve veces más que la precision. Por eso la fórmula clásica se escribe a veces como 10·P·R / (R + 9·P)."
+       "text": "El parámetro α controla el equilibrio entre *precision* y *recall*. En la formulación original y en NLTK, α = 0.9, de modo que el *recall* pesa nueve veces más que la *precision*. Por eso la fórmula clásica se escribe a veces como 10·P·R / (R + 9·P)."
       },
       {
        "type": "p",
-       "text": "Para medir el desorden, METEOR cuenta fragmentos (chunks): grupos de palabras emparejadas que aparecen contiguas y en el mismo orden en la hipótesis y en la referencia. Si todas las coincidencias forman un solo bloque, hay un fragmento; si están completamente dispersas, hay tantos fragmentos como coincidencias."
+       "text": "Para medir el desorden, METEOR cuenta **fragmentos** (*chunks*): grupos de palabras emparejadas que aparecen contiguas y en el mismo orden en la hipótesis y en la referencia. Si todas las coincidencias forman un solo bloque, hay un fragmento; si están completamente dispersas, hay tantos fragmentos como coincidencias."
       },
       {
        "type": "docimg",
-       "src": "img/doc_12.png",
+       "src": "img/doc_13.png",
        "alt": "Figura del manual",
        "w": 226
       },
@@ -1168,41 +1201,41 @@
       },
       {
        "type": "docimg",
-       "src": "img/doc_13.png",
+       "src": "img/doc_14.png",
        "alt": "Figura del manual",
        "w": 239
       },
       {
        "type": "p",
-       "text": "Veamos el cálculo con el ejemplo de recall del apartado 1.5.2:"
+       "text": "Veamos el cálculo con el ejemplo de *recall* del apartado 1.5.2:"
       },
       {
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis"
+         "**Referencia**",
+         "**Hipótesis**"
         ],
         [
          "los árboles son altos",
          "los árboles"
         ]
        ],
-       "title": "Veamos el cálculo con el ejemplo de recall del apartado 1.5.2"
+       "title": "Ejemplo de cálculo de METEOR"
       },
       {
        "type": "p",
-       "text": "Hay dos coincidencias (los y árboles), que forman un único fragmento:"
+       "text": "Hay dos coincidencias (*los* y *árboles*), que forman un único fragmento:"
       },
       {
        "type": "docimg",
-       "src": "img/doc_14.png",
+       "src": "img/doc_15.png",
        "alt": "Figura del manual",
        "w": 254
       },
       {
        "type": "p",
-       "text": "El F1 léxico de esta misma pareja sería 0.67. METEOR baja hasta 0.49 porque da mucho más peso al recall: la hipótesis es correcta en lo que dice, pero omite la mitad de la referencia."
+       "text": "El F1 léxico de esta misma pareja sería 0.67. METEOR baja hasta 0.49 porque da mucho más peso al *recall*: la hipótesis es correcta en lo que dice, pero omite la mitad de la referencia."
       },
       {
        "type": "p",
@@ -1212,23 +1245,23 @@
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis"
+         "**Referencia**",
+         "**Hipótesis**"
         ],
         [
          "the doctor examined the patient",
          "the physician examined the patient"
         ]
        ],
-       "title": "Ejemplo de coincidencia por sinónimos"
+       "title": "Coincidencia por sinónimos en METEOR"
       },
       {
        "type": "p",
-       "text": "Una métrica estrictamente léxica penalizaría doctor frente a physician. METEOR puede reconocer esa relación si dispone del recurso léxico adecuado, como WordNet para inglés."
+       "text": "Una métrica estrictamente léxica penalizaría *doctor* frente a *physician*, mientras que METEOR puede reconocer esa relación si dispone del recurso léxico adecuado, como WordNet para el inglés."
       },
       {
        "type": "p",
-       "text": "Con la implementación de NLTK, que usa WordNet, la hipótesis con physician obtiene 0.996, exactamente lo mismo que una hipótesis idéntica a la referencia: el emparejamiento por sinónimo cuenta como coincidencia completa."
+       "text": "Con la implementación de NLTK, que usa WordNet, la hipótesis con *physician* obtiene 0.996, exactamente lo mismo que una hipótesis idéntica a la referencia: el emparejamiento por sinónimo cuenta como coincidencia completa."
       },
       {
        "type": "p",
@@ -1238,9 +1271,9 @@
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis A",
-         "Hipótesis B"
+         "**Referencia**",
+         "**Hipótesis A**",
+         "**Hipótesis B**"
         ],
         [
          "the child opened the window",
@@ -1248,7 +1281,7 @@
          "window the opened child the"
         ]
        ],
-       "title": "Además, METEOR penaliza el desorden"
+       "title": "Penalización por desorden en METEOR"
       },
       {
        "type": "p",
@@ -1264,15 +1297,15 @@
       },
       {
        "type": "p",
-       "text": "Una cuestión importante es que muchas implementaciones de METEOR han estado especialmente desarrolladas para inglés, entre otras razones por la disponibilidad de recursos como WordNet. Esto no significa que la idea no sea aplicable a otras lenguas, sino que su rendimiento depende de los recursos lingüísticos disponibles."
+       "text": "Conviene tener en cuenta que muchas implementaciones de METEOR se han desarrollado sobre todo para el inglés, entre otras razones por la disponibilidad de recursos como WordNet. Eso no impide aplicar la idea a otras lenguas, pero su rendimiento depende de los recursos lingüísticos disponibles."
       },
       {
        "type": "p",
-       "text": "En la práctica, la configuración por defecto de NLTK usa el stemmer de Porter, diseñado para inglés, y el WordNet inglés para los sinónimos. En textos en español, METEOR se apoya casi solo en coincidencias exactas y en la penalización por orden. En el apartado 2.11 se verá cómo sustituir el stemmer por uno para español."
+       "text": "En la práctica, la configuración por defecto de NLTK usa el *stemmer* de Porter, diseñado para inglés, y el WordNet inglés para los sinónimos. En textos en español, METEOR se apoya casi solo en coincidencias exactas y en la penalización por orden. En el apartado 2.11 se verá cómo sustituir el *stemmer* por uno para español."
       },
       {
        "type": "p",
-       "text": "Para estudiantes con perfil lingüístico, esta observación es especialmente útil. Una métrica no es solo una fórmula matemática; también depende de decisiones lingüísticas previas, como la lematización, el stemming, la sinonimia o la disponibilidad de bases léxicas. Por eso dos implementaciones de una misma métrica pueden comportarse de forma distinta en función de la lengua, del dominio y de los recursos que utilicen."
+       "text": "Para estudiantes con perfil lingüístico, esta observación resulta muy útil. Una métrica es algo más que una fórmula matemática: depende también de decisiones lingüísticas previas, como la lematización, el *stemming*, la sinonimia o la disponibilidad de bases léxicas. Por eso dos implementaciones de una misma métrica pueden comportarse de forma distinta en función de la lengua, del dominio y de los recursos que utilicen."
       },
       {
        "type": "p",
@@ -1282,16 +1315,16 @@
        "type": "table",
        "rows": [
         [
-         "Ventaja",
-         "Explicación"
+         "**Ventaja**",
+         "**Explicación**"
         ],
         [
          "Es más flexible que una coincidencia exacta",
          "Puede reconocer raíces o sinónimos si dispone de recursos adecuados"
         ],
         [
-         "Combina precision y recall",
-         "No mira solo lo que produce la hipótesis, sino también lo que recupera de la referencia"
+         "Combina *precision* y *recall*",
+         "Además de lo que produce la hipótesis, mira lo que recupera de la referencia"
         ],
         [
          "Penaliza el desorden",
@@ -1302,7 +1335,7 @@
          "Su diseño intenta reflejar mejor diferencias lingüísticas relevantes"
         ]
        ],
-       "title": "Las ventajas principales de METEOR pueden resumirse así"
+       "title": "Ventajas de METEOR"
       },
       {
        "type": "p",
@@ -1312,8 +1345,8 @@
        "type": "table",
        "rows": [
         [
-         "Limitación",
-         "Explicación"
+         "**Limitación**",
+         "**Explicación**"
         ],
         [
          "Depende de recursos lingüísticos",
@@ -1321,7 +1354,7 @@
         ],
         [
          "Puede estar sesgada hacia determinadas lenguas",
-         "Muchas versiones se desarrollaron especialmente para inglés"
+         "Muchas versiones se desarrollaron sobre todo para inglés"
         ],
         [
          "Sigue sin comprender plenamente el significado",
@@ -1332,7 +1365,7 @@
          "Requiere más explicación y más decisiones de configuración"
         ]
        ],
-       "title": "Sus limitaciones también son importantes"
+       "title": "Limitaciones de METEOR"
       }
      ]
     },
@@ -1348,13 +1381,13 @@
        "type": "table",
        "rows": [
         [
-         "Grupo",
-         "Métricas",
-         "Qué comparan principalmente"
+         "**Grupo**",
+         "**Métricas**",
+         "**Qué comparan principalmente**"
         ],
         [
          "Métricas léxicas simples",
-         "Precision, recall, F1, Exact Match, Jaccard",
+         "*Precision*, *recall*, F1, Exact Match, Jaccard",
          "Palabras individuales o conjuntos de palabras"
         ],
         [
@@ -1368,7 +1401,7 @@
          "Caracteres, raíces, sinónimos y orden"
         ]
        ],
-       "title": "Las métricas clásicas pueden organizarse en varios grupos"
+       "title": "Grupos de métricas clásicas"
       },
       {
        "type": "p",
@@ -1378,12 +1411,12 @@
        "type": "table",
        "rows": [
         [
-         "Pregunta",
-         "Métrica adecuada"
+         "**Pregunta**",
+         "**Métrica adecuada**"
         ],
         [
          "¿Cuántas palabras coinciden?",
-         "Precision, recall, F1"
+         "*Precision*, *recall*, F1"
         ],
         [
          "¿La traducción es exactamente igual a la referencia?",
@@ -1406,11 +1439,11 @@
          "METEOR"
         ]
        ],
-       "title": "Cada grupo responde a una pregunta diferente"
+       "title": "Pregunta a la que responde cada métrica clásica"
       },
       {
        "type": "p",
-       "text": "La conclusión principal es que ninguna métrica clásica evalúa por sí sola todos los aspectos de una traducción. En investigación y desarrollo se recomienda interpretar varias métricas conjuntamente y, cuando sea posible, complementarlas con evaluación humana."
+       "text": "Por tanto, ninguna métrica clásica cubre todos los aspectos de una traducción, y en investigación y desarrollo se recomienda interpretar varias conjuntamente y, cuando sea posible, complementarlas con evaluación humana."
       }
      ]
     },
@@ -1420,7 +1453,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Las métricas clásicas fueron diseñadas en una época en la que la evaluación automática dependía principalmente de coincidencias superficiales. La traducción automática neuronal ha cambiado el escenario: los sistemas actuales pueden producir paráfrasis más fluidas, reformular estructuras y alejarse de la referencia sin necesariamente ser incorrectos."
+       "text": "Las métricas clásicas se diseñaron en una época en la que la evaluación automática dependía principalmente de coincidencias superficiales. La traducción automática neuronal ha cambiado el escenario: los sistemas actuales pueden producir paráfrasis más fluidas, reformular estructuras y alejarse de la referencia sin ser necesariamente incorrectos."
       },
       {
        "type": "p",
@@ -1430,10 +1463,10 @@
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis A",
-         "Hipótesis B",
-         "Hipótesis C"
+         "**Referencia**",
+         "**Hipótesis A**",
+         "**Hipótesis B**",
+         "**Hipótesis C**"
         ],
         [
          "El comité rechazó la propuesta.",
@@ -1442,19 +1475,19 @@
          "El comité aprobó la propuesta."
         ]
        ],
-       "title": "Ejemplo"
+       "title": "Paráfrasis y cambio de sentido frente a una misma referencia"
       },
       {
        "type": "p",
-       "text": "Una métrica basada en n-gramas puede penalizar la hipótesis B porque cambia la estructura sintáctica, aunque sea semánticamente equivalente. En cambio, la hipótesis C comparte varias palabras con la referencia, pero cambia el sentido principal: rechazó frente a aprobó."
+       "text": "Una métrica basada en n-gramas puede penalizar la hipótesis B porque cambia la estructura sintáctica, aunque sea semánticamente equivalente. En cambio, la hipótesis C comparte varias palabras con la referencia, pero cambia el sentido principal: *rechazó* frente a *aprobó*."
       },
       {
        "type": "p",
-       "text": "Este tipo de ejemplos motivó el desarrollo de métricas que no se limitaran a contar palabras, sino que utilizaran representaciones semánticas aprendidas por modelos neuronales. BERTScore, BLEURT y COMET pertenecen a esta familia."
+       "text": "Ejemplos como estos motivaron el desarrollo de métricas que, en lugar de limitarse a contar palabras, utilizaran representaciones semánticas aprendidas por modelos neuronales. BERTScore, BLEURT y COMET pertenecen a esta familia."
       },
       {
        "type": "p",
-       "text": "Una métrica semántica o neuronal utiliza modelos de lenguaje entrenados con grandes cantidades de texto para representar palabras, frases o documentos como vectores. Estos vectores se conocen como embeddings o representaciones distribucionales. La idea básica es que si dos palabras o frases tienen significados parecidos, sus representaciones vectoriales deberían estar relativamente próximas en el espacio semántico aprendido por el modelo."
+       "text": "Una métrica semántica o neuronal utiliza modelos de lenguaje entrenados con grandes cantidades de texto para representar palabras, frases o documentos como vectores, conocidos como *embeddings* o representaciones distribucionales. La idea básica es que, si dos palabras o frases tienen significados parecidos, sus representaciones vectoriales deberían estar relativamente próximas en el espacio semántico aprendido por el modelo."
       },
       {
        "type": "p",
@@ -1466,11 +1499,11 @@
       },
       {
        "type": "p",
-       "text": "BERTScore, propuesta por {{cite:zhang2020}}Zhang et al. (2020){{/cite}}, evalúa generación textual utilizando representaciones contextuales de modelos tipo BERT. En lugar de comprobar si dos palabras son exactamente iguales, compara la similitud entre los embeddings contextuales de los tokens de la hipótesis y los tokens de la referencia."
+       "text": "BERTScore, propuesta por Zhang *et al.* (2020), evalúa la generación textual con representaciones contextuales de modelos tipo BERT: en lugar de comprobar si dos palabras son exactamente iguales, compara la similitud entre los *embeddings* contextuales de los *tokens* de la hipótesis y los de la referencia."
       },
       {
        "type": "p",
-       "text": "La palabra contextual es fundamental. En modelos como BERT, una palabra no tiene siempre la misma representación: su vector cambia según el contexto. Banco no se representa igual en me senté en el banco que en fui al banco a sacar dinero."
+       "text": "La palabra **contextual** es fundamental. En modelos como BERT, una palabra no tiene siempre la misma representación, porque su vector cambia según el contexto: *banco* no se representa igual en *me senté en el banco* que en *fui al banco a sacar dinero*."
       },
       {
        "type": "p",
@@ -1480,8 +1513,8 @@
        "type": "ol",
        "items": [
         "Codifica la hipótesis y la referencia con un modelo de lenguaje preentrenado.",
-        "Compara cada token de la hipótesis con los tokens de la referencia mediante similitud vectorial.",
-        "Calcula puntuaciones análogas a precision, recall y F1, pero basadas en similitud semántica."
+        "Compara cada *token* de la hipótesis con los *tokens* de la referencia mediante similitud vectorial.",
+        "Calcula puntuaciones análogas a *precision*, *recall* y F1, pero basadas en similitud semántica."
        ]
       },
       {
@@ -1492,19 +1525,19 @@
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis"
+         "**Referencia**",
+         "**Hipótesis**"
         ],
         [
          "El médico examinó al paciente.",
          "El doctor revisó al paciente."
         ]
        ],
-       "title": "Ejemplo"
+       "title": "Ejemplo para BERTScore"
       },
       {
        "type": "p",
-       "text": "Una métrica léxica solo reconocerá coincidencias como el, al y paciente. BERTScore puede asignar similitud alta entre médico y doctor, y cierta similitud entre examinó y revisó."
+       "text": "Una métrica léxica solo reconocerá coincidencias como *el*, *al* y *paciente*, mientras que BERTScore puede asignar una similitud alta entre *médico* y *doctor*, y cierta similitud entre *examinó* y *revisó*."
       },
       {
        "type": "p",
@@ -1514,8 +1547,8 @@
        "type": "table",
        "rows": [
         [
-         "Ventaja",
-         "Explicación"
+         "**Ventaja**",
+         "**Explicación**"
         ],
         [
          "Reconoce similitud semántica",
@@ -1526,7 +1559,7 @@
          "La representación de cada palabra depende de la frase"
         ],
         [
-         "Mantiene la intuición de precision, recall y F1",
+         "Mantiene la intuición de *precision*, *recall* y F1",
          "Conecta con métricas ya vistas"
         ],
         [
@@ -1534,7 +1567,7 @@
          "No se limita a traducción automática"
         ]
        ],
-       "title": "Ventajas"
+       "title": "Ventajas de BERTScore"
       },
       {
        "type": "p",
@@ -1544,15 +1577,15 @@
        "type": "table",
        "rows": [
         [
-         "Limitación",
-         "Explicación"
+         "**Limitación**",
+         "**Explicación**"
         ],
         [
          "Depende del modelo preentrenado",
          "La calidad varía según lengua y modelo"
         ],
         [
-         "No siempre detecta errores críticos",
+         "No siempre detecta errores graves",
          "Puede asignar similitud alta a frases parecidas pero opuestas"
         ],
         [
@@ -1564,11 +1597,11 @@
          "La puntuación depende de representaciones internas"
         ]
        ],
-       "title": "Limitaciones"
+       "title": "Limitaciones de BERTScore"
       },
       {
        "type": "p",
-       "text": "BERTScore puede presentarse como una métrica que sustituye la pregunta «¿coinciden las palabras?» por otra más flexible: «¿se parecen las palabras en contexto?». Esa transición es importante para entender por qué las métricas modernas se alejan de la coincidencia literal y se acercan a representaciones semánticas. Aun así, BERTScore no debe interpretarse como una lectura humana del texto, sino como una comparación entre representaciones aprendidas por un modelo."
+       "text": "BERTScore puede presentarse como una métrica que sustituye la pregunta «¿coinciden las palabras?» por otra más flexible: «¿se parecen las palabras en contexto?». Esa transición ayuda a entender por qué las métricas modernas se alejan de la coincidencia literal y se acercan a representaciones semánticas. Aun así, BERTScore no equivale a una lectura humana del texto: es una comparación entre representaciones aprendidas por un modelo."
       },
       {
        "type": "h4",
@@ -1576,11 +1609,11 @@
       },
       {
        "type": "p",
-       "text": "BLEURT, propuesta por {{cite:sellam2020}}Sellam et al. (2020){{/cite}}, es una métrica aprendida basada en BERT. A diferencia de BERTScore, que se basa principalmente en similitudes entre embeddings, BLEURT se entrena explícitamente para predecir juicios humanos de calidad."
+       "text": "BLEURT, propuesta por Sellam *et al.* (2020), es una métrica aprendida basada en BERT. A diferencia de BERTScore, que se apoya principalmente en las similitudes entre *embeddings*, BLEURT se entrena expresamente para predecir juicios humanos de calidad."
       },
       {
        "type": "p",
-       "text": "Esta diferencia es importante: BLEURT no solo utiliza un modelo neuronal para representar frases, sino que aprende a asignar una puntuación que se parezca a la que darían evaluadores humanos."
+       "text": "La diferencia importa: además de utilizar un modelo neuronal para representar frases, BLEURT aprende a asignar una puntuación parecida a la que darían evaluadores humanos."
       },
       {
        "type": "p",
@@ -1603,9 +1636,9 @@
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis A",
-         "Hipótesis B"
+         "**Referencia**",
+         "**Hipótesis A**",
+         "**Hipótesis B**"
         ],
         [
          "La empresa anunció una reducción de costes.",
@@ -1613,11 +1646,11 @@
          "La empresa anunció un aumento de costes."
         ]
        ],
-       "title": "Ejemplo"
+       "title": "Ejemplo para BLEURT"
       },
       {
        "type": "p",
-       "text": "La hipótesis A cambia palabras, pero mantiene un significado parecido. La hipótesis B comparte más vocabulario superficial con la referencia, pero altera el sentido mediante aumento frente a reducción. BLEURT está diseñada para ser más sensible a este tipo de diferencias semánticas que una métrica puramente léxica."
+       "text": "La hipótesis A cambia palabras, pero mantiene un significado parecido. La hipótesis B comparte más vocabulario superficial con la referencia, pero altera el sentido con *aumento* frente a *reducción*. BLEURT se diseñó para ser más sensible a este tipo de diferencias semánticas que una métrica puramente léxica."
       },
       {
        "type": "p",
@@ -1627,8 +1660,8 @@
        "type": "table",
        "rows": [
         [
-         "Ventaja",
-         "Explicación"
+         "**Ventaja**",
+         "**Explicación**"
         ],
         [
          "Aprende de juicios humanos",
@@ -1639,7 +1672,7 @@
          "No depende solo de coincidencias de palabras"
         ],
         [
-         "Puede ser robusta ante paráfrasis",
+         "Puede resistir bien las paráfrasis",
          "Penaliza menos algunas reformulaciones válidas"
         ],
         [
@@ -1647,7 +1680,7 @@
          "Puede aplicarse a evaluación más allá de la traducción automática"
         ]
        ],
-       "title": "Las ventajas de BLEURT son"
+       "title": "Ventajas de BLEURT"
       },
       {
        "type": "p",
@@ -1657,8 +1690,8 @@
        "type": "table",
        "rows": [
         [
-         "Limitación",
-         "Explicación"
+         "**Limitación**",
+         "**Explicación**"
         ],
         [
          "Es una métrica aprendida",
@@ -1677,11 +1710,11 @@
          "Una métrica entrenada en ciertos datos no siempre generaliza igual de bien"
         ]
        ],
-       "title": "Sus limitaciones son"
+       "title": "Limitaciones de BLEURT"
       },
       {
        "type": "p",
-       "text": "BLEURT es especialmente útil para explicar que una métrica automática puede ser también un modelo supervisado: no solo aplica una fórmula, sino que aprende a evaluar a partir de ejemplos."
+       "text": "BLEURT sirve muy bien para explicar que una métrica automática puede ser también un modelo supervisado, que aprende a evaluar a partir de ejemplos en lugar de aplicar solo una fórmula."
       },
       {
        "type": "h4",
@@ -1689,11 +1722,11 @@
       },
       {
        "type": "p",
-       "text": "COMET, sigla de Crosslingual Optimized Metric for Evaluation of Translation, es una métrica neuronal diseñada específicamente para evaluación de traducción automática. Fue presentada por {{cite:rei2020}}Rei et al. (2020){{/cite}} como un marco neuronal multilingüe que puede explotar información del texto fuente, de la hipótesis y de la referencia."
+       "text": "COMET, sigla de **Crosslingual Optimized Metric for Evaluation of Translation**, es una métrica neuronal diseñada específicamente para la evaluación de la traducción automática. Rei *et al.* (2020) la presentaron como un marco neuronal multilingüe que puede aprovechar información del texto fuente, de la hipótesis y de la referencia."
       },
       {
        "type": "p",
-       "text": "Esta es una diferencia clave respecto a muchas métricas anteriores. BLEU, chrF, METEOR, BERTScore y BLEURT suelen centrarse principalmente en la comparación entre hipótesis y referencia. COMET puede incorporar también el texto fuente, lo que resulta muy relevante en traducción automática."
+       "text": "En esto se diferencia de muchas métricas anteriores. BLEU, chrF, METEOR, BERTScore y BLEURT suelen centrarse principalmente en la comparación entre hipótesis y referencia, mientras que COMET puede incorporar también el texto fuente, algo muy relevante en traducción automática."
       },
       {
        "type": "p",
@@ -1703,9 +1736,9 @@
        "type": "table",
        "rows": [
         [
-         "Texto fuente",
-         "Referencia",
-         "Hipótesis"
+         "**Texto fuente**",
+         "**Referencia**",
+         "**Hipótesis**"
         ],
         [
          "The patient did not receive the treatment.",
@@ -1713,11 +1746,11 @@
          "El paciente recibió el tratamiento."
         ]
        ],
-       "title": "Ejemplo"
+       "title": "Error de negación que invierte el significado"
       },
       {
        "type": "p",
-       "text": "La hipótesis se parece mucho a la referencia: solo falta no. Sin embargo, el error es grave porque invierte el significado. Una métrica que observe el texto fuente puede estar mejor situada para detectar problemas de adecuación."
+       "text": "La hipótesis se parece mucho a la referencia, porque solo falta *no*, pero el error es grave: invierte el significado. Una métrica que observe el texto fuente puede estar en mejores condiciones para detectar problemas de adecuación."
       },
       {
        "type": "p",
@@ -1743,12 +1776,12 @@
        "type": "table",
        "rows": [
         [
-         "Ventaja",
-         "Explicación"
+         "**Ventaja**",
+         "**Explicación**"
         ],
         [
          "Está diseñada para traducción automática",
-         "No es solo una métrica general de generación textual"
+         "Va más allá de una métrica general de generación textual"
         ],
         [
          "Puede usar el texto fuente",
@@ -1763,7 +1796,7 @@
          "Aprovecha modelos preentrenados multilingües o interlingües"
         ]
        ],
-       "title": "Las ventajas de COMET son"
+       "title": "Ventajas de COMET"
       },
       {
        "type": "p",
@@ -1773,8 +1806,8 @@
        "type": "table",
        "rows": [
         [
-         "Limitación",
-         "Explicación"
+         "**Limitación**",
+         "**Explicación**"
         ],
         [
          "Requiere modelos complejos",
@@ -1793,7 +1826,7 @@
          "Puede fallar ante fenómenos pragmáticos, terminológicos o discursivos específicos"
         ]
        ],
-       "title": "Sus limitaciones son"
+       "title": "Limitaciones de COMET"
       },
       {
        "type": "p",
@@ -1803,9 +1836,9 @@
        "type": "table",
        "rows": [
         [
-         "Métrica",
-         "Pregunta intuitiva",
-         "Nivel recomendado en esta asignatura"
+         "**Métrica**",
+         "**Pregunta intuitiva**",
+         "**Nivel recomendado en esta asignatura**"
         ],
         [
          "BERTScore",
@@ -1823,7 +1856,7 @@
          "Comprensión teórica"
         ]
        ],
-       "title": "Métrica · Pregunta intuitiva · Nivel recomendado en esta asignatura"
+       "title": "Pregunta intuitiva de cada métrica neuronal"
       },
       {
        "type": "p",
@@ -1833,16 +1866,16 @@
        "type": "table",
        "rows": [
         [
-         "Métrica",
-         "Tipo",
-         "Qué compara",
-         "Idea central"
+         "**Métrica**",
+         "**Tipo**",
+         "**Qué compara**",
+         "**Idea central**"
         ],
         [
          "BERTScore",
-         "Métrica basada en embeddings contextuales",
+         "Métrica basada en *embeddings* contextuales",
          "Hipótesis y referencia",
-         "Compara tokens mediante similitud semántica contextual"
+         "Compara *tokens* mediante similitud semántica contextual"
         ],
         [
          "BLEURT",
@@ -1857,7 +1890,7 @@
          "Predice calidad traductológica con modelos multilingües"
         ]
        ],
-       "title": "También pueden compararse por el tipo de información que utilizan"
+       "title": "Información que utiliza cada métrica neuronal"
       }
      ]
     },
@@ -1867,7 +1900,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Para alumnado de segundo curso, la idea más importante es que las métricas no deben interpretarse como verdades absolutas. Toda métrica simplifica la realidad. La traducción implica significado, gramática, pragmática, estilo, terminología, adecuación al encargo y naturalidad. Ninguna puntuación numérica recoge todo eso por sí sola."
+       "text": "Para el alumnado de segundo curso, la idea más importante es que las métricas no deben interpretarse como verdades absolutas. Toda métrica simplifica la realidad: la traducción abarca significado, gramática, pragmática, estilo, terminología, adecuación al encargo y naturalidad, y ninguna puntuación numérica recoge todo eso por sí sola."
       },
       {
        "type": "p",
@@ -1884,11 +1917,11 @@
       },
       {
        "type": "p",
-       "text": "La evaluación automática de traducciones ha evolucionado desde métricas basadas en coincidencias superficiales hasta métricas neuronales entrenadas para aproximarse a juicios humanos. Las métricas léxicas simples introducen conceptos básicos de comparación textual. BLEU incorpora el orden mediante n-gramas. chrF añade flexibilidad al trabajar con caracteres. METEOR incorpora correspondencias más flexibles. BERTScore, BLEURT y COMET representan una transición hacia la comparación semántica."
+       "text": "La evaluación automática de traducciones ha evolucionado desde métricas basadas en coincidencias superficiales hasta métricas neuronales entrenadas para aproximarse a los juicios humanos. Las métricas léxicas simples introducen los conceptos básicos de comparación textual; BLEU incorpora el orden mediante n-gramas; chrF añade flexibilidad al trabajar con caracteres; METEOR incorpora correspondencias más flexibles, y BERTScore, BLEURT y COMET representan una transición hacia la comparación semántica."
       },
       {
        "type": "p",
-       "text": "Para una estudiante de Tecnologías del Lenguaje, la idea esencial es esta: evaluar traducciones no consiste solo en calcular una puntuación, sino en entender qué aspecto de la calidad mide cada métrica, qué deja fuera y en qué contexto puede utilizarse con sentido."
+       "text": "Para una estudiante de Tecnologías del Lenguaje, lo esencial es entender que evaluar traducciones va mucho más allá de calcular una puntuación: hay que saber qué aspecto de la calidad recoge cada métrica, qué se le escapa y para qué tipo de decisión sirve."
       }
      ]
     }
@@ -1906,7 +1939,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Antes de calcular métricas, necesitamos preparar los textos. Si no lo hacemos, diferencias irrelevantes pueden contaminar los resultados."
+       "text": "Antes de calcular métricas, necesitamos preparar los textos, porque si no lo hacemos, diferencias irrelevantes pueden contaminar los resultados."
       },
       {
        "type": "p",
@@ -1916,19 +1949,19 @@
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis"
+         "**Referencia**",
+         "**Hipótesis**"
         ],
         [
          "Mi casa es azul",
          "mi casa es azul."
         ]
        ],
-       "title": "Imagina estas dos frases"
+       "title": "Diferencias irrelevantes entre referencia e hipótesis"
       },
       {
        "type": "p",
-       "text": "Desde el punto de vista lingüístico, son prácticamente iguales. Pero si Python compara las palabras de forma literal, puede considerar distintas Mi y mi, o azul y azul.. Para evitarlo, se aplica una limpieza mínima:"
+       "text": "Desde el punto de vista lingüístico, son prácticamente iguales. Pero si Python compara las palabras de forma literal, puede considerar distintas *Mi* y *mi*, o «azul» y «azul.». Para evitarlo, se aplica una limpieza mínima:"
       },
       {
        "type": "ul",
@@ -1948,7 +1981,7 @@
       },
       {
        "type": "p",
-       "text": "Esta función recibe una palabra y elimina signos de puntuación al principio o al final. Después podemos procesar una frase completa:"
+       "text": "Esta función recibe una palabra y elimina los signos de puntuación del principio o del final. Después podemos procesar una frase completa:"
       },
       {
        "type": "code",
@@ -1962,31 +1995,31 @@
        "type": "table",
        "rows": [
         [
-         "Línea",
-         "Qué hace"
+         "**Línea**",
+         "**Qué hace**"
         ],
         [
-         "texto.lower()",
+         "`texto.lower()`",
          "Convierte todo a minúsculas"
         ],
         [
-         "texto.split()",
+         "`texto.split()`",
          "Divide el texto por espacios"
         ],
         [
-         "[limpiar_palabra(p) for p in palabras]",
+         "`[limpiar_palabra(p) for p in palabras]`",
          "Limpia cada palabra de la lista"
         ],
         [
-         "return palabras",
+         "`return palabras`",
          "Devuelve la lista procesada"
         ]
        ],
-       "title": "Aquí aparecen varias ideas importantes"
+       "title": "Líneas de la función de procesamiento"
       },
       {
        "type": "p",
-       "text": "El resultado ya no es una frase como string, sino una lista de tokens:"
+       "text": "El resultado ya no es una frase en forma de `string`, sino una lista de *tokens*:"
       },
       {
        "type": "code",
@@ -1994,7 +2027,7 @@
       },
       {
        "type": "p",
-       "text": "La limpieza no es una operación inocente. Simplifica el texto para poder comparar. En una evaluación real, habría que decidir si se quieren conservar tildes, signos, mayúsculas, puntuación o segmentación más fina. En esta unidad usamos una limpieza básica porque permite entender la lógica de las métricas."
+       "text": "La limpieza no es una operación inocente: simplifica el texto para poder comparar. En una evaluación real habría que decidir si se quieren conservar tildes, signos, mayúsculas, puntuación o una segmentación más fina; en esta unidad usamos una limpieza básica porque permite entender la lógica de las métricas."
       }
      ]
     },
@@ -2016,7 +2049,7 @@
       },
       {
        "type": "p",
-       "text": "La expresión sum(1 for palabra in traduccion_prueba_proc if palabra in referencia_proc) recorre cada palabra de la traducción automática. Si esa palabra está también en la referencia, suma 1."
+       "text": "La expresión `sum(1 for palabra in traduccion_prueba_proc if palabra in referencia_proc)` recorre cada palabra de la traducción automática y, si esa palabra está también en la referencia, suma 1."
       },
       {
        "type": "p",
@@ -2026,19 +2059,19 @@
        "type": "table",
        "rows": [
         [
-         "Referencia procesada",
-         "Hipótesis procesada"
+         "**Referencia procesada**",
+         "**Hipótesis procesada**"
         ],
         [
          "['los', 'árboles', 'son', 'altos']",
          "['los', 'arboles', 'estan', 'grandes']"
         ]
        ],
-       "title": "En el caso"
+       "title": "Referencia e hipótesis procesadas"
       },
       {
        "type": "p",
-       "text": "solo coincide los, porque árboles y arboles no son idénticas por la tilde, son y estan son diferentes, y altos y grandes no coinciden. La precisión sería:"
+       "text": "solo coincide *los*, porque *árboles* y *arboles* no son idénticas por la tilde, *son* y *estan* son diferentes, y *altos* y *grandes* no coinciden. La precisión sería:"
       },
       {
        "type": "code",
@@ -2046,7 +2079,7 @@
       },
       {
        "type": "p",
-       "text": "Este resultado enseña algo importante: la métrica no sabe que árboles y arboles son variantes casi idénticas salvo por la tilde. Tampoco sabe que altos y grandes pueden estar semánticamente relacionados. Solo compara formas."
+       "text": "Este resultado enseña algo importante: la métrica no sabe que *árboles* y *arboles* son variantes casi idénticas salvo por la tilde, ni que *altos* y *grandes* pueden estar semánticamente relacionados. Solo compara formas."
       }
      ]
     },
@@ -2056,7 +2089,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Para generar una traducción automática desde Python puede usarse la biblioteca deep-translator, que permite acceder a varios motores de traducción online, entre ellos Google Translate."
+       "text": "Para generar una traducción automática desde Python puede usarse la biblioteca `deep-translator`, que permite acceder a varios motores de traducción en línea, entre ellos Google Translate."
       },
       {
        "type": "p",
@@ -2068,7 +2101,7 @@
       },
       {
        "type": "p",
-       "text": "Después se importa la clase GoogleTranslator:"
+       "text": "Después se importa la clase `GoogleTranslator`:"
       },
       {
        "type": "code",
@@ -2084,7 +2117,7 @@
       },
       {
        "type": "p",
-       "text": "Los argumentos source y target indican la lengua de origen y la lengua de destino. En este ejemplo, source=\"en\" indica inglés y target=\"es\" indica español."
+       "text": "Los argumentos `source` y `target` indican la lengua de origen y la de destino: en este ejemplo, `source=\"en\"` indica inglés y `target=\"es\"`, español."
       },
       {
        "type": "p",
@@ -2096,7 +2129,7 @@
       },
       {
        "type": "p",
-       "text": "Para las métricas léxicas, normalmente compararemos tradu_auto_proc con tradu_humana_proc. El texto fuente queda como contexto traductológico, aunque algunas métricas clásicas no lo usen directamente."
+       "text": "Para las métricas léxicas, normalmente compararemos `tradu_auto_proc` con `tradu_humana_proc`. El texto fuente queda como contexto traductológico, aunque algunas métricas clásicas no lo usen directamente."
       }
      ]
     },
@@ -2106,7 +2139,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "El recall léxico pregunta: de todas las palabras que aparecen en la referencia humana, ¿cuántas ha recuperado la traducción automática?"
+       "text": "El *recall* léxico pregunta: de todas las palabras que aparecen en la referencia humana, ¿cuántas ha recuperado la traducción automática?"
       },
       {
        "type": "p",
@@ -2118,7 +2151,7 @@
       },
       {
        "type": "p",
-       "text": "La estructura es muy parecida a la de precision, pero cambia el punto de vista. En precision recorremos la traducción automática; en recall recorremos la referencia."
+       "text": "La estructura es muy parecida a la de la *precision*, pero cambia el punto de vista: en la *precision* recorremos la traducción automática; en el *recall*, la referencia."
       },
       {
        "type": "p",
@@ -2128,26 +2161,26 @@
        "type": "table",
        "rows": [
         [
-         "Métrica",
-         "Punto de vista",
-         "Pregunta"
+         "**Métrica**",
+         "**Punto de vista**",
+         "**Pregunta**"
         ],
         [
-         "Precision",
+         "*Precision*",
          "Traducción automática",
          "¿Cuánto de lo que produjo el sistema coincide?"
         ],
         [
-         "Recall",
+         "*Recall*",
          "Referencia humana",
-         "¿Cuánto de lo esperado fue recuperado?"
+         "¿Cuánto de lo esperado se ha recuperado?"
         ]
        ],
-       "title": "Esta diferencia es lingüísticamente importante"
+       "title": "Punto de vista de precision y recall"
       },
       {
        "type": "p",
-       "text": "Una traducción puede tener alta precision y bajo recall si produce pocas palabras, pero correctas. También puede tener recall relativamente alto y precision más baja si produce muchas palabras añadidas."
+       "text": "Una traducción puede tener una *precision* alta y un *recall* bajo si produce pocas palabras, pero correctas, y también un *recall* relativamente alto y una *precision* más baja si produce muchas palabras añadidas."
       }
      ]
     },
@@ -2157,7 +2190,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "El F1-score combina precision y recall. Para evitar errores cuando ambas métricas valen cero, conviene comprobar antes que la suma sea mayor que cero:"
+       "text": "El F1-score combina *precision* y *recall*. Para evitar errores cuando ambas métricas valen cero, conviene comprobar antes que la suma sea mayor que cero:"
       },
       {
        "type": "code",
@@ -2165,11 +2198,11 @@
       },
       {
        "type": "p",
-       "text": "La condición if precision + recall > 0 evita una división entre cero. Este detalle técnico tiene una lectura metodológica: no siempre hay coincidencias entre hipótesis y referencia. Si no hay ninguna coincidencia, el F1 debe ser cero."
+       "text": "La condición `if precision + recall > 0` evita una división entre cero. Este detalle técnico tiene una lectura metodológica: no siempre hay coincidencias entre hipótesis y referencia, y si no hay ninguna, el F1 debe ser cero."
       },
       {
        "type": "p",
-       "text": "F1 resulta útil cuando queremos una medida equilibrada. Si una traducción produce muchas palabras correctas, pero omite mucha información, el F1 no se disparará. Si recupera mucho vocabulario, pero introduce muchas palabras no presentes en la referencia, tampoco será perfecto."
+       "text": "El F1 resulta útil cuando queremos una medida equilibrada: si una traducción produce muchas palabras correctas, pero omite mucha información, el F1 no se disparará, y si recupera mucho vocabulario, pero introduce muchas palabras ausentes de la referencia, tampoco será perfecto."
       }
      ]
     },
@@ -2187,11 +2220,11 @@
       },
       {
        "type": "p",
-       "text": "La expresión tradu_auto_proc == tradu_humana_proc devuelve True si ambas listas son exactamente iguales y False si hay cualquier diferencia."
+       "text": "La expresión `tradu_auto_proc == tradu_humana_proc` devuelve `True` si ambas listas son exactamente iguales y `False` si hay cualquier diferencia."
       },
       {
        "type": "p",
-       "text": "Esto implica que Exact Match será No si:"
+       "text": "Así, Exact Match será No si:"
       },
       {
        "type": "ul",
@@ -2206,7 +2239,7 @@
       },
       {
        "type": "p",
-       "text": "Por eso Exact Match es útil para enseñar la idea de coincidencia estricta, pero no suele ser una buena métrica para evaluar traducciones naturales. La traducción admite variación."
+       "text": "Por eso Exact Match es útil para enseñar la idea de coincidencia estricta, pero no suele ser una buena métrica para evaluar traducciones naturales, que admiten variación."
       }
      ]
     },
@@ -2216,7 +2249,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "El índice Jaccard compara conjuntos de palabras. En Python, los conjuntos se crean con set():"
+       "text": "El índice Jaccard compara conjuntos de palabras. En Python, los conjuntos se crean con `set()`:"
       },
       {
        "type": "code",
@@ -2224,11 +2257,11 @@
       },
       {
        "type": "p",
-       "text": "Jaccard ignora el orden y las repeticiones. Por eso puede ser útil para medir solapamiento de vocabulario, pero no para evaluar estructura sintáctica."
+       "text": "Jaccard ignora el orden y las repeticiones, de modo que puede servir para medir el solapamiento de vocabulario, pero no para evaluar la estructura sintáctica."
       },
       {
        "type": "p",
-       "text": "En el ejemplo Esos árboles eran enormes frente a Esos árboles eran grandes, los conjuntos son:"
+       "text": "En el ejemplo *Esos árboles eran enormes* frente a *Esos árboles eran grandes*, los conjuntos son:"
       },
       {
        "type": "code",
@@ -2236,7 +2269,7 @@
       },
       {
        "type": "p",
-       "text": "La puntuación es inferior a precision y recall porque Jaccard compara el vocabulario compartido con todo el vocabulario distinto que aparece en ambas traducciones."
+       "text": "La puntuación es inferior a *precision* y *recall* porque Jaccard compara el vocabulario compartido con todo el vocabulario distinto que aparece en ambas traducciones."
       }
      ]
     },
@@ -2260,9 +2293,9 @@
        "type": "table",
        "rows": [
         [
-         "Métrica",
-         "Valor",
-         "Lectura"
+         "**Métrica**",
+         "**Valor**",
+         "**Lectura**"
         ],
         [
          "Precisión léxica",
@@ -2270,14 +2303,14 @@
          "El 75 % de las palabras generadas coincide con la referencia"
         ],
         [
-         "Recall léxico",
+         "*Recall* léxico",
          "0.75",
-         "El 75 % de la referencia fue recuperado"
+         "Se recupera el 75 % de la referencia"
         ],
         [
          "F1-score",
          "0.75",
-         "Hay equilibrio entre precision y recall"
+         "Hay equilibrio entre *precision* y *recall*"
         ],
         [
          "Jaccard",
@@ -2290,11 +2323,11 @@
          "Las frases no son idénticas"
         ]
        ],
-       "title": "Un conjunto de resultados puede ser"
+       "title": "Informe de métricas léxicas"
       },
       {
        "type": "p",
-       "text": "La interpretación profesional sería: la traducción automática es bastante buena desde el punto de vista léxico, pero no idéntica. Cambiar una palabra por otra próxima puede hacer que Exact Match sea No, aunque otras métricas sigan siendo altas."
+       "text": "La interpretación profesional sería esta: la traducción automática es bastante buena desde el punto de vista léxico, pero no idéntica, y cambiar una palabra por otra próxima puede hacer que Exact Match sea No, aunque otras métricas sigan siendo altas."
       }
      ]
     },
@@ -2304,7 +2337,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "BLEU se puede calcular con nltk:"
+       "text": "BLEU se puede calcular con `nltk`:"
       },
       {
        "type": "code",
@@ -2312,7 +2345,7 @@
       },
       {
        "type": "p",
-       "text": "Para evaluar una frase, sentence_bleu() espera una lista de referencias y una candidata:"
+       "text": "Para evaluar una frase, `sentence_bleu()` espera una lista de referencias y una candidata:"
       },
       {
        "type": "code",
@@ -2325,20 +2358,20 @@
       {
        "type": "ol",
        "items": [
-        "reference = [tradu_humana_proc] usa una lista de listas porque BLEU permite comparar una hipótesis con varias referencias.",
-        "SmoothingFunction().method1 suaviza el cálculo para evitar que BLEU sea cero en frases cortas cuando no hay coincidencias de n-gramas largos."
+        "`reference = [tradu_humana_proc]` usa una lista de listas porque BLEU permite comparar una hipótesis con varias referencias.",
+        "`SmoothingFunction().method1` suaviza el cálculo para evitar que BLEU sea cero en frases cortas cuando no hay coincidencias de n-gramas largos."
        ]
       },
       {
        "type": "p",
-       "text": "En el caso Esos árboles eran enormes frente a Esos árboles eran grandes, el resultado puede sorprender porque la puntuación BLEU puede estar alrededor de 0.40. Las frases solo cambian en una palabra, pero esa palabra rompe varios n-gramas."
+       "text": "En el caso *Esos árboles eran enormes* frente a *Esos árboles eran grandes*, el resultado puede sorprender, porque la puntuación BLEU puede rondar 0.40: las frases solo cambian en una palabra, pero esa palabra rompe varios n-gramas."
       },
       {
        "type": "table",
        "rows": [
         [
-         "Nivel",
-         "Coincidencias"
+         "**Nivel**",
+         "**Coincidencias**"
         ],
         [
          "Unigramas",
@@ -2357,15 +2390,15 @@
          "0 de 1"
         ]
        ],
-       "title": "Nivel · Coincidencias"
+       "title": "Coincidencias de n-gramas en el caso de los árboles"
       },
       {
        "type": "p",
-       "text": "BLEU combina estas precisiones mediante un promedio geométrico. Si un nivel tiene cero coincidencias, la puntuación baja mucho. El smoothing evita que el resultado sea cero total, pero no elimina la penalización."
+       "text": "BLEU combina estas precisiones mediante un promedio geométrico, de modo que, si un nivel tiene cero coincidencias, la puntuación baja mucho. El suavizado evita que el resultado sea cero, pero no elimina la penalización."
       },
       {
        "type": "p",
-       "text": "La lectura lingüística es clara: BLEU no solo mide palabras sueltas. Mide continuidad formal. Por eso una diferencia en la última palabra afecta a toda la secuencia final."
+       "text": "La lectura lingüística es clara: más que palabras sueltas, BLEU mide continuidad formal, y por eso una diferencia en la última palabra afecta a toda la secuencia final."
       }
      ]
     },
@@ -2375,7 +2408,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Para calcular chrF puede usarse la biblioteca evaluate, junto con sacrebleu:"
+       "text": "Para calcular chrF puede usarse la biblioteca `evaluate`, junto con `sacrebleu`:"
       },
       {
        "type": "code",
@@ -2391,7 +2424,7 @@
       },
       {
        "type": "p",
-       "text": "chrF trabaja con texto completo, no con listas de palabras procesadas. Por eso conviene usar las cadenas originales:"
+       "text": "chrF trabaja con el texto completo, y no con listas de palabras procesadas, de modo que conviene usar las cadenas originales:"
       },
       {
        "type": "code",
@@ -2399,18 +2432,18 @@
       },
       {
        "type": "p",
-       "text": "El resultado de compute() es un diccionario. La clave score contiene la puntuación principal."
+       "text": "El resultado de `compute()` es un diccionario cuya clave `score` contiene la puntuación principal."
       },
       {
        "type": "p",
-       "text": "Es importante recordar que BLEU y METEOR aparecen en escala 0–1 en NLTK, mientras que chrF en evaluate suele aparecer en escala 0–100. Por tanto, no deben compararse los números de forma directa sin mirar la escala."
+       "text": "Conviene recordar que BLEU y METEOR aparecen en escala 0–1 en NLTK, mientras que chrF en `evaluate` suele aparecer en escala 0–100. Por tanto, los números no deben compararse directamente sin mirar la escala."
       },
       {
        "type": "table",
        "rows": [
         [
-         "Valor de chrF",
-         "Lectura orientativa"
+         "**Valor de chrF**",
+         "**Lectura orientativa**"
         ],
         [
          "Bajo",
@@ -2425,7 +2458,7 @@
          "La hipótesis se parece mucho a la referencia en su forma lingüística"
         ]
        ],
-       "title": "Valor de chrF · Lectura orientativa"
+       "title": "Lectura orientativa de chrF"
       },
       {
        "type": "p",
@@ -2439,7 +2472,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "METEOR también está disponible en nltk. Antes de usarlo hay que descargar WordNet, el recurso léxico que emplea para buscar sinónimos:"
+       "text": "METEOR también está disponible en `nltk`. Antes de usarlo hay que descargar WordNet, el recurso léxico que emplea para buscar sinónimos:"
       },
       {
        "type": "code",
@@ -2447,7 +2480,7 @@
       },
       {
        "type": "p",
-       "text": "Como sentence_bleu(), la función meteor_score() recibe una lista de referencias y una hipótesis, ambas ya tokenizadas:"
+       "text": "Como `sentence_bleu()`, la función `meteor_score()` recibe una lista de referencias y una hipótesis, ambas ya tokenizadas:"
       },
       {
        "type": "code",
@@ -2460,21 +2493,21 @@
       {
        "type": "ul",
        "items": [
-        "[tradu_humana_proc] es una lista de listas, igual que en BLEU. Si se proporcionan varias referencias, METEOR se queda con la puntuación más alta.",
-        "Las entradas deben ser listas de palabras, no cadenas de texto. Si se pasa una frase sin tokenizar, las versiones recientes de NLTK producen un error (TypeError)."
+        "`[tradu_humana_proc]` es una lista de listas, igual que en BLEU. Si se proporcionan varias referencias, METEOR se queda con la puntuación más alta.",
+        "Las entradas deben ser listas de palabras, no cadenas de texto: si se pasa una frase sin tokenizar, las versiones recientes de NLTK producen un error (`TypeError`)."
        ]
       },
       {
        "type": "p",
-       "text": "En el caso Esos árboles eran enormes frente a Esos árboles eran grandes, METEOR da 0.74, mientras que BLEU se quedaba en torno a 0.40:"
+       "text": "En el caso *Esos árboles eran enormes* frente a *Esos árboles eran grandes*, METEOR da 0.74, mientras que BLEU se quedaba en torno a 0.40:"
       },
       {
        "type": "table",
        "rows": [
         [
-         "Métrica",
-         "Valor",
-         "Por qué"
+         "**Métrica**",
+         "**Valor**",
+         "**Por qué**"
         ],
         [
          "BLEU",
@@ -2487,15 +2520,15 @@
          "Tres de cuatro palabras coinciden y forman un único fragmento ordenado"
         ]
        ],
-       "title": "Métrica · Valor · Por qué"
+       "title": "BLEU frente a METEOR en el caso de los árboles"
       },
       {
        "type": "p",
-       "text": "El contraste es instructivo. METEOR alinea palabras individuales y solo después mira el orden; por eso castiga menos una sustitución aislada. Pero tampoco reconoce grandes y enormes como equivalentes: en español no dispone de sinónimos."
+       "text": "El contraste es instructivo. METEOR alinea palabras individuales y solo después mira el orden, por lo que castiga menos una sustitución aislada; pero tampoco reconoce *grandes* y *enormes* como equivalentes, porque en español no dispone de sinónimos."
       },
       {
        "type": "p",
-       "text": "METEOR en español. Por defecto, meteor_score() utiliza el stemmer de Porter, pensado para inglés, y el WordNet inglés para los sinónimos. En español, la fase de sinónimos no actúa y la de raíces solo acierta por casualidad. La fase de raíces se puede mejorar pasando un stemmer para español mediante el argumento stemmer:"
+       "text": "**METEOR en español.** Por defecto, `meteor_score()` utiliza el *stemmer* de Porter, pensado para inglés, y el WordNet inglés para los sinónimos. En español, la fase de sinónimos no actúa y la de raíces solo acierta por casualidad, aunque esta última puede mejorarse pasando un *stemmer* para español mediante el argumento `stemmer`:"
       },
       {
        "type": "code",
@@ -2505,26 +2538,26 @@
        "type": "table",
        "rows": [
         [
-         "Configuración",
-         "METEOR",
-         "Qué ocurre"
+         "**Configuración**",
+         "**METEOR**",
+         "**Qué ocurre**"
         ],
         [
          "Por defecto (Porter)",
          "0.54",
-         "Solo empareja informe/informes, que Porter reduce por casualidad a la misma raíz"
+         "Solo empareja *informe*/*informes*, que Porter reduce por casualidad a la misma raíz"
         ],
         [
-         "SnowballStemmer(\"spanish\")",
+         "`SnowballStemmer(\"spanish\")`",
          "0.86",
-         "Además empareja muestra/muestran y baja/bajó"
+         "Además empareja *muestra*/*muestran* y *baja*/*bajó*"
         ]
        ],
-       "title": "Configuración · METEOR · Qué ocurre"
+       "title": "METEOR con distintos stemmers en español"
       },
       {
        "type": "p",
-       "text": "La lectura lingüística es clara: METEOR no es un número único, sino una familia de configuraciones. Al informar de un resultado conviene indicar qué stemmer y qué recurso de sinónimos se han usado."
+       "text": "De ahí se desprende que METEOR es una familia de configuraciones, más que un número único, y al informar de un resultado conviene indicar qué *stemmer* y qué recurso de sinónimos se han usado."
       },
       {
        "type": "p",
@@ -2534,8 +2567,8 @@
        "type": "table",
        "rows": [
         [
-         "Valor de METEOR",
-         "Lectura orientativa"
+         "**Valor de METEOR**",
+         "**Lectura orientativa**"
         ],
         [
          "Bajo",
@@ -2550,11 +2583,11 @@
          "La hipótesis recupera casi toda la referencia en un orden parecido"
         ]
        ],
-       "title": "Como con chrF, la escala orienta la lectura"
+       "title": "Lectura orientativa de METEOR"
       },
       {
        "type": "p",
-       "text": "METEOR complementa a BLEU: es menos severo con las sustituciones aisladas y más sensible a las omisiones, porque prioriza el recall. El cuaderno de práctica sobre METEOR de esta unidad aplica la métrica a ejemplos en español de los ámbitos médico, jurídico y económico."
+       "text": "METEOR complementa a BLEU: es menos severo con las sustituciones aisladas y más sensible a las omisiones, porque prioriza el *recall*. El cuaderno de práctica sobre METEOR de esta unidad aplica la métrica a ejemplos en español de los ámbitos médico, jurídico y económico."
       }
      ]
     },
@@ -2572,21 +2605,21 @@
       },
       {
        "type": "p",
-       "text": "El informe no debe limitarse a imprimir números. Debe incluir interpretación:"
+       "text": "El informe no debe limitarse a imprimir números; debe incluir una interpretación:"
       },
       {
        "type": "table",
        "rows": [
         [
-         "Métrica",
-         "Pregunta interpretativa"
+         "**Métrica**",
+         "**Pregunta interpretativa**"
         ],
         [
-         "Precision",
+         "*Precision*",
          "¿Cuánto de lo producido por la máquina coincide?"
         ],
         [
-         "Recall",
+         "*Recall*",
          "¿Cuánto de la referencia se recupera?"
         ],
         [
@@ -2614,7 +2647,7 @@
          "¿Son idénticas las versiones?"
         ]
        ],
-       "title": "Métrica · Pregunta interpretativa"
+       "title": "Pregunta interpretativa de cada métrica"
       },
       {
        "type": "p",
@@ -2628,43 +2661,43 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Un caso especialmente interesante es aquel en que la traducción automática usa sinónimos:"
+       "text": "Un caso de especial interés es aquel en que la traducción automática usa sinónimos:"
       },
       {
        "type": "table",
        "rows": [
         [
-         "Referencia",
-         "Hipótesis"
+         "**Referencia**",
+         "**Hipótesis**"
         ],
         [
          "Los estudiantes escuchaban atentos mientras el profesor explicaba con calma los conceptos clave del tema.",
          "Los alumnos prestaban atención mientras el docente exponía tranquilamente las ideas principales del asunto."
         ]
        ],
-       "title": "Referencia · Hipótesis"
+       "title": "Traducción con sinónimos y reformulación"
       },
       {
        "type": "p",
-       "text": "Desde el punto de vista semántico, las frases pueden transmitir una idea parecida. Pero las métricas basadas en coincidencias literales bajarán mucho:"
+       "text": "Desde el punto de vista semántico, las frases pueden transmitir una idea parecida, pero las métricas basadas en coincidencias literales bajarán mucho:"
       },
       {
        "type": "ul",
        "items": [
-        "estudiantes y alumnos no son la misma cadena;",
-        "profesor y docente no coinciden formalmente;",
-        "explicaba y exponía son diferentes;",
-        "con calma y tranquilamente son expresiones distintas;",
-        "conceptos clave e ideas principales son reformulaciones."
+        "*estudiantes* y *alumnos* no son la misma cadena;",
+        "*profesor* y *docente* no coinciden formalmente;",
+        "*explicaba* y *exponía* son diferentes;",
+        "*con calma* y *tranquilamente* son expresiones distintas;",
+        "*conceptos clave* e *ideas principales* son reformulaciones."
        ]
       },
       {
        "type": "p",
-       "text": "Exact Match será No. BLEU puede ser muy bajo porque las secuencias de palabras no coinciden. Jaccard también bajará porque el vocabulario compartido es reducido. chrF puede conservar algo más de información si hay fragmentos de caracteres compartidos, pero tampoco reconocerá completamente la equivalencia semántica. METEOR, que en inglés podría emparejar sinónimos gracias a WordNet, se comporta en español casi como una métrica de coincidencia exacta: en este ejemplo se queda alrededor de 0.21."
+       "text": "Exact Match será No. BLEU puede ser muy bajo, porque las secuencias de palabras no coinciden, y Jaccard también bajará, porque el vocabulario compartido es reducido. chrF puede conservar algo más de información si hay fragmentos de caracteres compartidos, pero tampoco reconocerá del todo la equivalencia semántica. METEOR, que en inglés podría emparejar sinónimos gracias a WordNet, se comporta en español casi como una métrica de coincidencia exacta: en este ejemplo se queda alrededor de 0.21."
       },
       {
        "type": "p",
-       "text": "La conclusión profesional no debe ser «la traducción es mala» solo porque las métricas bajen. La conclusión correcta es más matizada: las métricas de coincidencia formal penalizan la sinonimia y la reformulación; por tanto, hace falta evaluación humana o métricas semánticas para valorar si el significado se conserva."
+       "text": "La conclusión profesional no debe ser «la traducción es mala» solo porque las métricas bajen. Lo correcto es una conclusión más precisa: las métricas de coincidencia formal penalizan la sinonimia y la reformulación, y por tanto hace falta evaluación humana o métricas semánticas para valorar si el significado se conserva."
       }
      ]
     },
@@ -2679,20 +2712,20 @@
       {
        "type": "ol",
        "items": [
-        "No interpretar una métrica aislada. Un solo número puede ser engañoso.",
-        "Mirar qué mide cada métrica. Precision no mide lo mismo que BLEU, y BLEU no mide lo mismo que chrF.",
-        "Revisar la escala. BLEU y METEOR en NLTK usan 0–1; chrF en evaluate usa 0–100.",
-        "Distinguir forma y significado. Coincidencia formal no siempre equivale a calidad semántica.",
-        "Tener en cuenta la longitud. BLEU puede comportarse de forma inestable en frases cortas.",
-        "Documentar la configuración. METEOR cambia según el stemmer y los sinónimos disponibles; conviene indicar cuáles se han usado, sobre todo en lenguas distintas del inglés.",
-        "Explicar los resultados con ejemplos. Una interpretación sin evidencia textual queda débil.",
-        "Recordar la referencia. Si solo hay una traducción humana, muchas alternativas válidas pueden ser penalizadas.",
-        "Complementar con juicio lingüístico. Las métricas orientan, pero no sustituyen la evaluación experta."
+        "**No interpretar una métrica aislada**. Un solo número puede ser engañoso.",
+        "**Mirar qué mide cada métrica**. *Precision* no mide lo mismo que BLEU, y BLEU no mide lo mismo que chrF.",
+        "**Revisar la escala**. BLEU y METEOR en NLTK usan 0–1; chrF en `evaluate` usa 0–100.",
+        "**Distinguir forma y significado**. Coincidencia formal no siempre equivale a calidad semántica.",
+        "**Tener en cuenta la longitud**. BLEU puede comportarse de forma inestable en frases cortas.",
+        "**Documentar la configuración**. METEOR cambia según el *stemmer* y los sinónimos disponibles; conviene indicar cuáles se han usado, sobre todo en lenguas distintas del inglés.",
+        "**Explicar los resultados con ejemplos**. Una interpretación sin evidencia textual queda débil.",
+        "**Recordar la referencia**. Si solo hay una traducción humana, muchas alternativas válidas pueden salir penalizadas.",
+        "**Complementar con juicio lingüístico**. Las métricas orientan, pero no sustituyen la evaluación experta."
        ]
       },
       {
        "type": "p",
-       "text": "Una forma profesional de redactar una interpretación sería: La traducción automática presenta una coincidencia léxica moderada-alta con la referencia, como muestran precision, recall y F1. Sin embargo, Exact Match es negativo porque existe al menos una diferencia formal. BLEU baja más que las métricas léxicas simples porque una sustitución léxica rompe varios n-gramas. chrF permite observar si, pese a las diferencias de palabra completa, existe similitud formal por caracteres. METEOR se mantiene más alto que BLEU porque alinea palabras individuales y solo penaliza el desorden, lo que confirma que la diferencia se concentra en una sola palabra. En conjunto, los resultados sugieren una traducción aceptable desde el punto de vista formal, pero la decisión final requiere revisar si la diferencia léxica afecta al significado y al encargo traductológico."
+       "text": "Una forma profesional de redactar una interpretación sería: *La traducción automática presenta una coincidencia léxica moderada-alta con la referencia, como muestran precision, recall y F1. Sin embargo, Exact Match es negativo porque existe al menos una diferencia formal. BLEU baja más que las métricas léxicas simples porque una sustitución léxica rompe varios n-gramas. chrF permite observar si, pese a las diferencias de palabra completa, existe similitud formal por caracteres. METEOR se mantiene más alto que BLEU porque alinea palabras individuales y solo penaliza el desorden, lo que confirma que la diferencia se concentra en una sola palabra. En conjunto, los resultados sugieren una traducción aceptable desde el punto de vista formal, pero la decisión final requiere revisar si la diferencia léxica afecta al significado y al encargo traductológico.*"
       }
      ]
     },
@@ -2702,7 +2735,7 @@
      "blocks": [
       {
        "type": "p",
-       "text": "Python permite convertir una pregunta evaluativa en un procedimiento reproducible. En lugar de decir de forma vaga «esta traducción se parece bastante a la humana», podemos calcular varias medidas y justificar una interpretación."
+       "text": "Python permite convertir una pregunta evaluativa en un procedimiento reproducible: en lugar de decir de forma vaga «esta traducción se parece bastante a la humana», podemos calcular varias medidas y justificar una interpretación."
       },
       {
        "type": "p",
@@ -2712,8 +2745,8 @@
        "type": "table",
        "rows": [
         [
-         "Acción",
-         "Resultado"
+         "**Acción**",
+         "**Resultado**"
         ],
         [
          "Limpiar textos",
@@ -2732,11 +2765,11 @@
          "Facilita una interpretación argumentada"
         ]
        ],
-       "title": "La aportación de Python se resume en cuatro acciones"
+       "title": "Aportación de Python a la evaluación lingüística"
       },
       {
        "type": "p",
-       "text": "Pero Python no decide por sí solo si una traducción es adecuada. Una métrica puede señalar que dos frases se parecen poco en la forma, aunque sean equivalentes en significado. También puede señalar que dos frases se parecen mucho, aunque una contenga un error semántico grave."
+       "text": "Pero Python no decide por sí solo si una traducción es adecuada. Una métrica puede señalar que dos frases se parecen poco en la forma, aunque sean equivalentes en significado, o que se parecen mucho, aunque una contenga un error semántico grave."
       },
       {
        "type": "p",
@@ -2761,7 +2794,7 @@
       "Usar una sola métrica para decidir la calidad global de una traducción.",
       "No distinguir entre texto fuente, hipótesis y referencia.",
       "Pasar por alto que los sinónimos y las paráfrasis pueden ser correctos aunque bajen las métricas formales.",
-      "Aplicar METEOR a textos en español con la configuración por defecto de NLTK sin advertir que su stemmer y sus sinónimos están pensados para inglés."
+      "Aplicar METEOR a textos en español con la configuración por defecto de NLTK sin advertir que su *stemmer* y sus sinónimos están pensados para inglés."
      ]
     }
    ],
@@ -2774,11 +2807,11 @@
    "blocks": [
     {
      "type": "p",
-     "text": "La evaluación automática de traducciones permite comparar una hipótesis con una referencia y obtener puntuaciones reproducibles. Las métricas léxicas simples, como precision, recall, F1, Exact Match y Jaccard, introducen la lógica básica de coincidencia textual. BLEU añade n-gramas y penalización por brevedad. chrF compara caracteres y resulta más flexible ante variación morfológica. METEOR, BERTScore, BLEURT y COMET amplían la mirada hacia correspondencias más flexibles, similitud semántica y adecuación traductológica."
+     "text": "La evaluación automática de traducciones permite comparar una hipótesis con una referencia y obtener puntuaciones reproducibles. Las métricas léxicas simples, como *precision*, *recall*, F1, Exact Match y Jaccard, introducen la lógica básica de coincidencia textual. BLEU añade n-gramas y penalización por brevedad. chrF compara caracteres y resulta más flexible ante variación morfológica. METEOR, BERTScore, BLEURT y COMET amplían la mirada hacia correspondencias más flexibles, similitud semántica y adecuación traductológica."
     },
     {
      "type": "p",
-     "text": "En Python, estas ideas se traducen en operaciones concretas: limpiar textos, dividirlos en palabras, contar coincidencias, usar conjuntos, calcular n-gramas y llamar bibliotecas especializadas. Pero el aprendizaje central es interpretativo: una métrica no es una sentencia, sino una herramienta para formular mejores preguntas sobre la calidad de una traducción."
+     "text": "En Python, estas ideas se traducen en operaciones concretas: limpiar textos, dividirlos en palabras, contar coincidencias, usar conjuntos, calcular n-gramas y llamar a bibliotecas especializadas. Pero el aprendizaje de fondo es interpretativo: una métrica es una herramienta para formular mejores preguntas sobre la calidad de una traducción, y no una sentencia."
     }
    ],
    "subsections": [],
@@ -2790,11 +2823,11 @@
    "blocks": [
     {
      "type": "p",
-     "text": "Volvamos al encargo de NexaLingua Quality Lab. El equipo ya tiene un pequeño sistema capaz de comparar una traducción automática con una referencia humana. El informe no sustituye a la revisión profesional, pero permite priorizar."
+     "text": "Volvamos al encargo de NexaLingua Quality Lab. El equipo ya tiene un pequeño sistema capaz de comparar una traducción automática con una referencia humana, y aunque el informe no sustituye a la revisión profesional, permite priorizar."
     },
     {
      "type": "p",
-     "text": "Si precision, recall y F1 son altos, puede haber una coincidencia léxica sólida. Si Jaccard es más bajo, puede haber variación de vocabulario. Si BLEU baja mucho, quizá las secuencias no coinciden aunque el contenido sea próximo. Si chrF es alto, puede haber similitud formal incluso cuando no todas las palabras coinciden. Si METEOR se mantiene alto aunque BLEU baje, las palabras de la referencia están presentes y en un orden razonable, aunque no formen secuencias largas idénticas. Si Exact Match es No, eso solo indica que no hay identidad total; no implica automáticamente mala traducción."
+     "text": "Si la *precision*, el *recall* y el F1 son altos, puede haber una coincidencia léxica notable. Si Jaccard es más bajo, puede haber variación de vocabulario. Si BLEU baja mucho, quizá las secuencias no coinciden aunque el contenido sea próximo. Si chrF es alto, puede haber similitud formal incluso cuando no todas las palabras coinciden. Si METEOR se mantiene alto aunque BLEU baje, las palabras de la referencia están presentes y en un orden razonable, aunque no formen secuencias largas idénticas. Y si Exact Match es No, eso solo indica que no hay identidad total, lo que no equivale a una mala traducción."
     },
     {
      "type": "p",
@@ -2804,7 +2837,7 @@
      "type": "ul",
      "items": [
       "qué segmentos revisar primero;",
-      "qué motor parece más consistente;",
+      "qué motor parece más regular;",
       "qué casos merecen evaluación humana detallada;",
       "qué métricas conviene usar en cada tipo de texto;",
       "qué limitaciones deben explicarse al cliente."
@@ -2812,7 +2845,7 @@
     },
     {
      "type": "p",
-     "text": "Esta unidad, por tanto, no enseña solo a calcular métricas. Enseña a pensar como una lingüista que trabaja con herramientas computacionales: con precisión técnica, prudencia interpretativa y atención al significado."
+     "text": "Calcular métricas es solo la parte visible de esta unidad; lo que de verdad se ejercita es una manera de pensar propia de una lingüista que trabaja con herramientas computacionales: precisión técnica, prudencia interpretativa y atención al significado."
     }
    ],
    "subsections": [],
@@ -2822,31 +2855,31 @@
  "references": [
   {
    "key": "banerjee2005",
-   "text": "Banerjee, S. y Lavie, A. (2005). METEOR: An automatic metric for MT evaluation with improved correlation with human judgments. En *Proceedings of the ACL Workshop on Intrinsic and Extrinsic Evaluation Measures for Machine Translation and/or Summarization* (pp. 65-72). Association for Computational Linguistics. https://aclanthology.org/W05-0909/"
+   "text": "Banerjee, S. y Lavie, A. (2005). METEOR: An automatic metric for MT evaluation with improved correlation with human judgments. En *Proceedings of the ACL Workshop on Intrinsic and Extrinsic Evaluation Measures for Machine Translation and/or Summarization* (pp. 65–72). Association for Computational Linguistics. https://aclanthology.org/W05-0909/"
   },
   {
    "key": "mathur2020",
-   "text": "Mathur, N., Baldwin, T. y Cohn, T. (2020). Tangled up in BLEU: Reevaluating the evaluation of automatic machine translation evaluation metrics. En *Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics* (pp. 4984-4997). Association for Computational Linguistics. https://aclanthology.org/2020.acl-main.448/"
+   "text": "Mathur, N., Baldwin, T. y Cohn, T. (2020). Tangled up in BLEU: Reevaluating the evaluation of automatic machine translation evaluation metrics. En *Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics* (pp. 4984–4997). Association for Computational Linguistics. https://doi.org/10.18653/v1/2020.acl-main.448"
   },
   {
    "key": "papineni2002",
-   "text": "Papineni, K., Roukos, S., Ward, T. y Zhu, W.-J. (2002). BLEU: A method for automatic evaluation of machine translation. En *Proceedings of the 40th Annual Meeting of the Association for Computational Linguistics* (pp. 311-318). Association for Computational Linguistics. https://aclanthology.org/P02-1040/"
+   "text": "Papineni, K., Roukos, S., Ward, T. y Zhu, W.-J. (2002). BLEU: A method for automatic evaluation of machine translation. En *Proceedings of the 40th Annual Meeting of the Association for Computational Linguistics* (pp. 311–318). Association for Computational Linguistics. https://doi.org/10.3115/1073083.1073135"
   },
   {
    "key": "popovic2015",
-   "text": "Popović, M. (2015). chrF: Character n-gram F-score for automatic MT evaluation. En *Proceedings of the Tenth Workshop on Statistical Machine Translation* (pp. 392-395). Association for Computational Linguistics. https://aclanthology.org/W15-3049/"
+   "text": "Popović, M. (2015). chrF: Character n-gram F-score for automatic MT evaluation. En *Proceedings of the Tenth Workshop on Statistical Machine Translation* (pp. 392–395). Association for Computational Linguistics. https://doi.org/10.18653/v1/W15-3049"
   },
   {
    "key": "rei2020",
-   "text": "Rei, R., Stewart, C., Farinha, A. C. y Lavie, A. (2020). COMET: A neural framework for MT evaluation. En *Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing* (pp. 2685-2702). Association for Computational Linguistics. https://aclanthology.org/2020.emnlp-main.213/"
+   "text": "Rei, R., Stewart, C., Farinha, A. C. y Lavie, A. (2020). COMET: A neural framework for MT evaluation. En *Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP)* (pp. 2685–2702). Association for Computational Linguistics. https://doi.org/10.18653/v1/2020.emnlp-main.213"
   },
   {
    "key": "sellam2020",
-   "text": "Sellam, T., Das, D. y Parikh, A. P. (2020). BLEURT: Learning robust metrics for text generation. En *Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics* (pp. 7881-7892). Association for Computational Linguistics. https://aclanthology.org/2020.acl-main.704/"
+   "text": "Sellam, T., Das, D. y Parikh, A. P. (2020). BLEURT: Learning robust metrics for text generation. En *Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics* (pp. 7881–7892). Association for Computational Linguistics. https://doi.org/10.18653/v1/2020.acl-main.704"
   },
   {
    "key": "zhang2020",
-   "text": "Zhang, T., Kishore, V., Wu, F., Weinberger, K. Q. y Artzi, Y. (2020). BERTScore: Evaluating text generation with BERT. En *International Conference on Learning Representations*. https://openreview.net/forum?id=SkeHuCVFDr"
+   "text": "Zhang, T., Kishore, V., Wu, F., Weinberger, K. Q. y Artzi, Y. (2020). BERTScore: Evaluating text generation with BERT. En *International Conference on Learning Representations (ICLR 2020)*. https://openreview.net/forum?id=SkeHuCVFDr"
   }
  ]
 }

@@ -110,7 +110,7 @@
         {
           "text": "Cuando coinciden simultáneamente la forma inglesa sospechosa y la traducción literal problemática en el segmento.",
           "isCorrect": true,
-          "rationale": "La doble coincidencia en el par TO-TM aporta evidencia estadística de que la transferencia errónea ha ocurrido."
+          "rationale": "La doble coincidencia en el par TO-TM aporta más evidencia de que la transferencia errónea se ha producido, frente al simple riesgo que indica la forma inglesa sola."
         },
         {
           "text": "Cuando el sistema detecta un término inglés que no existe en el diccionario médico especializado del glosario.",

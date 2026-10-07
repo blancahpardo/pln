@@ -23,11 +23,11 @@ SITE = os.path.dirname(os.path.abspath(__file__))
 
 TEMAS = {
     't3': '3. PLN 3/0. Teoría/Teoría_PLN3_act_v2.docx',
-    't4': '4. PLN 4/0. Teoría/Teoría_PLN4_v2.docx',
-    't5': '5. PLN 5/0. Teoría/Teoría_PLN5_v2.docx',
-    't6': '6. PLN 6/0. Teoría/Teoría_PLN6.docx',
-    't7': '7. PLN 7/0. Teoría/Teoría_PLN7.docx',
-    't8': '8. PLN 8/0. Teoría/Teoría_PLN8.docx',
+    't4': 'manuales 2027/Tema 4 - Análisis automático de textos para revisión lingüística (2027).docx',
+    't5': 'manuales 2027/Tema 5 - Evaluación automática de traducciones (2027).docx',
+    't6': 'manuales 2027/Tema 6 - Análisis automático de sesgo léxico y discursivo (2027).docx',
+    't7': 'manuales 2027/Tema 7 - Extracción automática de terminología (2027).docx',
+    't8': 'manuales 2027/Tema 8 - Clasificación temática de textos (2027).docx',
 }
 
 NAV_FIXED = {
@@ -44,6 +44,17 @@ NAV_FIXED = {
     'Para saber más: Preparación previa a la práctica': 'Para saber más',
 }
 
+EMPH = {t: 'all' for t in ('t4', 't5', 't6', 't7', 't8')}
+# figuras de los manuales 2027 que la web sustituye por su versión SVG (FIGURAS)
+GENERATED = {
+    't3': ('Pipeline de preprocesamiento lingüístico de la unidad',),
+    't4': ('Cadena de análisis para la revisión de versiones paralelas monolingües',),
+    't5': ('Métricas de evaluación según el tipo de similitud que observan',),
+    't6': ('Pipeline de análisis de sesgo léxico y discursivo',),
+    't7': ('Pipeline de extracción automática de terminología', 'Componentes de la fórmula de weirdness'),
+    't8': ('Clasificación por prototipos temáticos',),
+}
+
 NS_A = '{http://schemas.openxmlformats.org/drawingml/2006/main}'
 NS_R = '{http://schemas.openxmlformats.org/officeDocument/2006/relationships}'
 
@@ -57,10 +68,31 @@ def slug(s):
     return re.sub(r'[^a-z0-9]+', '-', s).strip('-')[:60]
 
 
-def runs_to_markup(paragraph, italics=False):
-    """Courier New -> `código`; con italics=True, cursiva -> *texto* (bibliografía).
-    Los runs contiguos del mismo tipo se fusionan antes de marcar, para no partir
-    una cursiva en dos («*Tradumàtica*» + «*, 12*»)."""
+CODE_FONTS = {'Courier New', 'Consolas'}
+
+
+def _run_kind(r, emph):
+    rp = r._r.rPr
+    font = rp.rFonts.get(qn('w:ascii')) if (rp is not None and rp.rFonts is not None) else None
+    if (font in CODE_FONTS or r.font.name in CODE_FONTS) and r.text.strip():
+        return 'code'
+    if emph == 'all':
+        if r.bold and r.italic: return 'bi'
+        if r.bold: return 'b'
+        if r.italic: return 'it'
+    elif emph == 'italic' and r.italic:
+        return 'it'
+    return 'n'
+
+
+MARKS = {'code': '`', 'it': '*', 'b': '**', 'bi': '***'}
+
+
+def runs_to_markup(paragraph, italics=False, emph=None):
+    """Courier New/Consolas -> `código`; cursiva -> *texto*; negrita -> **texto** (con emph='all').
+    Los runs contiguos del mismo tipo se fusionan antes de marcar."""
+    if emph is None:
+        emph = 'italic' if italics else 'none'
     segs = []
     runs = []
     for item in paragraph.iter_inner_content():     # incluye el texto de los hipervínculos
@@ -69,7 +101,9 @@ def runs_to_markup(paragraph, italics=False):
         t = r.text
         if not t:
             continue
-        kind = 'code' if (r.font.name == 'Courier New' and t.strip()) else ('it' if (italics and r.italic) else 'n')
+        kind = _run_kind(r, emph)
+        if not t.strip() and kind != 'code' and segs:
+            kind = segs[-1][0]
         if segs and segs[-1][0] == kind:
             segs[-1][1] += t
         else:
@@ -79,7 +113,7 @@ def runs_to_markup(paragraph, italics=False):
         if kind == 'n' or not t.strip():
             out.append(t); continue
         lead = t[:len(t) - len(t.lstrip())]; trail = t[len(t.rstrip()):]
-        mark = '`' if kind == 'code' else '*'
+        mark = MARKS[kind]
         out.append(lead + mark + t.strip() + mark + trail)
     return ''.join(out)
 
@@ -109,7 +143,19 @@ def run(tema):
             if style.startswith('Heading'):
                 seen_heading = True
             blips = it._p.findall('.//' + NS_A + 'blip')
-            txt = runs_to_markup(it, italics=(style == 'Comillas References'))
+            if style == 'Caption':
+                full = ''.join(x.text or '' for x in it._p.iter(qn('w:t'))).strip()
+                lab = 'fig' if full.startswith('Figura') else 'tab'
+                stream.append(('cap', lab, full.split('. ', 1)[1] if '. ' in full else full))
+                continue
+            if style == 'Nota figura':
+                stream.append(('note', None, re.sub(r'^Nota\.\s*', '', it.text.strip())))
+                continue
+            if style.startswith('Heading'):
+                txt = it.text
+            else:
+                txt = runs_to_markup(it, italics=(style == 'Comillas References'),
+                                     emph=('italic' if style == 'Comillas References' else EMPH.get(tema, 'none')))
             stream.append(('p', style, txt))
             if blips and seen_heading:
                 exts = it._p.findall('.//{http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing}extent')
@@ -132,7 +178,7 @@ def run(tema):
             if fill == 'F2F4F5' and len(it.rows) == 1 and len(it.columns) == 1:
                 stream.append(('code', None, cell.text))
             else:
-                rows = [['\n'.join(runs_to_markup(p) for p in c.paragraphs) for c in r.cells] for r in it.rows]
+                rows = [['\n'.join(runs_to_markup(p, emph=EMPH.get(tema, 'none')) for p in c.paragraphs) for c in r.cells] for r in it.rows]
                 stream.append(('table', None, rows))
 
     # ---- cabecera (hasta el título del índice)
@@ -141,6 +187,7 @@ def run(tema):
         if stream[i][0] == 'p' and stream[i][2].strip():
             normals.append(stream[i][2].strip())
         i += 1
+    normals = [n.replace('*', '').strip() for n in normals]
     header = {'kicker': normals[0] if normals else '', 'title': normals[1] if len(normals) > 1 else '',
               'subtitle': normals[2] if len(normals) > 2 else '', 'meta': normals[3] if len(normals) > 3 else ''}
     i += 1
@@ -160,7 +207,18 @@ def run(tema):
             cur_target.append({'type': lst_type, 'items': lst})
         lst, lst_type = [], None
 
+    pending = {'tab': None, 'fig': None}
+    skip_note = False
     for kind, style, content in stream[i:]:
+        if kind == 'cap':
+            pending[style] = content
+            continue
+        if kind == 'note':
+            if skip_note:
+                skip_note = False
+            elif cur_target and cur_target[-1].get('type') == 'image':
+                cur_target[-1]['caption'] = content
+            continue
         if kind == 'p' and style == 'Heading 1':
             flush()
             title = content.strip()
@@ -206,7 +264,15 @@ def run(tema):
         elif kind == 'code':
             cur_target.append({'type': 'code', 'code': content})
         elif kind == 'table':
-            cur_target.append({'type': 'table', 'rows': content, 'title': table_title(content, last_para)})
+            title = pending['tab'] or table_title(content, last_para)
+            pending['tab'] = None
+            cur_target.append({'type': 'table', 'rows': content, 'title': title})
+        elif kind == 'img' and pending['fig']:
+            title = pending['fig']; pending['fig'] = None
+            if title in GENERATED.get(tema, ()):      # la web ya muestra esta figura en SVG (FIGURAS)
+                skip_note = True
+                continue
+            cur_target.append({'type': 'image', 'src': content, 'alt': title, 'caption': title})
         elif kind == 'img':
             blk = {'type': 'docimg', 'src': content, 'alt': 'Figura del manual'}
             if style:
@@ -217,7 +283,7 @@ def run(tema):
     # Errores frecuentes: pares término/explicación
     for sec in sections:
         if sec['title'] == 'Errores frecuentes de aprendizaje' and not sec['subsections']:
-            paras = [b['text'] for b in sec['blocks'] if b.get('type') == 'p']
+            paras = [re.sub(r'^\*\*(.+?):\*\*\s*', r'\1: ', b['text']) for b in sec['blocks'] if b.get('type') == 'p']
             if paras and len(sec['blocks']) == len(paras) and all(re.match(r'^[^:]{6,90}: ', x) for x in paras):
                 sec['blocks'] = [{'type': 'errorlist', 'items': [{'term': x.split(': ', 1)[0], 'desc': x.split(': ', 1)[1]} for x in paras]}]
             elif len(paras) >= 2 and len(paras) % 2 == 0 and len(sec['blocks']) == len(paras):
@@ -244,6 +310,10 @@ def run(tema):
     data = {'header': header, 'sections': sections, 'references': refs_out}
     with open(os.path.join(out_dir, 'manual_interactivo.json'), 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=1)
+    used = json.dumps(data, ensure_ascii=False)
+    for name in list(saved_imgs):
+        if 'img/' + name not in used:
+            os.remove(os.path.join(img_dir, name)); saved_imgs.remove(name)
 
     print(f'== {tema}: {header["kicker"]} {header["title"]}')
     for s in sections:

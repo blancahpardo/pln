@@ -136,7 +136,7 @@
         {
           "text": "No puede distinguir el sentido de palabras polisémicas que cambian según el contexto.",
           "isCorrect": true,
-          "rationale": "Al perder el orden y el contexto sintáctico, palabras como 'artículo' (jurídico vs. periodístico) pueden causar confusión."
+          "rationale": "Al perder el orden y el contexto sintáctico, palabras como «artículo» (de una ley o divulgativo) pueden causar confusión entre clases."
         },
         {
           "text": "Es incapaz de procesar correctamente textos en español debido a su compleja morfología verbal.",

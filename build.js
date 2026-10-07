@@ -716,9 +716,15 @@ function buildTopicHtml(tema) {
   function imEsc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
+  function imEmph(t) {
+    // **negrita**, ***negrita cursiva*** y *cursiva* (el texto ya viene escapado)
+    return t.replace(/\\*\\*\\*(?!\\s)([^*]+?)\\*\\*\\*/g, "<strong><em>$1</em></strong>")
+            .replace(/\\*\\*(?!\\s)([^*]+?)\\*\\*/g, "<strong>$1</strong>")
+            .replace(/(^|[^\\w*])\\*(?![\\s*])([^*]+?)\\*(?![\\w*])/g, "$1<em>$2</em>");
+  }
   function imFormatBackticks(s) {
     var parts = s.split("\`"), out = "";
-    for (var i = 0; i < parts.length; i++) out += (i % 2 === 1) ? '<code class="im-inline">' + imEsc(parts[i]) + "</code>" : imEsc(parts[i]);
+    for (var i = 0; i < parts.length; i++) out += (i % 2 === 1) ? '<code class="im-inline">' + imEsc(parts[i]) + "</code>" : imEmph(imEsc(parts[i]));
     return out;
   }
   function imFormatInline(raw) {

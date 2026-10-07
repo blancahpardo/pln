@@ -160,9 +160,9 @@
       "question": "¿Qué ocurre si una función de revisión lingüística en Python termina sus operaciones sin una instrucción `return`?",
       "answerOptions": [
         {
-          "text": "La función devuelve automáticamente el valor `None` y el resultado no se puede guardar en una variable.",
+          "text": "La función devuelve automáticamente el valor `None`, de modo que la variable que recoja su salida no contendrá el resultado calculado.",
           "isCorrect": true,
-          "rationale": "Sin 'return', la función ejecuta sus procesos pero no entrega nada al flujo principal del programa para su uso posterior."
+          "rationale": "Sin `return`, la función ejecuta sus operaciones, pero no entrega su resultado al programa principal: si se intenta guardar la salida, la variable recibe `None`."
         },
         {
           "text": "El programa se detiene y muestra un error de tipo 'MemoryLeak' que interrumpe toda la ejecución.",

@@ -108,9 +108,9 @@
       "question": "Al estimar el número de sílabas con la expresión regular `r'[aeiouáéíóúü]+'`, ¿qué fenómeno del español podría causar una imprecisión?",
       "answerOptions": [
         {
-          "text": "La existencia de diptongos o triptongos.",
+          "text": "La existencia de hiatos, es decir, de vocales contiguas que pertenecen a sílabas distintas.",
           "isCorrect": true,
-          "rationale": "El símbolo `+` agrupa vocales consecutivas como una sola coincidencia, lo cual no siempre refleja la división silábica real en hiatos."
+          "rationale": "El símbolo `+` agrupa las vocales consecutivas en una sola coincidencia: acierta con los diptongos y triptongos (una sílaba), pero en un hiato como el de «país» o «leer» cuenta una sílaba donde hay dos."
         },
         {
           "text": "La presencia de mayúsculas al inicio de la oración.",
@@ -128,7 +128,7 @@
           "rationale": "El patrón está diseñado específicamente para buscar vocales; las consonantes son ignoradas por la expresión regular definida."
         }
       ],
-      "hint": "Recuerda que el patrón busca uno o más caracteres vocálicos seguidos y cómo se comportan las vocales juntas en español."
+      "hint": "Recuerda que el patrón agrupa en una sola coincidencia las vocales seguidas: ¿en qué caso dos vocales juntas forman sílabas distintas?"
     },
     {
       "question": "En la fórmula del índice de legibilidad didáctico, indice = (num_silabas / num_palabras) + (num_palabras / num_oraciones), ¿qué representa el segundo término?",

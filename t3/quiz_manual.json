@@ -82,7 +82,7 @@
       "question": "¿Por qué se afirma que la tokenización en spaCy es más compleja que simplemente dividir por espacios en blanco?",
       "answerOptions": [
         {
-          "text": "Porque identifica de forma inteligente unidades como abreviaturas, signos de puntuación y prefijos.",
+          "text": "Porque reconoce unidades como abreviaturas, signos de puntuación, contracciones y números.",
           "isCorrect": true,
           "rationale": "Un tokenizador lingüístico reconoce que una unidad como '10mg/kg' o una abreviatura no debe segmentarse igual que una frase simple separada por espacios."
         },

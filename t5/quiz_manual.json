@@ -188,7 +188,7 @@
         {
           "text": "Permite coincidencias flexibles mediante el uso de raíces (*stemming*) y diccionarios de sinónimos.",
           "isCorrect": true,
-          "rationale": "METEOR va más allá de la coincidencia exacta de cadenas, permitiendo que 'correr' y 'corrió' se consideren aciertos."
+          "rationale": "METEOR va más allá de la coincidencia exacta: si dispone de los recursos adecuados (un stemmer para la lengua y un WordNet), empareja formas con la misma raíz o sinónimos, como «doctor» y «physician» en inglés. En español, con la configuración por defecto de NLTK, la fase de sinónimos no actúa."
         },
         {
           "text": "Utiliza únicamente modelos neuronales de última generación para comparar vectores.",
@@ -206,7 +206,7 @@
           "rationale": "Como todas las métricas, METEOR se beneficia y a menudo requiere etapas de normalización para funcionar correctamente con sus recursos lingüísticos."
         }
       ],
-      "hint": "Busca una función que le permita reconocer que 'médico' y 'doctor' están relacionados."
+      "hint": "Busca la propiedad que le permite reconocer que «doctor» y «physician» están relacionados en inglés."
     },
     {
       "question": "¿Cómo utiliza BERTScore los modelos de lenguaje para evaluar la similitud entre frases?",
@@ -310,7 +310,7 @@
           "rationale": "El smoothing añade una pequeña complejidad adicional al cálculo, por lo que no está diseñado para la optimización de la velocidad."
         }
       ],
-      "hint": "Recuerda que BLEU combina la precisión de 1-gramas, 2-gramas, 3-gramas y 4-gramas mediante una multiplicación."
+      "hint": "Recuerda que BLEU combina las precisiones de 1-gramas, 2-gramas, 3-gramas y 4-gramas mediante un promedio geométrico: si un nivel vale cero, todo el producto se anula."
     }
   ],
   "topics": {
