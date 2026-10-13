@@ -1481,6 +1481,7 @@ const TEMAS = [
           { author: 'linguAIstica', date: '2026, 15 de junio', title: 'Historia completa del NLP: de las reglas al deep learning', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=bFyUm1m2_4A' },
           { author: 'linguAIstica', date: '2026, 25 de mayo', title: '¿Qué hace un lingüista computacional?', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/watch?v=HmM6Z5dfnoc' },
           { author: 'linguAIstica', date: '2026, 7 de septiembre', title: 'La máquina que intentaba predecir el futuro', type: 'Vídeo', platform: 'YouTube', url: 'https://www.youtube.com/shorts/dGCgAI3A75g' },
+          { author: 'linguAIstica', date: '2026, 8 de octubre', title: '¿Para trabajar con NLP en 2026 necesitas saber programar?', type: 'Carrusel de fotos', platform: 'Instagram', url: 'https://www.instagram.com/linguaistica/p/DePYqLJDeCc/' },
         ] },
     } },
   { dir: 't0a', numLabel: 'TEMA 0', titleShort: 'Recordatorio', titleFull: 'Tema 0 · Recordatorio de Python', kicker: 'Tema 0 · Recordatorio',
