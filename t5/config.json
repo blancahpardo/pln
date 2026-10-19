@@ -3,7 +3,7 @@
   "principal": false,
   "evaluable": false,
   "quiz": false,
-  "adicionales": false,
+  "adicionales": true,
   "manual_interactivo": true,
   "practica": false
 }
