@@ -5,5 +5,6 @@
   "infografia": false,
   "adicionales": false,
   "practica": false,
-  "manual_interactivo": false
+  "manual_interactivo": false,
+  "evaluable": false
 }
