@@ -1,7 +1,7 @@
 {
   "manual": false,
   "principal": true,
-  "evaluable": false,
+  "evaluable": true,
   "quiz": false,
   "adicionales": true,
   "manual_interactivo": true,
