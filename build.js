@@ -1612,7 +1612,7 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't5', numLabel: 'TEMA 5', titleShort: 'Tema 5', titleFull: 'Tema 5', kicker: 'Tema 5',
-    viewOrder: ['manual_interactivo','adicionales','principal','evaluable','practica','metric2','quiz'],
+    viewOrder: ['manual_interactivo','adicionales','principal','traductores','evaluable','practica','metric2','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
       manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico', icon: '✨',
@@ -1625,6 +1625,9 @@ const TEMAS = [
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.pdf', materials: { file: 'materiales_evaluable.zip', label: 'Descargar materiales y plantilla (.zip)', note: 'Descarga el enunciado en PDF y, con el botón adicional, el paquete de trabajo: los textos en .txt (carpeta materiales) y la plantilla de resolución (.ipynb).' } },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }] },
+      traductores: { exists: true, kind: 'download', label: 'Código de traductores automáticos', icon: '🌐',
+        desc: 'GoogleTranslator y MyMemoryTranslator, con división del texto en bloques', file: 'traductores_automaticos.ipynb',
+        note: 'Cuaderno de apoyo para traducir automáticamente con GoogleTranslator y, si da el error «TooManyRequests», con MyMemoryTranslator dividiendo el texto en bloques. Descárgalo y ábrelo en Google Colab, Jupyter o VS Code.' },
       metric2: { exists: true, kind: 'download', label: 'Métricas parte II', icon: '📐',
         desc: 'Cuaderno complementario sobre METEOR, para descargar', file: 'metrica2.ipynb' },
       quiz: { exists: true }
