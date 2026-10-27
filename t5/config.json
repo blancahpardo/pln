@@ -6,5 +6,6 @@
   "adicionales": true,
   "manual_interactivo": true,
   "practica": true,
-  "traductores": true
+  "traductores": true,
+  "metric2": true
 }
