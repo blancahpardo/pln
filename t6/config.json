@@ -1,6 +1,6 @@
 {
   "manual": false,
-  "principal": false,
+  "principal": true,
   "quiz": false,
   "infografia": true,
   "adicionales": true,
