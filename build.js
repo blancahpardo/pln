@@ -445,7 +445,8 @@ function buildDownloadView(viewKey, tema) {
   <button class="back-btn" data-back="hub">← Volver</button>
   <h2>${esc(label)} · ${esc(tema.titleShort)}</h2>
   <p class="section-note">${cfg.note || 'Descarga el fichero para trabajar con él en tu ordenador.'}</p>
-  <a class="dl-big" href="${cfg.file}" download>⬇ Descargar</a>
+  <a class="dl-big" href="${cfg.file}" download>⬇ Descargar</a>${cfg.extraDownload ? `
+  <a class="dl-big" href="${cfg.extraDownload.file}" download>⬇ ${esc(cfg.extraDownload.label)}</a>` : ''}
 </div>`;
 }
 
@@ -1693,7 +1694,7 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't8', numLabel: 'TEMA 8', titleShort: 'Tema 8', titleFull: 'Tema 8', kicker: 'Tema 8',
-    viewOrder: ['manual_interactivo','adicionales','infografia','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual_interactivo','adicionales','infografia','principal','practica_guiada','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
       manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico', icon: '✨',
@@ -1722,8 +1723,11 @@ const TEMAS = [
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
       evaluable: { exists: true, file: 'evaluable.pdf', materials: { file: 'plantilla_evaluable.ipynb', label: 'Descargar plantilla de resolución (.ipynb)', note: 'Descarga el enunciado en PDF y, con el botón adicional, la plantilla de resolución (.ipynb) sobre la que debes trabajar y entregar.' } },
+      practica_guiada: { exists: true, kind: 'download', label: 'Práctica guiada', icon: '🧭',
+        desc: 'Clasificación de SMS (spam/ham): cuaderno para hacer paso a paso en clase', file: 'practica_guiada_sms.ipynb',
+        note: 'Descarga el cuaderno de la práctica guiada de clasificación de SMS y ábrelo en Google Colab o en tu entorno de Python: lo haremos juntos paso a paso en clase. El corpus se carga desde internet con la primera celda de código; si no funciona, descarga <code>spam.csv</code> con el botón de abajo y cárgalo desde tu ordenador.',
+        extraDownload: { file: 'spam.csv', label: 'Descargar spam.csv (por si falla la carga desde la URL)' } },
       practica: { exists: true, items: [
-        { id: 'sms', label: 'Clasificación de SMS', file: 'practica_sms.pdf', extraDownload: { file: 'spam.csv', label: 'Descargar spam.csv (por si falla la carga desde la URL)' }, notice: 'Carga el corpus desde la dirección que indica el ejercicio 1 del PDF. Si no funciona, descarga spam.csv con el botón de arriba y cárgalo desde tu ordenador.' },
         { id: 'agnews', label: 'Clasificación AG News', file: 'practica_agnews.pdf', notice: 'El corpus se carga directamente desde Hugging Face con el código del ejercicio 1 del PDF: no hay que descargar ningún fichero.' },
         { id: 'imdb', label: 'Clasificación IMDB', file: 'practica_imdb.pdf', extraDownload: { file: 'imdb_dataset.zip', label: 'Descargar IMDB Dataset.csv (.zip, 27 MB)' }, notice: 'Descarga el fichero con el botón de arriba y descomprímelo: dentro está IMDB Dataset.csv, el corpus con el que trabajan todos los ejercicios.' }
       ] },

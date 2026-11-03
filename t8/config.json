@@ -6,5 +6,6 @@
   "quiz": false,
   "infografia": false,
   "adicionales": false,
-  "manual_interactivo": false
+  "manual_interactivo": false,
+  "practica_guiada": false
 }
