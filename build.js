@@ -299,6 +299,10 @@ code.im-inline { background:#F2F4F5; padding:1px 6px; border-radius:4px; font-fa
 .hub-btn .teacher-hint { position:absolute; top:10px; right:12px; font-size:10px; font-weight:bold; padding:2px 8px; border-radius:10px; }
 .hub-btn .teacher-hint.on { background:#DFF3E0; color:var(--verde); }
 .hub-btn .teacher-hint.off { background:#FBEAEC; color:var(--rojo); }
+.video-full:not([hidden]) { position:fixed; inset:0; z-index:100; background:#000; display:block; padding:0; margin:0; max-width:none; }
+.video-full .video-frame { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#000; }
+.video-full .video-back { position:absolute; top:12px; left:12px; z-index:2; background:rgba(0,0,0,.55); color:#fff; border-color:#fff; }
+.video-full .video-back:hover { background:#fff; color:var(--azul); }
 footer { text-align:center; padding:26px clamp(20px,6vw,48px) 40px; font-size:11px; color:var(--humo); font-style:italic; }
 `;
 
@@ -525,6 +529,16 @@ function buildQuizView(tema) {
 </div>`;
 }
 
+function buildVideoFullView(viewKey, tema) {
+  const cfg = tema.views[viewKey];
+  if (!cfg || !cfg.exists) return '';
+  const label = viewLabel(viewKey, tema);
+  return `<div id="view-${viewKey}" class="view sub-view video-full" hidden>
+  <button class="back-btn video-back" data-back="hub">← Volver</button>
+  <video class="video-frame" src="${cfg.file}" controls controlsList="nodownload noremoteplayback" disablePictureInPicture disableRemotePlayback preload="metadata" playsinline oncontextmenu="return false" title="${esc(label)}"></video>
+</div>`;
+}
+
 function buildTopicHtml(tema) {
   const fixedViews = ['manual', 'principal', 'evaluable', 'practica', 'quiz'];
   const extraKeys = tema.viewOrder.filter(v => !fixedViews.includes(v));
@@ -537,6 +551,7 @@ function buildTopicHtml(tema) {
     if (cfg.kind === 'reflist') return buildReflistView(v, tema);
     if (cfg.kind === 'interactive_manual') return buildInteractiveManualView(v, tema);
     if (cfg.kind === 'html_embed') return buildHtmlEmbedView(v, tema);
+    if (cfg.kind === 'video_full') return buildVideoFullView(v, tema);
     return buildDownloadView(v, tema);
   });
 
@@ -626,6 +641,7 @@ function buildTopicHtml(tema) {
   }
 
   function showView(id) {
+    document.querySelectorAll("video").forEach(function(m) { m.pause(); });
     document.querySelectorAll(".view").forEach(function(v) { v.hidden = true; });
     var el = document.getElementById(id) || document.getElementById("view-" + id);
     if (el) el.hidden = false;
@@ -1633,7 +1649,7 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't6', numLabel: 'TEMA 6', titleShort: 'Tema 6', titleFull: 'Tema 6', kicker: 'Tema 6',
-    viewOrder: ['manual_interactivo','adicionales','infografia','principal','evaluable','practica','quiz'],
+    viewOrder: ['manual_interactivo','adicionales','infografia','principal','apartado11','evaluable','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
       manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico', icon: '✨',
@@ -1646,6 +1662,8 @@ const TEMAS = [
       infografia: { exists: true, kind: 'image', label: 'Infografía', icon: '🖼️',
         desc: 'Resumen visual del tema, en imagen grande', file: 'infografia.png' },
       principal: { exists: true, file: 'cuaderno_principal.ipynb' },
+      apartado11: { exists: true, kind: 'video_full', label: 'Apartado 11 - cuaderno principal', icon: '🎬',
+        desc: 'Ejecución del código y explicaciones de la profesora', file: 'apartado11.mp4' },
       evaluable: { exists: true, file: 'evaluable.pdf', materials: { file: 'plantilla_evaluable.docx', label: 'Descargar plantilla de entrega (.docx)', note: 'Descarga el enunciado en PDF y, con el botón adicional, la plantilla en Word sobre la que debes redactar tus respuestas. Entrega el documento convertido a PDF.' } },
       practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }],
         extraDownload: { file: 'datos_twitter.zip', label: 'Descargar los tuits (3 ficheros)' },

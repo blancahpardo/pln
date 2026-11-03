@@ -6,5 +6,6 @@
   "adicionales": true,
   "practica": false,
   "manual_interactivo": true,
-  "evaluable": true
+  "evaluable": true,
+  "apartado11": false
 }
