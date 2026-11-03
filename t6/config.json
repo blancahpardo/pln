@@ -1,7 +1,7 @@
 {
   "manual": false,
   "principal": true,
-  "quiz": false,
+  "quiz": true,
   "infografia": true,
   "adicionales": true,
   "practica": false,
