@@ -1694,7 +1694,7 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't8', numLabel: 'TEMA 8', titleShort: 'Tema 8', titleFull: 'Tema 8', kicker: 'Tema 8',
-    viewOrder: ['manual_interactivo','adicionales','infografia','principal','practica_guiada','evaluable','practica','quiz'],
+    viewOrder: ['manual_interactivo','adicionales','infografia','principal','practica_guiada','evaluable','practica_agnews','practica','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
       manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico', icon: '✨',
@@ -1727,10 +1727,12 @@ const TEMAS = [
         desc: 'Clasificación de SMS (spam/ham): cuaderno para hacer paso a paso en clase', file: 'practica_guiada_sms.ipynb',
         note: 'Descarga el cuaderno de la práctica guiada de clasificación de SMS y ábrelo en Google Colab o en tu entorno de Python: lo haremos juntos paso a paso en clase. El corpus se carga desde internet con la primera celda de código; si no funciona, descarga <code>spam.csv</code> con el botón de abajo y cárgalo desde tu ordenador.',
         extraDownload: { file: 'spam.csv', label: 'Descargar spam.csv (por si falla la carga desde la URL)' } },
+      practica_agnews: { exists: true, kind: 'download', label: 'Práctica AG News', icon: '📰',
+        desc: 'Clasificación de noticias: cuaderno para hacer por tu cuenta', file: 'practica_agnews.ipynb',
+        note: 'Descarga el cuaderno y ábrelo en Google Colab o en tu entorno de Python. Esta práctica la haces tú solo/a: solo está resuelto el paso 1 (cargar el corpus). El resto de pasos los completas tú, reutilizando el código de la práctica guiada de SMS. El corpus se carga directamente desde Hugging Face con la celda del paso 1: no hay que descargar ningún fichero.' },
       practica: { exists: true, items: [
-        { id: 'agnews', label: 'Clasificación AG News', file: 'practica_agnews.pdf', notice: 'El corpus se carga directamente desde Hugging Face con el código del ejercicio 1 del PDF: no hay que descargar ningún fichero.' },
-        { id: 'imdb', label: 'Clasificación IMDB', file: 'practica_imdb.pdf', extraDownload: { file: 'imdb_dataset.zip', label: 'Descargar IMDB Dataset.csv (.zip, 27 MB)' }, notice: 'Descarga el fichero con el botón de arriba y descomprímelo: dentro está IMDB Dataset.csv, el corpus con el que trabajan todos los ejercicios.' }
-      ] },
+        { id: 'imdb', label: 'Clasificación IMDB', file: 'practica_imdb.pdf' }
+      ], extraDownload: { file: 'imdb_dataset.zip', label: 'Descargar IMDB Dataset.csv (.zip, 27 MB)' }, notice: 'Descarga el fichero con el botón de arriba y descomprímelo: dentro está IMDB Dataset.csv, el corpus con el que trabajan todos los ejercicios.' },
       quiz: { exists: true }
     } }
 ];
