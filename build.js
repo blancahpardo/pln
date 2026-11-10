@@ -1666,7 +1666,7 @@ const TEMAS = [
       apartado11: { exists: true, kind: 'video_full', label: 'Apartado 11 - cuaderno principal', icon: '🎬',
         desc: 'Ejecución del código y explicaciones de la profesora', file: 'apartado11.mp4' },
       evaluable: { exists: true, file: 'evaluable.pdf', materials: { file: 'plantilla_evaluable.docx', label: 'Descargar plantilla de entrega (.docx)', note: 'Descarga el enunciado en PDF y, con el botón adicional, la plantilla en Word sobre la que debes redactar tus respuestas. Entrega el documento convertido a PDF.' } },
-      practica: { exists: true, items: [{ id: 'unica', label: 'Prácticas', file: 'practica.pdf' }],
+      practica: { exists: true, label: 'Práctica opcional asíncrona', items: [{ id: 'unica', label: 'Práctica opcional asíncrona', file: 'practica.pdf' }],
         extraDownload: { file: 'datos_twitter.zip', label: 'Descargar los tuits (3 ficheros)' },
         notice: 'Construye el corpus con los tres ficheros de tuits como en los apartados 11.1 y 11.2 del cuaderno principal (se descargan solos con ese código). Si la descarga automática falla, usa los ficheros del botón de arriba. Los temas y listas de términos que debes usar están en el PDF.' },
       quiz: { exists: true }
