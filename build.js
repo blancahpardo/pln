@@ -1650,7 +1650,7 @@ const TEMAS = [
       quiz: { exists: true }
     } },
   { dir: 't6', numLabel: 'TEMA 6', titleShort: 'Tema 6', titleFull: 'Tema 6', kicker: 'Tema 6',
-    viewOrder: ['manual_interactivo','adicionales','infografia','principal','apartado11','evaluable','practica','quiz'],
+    viewOrder: ['manual_interactivo','adicionales','infografia','principal','apartado11','evaluable','practica','reto_sesgo','quiz'],
     views: {
       manual: { exists: true, file: 'manual.pdf' },
       manual_interactivo: { exists: true, kind: 'interactive_manual', label: 'Manual teórico', icon: '✨',
@@ -1669,6 +1669,9 @@ const TEMAS = [
       practica: { exists: true, label: 'Práctica opcional asíncrona', items: [{ id: 'unica', label: 'Práctica opcional asíncrona', file: 'practica.pdf' }],
         extraDownload: { file: 'datos_twitter.zip', label: 'Descargar los tuits (3 ficheros)' },
         notice: 'Construye el corpus con los tres ficheros de tuits como en los apartados 11.1 y 11.2 del cuaderno principal (se descargan solos con ese código). Si la descarga automática falla, usa los ficheros del botón de arriba. Los temas y listas de términos que debes usar están en el PDF.' },
+      reto_sesgo: { exists: true, kind: 'html_embed', label: 'Reto relámpago: cazadores de sesgo', icon: '🏁',
+        desc: 'Dinámica de aula en parejas: detectar a contrarreloj el sesgo léxico de tuits reales antes de que lo confirme el código.',
+        file: 'reto_relampago_sesgo.html' },
       quiz: { exists: true }
     } },
   { dir: 't7', numLabel: 'TEMA 7', titleShort: 'Tema 7', titleFull: 'Tema 7', kicker: 'Tema 7',
