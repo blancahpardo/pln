@@ -4,7 +4,7 @@
   "evaluable": false,
   "quiz": false,
   "infografia": true,
-  "adicionales": false,
+  "adicionales": true,
   "manual_interactivo": true,
   "practica": false
 }
