@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Código resuelto de la práctica</title>
+<style>
+:root{
+  --bg:#F5F6F8; --panel:#FFFFFF; --panel2:#ECEEF2; --line:#D7DCE3;
+  --ink:#1C2430; --ink-dim:#5B6672;
+  --accent:#1E6FB8; --accent-ink:#ffffff;
+  --code-bg:#0F172A; --code-ink:#E2E8F0; --code-line:#1E293B;
+  --shadow:0 8px 24px rgba(28,36,48,.08);
+  --mono:"SF Mono","Cascadia Code","Courier New",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,Helvetica,sans-serif;
+}
+:root[data-theme="dark"]{
+  --bg:#141922; --panel:#1D2430; --panel2:#242C3A; --line:#323C4C;
+  --ink:#E7ECF2; --ink-dim:#9AA6B4;
+  --accent:#6FB1E8; --accent-ink:#0b1420;
+  --code-bg:#0A0F1A; --code-ink:#D7E2EF; --code-line:#18202E;
+  --shadow:0 8px 24px rgba(0,0,0,.45);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]):not([data-theme="dark"]){
+    --bg:#141922; --panel:#1D2430; --panel2:#242C3A; --line:#323C4C;
+    --ink:#E7ECF2; --ink-dim:#9AA6B4;
+    --accent:#6FB1E8; --accent-ink:#0b1420;
+    --code-bg:#0A0F1A; --code-ink:#D7E2EF; --code-line:#18202E;
+    --shadow:0 8px 24px rgba(0,0,0,.45);
+  }
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);transition:background .2s,color .2s;}
+.wrap{max-width:900px;margin:0 auto;padding:22px 18px 60px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.brand{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;color:var(--ink-dim);}
+.theme-btn{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:16px;padding:6px 12px;font-size:12px;cursor:pointer;font-family:var(--sans);}
+.theme-btn:hover{border-color:var(--accent);}
+h1.page-title{font-size:clamp(22px,3.6vw,28px);margin:6px 0 18px;}
+.intro-note{font-size:13.5px;color:var(--ink-dim);background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:14px 16px;margin:0 0 24px;line-height:1.55;}
+
+.md-block{margin:20px 0 10px;}
+.md-h{color:var(--accent);margin:0 0 6px;}
+.md-p{font-size:14.5px;line-height:1.6;color:var(--ink);margin:0 0 8px;}
+.md-quote{font-size:14px;line-height:1.55;color:var(--ink-dim);margin:0 0 8px;padding:8px 14px;background:var(--panel2);border-left:3px solid var(--accent);border-radius:4px;}
+.md-inline{font-family:var(--mono);font-size:12.5px;background:var(--panel2);padding:1px 5px;border-radius:4px;}
+
+.code-block{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin:0 0 16px;box-shadow:var(--shadow);overflow:hidden;}
+.code-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-dim);background:var(--panel2);padding:8px 14px;border-bottom:1px solid var(--line);}
+.code-block pre{margin:0;padding:16px 18px;background:var(--code-bg);color:var(--code-ink);overflow-x:auto;}
+.code-block code{font-family:var(--mono);font-size:13px;line-height:1.55;white-space:pre;}
+
+footer{margin-top:34px;text-align:center;font-size:11px;color:var(--ink-dim);font-style:italic;line-height:1.6;border-top:1px solid var(--line);padding-top:16px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <span class="brand">PROGRAMACIÓN PARA PLN · TEMA 6</span>
+    <button class="theme-btn" id="themeBtn" type="button">🌓 Cambiar vista</button>
+  </div>
+  <h1 class="page-title">Código resuelto de la práctica</h1>
+  <p class="intro-note">Código completo del cuaderno de prácticas del Tema 6, con todas las celdas ya resueltas, para consultar o comparar con tu propia solución.</p>
+
+<div class="md-block"><h3 class="md-h">Práctica PLN6</h3></div>
+<div class="md-block"><p class="md-p">A continuación tienes una práctica para aplicar todo lo trabajado con el minicorpus y con el subcorpus real de Twitter de PLN6. La actividad está diseñada para que puedas replicar el pipeline, construir un subcorpus temático real y argumentar tus decisiones.</p>
+<h5 class="md-h">Qué se evalúa</h5>
+<p class="md-p">1. <strong>Ejecución del análisis</strong>: que el subcorpus se construya correctamente y que el pipeline produzca salidas interpretables (tablas y ejemplos).</p>
+<p class="md-p">2. <strong>Interpretación</strong>: que se distingan con claridad <em>presencia temática</em> vs <em>actitud/sentimiento</em>, y que se discuta el impacto del preprocesado (stopwords, ruido, emojis, ironía).</p>
+<p class="md-p"><strong>Práctica guiada (evaluación): construir y analizar un subcorpus temático en Twitter</strong></p>
+<p class="md-p">En esta práctica vas a construir un subcorpus temático real a partir de tweets etiquetados (pos/neg/neu) y aplicar el mismo pipeline del cuaderno para:  </p>
+<p class="md-p">(a) filtrar, (b) tokenizar, (c) medir presencia temática, (d) explorar contexto (KWIC) y (e) obtener co‑ocurrencias.</p>
+<p class="md-quote">Importante: el objetivo no es “tener razón”, sino tomar decisiones metodológicas y justificar interpretaciones a partir de evidencia.</p>
+<p class="md-quote">Las dos preguntas de reflexión están al final del cuaderno, como trabajo opcional para hacer después en casa.</p></div>
+<div class="md-block"><h3 class="md-h">📥 0. Crear df_real (subcorpus real base) — ejercicio autónomo</h3></div>
+<div class="md-block"><p class="md-p">Fuente: https://github.com/garnachod/TwitterSentimentDataset</p></div>
+<div class="code-block"><div class="code-tag">Celda de código 1</div><pre><code>import os
+import pandas as pd
+from urllib.request import urlretrieve
+
+DATA_DIR = "data_subcorpus_real"
+os.makedirs(DATA_DIR, exist_ok=True)
+
+base = "https://raw.githubusercontent.com/garnachod/TwitterSentimentDataset/master/"
+archivos = {
+    "pos": "tweets_pos_clean.txt",
+    "neg": "tweets_neg_clean.txt",
+    "neu": "tweets_clean.txt",
+}
+
+rutas = {}
+for etiqueta, fname in archivos.items():
+    ruta = os.path.join(DATA_DIR, fname)
+    rutas[etiqueta] = ruta
+    if not os.path.exists(ruta) or os.path.getsize(ruta) == 0:
+        print(f"Descargando {fname} ...")
+        urlretrieve(base + fname, ruta)
+
+print("Archivos listos en:", DATA_DIR)
+for k,v in rutas.items():
+    print(k, "-&gt;", v)</code></pre></div>
+<div class="code-block"><div class="code-tag">Celda de código 2</div><pre><code>def leer_lineas(path, max_lines=None):
+    lineas = []
+    with open(path, "r", encoding="utf-8", errors="ignore") as f:
+        for i, line in enumerate(f):
+            line = line.strip()
+            if line:
+                lineas.append(line)
+            if max_lines is not None and len(lineas) &gt;= max_lines:
+                break
+    return lineas
+
+N_POR_CLASE = 800
+
+pos = leer_lineas(rutas["pos"], max_lines=N_POR_CLASE)
+neg = leer_lineas(rutas["neg"], max_lines=N_POR_CLASE)
+neu = leer_lineas(rutas["neu"], max_lines=N_POR_CLASE)
+
+df_real = pd.DataFrame({
+    "texto": pos + neg + neu,
+    "etiqueta": (["pos"]*len(pos)) + (["neg"]*len(neg)) + (["neu"]*len(neu))
+}).reset_index(drop=True)
+
+print("Tamaño del subcorpus real:", len(df_real))
+df_real.sample(8, random_state=7)</code></pre></div>
+<div class="md-block"><h3 class="md-h">🧩 1 Elige un tema y define tus términos objetivo (10–20 términos)</h3></div>
+<div class="md-block"><p class="md-p">Si el subcorpus queda muy pequeño (&lt;30), amplía <code class="md-inline">terminos_objetivo</code> o usa el patrón “relajado” (sin <code class="md-inline">\b</code>) para capturar hashtags/variantes.</p>
+<p class="md-p">Como en el cuaderno principal (apartado 11) ya se ha trabajado la opción de género, para tu práctica tendrás que seleccionar otro de los cuatro temas (y terminología) propuestos. Esta solución desarrolla el tema (b) Educación:</p>
+<p class="md-p"><strong>Plantillas para otros temas</strong></p>
+<p class="md-p">Cambia solo estas variables para cambiar de tema.</p>
+<p class="md-quote">(b) Educación</p>
+<p class="md-p">tema = "educación"</p>
+<p class="md-p">terminos_objetivo = [</p>
+<p class="md-p">    "alumno","alumnos","alumna","alumnas",</p>
+<p class="md-p">    "estudiante","estudiantes",</p>
+<p class="md-p">    "profesor","profesores","profesora","profesoras",</p>
+<p class="md-p">    "clase","clases","aula",</p>
+<p class="md-p">    "examen","exámenes",</p>
+<p class="md-p">    "nota","notas","evaluación","evaluar"</p>
+<p class="md-p">]</p>
+<p class="md-p">terminos_kwic = ["alumno","profesor","examen","nota"]</p>
+<p class="md-quote">(c) Migración</p>
+<p class="md-p">tema = "migración"</p>
+<p class="md-p">terminos_objetivo = [</p>
+<p class="md-p">    "inmigrante","inmigrantes",</p>
+<p class="md-p">    "migrante","migrantes",</p>
+<p class="md-p">    "refugiado","refugiados","refugiada","refugiadas",</p>
+<p class="md-p">    "frontera","fronteras",</p>
+<p class="md-p">    "asilo",</p>
+<p class="md-p">    "papeles",</p>
+<p class="md-p">    "deportación","deportar",</p>
+<p class="md-p">    "ilegal","ilegales",</p>
+<p class="md-p">    "racismo","xenofobia"</p>
+<p class="md-p">]</p>
+<p class="md-p">terminos_kwic = ["inmigrante","migrante","frontera","asilo"]</p>
+<p class="md-quote">(d) Política</p>
+<p class="md-p">⚠️ Nota didáctica: en Twitter hay mucho nombre propio y hashtag. Mejor incluir algunos términos generales y algunos muy típicos de conversación.</p>
+<p class="md-p">tema = "política"</p>
+<p class="md-p">terminos_objetivo = [</p>
+<p class="md-p">    "gobierno","presidente","presidenta",</p>
+<p class="md-p">    "ministro","ministra","diputado","diputada",</p>
+<p class="md-p">    "elección","elecciones","voto","votar",</p>
+<p class="md-p">    "partido","congreso","senado",</p>
+<p class="md-p">    "izquierda","derecha",</p>
+<p class="md-p">    "corrupción",</p>
+<p class="md-p">    "protesta","manifestación","huelga"</p>
+<p class="md-p">]</p>
+<p class="md-p">terminos_kwic = ["gobierno","elecciones","voto","corrupción"]</p>
+<p class="md-quote">(e) Emoción</p>
+<p class="md-p">Este tema suele dar subcorpus más grande (bien para que no quede &lt;30).</p>
+<p class="md-p">tema = "emoción"</p>
+<p class="md-p">terminos_objetivo = [</p>
+<p class="md-p">    "feliz","alegre","contento","contenta",</p>
+<p class="md-p">    "triste","deprimido","deprimida",</p>
+<p class="md-p">    "odio","odiar","amo","amar",</p>
+<p class="md-p">    "miedo","ansiedad","estres","estrés",</p>
+<p class="md-p">    "enfado","enojado","enojada",</p>
+<p class="md-p">    "ilusión","esperanza",</p>
+<p class="md-p">    "llorar","sonreír","sonrisa"</p>
+<p class="md-p">]</p>
+<p class="md-p">terminos_kwic = ["feliz","triste","odio","miedo"]</p></div>
+<div class="code-block"><div class="code-tag">Celda de código 3</div><pre><code>tema = "educación"
+terminos_objetivo = [
+    "alumno","alumnos","alumna","alumnas",
+    "estudiante","estudiantes",
+    "profesor","profesores","profesora","profesoras",
+    "clase","clases","aula",
+    "examen","exámenes",
+    "nota","notas","evaluación","evaluar"
+]
+
+terminos_kwic = ["alumno","profesor","examen","nota"]
+
+print("Tema:", tema)
+print("Términos objetivo:", terminos_objetivo)
+print("Términos KWIC:", terminos_kwic)</code></pre></div>
+<div class="md-block"><h3 class="md-h">🔍 2 Construcción del subcorpus temático (filtrado)</h3></div>
+<div class="code-block"><div class="code-tag">Celda de código 4</div><pre><code>
+import re
+
+pat = re.compile(
+    r"\b(?:%s)\b" % "|".join(map(re.escape, terminos_objetivo)),
+    re.IGNORECASE
+)
+
+df_sub = df_real[df_real["texto"].astype(str).str.contains(pat, regex=True)].copy()
+
+print("Tamaño df_sub:", len(df_sub))
+df_sub["texto"].head(3).tolist()</code></pre></div>
+<div class="md-block"><h3 class="md-h">🧼 3 Tokenización/lematización del subcorpus temático</h3></div>
+<div class="code-block"><div class="code-tag">Celda de código 5</div><pre><code>
+import pandas as pd
+import re
+from collections import Counter, defaultdict
+from IPython.display import display
+
+!pip install -q spacy
+!python -m spacy download es_core_news_sm
+
+import spacy
+nlp = spacy.load("es_core_news_sm")
+
+print("spaCy listo | Modelo cargado:", nlp.meta["name"])</code></pre></div>
+<div class="code-block"><div class="code-tag">Celda de código 6</div><pre><code>import re
+
+def get_stopwords_es():
+    try:
+        from spacy.lang.es.stop_words import STOP_WORDS as SPACY_STOP
+        return set(SPACY_STOP)
+    except Exception:
+        pass
+
+    try:
+        import nltk
+        from nltk.corpus import stopwords
+        try:
+            return set(stopwords.words("spanish"))
+        except LookupError:
+            try:
+                nltk.download("stopwords", quiet=True)
+                return set(stopwords.words("spanish"))
+            except Exception:
+                pass
+    except Exception:
+        pass
+
+    return {
+        "de","la","que","el","en","y","a","los","del","se","las","por","un","para","con","no","una","su","al","lo",
+        "como","más","pero","sus","le","ya","o","este","sí","porque","esta","entre","cuando","muy","sin","sobre","también"
+    }
+
+STOPWORDS_ES = get_stopwords_es()
+
+def tokenizar(texto: str):
+    return re.findall(r"[a-záéíóúüñ]+", str(texto).lower())
+
+def tokenizar_y_lematizar(texto: str):
+    if nlp is None:
+        toks = tokenizar(texto)
+        return [t for t in toks if t not in STOPWORDS_ES and len(t) &gt; 2]
+
+    doc = nlp(str(texto).lower())
+    return [
+        t.lemma_
+        for t in doc
+        if (not t.is_stop) and (not t.is_space) and (t.is_alpha) and len(t.lemma_) &gt; 2
+    ]</code></pre></div>
+<div class="code-block"><div class="code-tag">Celda de código 7</div><pre><code>lexico_valorativo_positivo = [
+    "excelente","buen","bueno","maravilloso","fantástico","positivo","agradable","genial","estupendo",
+    "feliz","amor","brillante","sólido","historico","histórico","éxito","rotundo","claro","sereno","responsable",
+    "espectacular","ambicioso","masivo","mejora","mejor","apoyo"
+]
+
+lexico_valorativo_negativo = [
+    "malo","horrible","terrible","negativo","desagradable","agresivo","agresiva","odio","peor","lamentable",
+    "incompetente","vago","vagas","minimiza","fría","frio","calculadora","mandona","desastre","desastrosa",
+    "confuso","confusa","acus","acusa","amenaza"
+]
+
+dic_valorativo = {w.lower(): "positivo" for w in lexico_valorativo_positivo}
+dic_valorativo.update({w.lower(): "negativo" for w in lexico_valorativo_negativo})
+
+print("Tamaño diccionario valorativo:", len(dic_valorativo))
+
+def detectar_lexico_tema(tokens_doc, lexico_tema):
+    return [t for t in tokens_doc if t in lexico_tema]
+
+def detectar_lexico_valorativo(tokens_doc, dic_valorativo):
+    return [t for t in tokens_doc if t in dic_valorativo]</code></pre></div>
+<div class="md-block"><h3 class="md-h">📏 4 Aplicar el pipeline al subcorpus temático (métricas por texto)</h3></div>
+<div class="code-block"><div class="code-tag">Celda de código 8</div><pre><code>tokens_sub = [tokenizar_y_lematizar(t) for t in df_sub["texto"].tolist()]
+
+resultados_sub = []
+for i, texto_tokens in enumerate(tokens_sub):
+    tema_enc = detectar_lexico_tema(texto_tokens, terminos_objetivo)
+    valorativo = detectar_lexico_valorativo(texto_tokens, dic_valorativo)
+
+    score = sum(1 if dic_valorativo.get(t) == "positivo" else -1 for t in valorativo if t in dic_valorativo)
+
+    resultados_sub.append({
+        "texto_id": i + 1,
+        "etiqueta": df_sub.iloc[i]["etiqueta"],
+        "texto": df_sub.iloc[i]["texto"],
+        "tokens": texto_tokens,
+        "tema_encontrado": tema_enc,
+        "valorativo_encontrado": valorativo,
+        "n_tema": len(tema_enc),
+        "n_valorativo": len(valorativo),
+        "score_valorativo": score
+    })
+
+df_resultados_sub = pd.DataFrame(resultados_sub)
+df_resultados_sub.head()</code></pre></div>
+<div class="md-block"><h3 class="md-h">📊 5 Promedios por etiqueta (pos/neg/neu)</h3></div>
+<div class="code-block"><div class="code-tag">Celda de código 9</div><pre><code>resumen_tema = df_resultados_sub.groupby("etiqueta")[["n_tema","n_valorativo","score_valorativo"]].mean().round(2)
+resumen_tema</code></pre></div>
+<div class="md-block"><h3 class="md-h">⭐ 6 Casos interesantes: top ejemplos por densidad temática</h3></div>
+<div class="code-block"><div class="code-tag">Celda de código 10</div><pre><code>top_tema = df_resultados_sub.sort_values(["n_tema","n_valorativo"], ascending=False).head(10)[
+    ["etiqueta","texto","tema_encontrado","valorativo_encontrado","score_valorativo"]
+]
+top_tema</code></pre></div>
+<div class="md-block"><h3 class="md-h">🔎 7 KWIC (tokens/lemas) para ver contexto rápidamente</h3></div>
+<div class="code-block"><div class="code-tag">Celda de código 11</div><pre><code>import pandas as pd
+
+def kwic_tokens(tokens_corpus, term, window=5, max_lines=12):
+    """KWIC simple sobre una lista de documentos tokenizados (cada doc = lista de tokens/lemas)."""
+    lines = []
+    for doc_id, toks in enumerate(tokens_corpus, start=1):
+        for i, t in enumerate(toks):
+            if t == term:
+                left = " ".join(toks[max(0, i-window):i])
+                right = " ".join(toks[i+1:i+1+window])
+                lines.append({"texto_id": doc_id, "izq": left, "term": term, "dcha": right})
+                if len(lines) &gt;= max_lines:
+                    return pd.DataFrame(lines)
+    return pd.DataFrame(lines)
+
+tokens_corpus_sub = df_resultados_sub["tokens"].tolist()
+
+terminos_prueba = terminos_kwic
+
+for term in terminos_prueba:
+    print("\n" + "="*70)
+    print("KWIC (tokens/lemas) para:", term)
+    kw = kwic_tokens(tokens_corpus_sub, term, window=6, max_lines=6)
+    display(kw if len(kw) else "— sin ocurrencias (prueba con plural o revisa lematización) —")</code></pre></div>
+<div class="md-block"><h3 class="md-h">🤝 8 Co‑ocurrencias interpretables (stopwords estándar + filtro Twitter mínimo)</h3></div>
+<div class="code-block"><div class="code-tag">Celda de código 12</div><pre><code>import re
+import pandas as pd
+from collections import Counter
+
+def tok_tweet(s):
+    return re.findall(r"[a-záéíóúüñ]+", str(s).lower())
+
+def coocurrencias_df(texts, target_terms, window_tokens=6, top_n=20, stopwords=None, extra_stop=None, min_len=3):
+    targets = set(t.lower() for t in target_terms)
+    stop = set(stopwords or [])
+    stop |= set(extra_stop or [])
+    counts = Counter()
+
+    for text in texts:
+        toks = tok_tweet(text)
+        for i, w in enumerate(toks):
+            if w in targets:
+                start = max(0, i - window_tokens)
+                end = min(len(toks), i + window_tokens + 1)
+                for ctxt in toks[start:end]:
+                    if ctxt in targets:
+                        continue
+                    if len(ctxt) &lt; min_len:
+                        continue
+                    if ctxt in stop:
+                        continue
+                    counts[ctxt] += 1
+
+    return pd.DataFrame(counts.most_common(top_n), columns=["coocurrencia", "frecuencia"])
+
+extra_stop_twitter = {"rt","dm","http","https","tco"}  # mínimo razonable
+
+cooc_df = coocurrencias_df(
+    df_sub["texto"].tolist(),
+    terminos_objetivo,
+    window_tokens=8,
+    top_n=20,
+    stopwords=STOPWORDS_ES,
+    extra_stop=extra_stop_twitter,
+    min_len=3
+)
+
+cooc_df if len(cooc_df) else "No se encontraron coocurrencias."</code></pre></div>
+<div class="md-block"><h3 class="md-h">🏠 Para trabajar después, en casa (opcional)</h3>
+<p class="md-p">Estas dos preguntas de reflexión no forman parte del trabajo en el aula. Están pensadas para que, si quieres, reflexiones más adelante sobre lo aprendido y pongas en práctica el análisis con tus propios resultados. Respóndelas en celdas de texto, apoyándote en las tablas, los ejemplos y las coocurrencias que hayas obtenido, y menciona también las limitaciones del método.</p></div>
+<div class="md-block"><h3 class="md-h">✍️ Reflexión 1 (opcional, en casa)</h3></div>
+<div class="md-block"><p class="md-p"><strong>A partir de tu tabla <code class="md-inline">resumen_tema</code>:</strong>  </p>
+<p class="md-p">¿Qué significaría que <code class="md-inline">neg</code> tenga más <code class="md-inline">n_tema</code> que <code class="md-inline">pos</code> (o al revés)?  </p>
+<p class="md-p">¿Mide esto “actitud/sentimiento” o mide más bien “presencia temática”? Justifica con evidencia (valores) y menciona al menos <strong>una limitación</strong> del método.</p></div>
+<div class="md-block"><p class="md-p">Tu respuesta:</p></div>
+<div class="md-block"><h3 class="md-h">✍️ Reflexión 2 (opcional, en casa)</h3></div>
+<div class="md-block"><p class="md-p">Elige <strong>tres</strong> palabras de tu tabla de co‑ocurrencias (<code class="md-inline">cooc_df</code>). Para cada una, explica por qué podría estar relacionada con el tema (o por qué crees que es “ruido”).  </p>
+<p class="md-p">Incluye al final una frase sobre <strong>limpieza</strong>: ¿qué stopwords añadirías para Twitter y qué podrías perder si limpias demasiado?</p></div>
+<div class="md-block"><p class="md-p">Tu respuesta:</p></div>
+
+  <footer>
+    © Dr.ª Blanca Hernández Pardo · Programación para PLN · Tema 6. Análisis automático de sesgo léxico y discursivo<br>
+    Queda prohibida la difusión, distribución o reproducción total o parcial de este material sin autorización expresa de la autora.
+  </footer>
+</div>
+<script>
+(function(){
+  "use strict";
+  var root = document.documentElement;
+  var stored = null;
+  try { stored = localStorage.getItem('codigo-resuelto-theme'); } catch(e){}
+  if (stored) { root.setAttribute('data-theme', stored); }
+  document.getElementById('themeBtn').addEventListener('click', function(){
+    var cur = root.getAttribute('data-theme');
+    if (cur !== 'light' && cur !== 'dark') {
+      cur = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+    var next = cur === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('codigo-resuelto-theme', next); } catch(e){}
+  });
+})();
+</script>
+</body>
+</html>

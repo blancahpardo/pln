@@ -12,6 +12,8 @@
   --pos:#5E8A1D; --pos-bg:#E6F4CB;
   --neg:#C3123D; --neg-bg:#FBDDE5;
   --warn:#B8860B;
+  --ok:#2E7D4F; --ok-bg:#DCF2E4;
+  --bad:#B4213A; --bad-bg:#FBDEE3;
   --shadow:0 8px 24px rgba(35,25,66,.10);
   --mono:"SF Mono","Cascadia Code","Courier New",monospace;
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,Helvetica,sans-serif;
@@ -24,6 +26,8 @@
   --pos:#AEE65C; --pos-bg:#2e3d17;
   --neg:#FF7A98; --neg-bg:#3d1826;
   --warn:#FFCA3A;
+  --ok:#8FE3B3; --ok-bg:#163826;
+  --bad:#FF8FA3; --bad-bg:#3d1a23;
   --shadow:0 8px 24px rgba(0,0,0,.4);
 }
 @media (prefers-color-scheme: dark){
@@ -34,6 +38,8 @@
     --pos:#AEE65C; --pos-bg:#2e3d17;
     --neg:#FF7A98; --neg-bg:#3d1826;
     --warn:#FFCA3A;
+    --ok:#8FE3B3; --ok-bg:#163826;
+    --bad:#FF8FA3; --bad-bg:#3d1a23;
     --shadow:0 8px 24px rgba(0,0,0,.4);
   }
 }
@@ -56,18 +62,20 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);tran
 
 .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:1.6px;color:var(--genero);margin:0 0 10px;text-transform:uppercase;}
 h1{font-size:clamp(26px,4vw,34px);margin:0 0 14px;line-height:1.2;}
-h2.step-title{font-size:19px;margin:0 0 6px;}
+h2.step-title{font-size:19px;margin:18px 0 10px;}
 .lede{font-family:var(--serif);font-size:16px;line-height:1.6;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--genero);border-radius:6px;padding:18px 20px;margin:0 0 18px;box-shadow:var(--shadow);}
 .step-note{font-size:13.5px;color:var(--ink-dim);margin:0 0 20px;line-height:1.55;}
-ul.rules{font-size:14px;line-height:1.7;padding-left:20px;margin:0 0 20px;}
+ol.rules,ul.rules{font-size:14.5px;line-height:1.75;padding-left:22px;margin:0 0 20px;}
+ol.rules li,ul.rules li{margin-bottom:6px;}
 
 .btn{display:inline-flex;align-items:center;gap:8px;background:var(--genero);color:var(--genero-ink);border:none;border-radius:22px;padding:12px 24px;font-size:14.5px;font-weight:700;cursor:pointer;font-family:var(--sans);box-shadow:var(--shadow);}
 .btn:hover{filter:brightness(1.08);}
 .btn.secondary{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none;}
 .btn.secondary:hover{border-color:var(--genero);}
 .btn.alt{background:var(--pos);color:#16210a;}
-.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center;}
 .btn:disabled{opacity:.4;cursor:not-allowed;}
+.btn-hint{font-size:12.5px;color:var(--ink-dim);width:100%;}
 
 .round-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow);}
 .content-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;color:var(--ink-dim);text-transform:uppercase;margin-bottom:10px;}
@@ -77,21 +85,35 @@ ul.rules{font-size:14px;line-height:1.7;padding-left:20px;margin:0 0 20px;}
 .tweet-text .hl.pos{background:var(--pos-bg);color:var(--pos);border:1px solid var(--pos);}
 .tweet-text .hl.neg{background:var(--neg-bg);color:var(--neg);border:1px solid var(--neg);}
 
+.task-box{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:16px;}
+.task-box .task-title{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--genero);margin:0 0 10px;}
+.task-box p{margin:0 0 12px;font-size:14.5px;line-height:1.55;}
+fieldset.diag{border:none;margin:0 0 12px;padding:0;}
+fieldset.diag label{display:flex;align-items:flex-start;gap:9px;font-size:14.5px;line-height:1.4;margin-bottom:9px;cursor:pointer;}
+fieldset.diag input[type="radio"]{margin-top:3px;accent-color:var(--genero);}
+.word-input-row{margin-top:4px;}
+.word-input-row label{font-size:13px;color:var(--ink-dim);display:block;margin-bottom:5px;}
+.word-input-row input[type="text"]{width:100%;max-width:320px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);font-family:var(--sans);font-size:14px;}
+
 .timer-box{display:flex;align-items:center;gap:18px;justify-content:center;margin:18px 0;}
 .timer-num{font-family:var(--mono);font-size:54px;font-weight:700;letter-spacing:1px;color:var(--genero);min-width:140px;text-align:center;}
 .timer-num.urgent{color:var(--neg);}
 .timer-num.stopped{color:var(--ink-dim);}
 
-.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-dim);margin:10px 0 2px;}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-dim);margin:10px 0 16px;}
 .legend span{display:inline-flex;align-items:center;gap:6px;}
 .legend .sw{width:12px;height:12px;border-radius:3px;display:inline-block;}
 .legend .sw.genero{background:var(--genero);}
 .legend .sw.pos{background:var(--pos-bg);border:1px solid var(--pos);}
 .legend .sw.neg{background:var(--neg-bg);border:1px solid var(--neg);}
 
-.reveal{background:var(--panel2);border-left:3px solid var(--genero);border-radius:8px;padding:14px 16px;margin-top:14px;font-size:14px;line-height:1.6;display:none;}
-.reveal.show{display:block;animation:fadein .25s ease;}
-.reveal .q{font-style:italic;color:var(--ink-dim);margin-top:8px;}
+.result-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin-bottom:18px;box-shadow:var(--shadow);}
+.compare-row{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0;}
+.compare-pill{font-size:13px;padding:6px 12px;border-radius:14px;border:1px solid var(--line);background:var(--panel2);}
+.compare-pill.match{background:var(--ok-bg);color:var(--ok);border-color:var(--ok);font-weight:700;}
+.compare-pill.nomatch{background:var(--bad-bg);color:var(--bad);border-color:var(--bad);font-weight:700;}
+.reveal-text{font-size:14px;line-height:1.6;}
+.reveal-text .q{font-style:italic;color:var(--ink-dim);margin-top:8px;}
 
 .closing{font-family:var(--serif);font-size:15px;line-height:1.65;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:18px 0;}
 details.refs{margin:16px 0;font-size:13px;color:var(--ink-dim);}
@@ -117,13 +139,15 @@ footer{margin-top:30px;text-align:center;font-size:11px;color:var(--ink-dim);fon
   <section class="screen active" id="screen-intro">
     <p class="kicker">Encargo urgente · Cliente de medios y redes sociales</p>
     <h1>Reto relámpago: cazadores de sesgo</h1>
-    <p class="lede">Un cliente os pide una auditoría exprés de tres publicaciones que ha recibido quejas. Trabajáis en parejas, como el equipo de lingüística computacional de la unidad: tenéis el cronómetro en contra y, al final de cada ronda, el propio sistema automático (las mismas listas de léxico de género y léxico valorativo que habéis programado en el cuaderno) revela su veredicto.</p>
-    <ul class="rules">
-      <li>En parejas. Por ronda: <strong>90 segundos</strong> para decidir si hay sesgo léxico o discursivo y, si lo hay, de qué tipo.</li>
-      <li>En cuanto creáis tenerlo, levantad la mano — la profesora para el cronómetro de esa pareja.</li>
-      <li>Después se pulsa <em>Revelar análisis</em>: no siempre el sistema automático acierta, y esa es la parte interesante.</li>
-      <li>Gana cada ronda la pareja más rápida con el diagnóstico correcto (no solo la más rápida).</li>
-    </ul>
+    <p class="lede">Un cliente de medios y redes sociales os pasa tres publicaciones por las que ha recibido quejas y os pide una auditoría exprés, como el equipo de lingüística computacional de la unidad. Vais a decidir, publicación por publicación, si hay sesgo léxico o discursivo — y solo al final sabréis si el sistema automático (las mismas listas de léxico de género y de léxico valorativo que habéis programado en el cuaderno) está de acuerdo con vosotros.</p>
+    <p class="step-note"><strong>Qué vais a hacer exactamente, en cada una de las 3 rondas:</strong></p>
+    <ol class="rules">
+      <li>Pulsáis <em>Iniciar cronómetro</em>: tenéis <strong>90 segundos</strong>, en pareja, para leer la publicación.</li>
+      <li>Elegís uno de los 4 diagnósticos posibles (el que creáis que daría el sistema automático según sus listas de léxico) y, si queréis, anotáis la palabra exacta que lo justifica.</li>
+      <li>Pulsáis <em>¡Lo tenemos!</em> para parar el cronómetro en cuanto hayáis decidido — no hace falta agotar los 90 segundos.</li>
+      <li>El botón <em>Siguiente contenido</em> solo se activa cuando habéis marcado un diagnóstico: no se puede avanzar sin haberlo intentado.</li>
+    </ol>
+    <p class="step-note">No vais a ver ningún veredicto hasta el final de las 3 rondas. Ahí, en una única pantalla de resultados, se compara vuestro diagnóstico con el de las listas de léxico del cuaderno — y se discute si el sistema automático tenía razón o no.</p>
     <div class="btn-row">
       <button class="btn" id="startBtn" type="button">▶ Empezar el reto</button>
     </div>
@@ -136,25 +160,28 @@ footer{margin-top:30px;text-align:center;font-size:11px;color:var(--ink-dim);fon
       <div class="content-tag">Tuit real · corpus TwitterSentimentDataset</div>
       <p class="tweet-text" id="tweet1">«Regla del pulgar para saber si algo es machista: Imagina la situación cambiando a las mujeres x hombres de color. Te parece mal? Es machista»</p>
     </div>
+    <div class="task-box">
+      <p class="task-title">Vuestra tarea</p>
+      <p>En pareja: ¿qué diagnóstico creéis que daría el sistema automático, según las listas de léxico de género y de léxico valorativo del cuaderno?</p>
+      <fieldset class="diag" id="diag-group-1">
+        <label><input type="radio" name="diag1" value="genero"> Solo sesgo de género (hay términos de la lista de género)</label>
+        <label><input type="radio" name="diag1" value="valorativo"> Solo sesgo valorativo (hay términos positivos o negativos de esa lista)</label>
+        <label><input type="radio" name="diag1" value="ambos"> Ambos a la vez</label>
+        <label><input type="radio" name="diag1" value="ninguno"> Ningún sesgo detectable por esas listas</label>
+      </fieldset>
+      <div class="word-input-row">
+        <label for="word1">Palabra(s) exacta(s) que lo justifican (opcional):</label>
+        <input type="text" id="word1" placeholder="p. ej. «machista», «mujeres»...">
+      </div>
+    </div>
     <div class="timer-box">
       <div class="timer-num" id="timer1">01:30</div>
     </div>
-    <div class="btn-row" id="controls1">
+    <div class="btn-row">
       <button class="btn" data-start="1">▶ Iniciar cronómetro</button>
       <button class="btn secondary" data-stop="1" disabled>⏱ ¡Lo tenemos!</button>
-      <button class="btn alt" data-reveal="1">🔍 Revelar análisis</button>
-    </div>
-    <div class="legend">
-      <span><span class="sw genero"></span>término de género marcado</span>
-      <span><span class="sw pos"></span>léxico valorativo positivo</span>
-      <span><span class="sw neg"></span>léxico valorativo negativo</span>
-    </div>
-    <div class="reveal" id="reveal1">
-      <strong>Veredicto del sistema:</strong> solo marca 2 términos, ambos de género (<span class="hl genero">mujeres</span>, <span class="hl genero">hombres</span>). La palabra que de verdad señala el sesgo, <em>«machista»</em>, no está en ninguna de las dos listas y pasa invisible.
-      <p class="q">Esto es un <strong>falso negativo</strong>: un método de listas cerradas solo ve lo que ya tiene escrito en el diccionario. ¿Qué se le escaparía a un cliente que confiara solo en esta herramienta?</p>
-    </div>
-    <div class="btn-row" id="next1" style="display:none;">
-      <button class="btn" data-next="2">Siguiente contenido →</button>
+      <button class="btn alt" data-next="r2" id="nextBtn1" disabled>Siguiente contenido →</button>
+      <span class="btn-hint" id="hint1">Elegid un diagnóstico arriba para poder avanzar.</span>
     </div>
   </section>
 
@@ -165,25 +192,28 @@ footer{margin-top:30px;text-align:center;font-size:11px;color:var(--ink-dim);fon
       <div class="content-tag">Tuit real · corpus TwitterSentimentDataset</div>
       <p class="tweet-text" id="tweet2">«Rajoy comete otra cacicada premiando al peor ministro de Educación de España [Wert] con una embajada inmerecida e importante para el país»</p>
     </div>
+    <div class="task-box">
+      <p class="task-title">Vuestra tarea</p>
+      <p>En pareja: ¿qué diagnóstico creéis que daría el sistema automático, según las listas de léxico de género y de léxico valorativo del cuaderno?</p>
+      <fieldset class="diag" id="diag-group-2">
+        <label><input type="radio" name="diag2" value="genero"> Solo sesgo de género (hay términos de la lista de género)</label>
+        <label><input type="radio" name="diag2" value="valorativo"> Solo sesgo valorativo (hay términos positivos o negativos de esa lista)</label>
+        <label><input type="radio" name="diag2" value="ambos"> Ambos a la vez</label>
+        <label><input type="radio" name="diag2" value="ninguno"> Ningún sesgo detectable por esas listas</label>
+      </fieldset>
+      <div class="word-input-row">
+        <label for="word2">Palabra(s) exacta(s) que lo justifican (opcional):</label>
+        <input type="text" id="word2" placeholder="p. ej. «ministro», «peor»...">
+      </div>
+    </div>
     <div class="timer-box">
       <div class="timer-num" id="timer2">01:30</div>
     </div>
-    <div class="btn-row" id="controls2">
+    <div class="btn-row">
       <button class="btn" data-start="2">▶ Iniciar cronómetro</button>
       <button class="btn secondary" data-stop="2" disabled>⏱ ¡Lo tenemos!</button>
-      <button class="btn alt" data-reveal="2">🔍 Revelar análisis</button>
-    </div>
-    <div class="legend">
-      <span><span class="sw genero"></span>término de género marcado</span>
-      <span><span class="sw pos"></span>léxico valorativo positivo</span>
-      <span><span class="sw neg"></span>léxico valorativo negativo</span>
-    </div>
-    <div class="reveal" id="reveal2">
-      <strong>Veredicto del sistema:</strong> marca <span class="hl genero">ministro</span> por tener flexión de género y <span class="hl neg">peor</span> como valorativo negativo.
-      <p class="q">Esto es un <strong>falso positivo de sesgo de género</strong>: «ministro» nombra correctamente a un cargo real; no hay sesgo de género aquí, solo una valoración política negativa. Una marca de género no equivale a un sesgo de género. ¿Dónde está exactamente ese límite?</p>
-    </div>
-    <div class="btn-row" id="next2" style="display:none;">
-      <button class="btn" data-next="3">Siguiente contenido →</button>
+      <button class="btn alt" data-next="r3" id="nextBtn2" disabled>Siguiente contenido →</button>
+      <span class="btn-hint" id="hint2">Elegid un diagnóstico arriba para poder avanzar.</span>
     </div>
   </section>
 
@@ -194,31 +224,83 @@ footer{margin-top:30px;text-align:center;font-size:11px;color:var(--ink-dim);fon
       <div class="content-tag">Tuit real · corpus TwitterSentimentDataset</div>
       <p class="tweet-text" id="tweet3">«Encontrar una buena chica en estos días es más difícil que tratar de encontrar a Wally»</p>
     </div>
+    <div class="task-box">
+      <p class="task-title">Vuestra tarea</p>
+      <p>En pareja: ¿qué diagnóstico creéis que daría el sistema automático, según las listas de léxico de género y de léxico valorativo del cuaderno?</p>
+      <fieldset class="diag" id="diag-group-3">
+        <label><input type="radio" name="diag3" value="genero"> Solo sesgo de género (hay términos de la lista de género)</label>
+        <label><input type="radio" name="diag3" value="valorativo"> Solo sesgo valorativo (hay términos positivos o negativos de esa lista)</label>
+        <label><input type="radio" name="diag3" value="ambos"> Ambos a la vez</label>
+        <label><input type="radio" name="diag3" value="ninguno"> Ningún sesgo detectable por esas listas</label>
+      </fieldset>
+      <div class="word-input-row">
+        <label for="word3">Palabra(s) exacta(s) que lo justifican (opcional):</label>
+        <input type="text" id="word3" placeholder="p. ej. «chica», «buena»...">
+      </div>
+    </div>
     <div class="timer-box">
       <div class="timer-num" id="timer3">01:30</div>
     </div>
-    <div class="btn-row" id="controls3">
+    <div class="btn-row">
       <button class="btn" data-start="3">▶ Iniciar cronómetro</button>
       <button class="btn secondary" data-stop="3" disabled>⏱ ¡Lo tenemos!</button>
-      <button class="btn alt" data-reveal="3">🔍 Revelar análisis</button>
+      <button class="btn alt" data-next="results" id="nextBtn3" disabled>Ver resultados finales →</button>
+      <span class="btn-hint" id="hint3">Elegid un diagnóstico arriba para poder avanzar.</span>
     </div>
+  </section>
+
+  <!-- RESULTADOS + CIERRE -->
+  <section class="screen" id="screen-results">
+    <p class="kicker">Resultados · Las 3 rondas completadas</p>
+    <h1 style="font-size:26px;">Vuestro diagnóstico frente al del sistema</h1>
     <div class="legend">
       <span><span class="sw genero"></span>término de género marcado</span>
       <span><span class="sw pos"></span>léxico valorativo positivo</span>
       <span><span class="sw neg"></span>léxico valorativo negativo</span>
     </div>
-    <div class="reveal" id="reveal3">
-      <strong>Veredicto del sistema:</strong> marca <span class="hl genero">chica</span> y <span class="hl pos">buena</span> juntos.
-      <p class="q">Aquí sí hay un patrón discursivo real: se reduce a las mujeres a un estereotipo (una «buena chica» como objeto raro de encontrar). Es un <strong>acierto</strong> del método simple. ¿Por qué convence más este diagnóstico que el de la ronda 2?</p>
-    </div>
-    <div class="btn-row" id="next3" style="display:none;">
-      <button class="btn" data-next="closing">Ver cierre del reto →</button>
-    </div>
-  </section>
 
-  <!-- CIERRE -->
-  <section class="screen" id="screen-closing">
-    <p class="kicker">Fin del reto</p>
+    <div class="result-card">
+      <div class="content-tag">Ronda 1</div>
+      <p class="tweet-text">«Regla del pulgar para saber si algo es machista: Imagina la situación cambiando a las <span class="hl genero">mujeres</span> x <span class="hl genero">hombres</span> de color. Te parece mal? Es machista»</p>
+      <div class="compare-row">
+        <span class="compare-pill">Vuestro diagnóstico: <strong id="yourDiag1">—</strong></span>
+        <span class="compare-pill">Sistema (listas de léxico): <strong>Solo sesgo de género</strong></span>
+        <span class="compare-pill" id="matchPill1">—</span>
+      </div>
+      <div class="reveal-text">
+        <strong>Veredicto del sistema:</strong> solo marca 2 términos, ambos de género (<span class="hl genero">mujeres</span>, <span class="hl genero">hombres</span>). La palabra que de verdad señala el sesgo, <em>«machista»</em>, no está en ninguna lista y pasa invisible.
+        <p class="q">Esto es un <strong>falso negativo</strong>: un método de listas cerradas solo ve lo que ya tiene escrito en el diccionario. ¿Qué se le escaparía a un cliente que confiara solo en esta herramienta?</p>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <div class="content-tag">Ronda 2</div>
+      <p class="tweet-text">«Rajoy comete otra cacicada premiando al <span class="hl pos">peor</span> <span class="hl genero">ministro</span> de Educación de España [Wert] con una embajada inmerecida e importante para el país»</p>
+      <div class="compare-row">
+        <span class="compare-pill">Vuestro diagnóstico: <strong id="yourDiag2">—</strong></span>
+        <span class="compare-pill">Sistema (listas de léxico): <strong>Ambos a la vez</strong></span>
+        <span class="compare-pill" id="matchPill2">—</span>
+      </div>
+      <div class="reveal-text">
+        <strong>Veredicto del sistema:</strong> marca <span class="hl genero">ministro</span> por tener flexión de género y <span class="hl neg">peor</span> como valorativo negativo (la casilla de arriba lo pinta en rojo por simplificar la leyenda, pero la lista lo cuenta como negativo).
+        <p class="q">Esto es un <strong>falso positivo de sesgo de género</strong>: «ministro» nombra correctamente a un cargo real; no hay sesgo de género aquí, solo una valoración política negativa. Una marca de género no equivale a un sesgo de género. ¿Dónde está exactamente ese límite?</p>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <div class="content-tag">Ronda 3</div>
+      <p class="tweet-text">«Encontrar una <span class="hl pos">buena</span> <span class="hl genero">chica</span> en estos días es más difícil que tratar de encontrar a Wally»</p>
+      <div class="compare-row">
+        <span class="compare-pill">Vuestro diagnóstico: <strong id="yourDiag3">—</strong></span>
+        <span class="compare-pill">Sistema (listas de léxico): <strong>Ambos a la vez</strong></span>
+        <span class="compare-pill" id="matchPill3">—</span>
+      </div>
+      <div class="reveal-text">
+        <strong>Veredicto del sistema:</strong> marca <span class="hl genero">chica</span> y <span class="hl pos">buena</span> juntos.
+        <p class="q">Aquí sí hay un patrón discursivo real: se reduce a las mujeres a un estereotipo (una «buena chica» como objeto raro de encontrar). Es un <strong>acierto</strong> del método simple. ¿Por qué convence más este diagnóstico que el de la ronda 2?</p>
+      </div>
+    </div>
+
     <h2 class="step-title">Lo que acabáis de hacer tiene nombre y mercado</h2>
     <p class="closing">Decidir si una marca de género o un término valorativo refleja un sesgo real, o es solo ruido de un diccionario, es el mismo juicio experto que ahora mismo necesitan empresas de medios, redes sociales y consultoras de IA responsable para auditar sus propios sistemas automáticos. En 2018, Amazon tuvo que desactivar una herramienta de contratación por IA porque penalizaba currículums que incluían la palabra «women's»: dentro de la empresa nadie hizo a tiempo esta misma lectura humana que acabáis de hacer vosotras y vosotros en 90 segundos (Dastin, 2018). Ese hueco —entre lo que detecta el código y lo que de verdad significa— es exactamente donde se contrata a perfiles como el vuestro.</p>
     <details class="refs">
@@ -258,26 +340,50 @@ footer{margin-top:30px;text-align:center;font-size:11px;color:var(--ink-dim);fon
   });
 
   /* ---------- navegación entre pantallas ---------- */
-  var screens = ['intro','r1','r2','r3','closing'];
+  var screens = ['intro','r1','r2','r3','results'];
   function show(name){
     screens.forEach(function(s){
       document.getElementById('screen-'+s).classList.toggle('active', s===name);
     });
-    var idx = { r1:1, r2:2, r3:3, closing:4 }[name] || 0;
+    var idx = { r1:1, r2:2, r3:3, results:4 }[name] || 0;
     document.querySelectorAll('#progress .dot').forEach(function(d){
       var p = parseInt(d.getAttribute('data-p'),10);
       d.classList.toggle('on', p===idx);
       d.classList.toggle('done', p<idx);
     });
+    if (name === 'results') buildResults();
   }
   document.getElementById('startBtn').addEventListener('click', function(){ show('r1'); });
   document.querySelectorAll('[data-next]').forEach(function(btn){
-    btn.addEventListener('click', function(){ show(btn.getAttribute('data-next')); });
+    btn.addEventListener('click', function(){
+      if (btn.disabled) return;
+      show(btn.getAttribute('data-next'));
+    });
   });
   document.getElementById('restartBtn').addEventListener('click', function(){
-    [1,2,3].forEach(resetTimer);
+    [1,2,3].forEach(resetRound);
     show('intro');
   });
+
+  /* ---------- diagnóstico: habilita "Siguiente" al elegir una opción ---------- */
+  [1,2,3].forEach(function(n){
+    document.querySelectorAll('input[name="diag'+n+'"]').forEach(function(radio){
+      radio.addEventListener('change', function(){
+        var btn = document.getElementById('nextBtn'+n);
+        btn.disabled = false;
+        document.getElementById('hint'+n).style.display = 'none';
+      });
+    });
+  });
+  function diagLabel(n){
+    var LABELS = {genero:'Solo sesgo de género', valorativo:'Solo sesgo valorativo', ambos:'Ambos a la vez', ninguno:'Ningún sesgo'};
+    var checked = document.querySelector('input[name="diag'+n+'"]:checked');
+    return checked ? LABELS[checked.value] : null;
+  }
+  function diagValue(n){
+    var checked = document.querySelector('input[name="diag'+n+'"]:checked');
+    return checked ? checked.value : null;
+  }
 
   /* ---------- cronómetros ---------- */
   var DURATION = 90;
@@ -312,13 +418,15 @@ footer{margin-top:30px;text-align:center;font-size:11px;color:var(--ink-dim);fon
     document.querySelector('[data-stop="'+n+'"]').disabled = true;
     paintTimer(n);
   }
-  function resetTimer(n){
+  function resetRound(n){
     stopTimer(n);
     timers[n].left = DURATION;
     paintTimer(n);
     document.querySelector('[data-start="'+n+'"]').disabled = false;
-    document.getElementById('reveal'+n).classList.remove('show');
-    document.getElementById('next'+n).style.display = 'none';
+    document.querySelectorAll('input[name="diag'+n+'"]').forEach(function(r){ r.checked = false; });
+    document.getElementById('word'+n).value = '';
+    document.getElementById('nextBtn'+n).disabled = true;
+    document.getElementById('hint'+n).style.display = '';
   }
   document.querySelectorAll('[data-start]').forEach(function(btn){
     btn.addEventListener('click', function(){ startTimer(btn.getAttribute('data-start')); });
@@ -326,14 +434,25 @@ footer{margin-top:30px;text-align:center;font-size:11px;color:var(--ink-dim);fon
   document.querySelectorAll('[data-stop]').forEach(function(btn){
     btn.addEventListener('click', function(){ stopTimer(btn.getAttribute('data-stop')); });
   });
-  document.querySelectorAll('[data-reveal]').forEach(function(btn){
-    var n = btn.getAttribute('data-reveal');
-    btn.addEventListener('click', function(){
-      stopTimer(n);
-      document.getElementById('reveal'+n).classList.add('show');
-      document.getElementById('next'+n).style.display = 'flex';
+
+  /* ---------- pantalla de resultados: compara diagnóstico propio vs. sistema ---------- */
+  var SYSTEM_DIAG = {1:'genero', 2:'ambos', 3:'ambos'};
+  function buildResults(){
+    [1,2,3].forEach(function(n){
+      var your = diagLabel(n) || '(sin marcar)';
+      document.getElementById('yourDiag'+n).textContent = your;
+      var pill = document.getElementById('matchPill'+n);
+      var yourVal = diagValue(n);
+      if (!yourVal) {
+        pill.textContent = '—';
+        pill.className = 'compare-pill';
+        return;
+      }
+      var isMatch = (yourVal === SYSTEM_DIAG[n]);
+      pill.textContent = isMatch ? '✅ Coincide con las listas' : '❌ No coincide con las listas';
+      pill.className = 'compare-pill ' + (isMatch ? 'match' : 'nomatch');
     });
-  });
+  }
 
   [1,2,3].forEach(paintTimer);
 })();
