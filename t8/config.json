@@ -5,7 +5,7 @@
   "practica": false,
   "quiz": false,
   "infografia": true,
-  "adicionales": false,
+  "adicionales": true,
   "manual_interactivo": true,
   "practica_guiada": false,
   "practica_agnews": false
