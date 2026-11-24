@@ -6,7 +6,7 @@
   "quiz": false,
   "infografia": false,
   "adicionales": false,
-  "manual_interactivo": false,
+  "manual_interactivo": true,
   "practica_guiada": false,
   "practica_agnews": false
 }
